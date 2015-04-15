@@ -42,8 +42,7 @@ NSString *const UsersCollection = @"Users";
         withPassword:(NSString *)password
   andCompletionBlock:(void (^)(XOCUser *, NSError *))completionBlock;
 {
-    XOCUser *newUser = [XOCUser newUserWithUsername:user
-                                        andPassword:password];
+    XOCUser *newUser = [XOCUser newUserWithUsername:user];
     
     [self.connection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         XOCUser *registeredUser = [transaction objectForKey:newUser.username
@@ -55,6 +54,7 @@ NSString *const UsersCollection = @"Users";
             return;
         }
         
+        [newUser setHashedPassword:password];
         [transaction setObject:newUser
                         forKey:newUser.username
                   inCollection:UsersCollection];

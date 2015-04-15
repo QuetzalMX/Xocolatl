@@ -22,24 +22,11 @@
 
 @implementation XOCUser
 
-+ (instancetype)newUserWithUsername:(NSString *)username
-                        andPassword:(NSString *)password;
++ (instancetype)newUserWithUsername:(NSString *)username;
 {
     //Create a new user.
     XOCUser *user = [[XOCUser alloc] init];
     user.username = username;
-    user.salt = [NSString randomString];
-    
-    //Create a password.
-    NSString *saltedPasswordString = [NSString stringWithFormat:@"%@%@", user.salt, password];
-    NSData *saltedPasswordData = [saltedPasswordString dataUsingEncoding:NSUTF8StringEncoding];
-    NSMutableData *hashedPasswordData = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH];
-    CC_SHA256(saltedPasswordData.bytes,
-              (CC_LONG)saltedPasswordData.length,
-              hashedPasswordData.mutableBytes);
-    
-    user.password = hashedPasswordData;
-    user.identifier = [NSString stringWithFormat:@"%@%@", username, user.salt];
     
     return user;
 }
@@ -62,6 +49,28 @@
     [aCoder encodeObject:self.identifier forKey:@"identifier"];
     [aCoder encodeObject:self.username forKey:@"username"];
     [aCoder encodeObject:self.password forKey:@"password"];
+}
+
+- (void)setHashedPassword:(NSString *)password;
+{
+    self.salt = [NSString randomString];
+    
+    //Create a password.
+    NSString *saltedPasswordString = [NSString stringWithFormat:@"%@%@", self.salt, password];
+    NSData *saltedPasswordData = [saltedPasswordString dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableData *hashedPasswordData = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH];
+    CC_SHA256(saltedPasswordData.bytes,
+              (CC_LONG)saltedPasswordData.length,
+              hashedPasswordData.mutableBytes);
+    
+    self.password = hashedPasswordData;
+    self.identifier = [NSString stringWithFormat:@"%@%@", self.username, self.salt];
+}
+
+- (NSDictionary *)jsonRepresentation;
+{
+    return @{@"id": self.identifier,
+             @"username": self.username};
 }
 
 @end

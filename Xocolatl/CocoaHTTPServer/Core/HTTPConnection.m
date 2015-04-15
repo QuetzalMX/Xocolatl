@@ -1014,15 +1014,15 @@ static NSMutableArray *recentNonces;
 	// Note: We already checked to ensure the method was supported in onSocket:didReadData:withTag:
 	
 	// Respond properly to HTTP 'GET' and 'HEAD' commands
-	httpResponse = [self httpResponseForMethod:method URI:uri];
-	
-	if (httpResponse == nil)
-	{
-		[self handleResourceNotFound];
-		return;
-	}
-	
-	[self sendResponseHeadersAndBody];
+	[self httpResponseForMethod:method URI:uri andCompletionBlock:^(NSObject<HTTPResponse> *response) {
+        if (!response) {
+            [self handleResourceNotFound];
+            return;
+        }
+        
+        httpResponse = response;
+        [self sendResponseHeadersAndBody];
+    }];
 }
 
 /**
@@ -1685,28 +1685,30 @@ static NSMutableArray *recentNonces;
  * The HTTPServer comes with two such classes: HTTPFileResponse and HTTPDataResponse.
  * HTTPFileResponse is a wrapper for an NSFileHandle object, and is the preferred way to send a file response.
  * HTTPDataResponse is a wrapper for an NSData object, and may be used to send a custom response.
-**/
-- (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path
+ **/
+- (void)httpResponseForMethod:(NSString *)method
+                          URI:(NSString *)path
+           andCompletionBlock:(void (^)(NSObject <HTTPResponse> *))completionBlock;
 {
-	HTTPLogTrace();
-	
-	// Override me to provide custom responses.
-	
-	NSString *filePath = [self filePathForURI:path allowDirectory:NO];
-	
-	BOOL isDir = NO;
-	
-	if (filePath && [[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDir] && !isDir)
-	{
-		return [[HTTPFileResponse alloc] initWithFilePath:filePath forConnection:self];
-	
-		// Use me instead for asynchronous file IO.
-		// Generally better for larger files.
-		
-	//	return [[[HTTPAsyncFileResponse alloc] initWithFilePath:filePath forConnection:self] autorelease];
-	}
-	
-	return nil;
+    HTTPLogTrace();
+    
+    // Override me to provide custom responses.
+    
+    NSString *filePath = [self filePathForURI:path allowDirectory:NO];
+    
+    BOOL isDir = NO;
+    
+    NSObject <HTTPResponse> *response;
+    if (filePath && [[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDir] && !isDir)
+    {
+        response = [[HTTPFileResponse alloc] initWithFilePath:filePath forConnection:self];
+        // Use me instead for asynchronous file IO.
+        // Generally better for larger files.
+        
+        //	return [[[HTTPAsyncFileResponse alloc] initWithFilePath:filePath forConnection:self] autorelease];
+    }
+    
+    completionBlock(response);
 }
 
 - (WebSocket *)webSocketForURI:(NSString *)path

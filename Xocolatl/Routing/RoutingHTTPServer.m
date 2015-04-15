@@ -184,9 +184,12 @@
 	return ([routes objectForKey:method] != nil);
 }
 
-- (void)handleRoute:(Route *)route withRequest:(RouteRequest *)request response:(RouteResponse *)response {
+- (void)handleRoute:(Route *)route
+        withRequest:(RouteRequest *)request
+           response:(RouteResponse *)response;
+{
 	if (route.handler) {
-		route.handler(request, response);
+        route.handler(request, response);
 	} else {
 		#pragma clang diagnostic push
 		#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -195,71 +198,96 @@
 	}
 }
 
-- (RouteResponse *)routeMethod:(NSString *)method withPath:(NSString *)path parameters:(NSDictionary *)params request:(HTTPMessage *)httpMessage connection:(HTTPConnection *)connection {
+- (void)routeMethod:(NSString *)method
+           withPath:(NSString *)path
+         parameters:(NSDictionary *)params
+            request:(HTTPMessage *)httpMessage
+         connection:(HTTPConnection *)connection
+ andCompletionBlock:(ResponseHandler)completionBlock;
+{
+    //Do we have any registered routes?
 	NSMutableArray *methodRoutes = [routes objectForKey:method];
-	if (methodRoutes == nil)
-		return nil;
+    if (!methodRoutes) {
+        //Nope. So we can't respond to this request.
+        completionBlock(nil, nil);
+		return;
+    }
 
+    //We do have registered routes. Which one is responsible for this request?
+    Route *chosenRoute;
+    NSTextCheckingResult *resultForChosenRoute;
 	for (Route *route in methodRoutes) {
 		NSTextCheckingResult *result = [route.regex firstMatchInString:path options:0 range:NSMakeRange(0, path.length)];
 		if (!result)
 			continue;
-
-		// The first range is all of the text matched by the regex.
-		NSUInteger captureCount = [result numberOfRanges];
-
-		if (route.keys) {
-			// Add the route's parameters to the parameter dictionary, accounting for
-			// the first range containing the matched text.
-			if (captureCount == [route.keys count] + 1) {
-				NSMutableDictionary *newParams = [params mutableCopy];
-				NSUInteger index = 1;
-				BOOL firstWildcard = YES;
-				for (NSString *key in route.keys) {
-					NSString *capture = [path substringWithRange:[result rangeAtIndex:index]];
-					if ([key isEqualToString:@"wildcards"]) {
-						NSMutableArray *wildcards = [newParams objectForKey:key];
-						if (firstWildcard) {
-							// Create a new array and replace any existing object with the same key
-							wildcards = [NSMutableArray array];
-							[newParams setObject:wildcards forKey:key];
-							firstWildcard = NO;
-						}
-						[wildcards addObject:capture];
-					} else {
-						[newParams setObject:capture forKey:key];
-					}
-					index++;
-				}
-				params = newParams;
-			}
-		} else if (captureCount > 1) {
-			// For custom regular expressions place the anonymous captures in the captures parameter
-			NSMutableDictionary *newParams = [params mutableCopy];
-			NSMutableArray *captures = [NSMutableArray array];
-			for (NSUInteger i = 1; i < captureCount; i++) {
-				[captures addObject:[path substringWithRange:[result rangeAtIndex:i]]];
-			}
-			[newParams setObject:captures forKey:@"captures"];
-			params = newParams;
-		}
-
-		RouteRequest *request = [[RouteRequest alloc] initWithHTTPMessage:httpMessage parameters:params];
-		RouteResponse *response = [[RouteResponse alloc] initWithConnection:connection];
-		if (!routeQueue) {
-			[self handleRoute:route withRequest:request response:response];
-		} else {
-			// Process the route on the specified queue
-			dispatch_sync(routeQueue, ^{
-				@autoreleasepool {
-					[self handleRoute:route withRequest:request response:response];
-				}
-			});
-		}
-		return response;
+        
+        resultForChosenRoute = result;
+        chosenRoute = route;
 	}
-
-	return nil;
+    
+    //Did we find someone?
+    if (!chosenRoute) {
+        //We did not.
+        completionBlock(nil, nil);
+        return;
+    }
+    
+    //We did find someone responsible.
+    //The first range is all of the text matched by the regex.
+    NSUInteger captureCount = [resultForChosenRoute numberOfRanges];
+    if (chosenRoute.keys) {
+        // Add the route's parameters to the parameter dictionary, accounting for
+        // the first range containing the matched text.
+        if (captureCount == [chosenRoute.keys count] + 1) {
+            NSMutableDictionary *newParams = [params mutableCopy];
+            NSUInteger index = 1;
+            BOOL firstWildcard = YES;
+            for (NSString *key in chosenRoute.keys) {
+                NSString *capture = [path substringWithRange:[resultForChosenRoute rangeAtIndex:index]];
+                if ([key isEqualToString:@"wildcards"]) {
+                    NSMutableArray *wildcards = [newParams objectForKey:key];
+                    if (firstWildcard) {
+                        // Create a new array and replace any existing object with the same key
+                        wildcards = [NSMutableArray array];
+                        [newParams setObject:wildcards forKey:key];
+                        firstWildcard = NO;
+                    }
+                    [wildcards addObject:capture];
+                } else {
+                    [newParams setObject:capture forKey:key];
+                }
+                index++;
+            }
+            params = newParams;
+        }
+    } else if (captureCount > 1) {
+        // For custom regular expressions place the anonymous captures in the captures parameter
+        NSMutableDictionary *newParams = [params mutableCopy];
+        NSMutableArray *captures = [NSMutableArray array];
+        for (NSUInteger i = 1; i < captureCount; i++) {
+            [captures addObject:[path substringWithRange:[resultForChosenRoute rangeAtIndex:i]]];
+        }
+        [newParams setObject:captures forKey:@"captures"];
+        params = newParams;
+    }
+    
+    //Ask for a request and a response from them.
+    RouteRequest *request = [[RouteRequest alloc] initWithHTTPMessage:httpMessage parameters:params];
+    RouteResponse *response = [[RouteResponse alloc] initWithConnection:connection andResponseBlock:completionBlock];
+    if (!routeQueue) {
+        [self handleRoute:chosenRoute
+              withRequest:request
+                 response:response];
+    } else {
+        // Process the route on the specified queue
+        dispatch_sync(routeQueue, ^{
+            @autoreleasepool {
+                [self handleRoute:chosenRoute
+                      withRequest:request
+                         response:response];
+            }
+        });
+    }
 }
 
 - (void)setupMIMETypes {

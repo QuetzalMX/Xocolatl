@@ -49,17 +49,16 @@
     }];
     
     [self.server post:@"/signup" withBlock:^(RouteRequest *request, RouteResponse *response) {
-        
         [self.manager registerUser:request.parsedBody[@"username"]
                       withPassword:request.parsedBody[@"password"]
                 andCompletionBlock:^(XOCUser *newUser, NSError *error) {
-                    if (newUser) {
-                        response.statusCode = 200;
-                        [response respondWithString:[NSString stringWithFormat:@"%@", newUser.identifier]];
-                    } else {
-                        response.statusCode = error.code;
-                        [response respondWithString:error.localizedDescription];
+                    if (error) {
+                        [response respondWithError:error];
+                        return;
                     }
+                    
+                    [response respondWithDictionary:@{@"user": newUser.jsonRepresentation}
+                                            andCode:200];
                 }];
     }];
 }

@@ -10,10 +10,12 @@
 
 @interface XOCUser : NSObject
 
-+ (instancetype)newUserWithUsername:(NSString *)username
-                        andPassword:(NSString *)password;
++ (instancetype)newUserWithUsername:(NSString *)username;
 
 @property (nonatomic, copy, readonly) NSString *identifier;
 @property (nonatomic, copy, readonly) NSString *username;
+
+- (void)setHashedPassword:(NSString *)password;
+- (NSDictionary *)jsonRepresentation;
 
 @end

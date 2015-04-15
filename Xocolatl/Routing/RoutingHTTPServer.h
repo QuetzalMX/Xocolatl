@@ -38,6 +38,10 @@ typedef void (^RequestHandler)(RouteRequest *request, RouteResponse *response);
 - (void)handleMethod:(NSString *)method withPath:(NSString *)path target:(id)target selector:(SEL)selector;
 
 - (BOOL)supportsMethod:(NSString *)method;
-- (RouteResponse *)routeMethod:(NSString *)method withPath:(NSString *)path parameters:(NSDictionary *)params request:(HTTPMessage *)request connection:(HTTPConnection *)connection;
-
+- (void)routeMethod:(NSString *)method
+           withPath:(NSString *)path
+         parameters:(NSDictionary *)params
+            request:(HTTPMessage *)httpMessage
+         connection:(HTTPConnection *)connection
+ andCompletionBlock:(ResponseHandler)completionBlock;
 @end

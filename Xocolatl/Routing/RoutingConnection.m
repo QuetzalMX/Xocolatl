@@ -42,7 +42,12 @@
 	}
 }
 
-- (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path {
+- (void)httpResponseForMethod:(NSString *)method
+                          URI:(NSString *)path
+           andCompletionBlock:(void (^)(NSObject <HTTPResponse> *))completionBlock;
+{
+    //We just received a request for someone.
+    //Parse the path and the query and then forward that to whoever is responsible.
 	NSURL *url = [request url];
 	NSString *query = nil;
 	NSDictionary *params = [NSDictionary dictionary];
@@ -56,21 +61,37 @@
 		}
 	}
 
-	RouteResponse *response = [http routeMethod:method withPath:path parameters:params request:request connection:self];
-	if (response != nil) {
-		headers = response.headers;
-		return response.proxiedResponse;
-	}
-
-	// Set a MIME type for static files if possible
-	NSObject<HTTPResponse> *staticResponse = [super httpResponseForMethod:method URI:path];
-	if (staticResponse && [staticResponse respondsToSelector:@selector(filePath)]) {
-		NSString *mimeType = [http mimeTypeForPath:[staticResponse performSelector:@selector(filePath)]];
-		if (mimeType) {
-			headers = [NSDictionary dictionaryWithObject:mimeType forKey:@"Content-Type"];
-		}
-	}
-	return staticResponse;
+    //Send it to whoever is responsible to get their response.
+    //Once we have thei response, we will call completionBlock.
+    [http routeMethod:method
+             withPath:path
+           parameters:params
+              request:request
+           connection:self
+   andCompletionBlock:^(NSObject<HTTPResponse> *response, NSDictionary *responseHeaders) {
+       //Someone did end up being responsible. We're done.
+       if (response) {
+           headers = responseHeaders;
+           completionBlock(response);
+           return;
+       }
+       
+       //No one was responsible for this route.
+       //Attempt to send a static file.
+       [super httpResponseForMethod:method
+                                URI:path
+                 andCompletionBlock:^ (NSObject <HTTPResponse> *staticResponse) {
+                     if (staticResponse && [staticResponse respondsToSelector:@selector(filePath)]) {
+                         NSString *mimeType = [http mimeTypeForPath:[staticResponse performSelector:@selector(filePath)]];
+                         if (mimeType) {
+                             headers = [NSDictionary dictionaryWithObject:mimeType forKey:@"Content-Type"];
+                         }
+                     }
+                     
+                     completionBlock(staticResponse);
+                 }];
+   }];
+	
 }
 
 - (void)responseHasAvailableData:(NSObject<HTTPResponse> *)sender {

@@ -5,6 +5,12 @@
 #import "HTTPAsyncFileResponse.h"
 #import "HTTPResponseProxy.h"
 
+@interface RouteResponse ()
+
+@property (nonatomic, strong) ResponseHandler responseBlock;
+
+@end
+
 @implementation RouteResponse {
 	NSMutableDictionary *headers;
 	HTTPResponseProxy *proxy;
@@ -13,8 +19,10 @@
 @synthesize connection;
 @synthesize headers;
 
-- (id)initWithConnection:(HTTPConnection *)theConnection {
+- (id)initWithConnection:(HTTPConnection *)theConnection andResponseBlock:(ResponseHandler)responseBlock;
+{
 	if (self = [super init]) {
+        _responseBlock = responseBlock;
 		connection = theConnection;
 		headers = [[NSMutableDictionary alloc] init];
 		proxy = [[HTTPResponseProxy alloc] init];
@@ -27,6 +35,7 @@
 }
 
 - (void)setResponse:(NSObject <HTTPResponse>*)response {
+    self.responseBlock(response, self.headers);
 	proxy.response = response;
 }
 
@@ -48,6 +57,22 @@
 
 - (void)setHeader:(NSString *)field value:(NSString *)value {
 	[headers setObject:value forKey:field];
+}
+
+- (void)respondWithDictionary:(NSDictionary *)dictionary
+                      andCode:(NSInteger)code;
+{
+    NSError *error = nil;
+    NSData *jsonDictionary = [NSJSONSerialization dataWithJSONObject:dictionary
+                                                             options:0
+                                                               error:&error];
+    if (error) {
+        [self respondWithError:error];
+        return;
+    }
+    
+    self.statusCode = code;
+    [self respondWithData:jsonDictionary];
 }
 
 - (void)respondWithString:(NSString *)string {
@@ -72,6 +97,12 @@
 	} else {
 		self.response = [[HTTPFileResponse alloc] initWithFilePath:path forConnection:connection];
 	}
+}
+
+- (void)respondWithError:(NSError *)error;
+{
+    self.statusCode = error.code;
+    [self respondWithString:error.localizedDescription];
 }
 
 @end

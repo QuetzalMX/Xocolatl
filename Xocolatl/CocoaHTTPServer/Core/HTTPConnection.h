@@ -90,7 +90,9 @@
 - (NSArray *)directoryIndexFileNames;
 - (NSString *)filePathForURI:(NSString *)path;
 - (NSString *)filePathForURI:(NSString *)path allowDirectory:(BOOL)allowDirectory;
-- (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path;
+- (void)httpResponseForMethod:(NSString *)method
+                          URI:(NSString *)path
+           andCompletionBlock:(void (^)(NSObject <HTTPResponse> *))completionBlock;
 - (WebSocket *)webSocketForURI:(NSString *)path;
 
 - (void)prepareForBodyWithSize:(UInt64)contentLength;
