@@ -12,5 +12,6 @@
 - (NSString *)method;
 - (NSURL *)url;
 - (NSData *)body;
+- (NSDictionary *)parsedBody;
 
 @end

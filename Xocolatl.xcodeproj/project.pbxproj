@@ -132,6 +132,9 @@
 		C1F692661AD9E5F1007FF919 /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F691E81AD9E5F1007FF919 /* ContextFilterLogFormatter.m */; };
 		C1F692671AD9E5F1007FF919 /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F691EA1AD9E5F1007FF919 /* DispatchQueueLogFormatter.m */; };
 		C1F692681AD9E5F1007FF919 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = C1F691EB1AD9E5F1007FF919 /* README.txt */; };
+		C1F70E271ADE0B0600CD9959 /* AuthRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E261ADE0B0600CD9959 /* AuthRequestManager.m */; };
+		C1F70E2A1ADE0BC700CD9959 /* XOCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E291ADE0BC700CD9959 /* XOCUser.m */; };
+		C1F70E2E1ADE17EA00CD9959 /* NSString+randomString.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */; };
 		C1FE77C01ADCEE2800495528 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FE77BF1ADCEE2800495528 /* libxml2.dylib */; };
 /* End PBXBuildFile section */
 
@@ -406,6 +409,12 @@
 		C1F691E91AD9E5F1007FF919 /* DispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueueLogFormatter.h; sourceTree = "<group>"; };
 		C1F691EA1AD9E5F1007FF919 /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
 		C1F691EB1AD9E5F1007FF919 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		C1F70E251ADE0B0600CD9959 /* AuthRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AuthRequestManager.h; path = Auth/AuthRequestManager.h; sourceTree = "<group>"; };
+		C1F70E261ADE0B0600CD9959 /* AuthRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AuthRequestManager.m; path = Auth/AuthRequestManager.m; sourceTree = "<group>"; };
+		C1F70E281ADE0BC700CD9959 /* XOCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XOCUser.h; path = Auth/XOCUser.h; sourceTree = "<group>"; };
+		C1F70E291ADE0BC700CD9959 /* XOCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XOCUser.m; path = Auth/XOCUser.m; sourceTree = "<group>"; };
+		C1F70E2C1ADE17EA00CD9959 /* NSString+randomString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+randomString.h"; path = "Auth/NSString+randomString.h"; sourceTree = "<group>"; };
+		C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+randomString.m"; path = "Auth/NSString+randomString.m"; sourceTree = "<group>"; };
 		C1FE77BF1ADCEE2800495528 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -434,6 +443,7 @@
 			children = (
 				C13D40451ADCEED4004AF563 /* libsqlite3.dylib */,
 				C1F68E871AD9E587007FF919 /* Xocolatl */,
+				C1F70E241ADE0AE500CD9959 /* Auth */,
 				C1F690CC1AD9E5E0007FF919 /* Routing */,
 				C1F690DF1AD9E5F0007FF919 /* CocoaHTTPServer */,
 				C1F68FBA1AD9E5C4007FF919 /* YapDatabase */,
@@ -1035,6 +1045,28 @@
 			name = Core;
 			sourceTree = "<group>";
 		};
+		C1F70E241ADE0AE500CD9959 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				C1F70E251ADE0B0600CD9959 /* AuthRequestManager.h */,
+				C1F70E261ADE0B0600CD9959 /* AuthRequestManager.m */,
+				C1F70E281ADE0BC700CD9959 /* XOCUser.h */,
+				C1F70E291ADE0BC700CD9959 /* XOCUser.m */,
+				C1F70E2F1ADE17ED00CD9959 /* Categories */,
+			);
+			name = Auth;
+			path = Xocolatl;
+			sourceTree = "<group>";
+		};
+		C1F70E2F1ADE17ED00CD9959 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				C1F70E2C1ADE17EA00CD9959 /* NSString+randomString.h */,
+				C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1150,6 +1182,7 @@
 				C1F692011AD9E5F1007FF919 /* PUTResponse.m in Sources */,
 				C1F6907E1AD9E5C4007FF919 /* YDBCKAttachRequest.m in Sources */,
 				C1F690A41AD9E5C4007FF919 /* YapDatabaseSearchResultsViewTransaction.m in Sources */,
+				C1F70E2E1ADE17EA00CD9959 /* NSString+randomString.m in Sources */,
 				C1F692031AD9E5F1007FF919 /* README.markdown in Sources */,
 				C1F6925F1AD9E5F1007FF919 /* GCDAsyncSocket.m in Sources */,
 				C1F690A01AD9E5C4007FF919 /* YapDatabaseSearchQueue.m in Sources */,
@@ -1168,6 +1201,7 @@
 				C1F690AA1AD9E5C4007FF919 /* YapDatabaseSecondaryIndexTransaction.m in Sources */,
 				C1F6909B1AD9E5C4007FF919 /* YapDatabaseRelationship.m in Sources */,
 				C1F690841AD9E5C4007FF919 /* YDBCKMergeInfo.m in Sources */,
+				C1F70E271ADE0B0600CD9959 /* AuthRequestManager.m in Sources */,
 				C1F690C01AD9E5C4007FF919 /* YapTouch.m in Sources */,
 				C1F6907F1AD9E5C4007FF919 /* YDBCKChangeQueue.m in Sources */,
 				C1F690B91AD9E5C4007FF919 /* YapDatabaseLogging.m in Sources */,
@@ -1222,6 +1256,7 @@
 				C1F691F91AD9E5F1007FF919 /* HTTPDataResponse.m in Sources */,
 				C1F690951AD9E5C4007FF919 /* YapDatabaseHooks.m in Sources */,
 				C1F690821AD9E5C4007FF919 /* YDBCKRecordTableInfo.m in Sources */,
+				C1F70E2A1ADE0BC700CD9959 /* XOCUser.m in Sources */,
 				C1F690A91AD9E5C4007FF919 /* YapDatabaseSecondaryIndexSetup.m in Sources */,
 				C1F690921AD9E5C4007FF919 /* YapDatabaseFullTextSearchHandler.m in Sources */,
 				C1F6908F1AD9E5C4007FF919 /* YapDatabaseFilteredViewTypes.m in Sources */,
