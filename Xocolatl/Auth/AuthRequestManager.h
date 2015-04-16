@@ -17,6 +17,10 @@
 + (instancetype)requestManagerForServer:(RoutingHTTPServer *)server
                             andDatabase:(YapDatabase *)database;
 
+- (void)loginUser:(NSString *)user
+     withPassword:(NSString *)password
+andCompletionBlock:(void (^)(XOCUser *, NSError *))completionBlock;
+
 - (void)registerUser:(NSString *)user
         withPassword:(NSString *)password
   andCompletionBlock:(void (^)(XOCUser *, NSError *))completionBlock;

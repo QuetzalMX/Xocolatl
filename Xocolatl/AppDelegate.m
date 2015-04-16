@@ -31,7 +31,7 @@
     [self.server setPort:3000];
     [self.server setDocumentRoot:[@"~/Sites" stringByExpandingTildeInPath]];
     
-    NSString *databasePath = [self.server.documentRoot stringByAppendingPathExtension:@"database.yap"];
+    NSString *databasePath = [self.server.documentRoot stringByAppendingString:@"/database.yap"];
     self.database = [[YapDatabase alloc] initWithPath:databasePath];
     
     self.manager = [AuthRequestManager requestManagerForServer:self.server
@@ -45,6 +45,25 @@
     
     [self.server get:@"/" withBlock:^(RouteRequest *request, RouteResponse *response) {
         NSString *path = [self.server.documentRoot stringByAppendingPathComponent:@"index.html"];
+        [response respondWithFile:path];
+    }];
+    
+    [self.server post:@"/signin" withBlock:^(RouteRequest *request, RouteResponse *response) {
+        [self.manager loginUser:request.parsedBody[@"username"]
+                   withPassword:request.parsedBody[@"password"]
+             andCompletionBlock:^(XOCUser *user, NSError *error) {
+                 if (error) {
+                     [response respondWithError:error];
+                     return;
+                 }
+                 
+                 [response respondWithDictionary:@{@"user": user.jsonRepresentation}
+                                         andCode:200];
+             }];
+    }];
+    
+    [self.server get:@"/signup" withBlock:^(RouteRequest *request, RouteResponse *response) {
+        NSString *path = [self.server.documentRoot stringByAppendingPathComponent:@"signup.html"];
         [response respondWithFile:path];
     }];
     

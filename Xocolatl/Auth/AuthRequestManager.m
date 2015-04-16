@@ -33,6 +33,41 @@ NSString *const UsersCollection = @"Users";
     return manager;
 }
 
+- (void)loginUser:(NSString *)user
+     withPassword:(NSString *)password
+andCompletionBlock:(void (^)(XOCUser *, NSError *))completionBlock;
+{
+    __block XOCUser *registeredUser;
+    __block NSError *error;
+    [self.connection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+        //Let's see if this user exists.
+        XOCUser *fetchedUser = [transaction objectForKey:user
+                                            inCollection:UsersCollection];
+        
+        if (!fetchedUser) {
+            //User is not registered.
+            error = [NSError errorWithDomain:@"User Does Not Exist"
+                                        code:404
+                                    userInfo:@{NSLocalizedDescriptionKey: @"The requested user is not registered."}];
+            return;
+        }
+        
+        //The user exists. Is the password valid?
+        if (![XOCUser verifyPasswordHashForUser:fetchedUser
+                                   withPassword:password]) {
+            error = [NSError errorWithDomain:@"Invalid Credentials"
+                                        code:400
+                                    userInfo:@{NSLocalizedDescriptionKey: @"That password is not valid for the given username."}];
+            return;
+        }
+        
+        //The password is valid.
+        registeredUser = fetchedUser;
+    }];
+    
+    completionBlock(registeredUser, error);
+}
+
 - (void)registerUser:(NSString *)username
         withPassword:(NSString *)password
   andCompletionBlock:(void (^)(XOCUser *, NSError *))completionBlock;

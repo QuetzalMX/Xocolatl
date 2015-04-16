@@ -31,6 +31,7 @@
     return user;
 }
 
+#pragma mark - Serialization
 - (instancetype)initWithCoder:(NSCoder *)aDecoder;
 {
     if (self != [super init]) {
@@ -40,6 +41,7 @@
     _identifier = [aDecoder decodeObjectForKey:@"identifier"];
     _username = [aDecoder decodeObjectForKey:@"username"];
     _password = [aDecoder decodeObjectForKey:@"password"];
+    _salt = [aDecoder decodeObjectForKey:@"salt"];
     
     return self;
 }
@@ -49,28 +51,45 @@
     [aCoder encodeObject:self.identifier forKey:@"identifier"];
     [aCoder encodeObject:self.username forKey:@"username"];
     [aCoder encodeObject:self.password forKey:@"password"];
-}
-
-- (void)setHashedPassword:(NSString *)password;
-{
-    self.salt = [NSString randomString];
-    
-    //Create a password.
-    NSString *saltedPasswordString = [NSString stringWithFormat:@"%@%@", self.salt, password];
-    NSData *saltedPasswordData = [saltedPasswordString dataUsingEncoding:NSUTF8StringEncoding];
-    NSMutableData *hashedPasswordData = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH];
-    CC_SHA256(saltedPasswordData.bytes,
-              (CC_LONG)saltedPasswordData.length,
-              hashedPasswordData.mutableBytes);
-    
-    self.password = hashedPasswordData;
-    self.identifier = [NSString stringWithFormat:@"%@%@", self.username, self.salt];
+    [aCoder encodeObject:self.salt forKey:@"salt"];
 }
 
 - (NSDictionary *)jsonRepresentation;
 {
     return @{@"id": self.identifier,
              @"username": self.username};
+}
+
+#pragma mark - Password
++ (NSData *)hashedPassword:(NSString *)password
+                   usingSalt:(NSString *)salt;
+{
+    //Create a password.
+    NSString *saltedPasswordString = [NSString stringWithFormat:@"%@%@", salt, password];
+    NSData *saltedPasswordData = [saltedPasswordString dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableData *hashedPasswordData = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH];
+    CC_SHA256(saltedPasswordData.bytes,
+              (CC_LONG)saltedPasswordData.length,
+              hashedPasswordData.mutableBytes);
+    
+    return hashedPasswordData;
+}
+
++ (BOOL)verifyPasswordHashForUser:(XOCUser *)user
+                     withPassword:(NSString *)password;
+{
+    NSData *proposedHashedPassword = [XOCUser hashedPassword:password
+                                                   usingSalt:user.salt];
+    
+    return [proposedHashedPassword isEqualTo:user.password];
+}
+
+- (void)setHashedPassword:(NSString *)password;
+{
+    self.salt = [NSString randomString];
+    self.password = [XOCUser hashedPassword:password
+                                  usingSalt:self.salt];
+    self.identifier = [NSString stringWithFormat:@"%@", [NSString randomString]];
 }
 
 @end

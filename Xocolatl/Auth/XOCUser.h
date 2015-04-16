@@ -15,6 +15,9 @@
 @property (nonatomic, copy, readonly) NSString *identifier;
 @property (nonatomic, copy, readonly) NSString *username;
 
++ (BOOL)verifyPasswordHashForUser:(XOCUser *)user
+                     withPassword:(NSString *)password;
+
 - (void)setHashedPassword:(NSString *)password;
 - (NSDictionary *)jsonRepresentation;
 
