@@ -5800,7 +5800,6 @@ enum GCDAsyncSocketConfig
 			[self maybeDequeueWrite];
 		}
 	}});
-	
 }
 
 - (void)maybeStartTLS

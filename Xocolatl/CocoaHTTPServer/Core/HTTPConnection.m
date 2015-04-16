@@ -336,9 +336,7 @@ static NSMutableArray *recentNonces;
 {
 	HTTPLogTrace();
 	
-	// Override me to create an https server...
-	
-	return NO;
+	return YES;
 }
 
 /**
@@ -349,9 +347,34 @@ static NSMutableArray *recentNonces;
 {
 	HTTPLogTrace();
 	
-	// Override me to provide the proper required SSL identity.
-	
-	return nil;
+    // Read .p12 file
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"certificate" ofType:@"p12"];
+    NSData *pkcs12data = [[NSData alloc] initWithContentsOfFile:path];
+    
+    // Import .p12 data
+    CFArrayRef keyref = NULL;
+    OSStatus sanityChesk = SecPKCS12Import((__bridge CFDataRef)pkcs12data,
+                                           (__bridge CFDictionaryRef)@{(__bridge id)kSecImportExportPassphrase: @"pass"},
+                                           &keyref);
+    if (sanityChesk != noErr) {
+        NSLog(@"Error while importing pkcs12 [%d]", (int)sanityChesk);
+    } else {
+        NSLog(@"Success opening p12 certificate.");
+    }
+
+    // Identity
+    CFDictionaryRef identityDict = CFArrayGetValueAtIndex(keyref, 0);
+    SecIdentityRef identityRef = (SecIdentityRef)CFDictionaryGetValue(identityDict,
+                                                                      kSecImportItemIdentity);
+    
+    // Cert
+    SecCertificateRef cert = NULL;
+    OSStatus status = SecIdentityCopyCertificate(identityRef, &cert);
+    if (status)
+        NSLog(@"SecIdentityCopyCertificate failed.");
+    
+    // the certificates array, containing the identity then the root certificate
+	return @[(__bridge id)identityRef, (__bridge id)cert];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

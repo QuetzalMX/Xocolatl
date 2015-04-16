@@ -135,6 +135,7 @@
 		C1F70E271ADE0B0600CD9959 /* AuthRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E261ADE0B0600CD9959 /* AuthRequestManager.m */; };
 		C1F70E2A1ADE0BC700CD9959 /* XOCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E291ADE0BC700CD9959 /* XOCUser.m */; };
 		C1F70E2E1ADE17EA00CD9959 /* NSString+randomString.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */; };
+		C1F70E401ADF66C100CD9959 /* certificate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = C1F70E3F1ADF658100CD9959 /* certificate.p12 */; };
 		C1FE77C01ADCEE2800495528 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FE77BF1ADCEE2800495528 /* libxml2.dylib */; };
 /* End PBXBuildFile section */
 
@@ -415,6 +416,7 @@
 		C1F70E291ADE0BC700CD9959 /* XOCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XOCUser.m; path = Auth/XOCUser.m; sourceTree = "<group>"; };
 		C1F70E2C1ADE17EA00CD9959 /* NSString+randomString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+randomString.h"; path = "Auth/NSString+randomString.h"; sourceTree = "<group>"; };
 		C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+randomString.m"; path = "Auth/NSString+randomString.m"; sourceTree = "<group>"; };
+		C1F70E3F1ADF658100CD9959 /* certificate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = certificate.p12; sourceTree = "<group>"; };
 		C1FE77BF1ADCEE2800495528 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -476,6 +478,7 @@
 		C1F68E881AD9E587007FF919 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C1F70E3F1ADF658100CD9959 /* certificate.p12 */,
 				C1FE77BF1ADCEE2800495528 /* libxml2.dylib */,
 				C1F68E891AD9E587007FF919 /* Info.plist */,
 				C1F68E8D1AD9E587007FF919 /* main.m */,
@@ -1148,6 +1151,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1F70E401ADF66C100CD9959 /* certificate.p12 in Resources */,
 				C1F6925E1AD9E5F1007FF919 /* About.txt in Resources */,
 				C1F692021AD9E5F1007FF919 /* LICENSE.txt in Resources */,
 				C1F691ED1AD9E5F1007FF919 /* .hgignore in Resources */,
