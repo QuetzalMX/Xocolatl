@@ -14,15 +14,16 @@
 
 @interface AuthRequestManager : NSObject
 
-+ (instancetype)requestManagerForServer:(RoutingHTTPServer *)server
-                            andDatabase:(YapDatabase *)database;
++ (instancetype)requestManagerForServer:(RoutingHTTPServer *)server;
++ (XOCUser *)userForCookie:(NSString *)cookieValue;
 
 - (void)loginUser:(NSString *)user
      withPassword:(NSString *)password
 andCompletionBlock:(void (^)(XOCUser *, NSError *))completionBlock;
 
-- (void)registerUser:(NSString *)user
-        withPassword:(NSString *)password
-  andCompletionBlock:(void (^)(XOCUser *, NSError *))completionBlock;
+#warning This is ugly. We're passing class so that the user can subclass XOCUser and we can create it, but I'm not 100% sure about this.
+- (void)registerUserFromRequestBody:(NSDictionary *)requestbody
+                           andClass:(Class)class
+andCompletionBlock:(void (^)(XOCUser *, NSError *))completionBlock;
 
 @end

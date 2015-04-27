@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface XOCUser : NSObject
+@interface XOCUser : NSObject <NSCoding>
 
 + (instancetype)newUserWithUsername:(NSString *)username;
 

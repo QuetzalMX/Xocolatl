@@ -1,6 +1,7 @@
 #import "RoutingHTTPServer.h"
 #import "RoutingConnection.h"
 #import "Route.h"
+#import "YapDatabase.h"
 
 @implementation RoutingHTTPServer {
 	NSMutableDictionary *routes;
@@ -10,6 +11,25 @@
 }
 
 @synthesize defaultHeaders;
+
+- (instancetype)initWithPort:(NSInteger)aPort
+                documentRoot:(NSString *)aDocumentRoot
+                databaseName:(NSString *)databaseName;
+{
+    if (self != [self init]) {
+        return nil;
+    }
+    
+    //It's necessary we use accessor methods.
+    [self setPort:(UInt16)aPort];
+    [self setDocumentRoot:aDocumentRoot];
+    
+    NSString *databaseWithFileExtension = [NSString stringWithFormat:@"/database/%@.yap", databaseName];
+    NSString *databasePath = [aDocumentRoot stringByAppendingString:databaseWithFileExtension];
+    _database = [[YapDatabase alloc] initWithPath:databasePath];
+    
+    return self;
+}
 
 - (id)init {
 	if (self = [super init]) {

@@ -11,7 +11,7 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "NSString+randomString.h"
 
-@interface XOCUser () <NSCoding>
+@interface XOCUser ()
 
 @property (nonatomic, copy, readwrite) NSString *identifier;
 @property (nonatomic, copy, readwrite) NSString *username;
@@ -25,7 +25,7 @@
 + (instancetype)newUserWithUsername:(NSString *)username;
 {
     //Create a new user.
-    XOCUser *user = [[XOCUser alloc] init];
+    XOCUser *user = [[self alloc] init];
     user.username = username;
     
     return user;

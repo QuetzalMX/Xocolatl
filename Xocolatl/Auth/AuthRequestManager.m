@@ -10,7 +10,7 @@
 
 #import "RoutingHTTPServer.h"
 #import "YapDatabase.h"
-#import "XOCUser.h"
+#import "XOCUser+Auth.h"
 
 NSString *const UsersCollection = @"Users";
 
@@ -23,14 +23,22 @@ NSString *const UsersCollection = @"Users";
 
 @implementation AuthRequestManager
 
-+ (instancetype)requestManagerForServer:(RoutingHTTPServer *)server
-                            andDatabase:(YapDatabase *)database;
++ (instancetype)requestManagerForServer:(RoutingHTTPServer *)server;
 {
     AuthRequestManager *manager = [[AuthRequestManager alloc] init];
     manager.server = server;
-    manager.connection = [database newConnection];
+    manager.connection = [server.database newConnection];
     
     return manager;
+}
+
+- (XOCUser *)userForCookie:(NSString *)cookieValue;
+{
+    NSString *userIdentifier = [[cookieValue componentsSeparatedByString:@"="] lastObject];
+    [self.connection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+        XOCUser *fetchedUser = [transaction objectForKey:userIdentifier
+                                            inCollection:UsersCollection];
+    }];
 }
 
 - (void)loginUser:(NSString *)user
@@ -68,26 +76,35 @@ andCompletionBlock:(void (^)(XOCUser *, NSError *))completionBlock;
     completionBlock(registeredUser, error);
 }
 
-- (void)registerUser:(NSString *)username
-        withPassword:(NSString *)password
-  andCompletionBlock:(void (^)(XOCUser *, NSError *))completionBlock;
+- (void)registerUserFromRequestBody:(NSDictionary *)requestbody
+                           andClass:(Class)class
+                 andCompletionBlock:(void (^)(XOCUser *, NSError *))completionBlock;
 {
+    //Attempt to register a new user.
+    NSString *username = requestbody[@"username"];
+    NSString *password = requestbody[@"password"];
+    
     __block XOCUser *newUser;
     __block NSError *error;
     [self.connection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+        //First, check if the user exists.
         XOCUser *registeredUser = [transaction objectForKey:username
                                                inCollection:UsersCollection];
         if (registeredUser) {
+            //User exists. We're done.
             error = [NSError errorWithDomain:@"Account Creation"
                                         code:403
                                     userInfo:@{NSLocalizedDescriptionKey: @"Username already exists."}];
-        } else {
-            newUser = [XOCUser newUserWithUsername:username];
-            [newUser setHashedPassword:password];
-            [transaction setObject:newUser
-                            forKey:newUser.username
-                      inCollection:UsersCollection];
+            return;
         }
+        
+        //User doesn't exist. Create it.
+        newUser = [class newUserWithUsername:username];
+        [newUser setHashedPassword:password];
+        [newUser willRegisterUsingRequestBody:requestbody];
+        [transaction setObject:newUser
+                        forKey:newUser.username
+                  inCollection:UsersCollection];
     }];
     
     completionBlock(newUser, error);
