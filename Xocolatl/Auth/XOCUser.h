@@ -10,15 +10,19 @@
 
 @interface XOCUser : NSObject
 
-+ (instancetype)newUserWithUsername:(NSString *)username;
-
 @property (nonatomic, copy, readonly) NSString *identifier;
 @property (nonatomic, copy, readonly) NSString *username;
 
+//Self
++ (instancetype)newUserWithUsername:(NSString *)username;
+- (NSDictionary *)jsonRepresentation;
+
+//Passwords
 + (BOOL)verifyPasswordHashForUser:(XOCUser *)user
                      withPassword:(NSString *)password;
-
 - (void)setHashedPassword:(NSString *)password;
-- (NSDictionary *)jsonRepresentation;
+
+//Auth
+- (NSString *)addAuthHeaderWithSessionDuration:(NSTimeInterval)secondsUntilExpiration;
 
 @end

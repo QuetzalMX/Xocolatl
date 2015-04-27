@@ -8,15 +8,18 @@
 
 #import "XOCUser.h"
 
-#import <CommonCrypto/CommonDigest.h>
+#import "NSData+hashedPassword.h"
 #import "NSString+randomString.h"
+
+NSString *const XOCUserPasswordSalt = @"XOCUserPasswordSalt";
 
 @interface XOCUser () <NSCoding>
 
 @property (nonatomic, copy, readwrite) NSString *identifier;
 @property (nonatomic, copy, readwrite) NSString *username;
 @property (nonatomic, copy) NSData *password;
-@property (nonatomic, copy) NSString *salt;
+@property (nonatomic, strong) NSMutableDictionary *salts;
+@property (nonatomic, strong) NSMutableDictionary *authorizations;
 
 @end
 
@@ -27,6 +30,8 @@
     //Create a new user.
     XOCUser *user = [[XOCUser alloc] init];
     user.username = username;
+    user.salts = [NSMutableDictionary new];
+    user.authorizations = [NSMutableDictionary new];
     
     return user;
 }
@@ -41,7 +46,6 @@
     _identifier = [aDecoder decodeObjectForKey:@"identifier"];
     _username = [aDecoder decodeObjectForKey:@"username"];
     _password = [aDecoder decodeObjectForKey:@"password"];
-    _salt = [aDecoder decodeObjectForKey:@"salt"];
     
     return self;
 }
@@ -51,7 +55,6 @@
     [aCoder encodeObject:self.identifier forKey:@"identifier"];
     [aCoder encodeObject:self.username forKey:@"username"];
     [aCoder encodeObject:self.password forKey:@"password"];
-    [aCoder encodeObject:self.salt forKey:@"salt"];
 }
 
 - (NSDictionary *)jsonRepresentation;
@@ -60,35 +63,39 @@
              @"username": self.username};
 }
 
-#pragma mark - Password
-+ (NSData *)hashedPassword:(NSString *)password
-                   usingSalt:(NSString *)salt;
+#pragma mark - Aurhotization
+- (NSString *)addAuthHeaderWithSessionDuration:(NSTimeInterval)secondsUntilExpiration;
 {
-    //Create a password.
-    NSString *saltedPasswordString = [NSString stringWithFormat:@"%@%@", salt, password];
-    NSData *saltedPasswordData = [saltedPasswordString dataUsingEncoding:NSUTF8StringEncoding];
-    NSMutableData *hashedPasswordData = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH];
-    CC_SHA256(saltedPasswordData.bytes,
-              (CC_LONG)saltedPasswordData.length,
-              hashedPasswordData.mutableBytes);
+    if (secondsUntilExpiration <= 0) {
+        return nil;
+    }
     
-    return hashedPasswordData;
+    NSString *authExpiration = [NSString stringWithFormat:@"exp=%f", [[NSDate date] timeIntervalSince1970] + secondsUntilExpiration];
+    NSString *authUsername = [NSString stringWithFormat:@"username=%@", self.username];
+    NSString *clearAuthorization = [NSString stringWithFormat:@"%@&%@", authExpiration, authUsername];
+    
+    self.salts[clearAuthorization] = [NSString randomString];
+    NSData *encryptedAuthData = [NSData SHA256passwordUsing:clearAuthorization
+                                                   andSaltPrefix:self.salts[clearAuthorization]];
+    
+    return [clearAuthorization stringByAppendingFormat:@"&auth=%@", [encryptedAuthData SHA256String]];
 }
 
+#pragma mark - Password
 + (BOOL)verifyPasswordHashForUser:(XOCUser *)user
                      withPassword:(NSString *)password;
 {
-    NSData *proposedHashedPassword = [XOCUser hashedPassword:password
-                                                   usingSalt:user.salt];
+    NSData *proposedHashedPassword = [NSData SHA256passwordUsing:password
+                                                   andSaltPrefix:user.salts[XOCUserPasswordSalt]];
     
     return [proposedHashedPassword isEqualTo:user.password];
 }
 
 - (void)setHashedPassword:(NSString *)password;
 {
-    self.salt = [NSString randomString];
-    self.password = [XOCUser hashedPassword:password
-                                  usingSalt:self.salt];
+    self.salts[XOCUserPasswordSalt] = [NSString randomString];
+    self.password = [NSData SHA256passwordUsing:password
+                                  andSaltPrefix:self.salts[XOCUserPasswordSalt]];
     self.identifier = [NSString stringWithFormat:@"%@", [NSString randomString]];
 }
 

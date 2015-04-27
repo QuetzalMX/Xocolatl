@@ -19,7 +19,7 @@
 
 - (void)loginUser:(NSString *)user
      withPassword:(NSString *)password
-andCompletionBlock:(void (^)(XOCUser *, NSError *))completionBlock;
+andCompletionBlock:(void (^)(XOCUser *, NSString *, NSError *))completionBlock;
 
 - (void)registerUser:(NSString *)user
         withPassword:(NSString *)password

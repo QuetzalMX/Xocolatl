@@ -11,6 +11,9 @@
 #import "RoutingHTTPServer.h"
 #import "YapDatabase.h"
 #import "XOCUser.h"
+#import "NSData+hashedPassword.h"
+
+NSInteger const SecondsUntilAuthorizationExpires = 3600;
 
 NSString *const UsersCollection = @"Users";
 
@@ -35,10 +38,11 @@ NSString *const UsersCollection = @"Users";
 
 - (void)loginUser:(NSString *)user
      withPassword:(NSString *)password
-andCompletionBlock:(void (^)(XOCUser *, NSError *))completionBlock;
+andCompletionBlock:(void (^)(XOCUser *, NSString *, NSError *))completionBlock;
 {
     __block XOCUser *registeredUser;
     __block NSError *error;
+    __block NSString *authorization;
     [self.connection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
         //Let's see if this user exists.
         XOCUser *fetchedUser = [transaction objectForKey:user
@@ -61,11 +65,12 @@ andCompletionBlock:(void (^)(XOCUser *, NSError *))completionBlock;
             return;
         }
         
-        //The password is valid.
+        //The password is valid. Create an auth string and return the user.
         registeredUser = fetchedUser;
+        authorization = [fetchedUser addAuthHeaderWithSessionDuration:SecondsUntilAuthorizationExpires];
     }];
     
-    completionBlock(registeredUser, error);
+    completionBlock(registeredUser, authorization, error);
 }
 
 - (void)registerUser:(NSString *)username
