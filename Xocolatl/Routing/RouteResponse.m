@@ -4,6 +4,9 @@
 #import "HTTPFileResponse.h"
 #import "HTTPAsyncFileResponse.h"
 #import "HTTPResponseProxy.h"
+#import "HTTPDynamicFileResponse.h"
+#import "HTTPRedirectResponse.h"
+#import "HTTPRedirectWithPayload.h"
 
 @interface RouteResponse ()
 
@@ -91,6 +94,15 @@
 	[self respondWithFile:path async:NO];
 }
 
+- (void)respondWithDynamicFile:(NSString *)path
+      andReplacementDictionary:(NSDictionary *)replacementDictionary;
+{
+    self.response = [[HTTPDynamicFileResponse alloc] initWithFilePath:path
+                                                        forConnection:self.connection
+                                                            separator:@"%%"
+                                                replacementDictionary:replacementDictionary];
+}
+
 - (void)respondWithFile:(NSString *)path async:(BOOL)async {
 	if (async) {
 		self.response = [[HTTPAsyncFileResponse alloc] initWithFilePath:path forConnection:connection];
@@ -103,6 +115,17 @@
 {
     self.statusCode = error.code;
     [self respondWithString:error.localizedDescription];
+}
+
+- (void)respondWithRedirect:(NSString *)destination;
+{
+    self.response = [[HTTPRedirectResponse alloc] initWithPath:destination];
+}
+
+- (void)respondWithRedirect:(NSString *)destination andData:(NSData *)data;
+{
+    self.response = [[HTTPRedirectWithPayload alloc] initWithData:data
+                                                   andDestination:destination];
 }
 
 @end

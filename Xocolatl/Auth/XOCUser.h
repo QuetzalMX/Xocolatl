@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface XOCUser : NSObject
+@interface XOCUser : NSObject <NSCoding>
 
 @property (nonatomic, copy, readonly) NSString *identifier;
 @property (nonatomic, copy, readonly) NSString *username;

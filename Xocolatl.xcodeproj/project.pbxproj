@@ -137,6 +137,9 @@
 		C1F70E2E1ADE17EA00CD9959 /* NSString+randomString.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */; };
 		C1F70E401ADF66C100CD9959 /* certificate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = C1F70E3F1ADF658100CD9959 /* certificate.p12 */; };
 		C1FA435B1AEC46BE006B3C07 /* NSData+hashedPassword.m in Sources */ = {isa = PBXBuildFile; fileRef = C1FA435A1AEC46BE006B3C07 /* NSData+hashedPassword.m */; };
+		C1F70E441ADF7FE000CD9959 /* CruyffUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E431ADF7FE000CD9959 /* CruyffUser.m */; };
+		C1F70E471ADF81E400CD9959 /* XOCUser+Auth.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E461ADF81E400CD9959 /* XOCUser+Auth.m */; };
+		C1F7CCBC1ADF8C510030C132 /* HTTPRedirectWithPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F7CCBB1ADF8C510030C132 /* HTTPRedirectWithPayload.m */; };
 		C1FE77C01ADCEE2800495528 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FE77BF1ADCEE2800495528 /* libxml2.dylib */; };
 /* End PBXBuildFile section */
 
@@ -420,6 +423,12 @@
 		C1F70E3F1ADF658100CD9959 /* certificate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = certificate.p12; sourceTree = "<group>"; };
 		C1FA43591AEC46BE006B3C07 /* NSData+hashedPassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+hashedPassword.h"; path = "Auth/NSData+hashedPassword.h"; sourceTree = "<group>"; };
 		C1FA435A1AEC46BE006B3C07 /* NSData+hashedPassword.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+hashedPassword.m"; path = "Auth/NSData+hashedPassword.m"; sourceTree = "<group>"; };
+		C1F70E421ADF7FE000CD9959 /* CruyffUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CruyffUser.h; path = Cruyff/CruyffUser.h; sourceTree = "<group>"; };
+		C1F70E431ADF7FE000CD9959 /* CruyffUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CruyffUser.m; path = Cruyff/CruyffUser.m; sourceTree = "<group>"; };
+		C1F70E451ADF81E400CD9959 /* XOCUser+Auth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XOCUser+Auth.h"; path = "Auth/XOCUser+Auth.h"; sourceTree = "<group>"; };
+		C1F70E461ADF81E400CD9959 /* XOCUser+Auth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XOCUser+Auth.m"; path = "Auth/XOCUser+Auth.m"; sourceTree = "<group>"; };
+		C1F7CCBA1ADF8C510030C132 /* HTTPRedirectWithPayload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTTPRedirectWithPayload.h; path = ../HTTPRedirectWithPayload.h; sourceTree = "<group>"; };
+		C1F7CCBB1ADF8C510030C132 /* HTTPRedirectWithPayload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTTPRedirectWithPayload.m; path = ../HTTPRedirectWithPayload.m; sourceTree = "<group>"; };
 		C1FE77BF1ADCEE2800495528 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -448,6 +457,7 @@
 			children = (
 				C13D40451ADCEED4004AF563 /* libsqlite3.dylib */,
 				C1F68E871AD9E587007FF919 /* Xocolatl */,
+				C1F70E411ADF7FC800CD9959 /* Cruyff */,
 				C1F70E241ADE0AE500CD9959 /* Auth */,
 				C1F690CC1AD9E5E0007FF919 /* Routing */,
 				C1F690DF1AD9E5F0007FF919 /* CocoaHTTPServer */,
@@ -949,6 +959,8 @@
 		C1F690FB1AD9E5F0007FF919 /* Responses */ = {
 			isa = PBXGroup;
 			children = (
+				C1F7CCBA1ADF8C510030C132 /* HTTPRedirectWithPayload.h */,
+				C1F7CCBB1ADF8C510030C132 /* HTTPRedirectWithPayload.m */,
 				C1F690FC1AD9E5F0007FF919 /* HTTPAsyncFileResponse.h */,
 				C1F690FD1AD9E5F0007FF919 /* HTTPAsyncFileResponse.m */,
 				C1F690FE1AD9E5F0007FF919 /* HTTPDataResponse.h */,
@@ -1071,8 +1083,20 @@
 				C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */,
 				C1FA43591AEC46BE006B3C07 /* NSData+hashedPassword.h */,
 				C1FA435A1AEC46BE006B3C07 /* NSData+hashedPassword.m */,
+				C1F70E451ADF81E400CD9959 /* XOCUser+Auth.h */,
+				C1F70E461ADF81E400CD9959 /* XOCUser+Auth.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		C1F70E411ADF7FC800CD9959 /* Cruyff */ = {
+			isa = PBXGroup;
+			children = (
+				C1F70E421ADF7FE000CD9959 /* CruyffUser.h */,
+				C1F70E431ADF7FE000CD9959 /* CruyffUser.m */,
+			);
+			name = Cruyff;
+			path = Xocolatl;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1230,6 +1254,7 @@
 				C1F690D91AD9E5E0007FF919 /* HTTPResponseProxy.m in Sources */,
 				C1F690AC1AD9E5C4007FF919 /* YapDatabaseViewPageMetadata.m in Sources */,
 				C1F691F11AD9E5F1007FF919 /* HTTPAuthenticationRequest.m in Sources */,
+				C1F70E471ADF81E400CD9959 /* XOCUser+Auth.m in Sources */,
 				C1F691FC1AD9E5F1007FF919 /* HTTPRedirectResponse.m in Sources */,
 				C1F690BE1AD9E5C4007FF919 /* YapNull.m in Sources */,
 				C1F690811AD9E5C4007FF919 /* YDBCKMappingTableInfo.m in Sources */,
@@ -1243,6 +1268,8 @@
 				C1F690941AD9E5C4007FF919 /* YapDatabaseFullTextSearchTransaction.m in Sources */,
 				C1F690B71AD9E5C4007FF919 /* YapDatabaseConnectionDefaults.m in Sources */,
 				C1F690BD1AD9E5C4007FF919 /* YapMemoryTable.m in Sources */,
+				C1F7CCBC1ADF8C510030C132 /* HTTPRedirectWithPayload.m in Sources */,
+				C1F70E441ADF7FE000CD9959 /* CruyffUser.m in Sources */,
 				C1F690901AD9E5C4007FF919 /* YapDatabaseFullTextSearch.m in Sources */,
 				C1F6909C1AD9E5C4007FF919 /* YapDatabaseRelationshipConnection.m in Sources */,
 				C1F692001AD9E5F1007FF919 /* DELETEResponse.m in Sources */,

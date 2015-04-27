@@ -28,7 +28,7 @@ NSString *const XOCUserPasswordSalt = @"XOCUserPasswordSalt";
 + (instancetype)newUserWithUsername:(NSString *)username;
 {
     //Create a new user.
-    XOCUser *user = [[XOCUser alloc] init];
+    XOCUser *user = [[self alloc] init];
     user.username = username;
     user.salts = [NSMutableDictionary new];
     user.authorizations = [NSMutableDictionary new];

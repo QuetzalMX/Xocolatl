@@ -3,11 +3,18 @@
 #import "RouteRequest.h"
 #import "RouteResponse.h"
 
+@class YapDatabase;
+
 typedef void (^RequestHandler)(RouteRequest *request, RouteResponse *response);
 
 @interface RoutingHTTPServer : HTTPServer
 
 @property (nonatomic, readonly) NSDictionary *defaultHeaders;
+@property (nonatomic, readonly) YapDatabase *database;
+
+- (instancetype)initWithPort:(NSInteger)port
+                documentRoot:(NSString *)documentRoot
+                databaseName:(NSString *)name;
 
 // Specifies headers that will be set on every response.
 // These headers can be overridden by RouteResponses.

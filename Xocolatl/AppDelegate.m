@@ -13,10 +13,12 @@
 #import "YapDatabase.h"
 #import "AuthRequestManager.h"
 
+//Cruyff
+#import "CruyffUser.h"
+
 @interface AppDelegate ()
 
 @property (nonatomic, strong) RoutingHTTPServer *server;
-@property (nonatomic, strong) YapDatabase *database;
 @property (nonatomic, strong) AuthRequestManager *manager;
 
 @property (weak) IBOutlet NSWindow *window;
@@ -27,15 +29,12 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     
     //Create the server.
-    self.server = [[RoutingHTTPServer alloc] init];
-    [self.server setPort:3000];
-    [self.server setDocumentRoot:[@"~/Sites/Cruyff/" stringByExpandingTildeInPath]];
+    self.server = [[RoutingHTTPServer alloc] initWithPort:3000
+                                             documentRoot:[@"~/Sites/Cruyff" stringByExpandingTildeInPath]
+                                             databaseName:@"Cruyff"];
     
-    NSString *databasePath = [self.server.documentRoot stringByAppendingString:@"database.yap"];
-    self.database = [[YapDatabase alloc] initWithPath:databasePath];
-    
-    self.manager = [AuthRequestManager requestManagerForServer:self.server
-                                                   andDatabase:self.database];
+    //Create our auth manager.
+    self.manager = [AuthRequestManager requestManagerForServer:self.server];
     
     //Start the server.
     NSError *error;
@@ -43,9 +42,12 @@
         NSLog(@"Error starting HTTP server: %@", error);
     }
     
+    //Configure the routes.
+    //Auth
     [self.server get:@"/" withBlock:^(RouteRequest *request, RouteResponse *response) {
         NSString *path = [self.server.documentRoot stringByAppendingPathComponent:@"index.html"];
-        [response respondWithFile:path];
+        [response respondWithDynamicFile:path
+                andReplacementDictionary:@{@"title": @"Cruyff Football"}];
     }];
     
     [self.server post:@"/api/login" withBlock:^(RouteRequest *request, RouteResponse *response) {
@@ -56,30 +58,46 @@
                      [response respondWithError:error];
                      return;
                  }
-                 
-                 [response setHeader:@"Set-Cookie" value:authorization];
-                 [response respondWithDictionary:@{@"user": user.jsonRepresentation}
-                                         andCode:200];
+                 [response setHeader:@"Set-Cookie" value:[NSString stringWithFormat:@"name=%@; domain=localhost; path=/; secure; HttpOnly",authorization]];
+                 [response respondWithRedirect:@"/home"];
              }];
     }];
     
     [self.server get:@"/signup" withBlock:^(RouteRequest *request, RouteResponse *response) {
         NSString *path = [self.server.documentRoot stringByAppendingPathComponent:@"register.html"];
-        [response respondWithFile:path];
+        [response respondWithDynamicFile:path
+                andReplacementDictionary:@{@"title": @"Cruyff Football"}];
     }];
     
     [self.server post:@"/api/signup" withBlock:^(RouteRequest *request, RouteResponse *response) {
-        [self.manager registerUser:request.parsedBody[@"username"]
-                      withPassword:request.parsedBody[@"password"]
-                andCompletionBlock:^(XOCUser *newUser, NSError *error) {
-                    if (error) {
-                        [response respondWithError:error];
-                        return;
-                    }
+        [self.manager registerUserFromRequestBody:request.parsedBody
+                                         andClass:[CruyffUser class]
+                               andCompletionBlock:^(XOCUser *newUser, NSError *error) {
+                                   if (error) {
+                                       [response respondWithError:error];
+                                       return;
+                                   }
                     
-                    [response respondWithDictionary:@{@"user": newUser.jsonRepresentation}
-                                            andCode:200];
-                }];
+                                   NSDictionary *userJSON = newUser.jsonRepresentation;
+                                   NSLog(@"%@", @{@"user": userJSON});
+                                   [response respondWithRedirect:@"/" andData:[NSJSONSerialization dataWithJSONObject:userJSON
+                                                                                                              options:0
+                                                                                                                error:nil]];
+                               }];
+    }];
+    
+    //Home
+    [self.server get:@"/home" withBlock:^(RouteRequest *request, RouteResponse *response) {
+        //Get the user from the cookie.
+        
+        NSString *path = [self.server.documentRoot stringByAppendingPathComponent:@"home.html"];
+        NSString *navigationPath = [self.server.documentRoot stringByAppendingPathComponent:@"navigation.html"];
+        NSString *navBar = [NSString stringWithContentsOfFile:navigationPath
+                                                     encoding:NSUTF8StringEncoding
+                                                        error:nil];
+        [response respondWithDynamicFile:path
+                andReplacementDictionary:@{@"nav": navBar,
+                                           @"username": request.parsedBody[@"username"]}];
     }];
 }
 

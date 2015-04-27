@@ -94,11 +94,16 @@
 	
 }
 
-- (void)responseHasAvailableData:(NSObject<HTTPResponse> *)sender {
-	HTTPResponseProxy *proxy = (HTTPResponseProxy *)httpResponse;
-	if (proxy.response == sender) {
-		[super responseHasAvailableData:httpResponse];
-	}
+- (void)responseHasAvailableData:(NSObject<HTTPResponse> *)sender;
+{
+    if ([sender respondsToSelector:@selector(response)]) {
+        HTTPResponseProxy *proxy = (HTTPResponseProxy *)httpResponse;
+        if (proxy.response == sender) {
+            [super responseHasAvailableData:httpResponse];
+        }
+    } else {
+        [super responseHasAvailableData:sender];
+    }
 }
 
 - (void)responseDidAbort:(NSObject<HTTPResponse> *)sender {

@@ -23,7 +23,11 @@ typedef void (^ResponseHandler)(NSObject <HTTPResponse> *response, NSDictionary 
 - (void)respondWithString:(NSString *)string;
 - (void)respondWithString:(NSString *)string encoding:(NSStringEncoding)encoding;
 - (void)respondWithData:(NSData *)data;
+- (void)respondWithDynamicFile:(NSString *)path
+      andReplacementDictionary:(NSDictionary *)replacementDictionary;
 - (void)respondWithFile:(NSString *)path;
 - (void)respondWithFile:(NSString *)path async:(BOOL)async;
 - (void)respondWithError:(NSError *)error;
+- (void)respondWithRedirect:(NSString *)destination;
+- (void)respondWithRedirect:(NSString *)destination andData:(NSData *)data;
 @end
