@@ -120,25 +120,35 @@
 }
 
 - (void)handleMethod:(NSString *)method withPath:(NSString *)path block:(RequestHandler)block {
-	Route *route = [self routeWithPath:path];
+	Route *route = [[Route alloc] initWithMethod:method
+                                         andPath:path];
 	route.handler = block;
 
 	[self addRoute:route forMethod:method];
 }
 
 - (void)handleMethod:(NSString *)method withPath:(NSString *)path target:(id)target selector:(SEL)selector {
-	Route *route = [self routeWithPath:path];
+	Route *route = [[Route alloc] initWithMethod:method
+                                         andPath:path];
 	route.target = target;
 	route.selector = selector;
 
 	[self addRoute:route forMethod:method];
 }
 
-- (void)addRoute:(Route *)route forMethod:(NSString *)method {
+- (void)addRoute:(Route *)route;
+{
+    [self addRoute:route
+         forMethod:route.method];
+}
+
+- (void)addRoute:(Route *)route forMethod:(NSString *)method;
+{
 	method = [method uppercaseString];
 	NSMutableArray *methodRoutes = [routes objectForKey:method];
 	if (methodRoutes == nil) {
 		methodRoutes = [NSMutableArray array];
+        NSAssert(method != nil, @"All Routes should have at least one method implemented");
 		[routes setObject:methodRoutes forKey:method];
 	}
 
@@ -148,56 +158,6 @@
 	if ([method isEqualToString:@"GET"]) {
 		[self addRoute:route forMethod:@"HEAD"];
 	}
-}
-
-- (Route *)routeWithPath:(NSString *)path {
-	Route *route = [[Route alloc] init];
-	NSMutableArray *keys = [NSMutableArray array];
-
-	if ([path length] > 2 && [path characterAtIndex:0] == '{') {
-		// This is a custom regular expression, just remove the {}
-		path = [path substringWithRange:NSMakeRange(1, [path length] - 2)];
-	} else {
-		NSRegularExpression *regex = nil;
-
-		// Escape regex characters
-		regex = [NSRegularExpression regularExpressionWithPattern:@"[.+()]" options:0 error:nil];
-		path = [regex stringByReplacingMatchesInString:path options:0 range:NSMakeRange(0, path.length) withTemplate:@"\\\\$0"];
-
-		// Parse any :parameters and * in the path
-		regex = [NSRegularExpression regularExpressionWithPattern:@"(:(\\w+)|\\*)"
-														  options:0
-															error:nil];
-		NSMutableString *regexPath = [NSMutableString stringWithString:path];
-		__block NSInteger diff = 0;
-		[regex enumerateMatchesInString:path options:0 range:NSMakeRange(0, path.length)
-			usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-				NSRange replacementRange = NSMakeRange(diff + result.range.location, result.range.length);
-				NSString *replacementString;
-
-				NSString *capturedString = [path substringWithRange:result.range];
-				if ([capturedString isEqualToString:@"*"]) {
-					[keys addObject:@"wildcards"];
-					replacementString = @"(.*?)";
-				} else {
-					NSString *keyString = [path substringWithRange:[result rangeAtIndex:2]];
-					[keys addObject:keyString];
-					replacementString = @"([^/]+)";
-				}
-
-				[regexPath replaceCharactersInRange:replacementRange withString:replacementString];
-				diff += replacementString.length - result.range.length;
-			}];
-
-		path = [NSString stringWithFormat:@"^%@$", regexPath];
-	}
-
-	route.regex = [NSRegularExpression regularExpressionWithPattern:path options:NSRegularExpressionCaseInsensitive error:nil];
-	if ([keys count] > 0) {
-		route.keys = keys;
-	}
-
-	return route;
 }
 
 - (BOOL)supportsMethod:(NSString *)method {
@@ -211,10 +171,14 @@
 	if (route.handler) {
         route.handler(request, response);
 	} else {
-		#pragma clang diagnostic push
-		#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-		[route.target performSelector:route.selector withObject:request withObject:response];
-		#pragma clang diagnostic pop
+        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[route methodSignatureForSelector:route.selector]];
+        [inv setSelector:route.selector];
+        [inv setTarget:route.target];
+        
+        [inv setArgument:&(request) atIndex:2]; //arguments 0 and 1 are self and _cmd respectively, automatically set by NSInvocation
+        [inv setArgument:&(response) atIndex:3]; //arguments 0 and 1 are self and _cmd respectively, automatically set by NSInvocation
+        
+        [inv invoke];
 	}
 }
 

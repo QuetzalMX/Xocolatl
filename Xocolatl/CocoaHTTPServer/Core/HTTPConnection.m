@@ -353,11 +353,18 @@ static NSMutableArray *recentNonces;
     
     // Import .p12 data
     CFArrayRef keyref = NULL;
-    OSStatus sanityChesk = SecPKCS12Import((__bridge CFDataRef)pkcs12data,
-                                           (__bridge CFDictionaryRef)@{(__bridge id)kSecImportExportPassphrase: @"pass"},
-                                           &keyref);
-    if (sanityChesk != noErr) {
-        NSLog(@"Error while importing pkcs12 [%d]", (int)sanityChesk);
+    OSStatus sanityCheck;
+    @try {
+        sanityCheck = SecPKCS12Import((__bridge CFDataRef)pkcs12data,
+                                      (__bridge CFDictionaryRef)@{(__bridge id)kSecImportExportPassphrase: @"pass"},
+                                      &keyref);
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Exception trying to read SSL certificate: %@", exception);
+    }
+
+    if (sanityCheck != noErr) {
+        NSLog(@"Error while importing pkcs12 [%d]", (int)sanityCheck);
     } else {
         NSLog(@"Success opening p12 certificate.");
     }

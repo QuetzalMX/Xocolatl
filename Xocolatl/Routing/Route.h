@@ -3,16 +3,16 @@
 
 @interface Route : NSObject
 
+@property (nonatomic, copy, readonly) NSString *method;
+@property (nonatomic, copy, readonly) NSString *path;
+
 @property (nonatomic) NSRegularExpression *regex;
-@property (nonatomic, copy) RequestHandler handler;
-
-#if __has_feature(objc_arc_weak)
-@property (nonatomic, weak) id target;
-#else
-@property (nonatomic, assign) id target;
-#endif
-
-@property (nonatomic, assign) SEL selector;
 @property (nonatomic) NSArray *keys;
+
+@property (nonatomic, copy) RequestHandler handler;
+@property (nonatomic, weak) id target;
+@property (nonatomic, assign) SEL selector;
+
+- (instancetype)initWithMethod:(NSString *)method andPath:(NSString *)path;
 
 @end

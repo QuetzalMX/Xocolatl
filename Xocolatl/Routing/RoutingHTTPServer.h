@@ -3,6 +3,7 @@
 #import "RouteRequest.h"
 #import "RouteResponse.h"
 
+@class Route;
 @class YapDatabase;
 
 typedef void (^RequestHandler)(RouteRequest *request, RouteResponse *response);
@@ -36,6 +37,9 @@ typedef void (^RequestHandler)(RouteRequest *request, RouteResponse *response);
 // Convenience methods. Yes I know, this is Cocoa and we don't use convenience
 // methods because typing lengthy primitives over and over and over again is
 // elegant with the beauty and the poetry. These are just, you know, here.
+- (void)addRoute:(Route *)route;
+- (void)addRoute:(Route *)route forMethod:(NSString *)method;
+
 - (void)get:(NSString *)path withBlock:(RequestHandler)block;
 - (void)post:(NSString *)path withBlock:(RequestHandler)block;
 - (void)put:(NSString *)path withBlock:(RequestHandler)block;
