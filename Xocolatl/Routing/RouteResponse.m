@@ -62,6 +62,33 @@
 	[headers setObject:value forKey:field];
 }
 
+- (void)setCookieNamed:(NSString *)name
+             withValue:(NSString *)value
+              isSecure:(BOOL)isSecure
+              httpOnly:(BOOL)httpOnly;
+{
+    //Is this the first cookie we save?
+    NSMutableArray *cookies = self.headers[@"Set-Cookie"];
+    if (!cookies) {
+        //It is. Create our cookie jar.
+        cookies = [NSMutableArray array];
+        headers[@"Set-Cookie"] = cookies;
+    }
+    
+    //Bake the cookie.
+    NSMutableString *formedCookie = [NSMutableString stringWithFormat:@"%@=%@; domain=localhost; path=/;", name, value];
+    if (isSecure) {
+        [formedCookie appendFormat:@" secure;"];
+    }
+    
+    if (httpOnly) {
+        [formedCookie appendFormat:@" HTTPOnly;"];
+    }
+    
+    //Save it.
+    [cookies addObject:[formedCookie copy]];
+}
+
 - (void)respondWithDictionary:(NSDictionary *)dictionary
                       andCode:(NSInteger)code;
 {
@@ -119,7 +146,8 @@
 
 - (void)respondWithRedirect:(NSString *)destination;
 {
-    self.response = [[HTTPRedirectResponse alloc] initWithPath:destination];
+    self.response = [[HTTPRedirectResponse alloc] initWithPath:destination
+                                                    andHeaders:self.headers];
 }
 
 - (void)respondWithRedirect:(NSString *)destination andData:(NSData *)data;

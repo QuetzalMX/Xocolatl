@@ -18,6 +18,11 @@ typedef void (^ResponseHandler)(NSObject <HTTPResponse> *response, NSDictionary 
         andResponseBlock:(ResponseHandler)responseBlock;
 - (void)setHeader:(NSString *)field value:(NSString *)value;
 
+- (void)setCookieNamed:(NSString *)name
+             withValue:(NSString *)value
+              isSecure:(BOOL)isSecure
+              httpOnly:(BOOL)httpOnly;
+
 - (void)respondWithDictionary:(NSDictionary *)dictionary
                       andCode:(NSInteger)code;
 - (void)respondWithString:(NSString *)string;

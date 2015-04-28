@@ -118,12 +118,6 @@
 		[response setHeaderField:field value:value];
 	}];
 
-	if (headers && !isError) {
-		[headers enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL *stop) {
-			[response setHeaderField:field value:value];
-		}];
-	}
-
 	// Set the connection header if not already specified
 	NSString *connection = [response headerField:@"Connection"];
 	if (!connection) {

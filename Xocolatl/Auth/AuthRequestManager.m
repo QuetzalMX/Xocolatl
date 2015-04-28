@@ -13,8 +13,6 @@
 #import "XOCUser+Auth.h"
 #import "NSData+hashedPassword.h"
 
-NSInteger const SecondsUntilAuthorizationExpires = 3600;
-
 NSString *const UsersCollection = @"Users";
 
 @interface AuthRequestManager ()
@@ -37,6 +35,7 @@ NSString *const UsersCollection = @"Users";
 
 - (void)loginUser:(NSString *)user
      withPassword:(NSString *)password
+       timeOfDeath:(NSTimeInterval)timeInterval
 andCompletionBlock:(void (^)(XOCUser *, NSString *, NSError *))completionBlock;
 {
     __block XOCUser *registeredUser;
@@ -66,7 +65,7 @@ andCompletionBlock:(void (^)(XOCUser *, NSString *, NSError *))completionBlock;
         
         //The password is valid. Create an auth string and return the user.
         registeredUser = fetchedUser;
-        authorization = [fetchedUser addAuthHeaderWithSessionDuration:SecondsUntilAuthorizationExpires];
+        authorization = [fetchedUser newAuthHeaderWithSessionDuration:timeInterval];
     }];
     
     completionBlock(registeredUser, authorization, error);

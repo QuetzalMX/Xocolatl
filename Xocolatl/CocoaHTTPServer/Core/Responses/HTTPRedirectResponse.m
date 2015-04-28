@@ -9,17 +9,26 @@
 // Other flags: trace
 static const int httpLogLevel = HTTP_LOG_LEVEL_OFF; // | HTTP_LOG_FLAG_TRACE;
 
+@interface HTTPRedirectResponse ()
+
+@property (nonatomic, copy) NSDictionary *headers;
+
+@end
 
 @implementation HTTPRedirectResponse
 
-- (id)initWithPath:(NSString *)path
+- (id)initWithPath:(NSString *)redirectPath
+        andHeaders:(NSDictionary *)headers;
 {
 	if ((self = [super init]))
 	{
 		HTTPLogTrace();
 		
-		redirectPath = [path copy];
+        NSMutableDictionary *previousHeaders = [[NSDictionary dictionaryWithDictionary:headers] mutableCopy];
+        previousHeaders[@"Location"] = redirectPath;
+        _headers = [previousHeaders copy];
 	}
+    
 	return self;
 }
 
@@ -54,7 +63,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_OFF; // | HTTP_LOG_FLAG_TRACE;
 {
 	HTTPLogTrace();
 	
-	return [NSDictionary dictionaryWithObject:redirectPath forKey:@"Location"];
+	return self.headers;
 }
 
 - (NSInteger)status

@@ -23,6 +23,6 @@
 - (void)setHashedPassword:(NSString *)password;
 
 //Auth
-- (NSString *)addAuthHeaderWithSessionDuration:(NSTimeInterval)secondsUntilExpiration;
+- (NSString *)newAuthHeaderWithSessionDuration:(NSTimeInterval)secondsUntilExpiration;
 
 @end

@@ -46,6 +46,8 @@ NSString *const XOCUserPasswordSalt = @"XOCUserPasswordSalt";
     _identifier = [aDecoder decodeObjectForKey:@"identifier"];
     _username = [aDecoder decodeObjectForKey:@"username"];
     _password = [aDecoder decodeObjectForKey:@"password"];
+    _salts = [[aDecoder decodeObjectForKey:@"salts"] mutableCopy];
+    _authorizations = [[aDecoder decodeObjectForKey:@"authorizations"] mutableCopy];
     
     return self;
 }
@@ -55,6 +57,8 @@ NSString *const XOCUserPasswordSalt = @"XOCUserPasswordSalt";
     [aCoder encodeObject:self.identifier forKey:@"identifier"];
     [aCoder encodeObject:self.username forKey:@"username"];
     [aCoder encodeObject:self.password forKey:@"password"];
+    [aCoder encodeObject:self.salts forKey:@"salts"];
+    [aCoder encodeObject:self.authorizations forKey:@"authorizations"];
 }
 
 - (NSDictionary *)jsonRepresentation;
@@ -64,21 +68,21 @@ NSString *const XOCUserPasswordSalt = @"XOCUserPasswordSalt";
 }
 
 #pragma mark - Aurhotization
-- (NSString *)addAuthHeaderWithSessionDuration:(NSTimeInterval)secondsUntilExpiration;
+- (NSString *)newAuthHeaderWithSessionDuration:(NSTimeInterval)secondsUntilExpiration;
 {
     if (secondsUntilExpiration <= 0) {
         return nil;
     }
     
-    NSString *authExpiration = [NSString stringWithFormat:@"exp=%f", [[NSDate date] timeIntervalSince1970] + secondsUntilExpiration];
-    NSString *authUsername = [NSString stringWithFormat:@"username=%@", self.username];
-    NSString *clearAuthorization = [NSString stringWithFormat:@"%@&%@", authExpiration, authUsername];
+    //In order to make our cookie secure, we add an authorization string that uses SHA256 to digest the expiration and username.
+    NSString *expiration = [NSString stringWithFormat:@"%.0f", secondsUntilExpiration];
+    NSString *username = [NSString stringWithFormat:@"%@", self.username];
+    NSString *clearAuthorization = [NSString stringWithFormat:@"%@%@", expiration, username];
     
     self.salts[clearAuthorization] = [NSString randomString];
     NSData *encryptedAuthData = [NSData SHA256passwordUsing:clearAuthorization
-                                                   andSaltPrefix:self.salts[clearAuthorization]];
-    
-    return [clearAuthorization stringByAppendingFormat:@"&auth=%@", [encryptedAuthData SHA256String]];
+                                              andSaltPrefix:self.salts[clearAuthorization]];
+    return [encryptedAuthData SHA256String];
 }
 
 #pragma mark - Password

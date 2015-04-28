@@ -16,6 +16,8 @@
 //Cruyff
 #import "CruyffUser.h"
 
+NSInteger const SecondsUntilAuthorizationExpires = 3600;
+
 @interface AppDelegate ()
 
 @property (nonatomic, strong) RoutingHTTPServer *server;
@@ -40,6 +42,7 @@
     NSError *error;
     if (![self.server start:&error]) {
         NSLog(@"Error starting HTTP server: %@", error);
+        return;
     }
     
     //Configure the routes.
@@ -51,14 +54,32 @@
     }];
     
     [self.server post:@"/api/login" withBlock:^(RouteRequest *request, RouteResponse *response) {
+        NSTimeInterval timeOfDeath = [[NSDate date] timeIntervalSince1970] + SecondsUntilAuthorizationExpires;
         [self.manager loginUser:request.parsedBody[@"username"]
                    withPassword:request.parsedBody[@"password"]
+                     timeOfDeath:timeOfDeath
              andCompletionBlock:^(XOCUser *user, NSString *authorization, NSError *error) {
                  if (error) {
                      [response respondWithError:error];
                      return;
                  }
-                 [response setHeader:@"Set-Cookie" value:[NSString stringWithFormat:@"name=%@; domain=localhost; path=/; secure; HttpOnly",authorization]];
+                 
+                 //Now that we have all the info, add our cookies and redirect the user back to home.
+                 [response setCookieNamed:@"timeOfDeath"
+                                withValue:[NSString stringWithFormat:@"%.0f", timeOfDeath]
+                                 isSecure:YES
+                                 httpOnly:YES];
+                 
+                 [response setCookieNamed:@"username"
+                                withValue:user.username
+                                 isSecure:YES
+                                 httpOnly:YES];
+                 
+                 [response setCookieNamed:@"auth"
+                                withValue:authorization
+                                 isSecure:YES
+                                 httpOnly:YES];
+                 
                  [response respondWithRedirect:@"/home"];
              }];
     }];
@@ -96,8 +117,7 @@
                                                      encoding:NSUTF8StringEncoding
                                                         error:nil];
         [response respondWithDynamicFile:path
-                andReplacementDictionary:@{@"nav": navBar,
-                                           @"username": request.parsedBody[@"username"]}];
+                andReplacementDictionary:@{@"nav": navBar}];
     }];
 }
 

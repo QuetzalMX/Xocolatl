@@ -1982,17 +1982,25 @@ static NSMutableArray *recentNonces;
 	// Add optional response headers
 	if ([httpResponse respondsToSelector:@selector(httpHeaders)])
 	{
-		NSDictionary *responseHeaders = [httpResponse httpHeaders];
-		
-		NSEnumerator *keyEnumerator = [responseHeaders keyEnumerator];
-		NSString *key;
-		
-		while ((key = [keyEnumerator nextObject]))
-		{
-			NSString *value = [responseHeaders objectForKey:key];
-			
-			[response setHeaderField:key value:value];
-		}
+        //According to RFC6265 (http://tools.ietf.org/html/rfc6265#section-3) we can respond with multiple Set-Cookie headers.
+        //This means that the value for Set-Cookie should actually be an array of strings, not a string. Just watch out for that.
+        //It's also interesting to note that CFHTTPMessageSetHeaderFieldValue acts like a dictionary, so we cannot have multiple headers with the same name.
+        //This means we need to hack it a little bit for it to work.
+        [[httpResponse httpHeaders] enumerateKeysAndObjectsUsingBlock:^(NSString *field, id value, BOOL *stop) {
+            if ([field caseInsensitiveCompare:@"Set-Cookie"] == NSOrderedSame) {
+                NSArray *cookies = value;
+                
+                NSMutableString *hackyString = [NSMutableString stringWithString:@"Set-Cookie"];
+                [cookies enumerateObjectsUsingBlock:^(NSString *cookie, NSUInteger idx, BOOL *stop) {
+                    [response setHeaderField:[hackyString copy]
+                                       value:cookie];
+                    
+                    [hackyString appendString:@" "];
+                }];
+            } else {
+                [response setHeaderField:field value:value];
+            }
+        }];
 	}
 	
 	return [response messageData];

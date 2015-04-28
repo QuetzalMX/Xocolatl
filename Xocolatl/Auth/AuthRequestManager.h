@@ -18,6 +18,7 @@
 
 - (void)loginUser:(NSString *)user
      withPassword:(NSString *)password
+       timeOfDeath:(NSTimeInterval)timeInterval
 andCompletionBlock:(void (^)(XOCUser *, NSString *, NSError *))completionBlock;
 
 #warning This is ugly. We're passing class so that the user can subclass XOCUser and we can create it, but I'm not 100% sure about this.

@@ -3,10 +3,8 @@
 
 
 @interface HTTPRedirectResponse : NSObject <HTTPResponse>
-{
-	NSString *redirectPath;
-}
 
-- (id)initWithPath:(NSString *)redirectPath;
+- (id)initWithPath:(NSString *)redirectPath
+        andHeaders:(NSDictionary *)headers;
 
 @end
