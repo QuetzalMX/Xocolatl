@@ -14,7 +14,7 @@
 #import "YapDatabase.h"
 #import "AuthRequestManager.h"
 #import "Route.h"
-#import "LoginRoute.h"
+#import "SigninRoute.h"
 
 @interface AppDelegate ()
 
@@ -40,7 +40,7 @@
     }
     
     //Configure the routes.
-    LoginRoute *loginRoute = [[LoginRoute alloc] initInServer:self.server];
+    SigninRoute *loginRoute = [[SigninRoute alloc] initInServer:self.server];
     [self.server addRoute:loginRoute];
 }
 

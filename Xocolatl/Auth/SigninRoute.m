@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Quetzal. All rights reserved.
 //
 
-#import "LoginRoute.h"
+#import "SigninRoute.h"
 
 #import "AuthRequestManager.h"
 #import "XOCUser+Auth.h"
@@ -14,7 +14,7 @@
 
 NSInteger const SecondsUntilAuthorizationExpires = 3600;
 
-@implementation LoginRoute
+@implementation SigninRoute
 
 - (NSDictionary *)methods;
 {
