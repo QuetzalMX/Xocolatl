@@ -17,6 +17,7 @@
 //Cruyff
 #import "CruyffUser.h"
 #import "IndexRoute.h"
+#import "LoginRoute.h"
 
 @interface AppDelegate ()
 
@@ -48,6 +49,9 @@
     //Configure the routes.
     IndexRoute *indexRoute = [[IndexRoute alloc] initInServer:self.server];
     [self.server addRoute:indexRoute];
+    
+    LoginRoute *loginRoute = [[LoginRoute alloc] initInServer:self.server];
+    [self.server addRoute:loginRoute];
     
 //    [self.server get:@"/signup" withBlock:^(RouteRequest *request, RouteResponse *response) {
 //        NSString *path = [self.server.documentRoot stringByAppendingPathComponent:@"register.html"];

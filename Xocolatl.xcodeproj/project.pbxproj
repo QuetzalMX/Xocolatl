@@ -12,7 +12,7 @@
 		C1DD528C1AEF613C00955035 /* IndexRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD528B1AEF613C00955035 /* IndexRoute.m */; };
 		C1DD52921AEF67E800955035 /* AdvancedRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52911AEF67E800955035 /* AdvancedRoute.m */; };
 		C1DD52961AEF696600955035 /* LoginRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52951AEF696600955035 /* LoginRoute.m */; };
-		C1DD529A1AF06DEF00955035 /* certificate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = C1DD52991AF06DEF00955035 /* certificate.p12 */; };
+		C1DD529D1AF0713900955035 /* certificate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = C1DD529C1AF0713900955035 /* certificate.p12 */; };
 		C1F68E8C1AD9E587007FF919 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F68E8B1AD9E587007FF919 /* AppDelegate.m */; };
 		C1F68E8E1AD9E587007FF919 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F68E8D1AD9E587007FF919 /* main.m */; };
 		C1F68E901AD9E587007FF919 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1F68E8F1AD9E587007FF919 /* Images.xcassets */; };
@@ -167,7 +167,7 @@
 		C1DD52911AEF67E800955035 /* AdvancedRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedRoute.m; sourceTree = "<group>"; };
 		C1DD52941AEF696600955035 /* LoginRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginRoute.h; path = Auth/LoginRoute.h; sourceTree = "<group>"; };
 		C1DD52951AEF696600955035 /* LoginRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginRoute.m; path = Auth/LoginRoute.m; sourceTree = "<group>"; };
-		C1DD52991AF06DEF00955035 /* certificate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = certificate.p12; sourceTree = "<group>"; };
+		C1DD529C1AF0713900955035 /* certificate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = certificate.p12; sourceTree = "<group>"; };
 		C1F68E851AD9E587007FF919 /* Xocolatl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xocolatl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1F68E891AD9E587007FF919 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1F68E8A1AD9E587007FF919 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -522,7 +522,7 @@
 		C1F68E881AD9E587007FF919 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C1DD52991AF06DEF00955035 /* certificate.p12 */,
+				C1DD529C1AF0713900955035 /* certificate.p12 */,
 				C1FE77BF1ADCEE2800495528 /* libxml2.dylib */,
 				C1F68E891AD9E587007FF919 /* Info.plist */,
 				C1F68E8D1AD9E587007FF919 /* main.m */,
@@ -1215,7 +1215,7 @@
 				C1F692601AD9E5F1007FF919 /* About.txt in Resources */,
 				C1F691EC1AD9E5F1007FF919 /* .gitignore in Resources */,
 				C1F690C11AD9E5C4007FF919 /* LICENSE.txt in Resources */,
-				C1DD529A1AF06DEF00955035 /* certificate.p12 in Resources */,
+				C1DD529D1AF0713900955035 /* certificate.p12 in Resources */,
 				C1F68E901AD9E587007FF919 /* Images.xcassets in Resources */,
 				C1F68E931AD9E587007FF919 /* MainMenu.xib in Resources */,
 			);
