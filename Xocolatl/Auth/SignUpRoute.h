@@ -1,13 +1,13 @@
 //
-//  IndexRoute.h
+//  SignUpRoute.h
 //  Xocolatl
 //
 //  Created by Fernando Olivares on 4/28/15.
 //  Copyright (c) 2015 Quetzal. All rights reserved.
 //
 
-#import "DynamicFileRoute.h"
+#import "AdvancedRoute.h"
 
-@interface IndexRoute : DynamicFileRoute
+@interface SignUpRoute : AdvancedRoute
 
 @end

@@ -16,7 +16,6 @@
 
 //Cruyff
 #import "CruyffUser.h"
-#import "IndexRoute.h"
 #import "LoginRoute.h"
 #import "HomeRoute.h"
 
@@ -48,37 +47,11 @@
     }
     
     //Configure the routes.
-    IndexRoute *indexRoute = [[IndexRoute alloc] initInServer:self.server];
-    [self.server addRoute:indexRoute];
-    
     LoginRoute *loginRoute = [[LoginRoute alloc] initInServer:self.server];
     [self.server addRoute:loginRoute];
     
     HomeRoute *homeRoute = [[HomeRoute alloc] initInServer:self.server];
     [self.server addRoute:homeRoute];
-    
-//    [self.server get:@"/signup" withBlock:^(RouteRequest *request, RouteResponse *response) {
-//        NSString *path = [self.server.documentRoot stringByAppendingPathComponent:@"register.html"];
-//        [response respondWithDynamicFile:path
-//                andReplacementDictionary:@{@"title": @"Cruyff Football"}];
-//    }];
-//    
-//    [self.server post:@"/api/signup" withBlock:^(RouteRequest *request, RouteResponse *response) {
-//        [self.manager registerUserFromRequestBody:request.parsedBody
-//                                         andClass:[CruyffUser class]
-//                               andCompletionBlock:^(XOCUser *newUser, NSError *error) {
-//                                   if (error) {
-//                                       [response respondWithError:error];
-//                                       return;
-//                                   }
-//                    
-//                                   NSDictionary *userJSON = newUser.jsonRepresentation;
-//                                   NSLog(@"%@", @{@"user": userJSON});
-//                                   [response respondWithRedirect:@"/" andData:[NSJSONSerialization dataWithJSONObject:userJSON
-//                                                                                                              options:0
-//                                                                                                                error:nil]];
-//                               }];
-//    }];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

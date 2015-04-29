@@ -40,14 +40,6 @@ typedef void (^RequestHandler)(RouteRequest *request, RouteResponse *response);
 - (void)addRoute:(Route *)route;
 - (void)addRoute:(Route *)route forMethod:(NSString *)method;
 
-- (void)get:(NSString *)path withBlock:(RequestHandler)block;
-- (void)post:(NSString *)path withBlock:(RequestHandler)block;
-- (void)put:(NSString *)path withBlock:(RequestHandler)block;
-- (void)delete:(NSString *)path withBlock:(RequestHandler)block;
-
-- (void)handleMethod:(NSString *)method withPath:(NSString *)path block:(RequestHandler)block;
-- (void)handleMethod:(NSString *)method withPath:(NSString *)path target:(id)target selector:(SEL)selector;
-
 - (BOOL)supportsMethod:(NSString *)method;
 - (void)routeMethod:(NSString *)method
            withPath:(NSString *)path

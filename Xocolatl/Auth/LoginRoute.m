@@ -16,17 +16,19 @@ NSInteger const SecondsUntilAuthorizationExpires = 3600;
 
 @implementation LoginRoute
 
-- (NSString *)method;
+- (NSDictionary *)methods;
 {
-    return @"POST";
+    return @{@"GET": @"/",
+             @"POST": @"/api/login"};
 }
 
-- (NSString *)path;
+- (void)getRequest:(RouteRequest *)request response:(RouteResponse *)response;
 {
-    return @"/api/login";
+    [response respondWithDynamicFile:[self.server.documentRoot stringByAppendingPathComponent:@"index.html"]
+            andReplacementDictionary:@{@"title": @"Cruyff Football"}];
 }
 
-- (void)incomingRequest:(RouteRequest *)request response:(RouteResponse *)response;
+- (void)postRequest:(RouteRequest *)request response:(RouteResponse *)response;
 {
     //Attempt to log in the user with the given credentials.
     NSTimeInterval timeOfDeath = [[NSDate date] timeIntervalSince1970] + SecondsUntilAuthorizationExpires;

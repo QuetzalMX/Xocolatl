@@ -11,6 +11,12 @@
 #import "XOCUser+Auth.h"
 #import "YapDatabaseTransaction.h"
 
+@interface AuthenticatedRoute ()
+
+@property (nonatomic, strong, readwrite) XOCUser *user;
+
+@end
+
 @implementation AuthenticatedRoute
 
 - (void)incomingRequest:(RouteRequest *)request
@@ -44,7 +50,7 @@
         return;
     }
     
-    //There appears to be user, expiration and authorization.
+    //There appears to be user, expiration and authorization. Is the auth valid?
     __block XOCUser *user;
     __block BOOL isValidAuth;
     [self.connection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
@@ -55,11 +61,14 @@
                                withTimeOfDeath:expiration.integerValue];
     }];
     
+    //Let's see.
     if (isValidAuth) {
-        [self incomingAuthorizedRequest:request
-                                forUser:user
-                               response:response];
+        //The auth was valid. Pass on the request depending on the verb.
+        self.user = user;
+        [super incomingRequest:request
+                      response:response];
     } else {
+        //The auth was invalid.
         [self errorAuthorizingRequest:request
                              response:response];
     }

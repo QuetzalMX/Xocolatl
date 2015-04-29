@@ -11,9 +11,7 @@
 
 @interface AuthenticatedRoute : AdvancedRoute
 
-- (void)incomingAuthorizedRequest:(RouteRequest *)request
-                          forUser:(XOCUser *)user
-                         response:(RouteResponse *)response;
+@property (nonatomic, strong, readonly) XOCUser *user;
 
 - (void)errorAuthorizingRequest:(RouteRequest *)request
                        response:(RouteResponse *)response;

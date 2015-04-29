@@ -35,6 +35,43 @@
 - (void)incomingRequest:(RouteRequest *)request
                response:(RouteResponse *)response;
 {
+    //Where are we routing this request?
+    if ([request.method isEqualToString:@"GET"] && self.methods[@"GET"]) {
+        [self getRequest:request
+                response:response];
+    } else if ([request.method isEqualToString:@"POST"] && self.methods[@"POST"]) {
+        [self postRequest:request
+                 response:response];
+    } else if ([request.method isEqualToString:@"PUT"] && self.methods[@"PUT"]) {
+        [self putRequest:request
+                response:response];
+    } else if ([request.method isEqualToString:@"DELETE"] && self.methods[@"DELETE"]) {
+        [self deleteRequest:request
+                   response:response];
+    }
+}
+
+- (void)getRequest:(RouteRequest *)request
+          response:(RouteResponse *)response;
+{
+    //Implemented by subclasses.
+}
+
+- (void)postRequest:(RouteRequest *)request
+           response:(RouteResponse *)response;
+{
+    //Implemented by subclasses.
+}
+
+- (void)putRequest:(RouteRequest *)request
+          response:(RouteResponse *)response;
+{
+    //Implemented by subclasses.
+}
+
+- (void)deleteRequest:(RouteRequest *)request
+             response:(RouteResponse *)response;
+{
     //Implemented by subclasses.
 }
 

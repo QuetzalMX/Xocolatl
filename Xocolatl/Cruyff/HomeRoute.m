@@ -10,19 +10,12 @@
 
 @implementation HomeRoute
 
-- (NSString *)method;
+- (NSDictionary *)methods;
 {
-    return @"GET";
+    return @{@"GET": @"/home"};
 }
 
-- (NSString *)path;
-{
-    return @"/home";
-}
-
-- (void)incomingAuthorizedRequest:(RouteRequest *)request
-                          forUser:(XOCUser *)user
-                         response:(RouteResponse *)response;
+- (void)getRequest:(RouteRequest *)request response:(RouteResponse *)response;
 {
     //Home
     NSString *path = [self.server.documentRoot stringByAppendingPathComponent:@"home.html"];
@@ -32,7 +25,7 @@
                                                     error:nil];
     [response respondWithDynamicFile:path
             andReplacementDictionary:@{@"nav": navBar,
-                                       @"username": user.username}];
+                                       @"username": self.user.username}];
 }
 
 - (void)errorAuthorizingRequest:(RouteRequest *)request

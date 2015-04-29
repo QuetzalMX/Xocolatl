@@ -103,61 +103,29 @@
 	return [mimeTypes objectForKey:ext];
 }
 
-- (void)get:(NSString *)path withBlock:(RequestHandler)block {
-	[self handleMethod:@"GET" withPath:path block:block];
-}
-
-- (void)post:(NSString *)path withBlock:(RequestHandler)block {
-	[self handleMethod:@"POST" withPath:path block:block];
-}
-
-- (void)put:(NSString *)path withBlock:(RequestHandler)block {
-	[self handleMethod:@"PUT" withPath:path block:block];
-}
-
-- (void)delete:(NSString *)path withBlock:(RequestHandler)block {
-	[self handleMethod:@"DELETE" withPath:path block:block];
-}
-
-- (void)handleMethod:(NSString *)method withPath:(NSString *)path block:(RequestHandler)block {
-	Route *route = [[Route alloc] initWithMethod:method
-                                         andPath:path];
-	route.handler = block;
-
-	[self addRoute:route forMethod:method];
-}
-
-- (void)handleMethod:(NSString *)method withPath:(NSString *)path target:(id)target selector:(SEL)selector {
-	Route *route = [[Route alloc] initWithMethod:method
-                                         andPath:path];
-	route.target = target;
-	route.selector = selector;
-
-	[self addRoute:route forMethod:method];
-}
-
 - (void)addRoute:(Route *)route;
 {
-    [self addRoute:route
-         forMethod:route.method];
+    [[route methods] enumerateKeysAndObjectsUsingBlock:^(NSString *method, NSString *key, BOOL *stop) {
+        [self addRoute:route
+             forMethod:method];
+        
+        if ([method isEqualToString:@"GET"]) {
+            [self addRoute:route forMethod:@"HEAD"];
+        }
+    }];
 }
 
 - (void)addRoute:(Route *)route forMethod:(NSString *)method;
 {
-	method = [method uppercaseString];
-	NSMutableArray *methodRoutes = [routes objectForKey:method];
-	if (!methodRoutes) {
-		methodRoutes = [NSMutableArray array];
+    method = [method uppercaseString];
+    NSMutableArray *methodRoutes = [routes objectForKey:method];
+    if (!methodRoutes) {
+        methodRoutes = [NSMutableArray array];
         NSAssert(method != nil, @"All Routes should have at least one method implemented");
-		[routes setObject:methodRoutes forKey:method];
-	}
-
-	[methodRoutes addObject:route];
-
-	// Define a HEAD route for all GET routes
-	if ([method isEqualToString:@"GET"]) {
-		[self addRoute:route forMethod:@"HEAD"];
-	}
+        [routes setObject:methodRoutes forKey:method];
+    }
+    
+    [methodRoutes addObject:route];
 }
 
 - (BOOL)supportsMethod:(NSString *)method {
@@ -201,7 +169,7 @@
     Route *chosenRoute;
     NSTextCheckingResult *resultForChosenRoute;
 	for (Route *route in methodRoutes) {
-		NSTextCheckingResult *result = [route.regex firstMatchInString:path options:0 range:NSMakeRange(0, path.length)];
+        NSTextCheckingResult *result = [route isResponsibleForPath:path];
 		if (!result)
 			continue;
         
@@ -219,14 +187,15 @@
     //We did find someone responsible.
     //The first range is all of the text matched by the regex.
     NSUInteger captureCount = [resultForChosenRoute numberOfRanges];
-    if (chosenRoute.keys) {
+    NSArray *routeKeys = chosenRoute.keys[method];
+    if (routeKeys) {
         // Add the route's parameters to the parameter dictionary, accounting for
         // the first range containing the matched text.
-        if (captureCount == [chosenRoute.keys count] + 1) {
+        if (captureCount == routeKeys.count + 1) {
             NSMutableDictionary *newParams = [params mutableCopy];
             NSUInteger index = 1;
             BOOL firstWildcard = YES;
-            for (NSString *key in chosenRoute.keys) {
+            for (NSString *key in routeKeys) {
                 NSString *capture = [path substringWithRange:[resultForChosenRoute rangeAtIndex:index]];
                 if ([key isEqualToString:@"wildcards"]) {
                     NSMutableArray *wildcards = [newParams objectForKey:key];
