@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		C13D40461ADCEED4004AF563 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C13D40451ADCEED4004AF563 /* libsqlite3.dylib */; };
 		C1AC896F1AF09517008392D5 /* SignUpRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC896E1AF09517008392D5 /* SignUpRoute.m */; };
+		C1AC89791AF16539008392D5 /* License.txt in Resources */ = {isa = PBXBuildFile; fileRef = C1AC89781AF16539008392D5 /* License.txt */; };
 		C1DD52891AEF5A1D00955035 /* DynamicFileRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52881AEF5A1D00955035 /* DynamicFileRoute.m */; };
 		C1DD52921AEF67E800955035 /* AdvancedRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52911AEF67E800955035 /* AdvancedRoute.m */; };
 		C1DD52961AEF696600955035 /* LoginRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52951AEF696600955035 /* LoginRoute.m */; };
 		C1DD529D1AF0713900955035 /* certificate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = C1DD529C1AF0713900955035 /* certificate.p12 */; };
 		C1DD977C1AF0772C005D09D4 /* AuthenticatedRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD977B1AF0772C005D09D4 /* AuthenticatedRoute.m */; };
-		C1DD977F1AF07762005D09D4 /* HomeRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD977E1AF07762005D09D4 /* HomeRoute.m */; };
 		C1F68E8C1AD9E587007FF919 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F68E8B1AD9E587007FF919 /* AppDelegate.m */; };
 		C1F68E8E1AD9E587007FF919 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F68E8D1AD9E587007FF919 /* main.m */; };
 		C1F68E901AD9E587007FF919 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1F68E8F1AD9E587007FF919 /* Images.xcassets */; };
@@ -142,7 +142,6 @@
 		C1F70E271ADE0B0600CD9959 /* AuthRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E261ADE0B0600CD9959 /* AuthRequestManager.m */; };
 		C1F70E2A1ADE0BC700CD9959 /* XOCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E291ADE0BC700CD9959 /* XOCUser.m */; };
 		C1F70E2E1ADE17EA00CD9959 /* NSString+randomString.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */; };
-		C1F70E441ADF7FE000CD9959 /* CruyffUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E431ADF7FE000CD9959 /* CruyffUser.m */; };
 		C1F70E471ADF81E400CD9959 /* XOCUser+Auth.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E461ADF81E400CD9959 /* XOCUser+Auth.m */; };
 		C1F7CCBC1ADF8C510030C132 /* HTTPRedirectWithPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F7CCBB1ADF8C510030C132 /* HTTPRedirectWithPayload.m */; };
 		C1FA435B1AEC46BE006B3C07 /* NSData+hashedPassword.m in Sources */ = {isa = PBXBuildFile; fileRef = C1FA435A1AEC46BE006B3C07 /* NSData+hashedPassword.m */; };
@@ -163,6 +162,7 @@
 		C13D40451ADCEED4004AF563 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		C1AC896D1AF09517008392D5 /* SignUpRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpRoute.h; path = Auth/SignUpRoute.h; sourceTree = "<group>"; };
 		C1AC896E1AF09517008392D5 /* SignUpRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpRoute.m; path = Auth/SignUpRoute.m; sourceTree = "<group>"; };
+		C1AC89781AF16539008392D5 /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
 		C1DD52871AEF5A1D00955035 /* DynamicFileRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicFileRoute.h; sourceTree = "<group>"; };
 		C1DD52881AEF5A1D00955035 /* DynamicFileRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicFileRoute.m; sourceTree = "<group>"; };
 		C1DD52901AEF67E800955035 /* AdvancedRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedRoute.h; sourceTree = "<group>"; };
@@ -172,8 +172,6 @@
 		C1DD529C1AF0713900955035 /* certificate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = certificate.p12; sourceTree = "<group>"; };
 		C1DD977A1AF0772C005D09D4 /* AuthenticatedRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticatedRoute.h; sourceTree = "<group>"; };
 		C1DD977B1AF0772C005D09D4 /* AuthenticatedRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticatedRoute.m; sourceTree = "<group>"; };
-		C1DD977D1AF07762005D09D4 /* HomeRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeRoute.h; path = Cruyff/HomeRoute.h; sourceTree = "<group>"; };
-		C1DD977E1AF07762005D09D4 /* HomeRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeRoute.m; path = Cruyff/HomeRoute.m; sourceTree = "<group>"; };
 		C1F68E851AD9E587007FF919 /* Xocolatl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xocolatl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1F68E891AD9E587007FF919 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1F68E8A1AD9E587007FF919 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -439,8 +437,6 @@
 		C1F70E291ADE0BC700CD9959 /* XOCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XOCUser.m; path = Auth/XOCUser.m; sourceTree = "<group>"; };
 		C1F70E2C1ADE17EA00CD9959 /* NSString+randomString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+randomString.h"; path = "Auth/NSString+randomString.h"; sourceTree = "<group>"; };
 		C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+randomString.m"; path = "Auth/NSString+randomString.m"; sourceTree = "<group>"; };
-		C1F70E421ADF7FE000CD9959 /* CruyffUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CruyffUser.h; path = Cruyff/CruyffUser.h; sourceTree = "<group>"; };
-		C1F70E431ADF7FE000CD9959 /* CruyffUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CruyffUser.m; path = Cruyff/CruyffUser.m; sourceTree = "<group>"; };
 		C1F70E451ADF81E400CD9959 /* XOCUser+Auth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XOCUser+Auth.h"; path = "Auth/XOCUser+Auth.h"; sourceTree = "<group>"; };
 		C1F70E461ADF81E400CD9959 /* XOCUser+Auth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XOCUser+Auth.m"; path = "Auth/XOCUser+Auth.m"; sourceTree = "<group>"; };
 		C1F7CCBA1ADF8C510030C132 /* HTTPRedirectWithPayload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTTPRedirectWithPayload.h; path = ../HTTPRedirectWithPayload.h; sourceTree = "<group>"; };
@@ -494,7 +490,6 @@
 			children = (
 				C13D40451ADCEED4004AF563 /* libsqlite3.dylib */,
 				C1F68E871AD9E587007FF919 /* Xocolatl */,
-				C1F70E411ADF7FC800CD9959 /* Cruyff */,
 				C1F70E241ADE0AE500CD9959 /* Auth */,
 				C1F690CC1AD9E5E0007FF919 /* Routing */,
 				C1F690DF1AD9E5F0007FF919 /* CocoaHTTPServer */,
@@ -920,6 +915,7 @@
 				C1DD52911AEF67E800955035 /* AdvancedRoute.m */,
 				C1DD977A1AF0772C005D09D4 /* AuthenticatedRoute.h */,
 				C1DD977B1AF0772C005D09D4 /* AuthenticatedRoute.m */,
+				C1AC89781AF16539008392D5 /* License.txt */,
 			);
 			name = Routing;
 			path = Xocolatl/Routing;
@@ -1125,18 +1121,6 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
-		C1F70E411ADF7FC800CD9959 /* Cruyff */ = {
-			isa = PBXGroup;
-			children = (
-				C1F70E421ADF7FE000CD9959 /* CruyffUser.h */,
-				C1F70E431ADF7FE000CD9959 /* CruyffUser.m */,
-				C1DD977D1AF07762005D09D4 /* HomeRoute.h */,
-				C1DD977E1AF07762005D09D4 /* HomeRoute.m */,
-			);
-			name = Cruyff;
-			path = Xocolatl;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1226,6 +1210,7 @@
 				C1F691EC1AD9E5F1007FF919 /* .gitignore in Resources */,
 				C1F690C11AD9E5C4007FF919 /* LICENSE.txt in Resources */,
 				C1DD529D1AF0713900955035 /* certificate.p12 in Resources */,
+				C1AC89791AF16539008392D5 /* License.txt in Resources */,
 				C1F68E901AD9E587007FF919 /* Images.xcassets in Resources */,
 				C1F68E931AD9E587007FF919 /* MainMenu.xib in Resources */,
 			);
@@ -1296,7 +1281,6 @@
 				C1F690AC1AD9E5C4007FF919 /* YapDatabaseViewPageMetadata.m in Sources */,
 				C1F691F11AD9E5F1007FF919 /* HTTPAuthenticationRequest.m in Sources */,
 				C1F70E471ADF81E400CD9959 /* XOCUser+Auth.m in Sources */,
-				C1DD977F1AF07762005D09D4 /* HomeRoute.m in Sources */,
 				C1F691FC1AD9E5F1007FF919 /* HTTPRedirectResponse.m in Sources */,
 				C1F690BE1AD9E5C4007FF919 /* YapNull.m in Sources */,
 				C1F690811AD9E5C4007FF919 /* YDBCKMappingTableInfo.m in Sources */,
@@ -1311,7 +1295,6 @@
 				C1F690B71AD9E5C4007FF919 /* YapDatabaseConnectionDefaults.m in Sources */,
 				C1F690BD1AD9E5C4007FF919 /* YapMemoryTable.m in Sources */,
 				C1F7CCBC1ADF8C510030C132 /* HTTPRedirectWithPayload.m in Sources */,
-				C1F70E441ADF7FE000CD9959 /* CruyffUser.m in Sources */,
 				C1F690901AD9E5C4007FF919 /* YapDatabaseFullTextSearch.m in Sources */,
 				C1F6909C1AD9E5C4007FF919 /* YapDatabaseRelationshipConnection.m in Sources */,
 				C1F692001AD9E5F1007FF919 /* DELETEResponse.m in Sources */,

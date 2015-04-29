@@ -16,10 +16,6 @@
 #import "Route.h"
 #import "LoginRoute.h"
 
-//Example
-#import "CruyffUser.h"
-#import "HomeRoute.h"
-
 @interface AppDelegate ()
 
 @property (nonatomic, strong) RoutingHTTPServer *server;
@@ -46,9 +42,6 @@
     //Configure the routes.
     LoginRoute *loginRoute = [[LoginRoute alloc] initInServer:self.server];
     [self.server addRoute:loginRoute];
-    
-    HomeRoute *homeRoute = [[HomeRoute alloc] initInServer:self.server];
-    [self.server addRoute:homeRoute];
 }
 
 @end
