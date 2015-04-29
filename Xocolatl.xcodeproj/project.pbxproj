@@ -86,7 +86,6 @@
 		C1F690BE1AD9E5C4007FF919 /* YapNull.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F690631AD9E5C4007FF919 /* YapNull.m */; };
 		C1F690BF1AD9E5C4007FF919 /* YapRowidSet.mm in Sources */ = {isa = PBXBuildFile; fileRef = C1F690651AD9E5C4007FF919 /* YapRowidSet.mm */; };
 		C1F690C01AD9E5C4007FF919 /* YapTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F690671AD9E5C4007FF919 /* YapTouch.m */; };
-		C1F690C11AD9E5C4007FF919 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = C1F690681AD9E5C4007FF919 /* LICENSE.txt */; };
 		C1F690C21AD9E5C4007FF919 /* YapCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F6906B1AD9E5C4007FF919 /* YapCache.m */; };
 		C1F690C31AD9E5C4007FF919 /* YapCollectionKey.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F6906D1AD9E5C4007FF919 /* YapCollectionKey.m */; };
 		C1F690C41AD9E5C4007FF919 /* YapDatabaseQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F6906F1AD9E5C4007FF919 /* YapDatabaseQuery.m */; };
@@ -125,11 +124,7 @@
 		C1F691FF1AD9E5F1007FF919 /* DAVResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F6910D1AD9E5F0007FF919 /* DAVResponse.m */; };
 		C1F692001AD9E5F1007FF919 /* DELETEResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F6910F1AD9E5F0007FF919 /* DELETEResponse.m */; };
 		C1F692011AD9E5F1007FF919 /* PUTResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F691111AD9E5F0007FF919 /* PUTResponse.m */; };
-		C1F692021AD9E5F1007FF919 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = C1F691121AD9E5F0007FF919 /* LICENSE.txt */; };
-		C1F692031AD9E5F1007FF919 /* README.markdown in Sources */ = {isa = PBXBuildFile; fileRef = C1F691131AD9E5F0007FF919 /* README.markdown */; };
-		C1F6925E1AD9E5F1007FF919 /* About.txt in Resources */ = {isa = PBXBuildFile; fileRef = C1F691D71AD9E5F1007FF919 /* About.txt */; };
 		C1F6925F1AD9E5F1007FF919 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F691D91AD9E5F1007FF919 /* GCDAsyncSocket.m */; };
-		C1F692601AD9E5F1007FF919 /* About.txt in Resources */ = {isa = PBXBuildFile; fileRef = C1F691DB1AD9E5F1007FF919 /* About.txt */; };
 		C1F692611AD9E5F1007FF919 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F691DD1AD9E5F1007FF919 /* DDAbstractDatabaseLogger.m */; };
 		C1F692621AD9E5F1007FF919 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F691DF1AD9E5F1007FF919 /* DDASLLogger.m */; };
 		C1F692631AD9E5F1007FF919 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F691E11AD9E5F1007FF919 /* DDFileLogger.m */; };
@@ -137,7 +132,6 @@
 		C1F692651AD9E5F1007FF919 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F691E51AD9E5F1007FF919 /* DDTTYLogger.m */; };
 		C1F692661AD9E5F1007FF919 /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F691E81AD9E5F1007FF919 /* ContextFilterLogFormatter.m */; };
 		C1F692671AD9E5F1007FF919 /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F691EA1AD9E5F1007FF919 /* DispatchQueueLogFormatter.m */; };
-		C1F692681AD9E5F1007FF919 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = C1F691EB1AD9E5F1007FF919 /* README.txt */; };
 		C1F70E271ADE0B0600CD9959 /* AuthRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E261ADE0B0600CD9959 /* AuthRequestManager.m */; };
 		C1F70E2A1ADE0BC700CD9959 /* XOCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E291ADE0BC700CD9959 /* XOCUser.m */; };
 		C1F70E2E1ADE17EA00CD9959 /* NSString+randomString.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */; };
@@ -1191,13 +1185,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1F6925E1AD9E5F1007FF919 /* About.txt in Resources */,
-				C1F692021AD9E5F1007FF919 /* LICENSE.txt in Resources */,
 				C1F691ED1AD9E5F1007FF919 /* .hgignore in Resources */,
-				C1F692681AD9E5F1007FF919 /* README.txt in Resources */,
-				C1F692601AD9E5F1007FF919 /* About.txt in Resources */,
 				C1F691EC1AD9E5F1007FF919 /* .gitignore in Resources */,
-				C1F690C11AD9E5C4007FF919 /* LICENSE.txt in Resources */,
 				C1DD529D1AF0713900955035 /* certificate.p12 in Resources */,
 				C1F68E901AD9E587007FF919 /* Images.xcassets in Resources */,
 				C1F68E931AD9E587007FF919 /* MainMenu.xib in Resources */,
@@ -1227,7 +1216,6 @@
 				C1F6907E1AD9E5C4007FF919 /* YDBCKAttachRequest.m in Sources */,
 				C1F690A41AD9E5C4007FF919 /* YapDatabaseSearchResultsViewTransaction.m in Sources */,
 				C1F70E2E1ADE17EA00CD9959 /* NSString+randomString.m in Sources */,
-				C1F692031AD9E5F1007FF919 /* README.markdown in Sources */,
 				C1F6925F1AD9E5F1007FF919 /* GCDAsyncSocket.m in Sources */,
 				C1F690A01AD9E5C4007FF919 /* YapDatabaseSearchQueue.m in Sources */,
 				C1F690AB1AD9E5C4007FF919 /* YapDatabaseViewPage.mm in Sources */,

@@ -70,12 +70,12 @@
             [super httpResponseForMethod:method
                                      URI:path
                       andCompletionBlock:^ (NSObject <HTTPResponse> *staticResponse) {
-                          if (staticResponse && [staticResponse respondsToSelector:@selector(filePath)]) {
-                              NSString *mimeType = [self.http mimeTypeForPath:[staticResponse performSelector:@selector(filePath)]];
-                              if (mimeType) {
-                                  self.headers = [NSDictionary dictionaryWithObject:mimeType forKey:@"Content-Type"];
-                              }
-                          }
+//                          if (staticResponse && [staticResponse respondsToSelector:@selector(filePath)]) {
+//                              NSString *mimeType = [self.http mimeTypeForPath:[staticResponse performSelector:@selector(filePath)]];
+//                              if (mimeType) {
+//                                  self.headers = [NSDictionary dictionaryWithObject:mimeType forKey:@"Content-Type"];
+//                              }
+//                          }
                      
                           completionBlock(staticResponse);
                       }];

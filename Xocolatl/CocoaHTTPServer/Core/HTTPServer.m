@@ -4,6 +4,8 @@
 #import "WebSocket.h"
 #import "HTTPLogging.h"
 
+NSString *const HTTPServerQueueLabel = @"HTTPServer";
+
 #if ! __has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
@@ -64,7 +66,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 		HTTPLogTrace();
 		
 		// Initialize underlying dispatch queue and GCD based tcp socket
-		serverQueue = dispatch_queue_create("HTTPServer", NULL);
+		serverQueue = dispatch_queue_create([HTTPServerQueueLabel UTF8String], NULL);
 		asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:serverQueue];
 		
 		// Use default connection class of HTTPConnection
@@ -135,6 +137,11 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	#endif
 	
 	[asyncSocket setDelegate:nil delegateQueue:NULL];
+}
+
+- (BOOL)isOnServerQueue;
+{
+    return (dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL) == dispatch_queue_get_label(serverQueue));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -577,7 +584,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
 	HTTPLogTrace();
 	
-	NSAssert(dispatch_get_current_queue() == serverQueue, @"Invalid queue");
+	NSAssert([self isOnServerQueue], @"Invalid queue");
 	
 	if (type)
 	{
@@ -612,7 +619,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
 	HTTPLogTrace();
 	
-	NSAssert(dispatch_get_current_queue() == serverQueue, @"Invalid queue");
+	NSAssert([self isOnServerQueue], @"Invalid queue");
 	
 	if (netService)
 	{
@@ -748,10 +755,10 @@ static NSThread *bonjourThread;
 		
 		// We can't run the run loop unless it has an associated input source or a timer.
 		// So we'll just create a timer that will never fire - unless the server runs for 10,000 years.
-		
+		// (FO): I have chosen isOnServerQueue to avoid a warning here. It could be literally any method since it's never firing.
 		[NSTimer scheduledTimerWithTimeInterval:[[NSDate distantFuture] timeIntervalSinceNow]
 		                                 target:self
-		                               selector:@selector(donothingatall:)
+		                               selector:@selector(isOnServerQueue)
 		                               userInfo:nil
 		                                repeats:YES];
 		
