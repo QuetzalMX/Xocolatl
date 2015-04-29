@@ -13,7 +13,7 @@ typedef void (^RequestHandler)(RouteRequest *request, RouteResponse *response);
 @property (nonatomic, readonly) NSDictionary *defaultHeaders;
 @property (nonatomic, readonly) YapDatabase *database;
 
-- (instancetype)initWithPort:(NSInteger)port
+- (instancetype)initAtPort:(NSInteger)port
                 documentRoot:(NSString *)documentRoot
                 databaseName:(NSString *)name;
 

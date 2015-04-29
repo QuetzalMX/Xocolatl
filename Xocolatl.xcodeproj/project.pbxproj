@@ -557,10 +557,10 @@
 			isa = PBXGroup;
 			children = (
 				C1F690681AD9E5C4007FF919 /* LICENSE.txt */,
+				C1F692881ADAF9E1007FF919 /* Core */,
 				C1F68FBB1AD9E5C4007FF919 /* Extensions */,
 				C1F6904F1AD9E5C4007FF919 /* Internal */,
 				C1F690691AD9E5C4007FF919 /* Utilities */,
-				C1F692881ADAF9E1007FF919 /* Core */,
 			);
 			name = YapDatabase;
 			path = Xocolatl/YapDatabase;

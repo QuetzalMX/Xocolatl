@@ -12,7 +12,7 @@
 
 @synthesize defaultHeaders;
 
-- (instancetype)initWithPort:(NSInteger)aPort
+- (instancetype)initAtPort:(NSInteger)aPort
                 documentRoot:(NSString *)aDocumentRoot
                 databaseName:(NSString *)databaseName;
 {

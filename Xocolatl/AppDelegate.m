@@ -8,21 +8,21 @@
 
 #import "AppDelegate.h"
 
+//Core
 #import "XOCUser.h"
 #import "RoutingHTTPServer.h"
 #import "YapDatabase.h"
 #import "AuthRequestManager.h"
 #import "Route.h"
-
-//Cruyff
-#import "CruyffUser.h"
 #import "LoginRoute.h"
+
+//Example
+#import "CruyffUser.h"
 #import "HomeRoute.h"
 
 @interface AppDelegate ()
 
 @property (nonatomic, strong) RoutingHTTPServer *server;
-@property (nonatomic, strong) AuthRequestManager *manager;
 
 @property (weak) IBOutlet NSWindow *window;
 @end
@@ -32,12 +32,9 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     
     //Create the server.
-    self.server = [[RoutingHTTPServer alloc] initWithPort:3000
-                                             documentRoot:[@"~/Sites/Cruyff" stringByExpandingTildeInPath]
-                                             databaseName:@"Cruyff"];
-    
-    //Create our auth manager.
-    self.manager = [AuthRequestManager requestManagerForServer:self.server];
+    self.server = [[RoutingHTTPServer alloc] initAtPort:3000
+                                           documentRoot:[@"~/Sites/Cruyff" stringByExpandingTildeInPath]
+                                           databaseName:@"Cruyff"];
     
     //Start the server.
     NSError *error;
@@ -52,10 +49,6 @@
     
     HomeRoute *homeRoute = [[HomeRoute alloc] initInServer:self.server];
     [self.server addRoute:homeRoute];
-}
-
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
-    // Insert code here to tear down your application
 }
 
 @end
