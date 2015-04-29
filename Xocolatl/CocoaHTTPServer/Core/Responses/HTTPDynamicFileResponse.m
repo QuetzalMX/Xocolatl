@@ -211,8 +211,10 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 							// And don't forget to update our indices.
 							
 							bufLen     += diff;
-							offset     += diff;
 							stopOffset += diff;
+                            
+                            // FO: We reset the offset to the beginning of the replaced text to allow for insertions inside insertions.
+                            offset     = s1;
 						}
 					}
 					

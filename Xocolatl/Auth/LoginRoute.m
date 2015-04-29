@@ -12,7 +12,6 @@
 #import "XOCUser+Auth.h"
 #import "YapDatabaseTransaction.h"
 
-NSString *const UsersCollection = @"Users";
 NSInteger const SecondsUntilAuthorizationExpires = 3600;
 
 @implementation LoginRoute
@@ -36,7 +35,7 @@ NSInteger const SecondsUntilAuthorizationExpires = 3600;
     
     __block XOCUser *registeredUser;
     __block NSString *authorization;
-    [self.connection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+    [self.connection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         //Let's see if this user exists.
         XOCUser *fetchedUser = [transaction objectForKey:user
                                             inCollection:UsersCollection];
@@ -64,7 +63,12 @@ NSInteger const SecondsUntilAuthorizationExpires = 3600;
         
         //The password is valid. Create an auth string and return the user.
         registeredUser = fetchedUser;
-        authorization = [fetchedUser newAuthHeaderWithSessionDuration:timeOfDeath];
+        authorization = [fetchedUser newAuthHeaderWithTimeOfDeath:timeOfDeath];
+        
+        //Save the user.
+        [transaction setObject:fetchedUser
+                        forKey:user
+                  inCollection:UsersCollection];
     }];
     
     //Now that we have all the info, add our cookies and redirect the user back to home.

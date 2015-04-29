@@ -18,6 +18,7 @@
 #import "CruyffUser.h"
 #import "IndexRoute.h"
 #import "LoginRoute.h"
+#import "HomeRoute.h"
 
 @interface AppDelegate ()
 
@@ -53,6 +54,9 @@
     LoginRoute *loginRoute = [[LoginRoute alloc] initInServer:self.server];
     [self.server addRoute:loginRoute];
     
+    HomeRoute *homeRoute = [[HomeRoute alloc] initInServer:self.server];
+    [self.server addRoute:homeRoute];
+    
 //    [self.server get:@"/signup" withBlock:^(RouteRequest *request, RouteResponse *response) {
 //        NSString *path = [self.server.documentRoot stringByAppendingPathComponent:@"register.html"];
 //        [response respondWithDynamicFile:path
@@ -74,19 +78,6 @@
 //                                                                                                              options:0
 //                                                                                                                error:nil]];
 //                               }];
-//    }];
-//    
-//    //Home
-//    [self.server get:@"/home" withBlock:^(RouteRequest *request, RouteResponse *response) {
-//        //Get the user from the cookie.
-//        
-//        NSString *path = [self.server.documentRoot stringByAppendingPathComponent:@"home.html"];
-//        NSString *navigationPath = [self.server.documentRoot stringByAppendingPathComponent:@"navigation.html"];
-//        NSString *navBar = [NSString stringWithContentsOfFile:navigationPath
-//                                                     encoding:NSUTF8StringEncoding
-//                                                        error:nil];
-//        [response respondWithDynamicFile:path
-//                andReplacementDictionary:@{@"nav": navBar}];
 //    }];
 }
 

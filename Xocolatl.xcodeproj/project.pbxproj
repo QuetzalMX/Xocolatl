@@ -13,6 +13,8 @@
 		C1DD52921AEF67E800955035 /* AdvancedRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52911AEF67E800955035 /* AdvancedRoute.m */; };
 		C1DD52961AEF696600955035 /* LoginRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52951AEF696600955035 /* LoginRoute.m */; };
 		C1DD529D1AF0713900955035 /* certificate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = C1DD529C1AF0713900955035 /* certificate.p12 */; };
+		C1DD977C1AF0772C005D09D4 /* AuthenticatedRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD977B1AF0772C005D09D4 /* AuthenticatedRoute.m */; };
+		C1DD977F1AF07762005D09D4 /* HomeRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD977E1AF07762005D09D4 /* HomeRoute.m */; };
 		C1F68E8C1AD9E587007FF919 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F68E8B1AD9E587007FF919 /* AppDelegate.m */; };
 		C1F68E8E1AD9E587007FF919 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F68E8D1AD9E587007FF919 /* main.m */; };
 		C1F68E901AD9E587007FF919 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1F68E8F1AD9E587007FF919 /* Images.xcassets */; };
@@ -168,6 +170,10 @@
 		C1DD52941AEF696600955035 /* LoginRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginRoute.h; path = Auth/LoginRoute.h; sourceTree = "<group>"; };
 		C1DD52951AEF696600955035 /* LoginRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginRoute.m; path = Auth/LoginRoute.m; sourceTree = "<group>"; };
 		C1DD529C1AF0713900955035 /* certificate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = certificate.p12; sourceTree = "<group>"; };
+		C1DD977A1AF0772C005D09D4 /* AuthenticatedRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticatedRoute.h; sourceTree = "<group>"; };
+		C1DD977B1AF0772C005D09D4 /* AuthenticatedRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticatedRoute.m; sourceTree = "<group>"; };
+		C1DD977D1AF07762005D09D4 /* HomeRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeRoute.h; path = Cruyff/HomeRoute.h; sourceTree = "<group>"; };
+		C1DD977E1AF07762005D09D4 /* HomeRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeRoute.m; path = Cruyff/HomeRoute.m; sourceTree = "<group>"; };
 		C1F68E851AD9E587007FF919 /* Xocolatl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xocolatl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1F68E891AD9E587007FF919 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1F68E8A1AD9E587007FF919 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -912,6 +918,8 @@
 				C1DD52881AEF5A1D00955035 /* DynamicFileRoute.m */,
 				C1DD52901AEF67E800955035 /* AdvancedRoute.h */,
 				C1DD52911AEF67E800955035 /* AdvancedRoute.m */,
+				C1DD977A1AF0772C005D09D4 /* AuthenticatedRoute.h */,
+				C1DD977B1AF0772C005D09D4 /* AuthenticatedRoute.m */,
 			);
 			name = Routing;
 			path = Xocolatl/Routing;
@@ -1122,6 +1130,8 @@
 				C1F70E431ADF7FE000CD9959 /* CruyffUser.m */,
 				C1DD528A1AEF613C00955035 /* IndexRoute.h */,
 				C1DD528B1AEF613C00955035 /* IndexRoute.m */,
+				C1DD977D1AF07762005D09D4 /* HomeRoute.h */,
+				C1DD977E1AF07762005D09D4 /* HomeRoute.m */,
 			);
 			name = Cruyff;
 			path = Xocolatl;
@@ -1286,6 +1296,7 @@
 				C1F690AC1AD9E5C4007FF919 /* YapDatabaseViewPageMetadata.m in Sources */,
 				C1F691F11AD9E5F1007FF919 /* HTTPAuthenticationRequest.m in Sources */,
 				C1F70E471ADF81E400CD9959 /* XOCUser+Auth.m in Sources */,
+				C1DD977F1AF07762005D09D4 /* HomeRoute.m in Sources */,
 				C1F691FC1AD9E5F1007FF919 /* HTTPRedirectResponse.m in Sources */,
 				C1F690BE1AD9E5C4007FF919 /* YapNull.m in Sources */,
 				C1F690811AD9E5C4007FF919 /* YDBCKMappingTableInfo.m in Sources */,
@@ -1356,6 +1367,7 @@
 				C1F690DB1AD9E5E0007FF919 /* RouteRequest.m in Sources */,
 				C1F690C91AD9E5C4007FF919 /* YapDatabaseConnection.m in Sources */,
 				C1F6909E1AD9E5C4007FF919 /* YapDatabaseRelationshipOptions.m in Sources */,
+				C1DD977C1AF0772C005D09D4 /* AuthenticatedRoute.m in Sources */,
 				C1F691F41AD9E5F1007FF919 /* HTTPServer.m in Sources */,
 				C1F691F31AD9E5F1007FF919 /* HTTPMessage.m in Sources */,
 				C1F691F81AD9E5F1007FF919 /* HTTPAsyncFileResponse.m in Sources */,

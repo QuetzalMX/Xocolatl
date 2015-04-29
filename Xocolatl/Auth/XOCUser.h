@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *const UsersCollection;
+
 @interface XOCUser : NSObject <NSCoding>
 
 @property (nonatomic, copy, readonly) NSString *identifier;
@@ -23,6 +25,8 @@
 - (void)setHashedPassword:(NSString *)password;
 
 //Auth
-- (NSString *)newAuthHeaderWithSessionDuration:(NSTimeInterval)secondsUntilExpiration;
+- (NSString *)newAuthHeaderWithTimeOfDeath:(NSTimeInterval)secondsUntilExpiration;
+- (BOOL)validateAuthHeader:(NSString *)clientProvidedAuth
+           withTimeOfDeath:(NSTimeInterval)timeOfDeath;
 
 @end
