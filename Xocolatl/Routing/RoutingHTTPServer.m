@@ -146,7 +146,7 @@
 {
 	method = [method uppercaseString];
 	NSMutableArray *methodRoutes = [routes objectForKey:method];
-	if (methodRoutes == nil) {
+	if (!methodRoutes) {
 		methodRoutes = [NSMutableArray array];
         NSAssert(method != nil, @"All Routes should have at least one method implemented");
 		[routes setObject:methodRoutes forKey:method];

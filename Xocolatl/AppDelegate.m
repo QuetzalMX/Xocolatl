@@ -18,8 +18,6 @@
 #import "CruyffUser.h"
 #import "IndexRoute.h"
 
-NSInteger const SecondsUntilAuthorizationExpires = 3600;
-
 @interface AppDelegate ()
 
 @property (nonatomic, strong) RoutingHTTPServer *server;
@@ -49,38 +47,8 @@ NSInteger const SecondsUntilAuthorizationExpires = 3600;
     
     //Configure the routes.
     IndexRoute *indexRoute = [[IndexRoute alloc] initInServer:self.server];
+    [self.server addRoute:indexRoute];
     
-//    [self.server post:@"/api/login" withBlock:^(RouteRequest *request, RouteResponse *response) {
-//        NSTimeInterval timeOfDeath = [[NSDate date] timeIntervalSince1970] + SecondsUntilAuthorizationExpires;
-//        [self.manager loginUser:request.parsedBody[@"username"]
-//                   withPassword:request.parsedBody[@"password"]
-//                     timeOfDeath:timeOfDeath
-//             andCompletionBlock:^(XOCUser *user, NSString *authorization, NSError *error) {
-//                 if (error) {
-//                     [response respondWithError:error];
-//                     return;
-//                 }
-//                 
-//                 //Now that we have all the info, add our cookies and redirect the user back to home.
-//                 [response setCookieNamed:@"timeOfDeath"
-//                                withValue:[NSString stringWithFormat:@"%.0f", timeOfDeath]
-//                                 isSecure:YES
-//                                 httpOnly:YES];
-//                 
-//                 [response setCookieNamed:@"username"
-//                                withValue:user.username
-//                                 isSecure:YES
-//                                 httpOnly:YES];
-//                 
-//                 [response setCookieNamed:@"auth"
-//                                withValue:authorization
-//                                 isSecure:YES
-//                                 httpOnly:YES];
-//                 
-//                 [response respondWithRedirect:@"/home"];
-//             }];
-//    }];
-//    
 //    [self.server get:@"/signup" withBlock:^(RouteRequest *request, RouteResponse *response) {
 //        NSString *path = [self.server.documentRoot stringByAppendingPathComponent:@"register.html"];
 //        [response respondWithDynamicFile:path

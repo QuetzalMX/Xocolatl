@@ -7,31 +7,9 @@
 //
 
 #import "DynamicFileRoute.h"
-
 #import "RoutingHTTPServer.h"
 
-@interface DynamicFileRoute ()
-
-@property (nonatomic, weak, readwrite) RoutingHTTPServer *server;
-@property (nonatomic, copy, readwrite) NSString *dynamicFilePath;
-
-@end
-
 @implementation DynamicFileRoute
-
-- (instancetype)initInServer:(RoutingHTTPServer *)server;
-{
-    if (self != [super init]) {
-        return nil;
-    }
-    
-    self.server = server;
-    self.target = self;
-    self.selector = @selector(incomingRequest:response:);
-    [server addRoute:self];
-    
-    return self;
-}
 
 - (void)incomingRequest:(RouteRequest *)request
                response:(RouteResponse *)response;

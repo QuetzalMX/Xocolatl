@@ -10,6 +10,9 @@
 		C13D40461ADCEED4004AF563 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C13D40451ADCEED4004AF563 /* libsqlite3.dylib */; };
 		C1DD52891AEF5A1D00955035 /* DynamicFileRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52881AEF5A1D00955035 /* DynamicFileRoute.m */; };
 		C1DD528C1AEF613C00955035 /* IndexRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD528B1AEF613C00955035 /* IndexRoute.m */; };
+		C1DD52921AEF67E800955035 /* AdvancedRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52911AEF67E800955035 /* AdvancedRoute.m */; };
+		C1DD52961AEF696600955035 /* LoginRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52951AEF696600955035 /* LoginRoute.m */; };
+		C1DD529A1AF06DEF00955035 /* certificate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = C1DD52991AF06DEF00955035 /* certificate.p12 */; };
 		C1F68E8C1AD9E587007FF919 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F68E8B1AD9E587007FF919 /* AppDelegate.m */; };
 		C1F68E8E1AD9E587007FF919 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F68E8D1AD9E587007FF919 /* main.m */; };
 		C1F68E901AD9E587007FF919 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1F68E8F1AD9E587007FF919 /* Images.xcassets */; };
@@ -137,7 +140,6 @@
 		C1F70E271ADE0B0600CD9959 /* AuthRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E261ADE0B0600CD9959 /* AuthRequestManager.m */; };
 		C1F70E2A1ADE0BC700CD9959 /* XOCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E291ADE0BC700CD9959 /* XOCUser.m */; };
 		C1F70E2E1ADE17EA00CD9959 /* NSString+randomString.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */; };
-		C1F70E401ADF66C100CD9959 /* certificate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = C1F70E3F1ADF658100CD9959 /* certificate.p12 */; };
 		C1F70E441ADF7FE000CD9959 /* CruyffUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E431ADF7FE000CD9959 /* CruyffUser.m */; };
 		C1F70E471ADF81E400CD9959 /* XOCUser+Auth.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E461ADF81E400CD9959 /* XOCUser+Auth.m */; };
 		C1F7CCBC1ADF8C510030C132 /* HTTPRedirectWithPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F7CCBB1ADF8C510030C132 /* HTTPRedirectWithPayload.m */; };
@@ -161,6 +163,11 @@
 		C1DD52881AEF5A1D00955035 /* DynamicFileRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicFileRoute.m; sourceTree = "<group>"; };
 		C1DD528A1AEF613C00955035 /* IndexRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IndexRoute.h; path = Cruyff/IndexRoute.h; sourceTree = "<group>"; };
 		C1DD528B1AEF613C00955035 /* IndexRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IndexRoute.m; path = Cruyff/IndexRoute.m; sourceTree = "<group>"; };
+		C1DD52901AEF67E800955035 /* AdvancedRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedRoute.h; sourceTree = "<group>"; };
+		C1DD52911AEF67E800955035 /* AdvancedRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedRoute.m; sourceTree = "<group>"; };
+		C1DD52941AEF696600955035 /* LoginRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginRoute.h; path = Auth/LoginRoute.h; sourceTree = "<group>"; };
+		C1DD52951AEF696600955035 /* LoginRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginRoute.m; path = Auth/LoginRoute.m; sourceTree = "<group>"; };
+		C1DD52991AF06DEF00955035 /* certificate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = certificate.p12; sourceTree = "<group>"; };
 		C1F68E851AD9E587007FF919 /* Xocolatl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xocolatl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1F68E891AD9E587007FF919 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1F68E8A1AD9E587007FF919 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -426,7 +433,6 @@
 		C1F70E291ADE0BC700CD9959 /* XOCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XOCUser.m; path = Auth/XOCUser.m; sourceTree = "<group>"; };
 		C1F70E2C1ADE17EA00CD9959 /* NSString+randomString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+randomString.h"; path = "Auth/NSString+randomString.h"; sourceTree = "<group>"; };
 		C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+randomString.m"; path = "Auth/NSString+randomString.m"; sourceTree = "<group>"; };
-		C1F70E3F1ADF658100CD9959 /* certificate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = certificate.p12; sourceTree = "<group>"; };
 		C1F70E421ADF7FE000CD9959 /* CruyffUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CruyffUser.h; path = Cruyff/CruyffUser.h; sourceTree = "<group>"; };
 		C1F70E431ADF7FE000CD9959 /* CruyffUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CruyffUser.m; path = Cruyff/CruyffUser.m; sourceTree = "<group>"; };
 		C1F70E451ADF81E400CD9959 /* XOCUser+Auth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XOCUser+Auth.h"; path = "Auth/XOCUser+Auth.h"; sourceTree = "<group>"; };
@@ -516,7 +522,7 @@
 		C1F68E881AD9E587007FF919 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C1F70E3F1ADF658100CD9959 /* certificate.p12 */,
+				C1DD52991AF06DEF00955035 /* certificate.p12 */,
 				C1FE77BF1ADCEE2800495528 /* libxml2.dylib */,
 				C1F68E891AD9E587007FF919 /* Info.plist */,
 				C1F68E8D1AD9E587007FF919 /* main.m */,
@@ -904,6 +910,8 @@
 				C1DD52861AEF5A0100955035 /* Core */,
 				C1DD52871AEF5A1D00955035 /* DynamicFileRoute.h */,
 				C1DD52881AEF5A1D00955035 /* DynamicFileRoute.m */,
+				C1DD52901AEF67E800955035 /* AdvancedRoute.h */,
+				C1DD52911AEF67E800955035 /* AdvancedRoute.m */,
 			);
 			name = Routing;
 			path = Xocolatl/Routing;
@@ -1082,6 +1090,8 @@
 		C1F70E241ADE0AE500CD9959 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				C1DD52941AEF696600955035 /* LoginRoute.h */,
+				C1DD52951AEF696600955035 /* LoginRoute.m */,
 				C1F70E251ADE0B0600CD9959 /* AuthRequestManager.h */,
 				C1F70E261ADE0B0600CD9959 /* AuthRequestManager.m */,
 				C1F70E281ADE0BC700CD9959 /* XOCUser.h */,
@@ -1198,7 +1208,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1F70E401ADF66C100CD9959 /* certificate.p12 in Resources */,
 				C1F6925E1AD9E5F1007FF919 /* About.txt in Resources */,
 				C1F692021AD9E5F1007FF919 /* LICENSE.txt in Resources */,
 				C1F691ED1AD9E5F1007FF919 /* .hgignore in Resources */,
@@ -1206,6 +1215,7 @@
 				C1F692601AD9E5F1007FF919 /* About.txt in Resources */,
 				C1F691EC1AD9E5F1007FF919 /* .gitignore in Resources */,
 				C1F690C11AD9E5C4007FF919 /* LICENSE.txt in Resources */,
+				C1DD529A1AF06DEF00955035 /* certificate.p12 in Resources */,
 				C1F68E901AD9E587007FF919 /* Images.xcassets in Resources */,
 				C1F68E931AD9E587007FF919 /* MainMenu.xib in Resources */,
 			);
@@ -1266,9 +1276,11 @@
 				C1F690891AD9E5C4007FF919 /* YapDatabaseCloudKitOptions.m in Sources */,
 				C1F690B51AD9E5C4007FF919 /* YapDatabaseViewTypes.m in Sources */,
 				C1F691F71AD9E5F1007FF919 /* MultipartMessageHeaderField.m in Sources */,
+				C1DD52921AEF67E800955035 /* AdvancedRoute.m in Sources */,
 				C1F692651AD9E5F1007FF919 /* DDTTYLogger.m in Sources */,
 				C1F692631AD9E5F1007FF919 /* DDFileLogger.m in Sources */,
 				C1F6908B1AD9E5C4007FF919 /* YapDatabaseCloudKitTypes.m in Sources */,
+				C1DD52961AEF696600955035 /* LoginRoute.m in Sources */,
 				C1F692611AD9E5F1007FF919 /* DDAbstractDatabaseLogger.m in Sources */,
 				C1F690D91AD9E5E0007FF919 /* HTTPResponseProxy.m in Sources */,
 				C1F690AC1AD9E5C4007FF919 /* YapDatabaseViewPageMetadata.m in Sources */,
