@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C13D40461ADCEED4004AF563 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C13D40451ADCEED4004AF563 /* libsqlite3.dylib */; };
 		C1AC896F1AF09517008392D5 /* SignUpRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC896E1AF09517008392D5 /* SignUpRoute.m */; };
+		C1AC89A21AF34D4D008392D5 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC89A11AF34D4D008392D5 /* GCDAsyncSocket.m */; };
 		C1DD52891AEF5A1D00955035 /* DynamicFileRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52881AEF5A1D00955035 /* DynamicFileRoute.m */; };
 		C1DD52921AEF67E800955035 /* AdvancedRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52911AEF67E800955035 /* AdvancedRoute.m */; };
 		C1DD52961AEF696600955035 /* SigninRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52951AEF696600955035 /* SigninRoute.m */; };
@@ -124,7 +125,6 @@
 		C1F691FF1AD9E5F1007FF919 /* DAVResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F6910D1AD9E5F0007FF919 /* DAVResponse.m */; };
 		C1F692001AD9E5F1007FF919 /* DELETEResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F6910F1AD9E5F0007FF919 /* DELETEResponse.m */; };
 		C1F692011AD9E5F1007FF919 /* PUTResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F691111AD9E5F0007FF919 /* PUTResponse.m */; };
-		C1F6925F1AD9E5F1007FF919 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F691D91AD9E5F1007FF919 /* GCDAsyncSocket.m */; };
 		C1F692611AD9E5F1007FF919 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F691DD1AD9E5F1007FF919 /* DDAbstractDatabaseLogger.m */; };
 		C1F692621AD9E5F1007FF919 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F691DF1AD9E5F1007FF919 /* DDASLLogger.m */; };
 		C1F692631AD9E5F1007FF919 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F691E11AD9E5F1007FF919 /* DDFileLogger.m */; };
@@ -154,6 +154,8 @@
 		C13D40451ADCEED4004AF563 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		C1AC896D1AF09517008392D5 /* SignUpRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpRoute.h; path = Auth/SignUpRoute.h; sourceTree = "<group>"; };
 		C1AC896E1AF09517008392D5 /* SignUpRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpRoute.m; path = Auth/SignUpRoute.m; sourceTree = "<group>"; };
+		C1AC89A01AF34D4D008392D5 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		C1AC89A11AF34D4D008392D5 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		C1DD52871AEF5A1D00955035 /* DynamicFileRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicFileRoute.h; sourceTree = "<group>"; };
 		C1DD52881AEF5A1D00955035 /* DynamicFileRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicFileRoute.m; sourceTree = "<group>"; };
 		C1DD52901AEF67E800955035 /* AdvancedRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedRoute.h; sourceTree = "<group>"; };
@@ -404,8 +406,6 @@
 		C1F691121AD9E5F0007FF919 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		C1F691131AD9E5F0007FF919 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.markdown; sourceTree = "<group>"; };
 		C1F691D71AD9E5F1007FF919 /* About.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = About.txt; sourceTree = "<group>"; };
-		C1F691D81AD9E5F1007FF919 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
-		C1F691D91AD9E5F1007FF919 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		C1F691DB1AD9E5F1007FF919 /* About.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = About.txt; sourceTree = "<group>"; };
 		C1F691DC1AD9E5F1007FF919 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
 		C1F691DD1AD9E5F1007FF919 /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
@@ -463,6 +463,7 @@
 				C1F70E241ADE0AE500CD9959 /* Auth */,
 				C1F690CC1AD9E5E0007FF919 /* Routing */,
 				C1F690DF1AD9E5F0007FF919 /* CocoaHTTPServer */,
+				C1F691D51AD9E5F1007FF919 /* CocoaAsyncSocket */,
 				C1F68FBA1AD9E5C4007FF919 /* YapDatabase */,
 				C1F68E9B1AD9E587007FF919 /* XocolatlTests */,
 				C1F68E861AD9E587007FF919 /* Products */,
@@ -910,7 +911,6 @@
 				C1F691081AD9E5F0007FF919 /* Extensions */,
 				C1F691121AD9E5F0007FF919 /* LICENSE.txt */,
 				C1F691131AD9E5F0007FF919 /* README.markdown */,
-				C1F691D51AD9E5F1007FF919 /* Vendor */,
 			);
 			name = CocoaHTTPServer;
 			path = Xocolatl/CocoaHTTPServer;
@@ -1006,21 +1006,22 @@
 			path = WebDAV;
 			sourceTree = "<group>";
 		};
-		C1F691D51AD9E5F1007FF919 /* Vendor */ = {
+		C1F691D51AD9E5F1007FF919 /* CocoaAsyncSocket */ = {
 			isa = PBXGroup;
 			children = (
 				C1F691D61AD9E5F1007FF919 /* CocoaAsyncSocket */,
 				C1F691DA1AD9E5F1007FF919 /* CocoaLumberjack */,
 			);
-			path = Vendor;
+			name = CocoaAsyncSocket;
+			path = Xocolatl/CocoaHTTPServer/Vendor;
 			sourceTree = "<group>";
 		};
 		C1F691D61AD9E5F1007FF919 /* CocoaAsyncSocket */ = {
 			isa = PBXGroup;
 			children = (
+				C1AC89A01AF34D4D008392D5 /* GCDAsyncSocket.h */,
+				C1AC89A11AF34D4D008392D5 /* GCDAsyncSocket.m */,
 				C1F691D71AD9E5F1007FF919 /* About.txt */,
-				C1F691D81AD9E5F1007FF919 /* GCDAsyncSocket.h */,
-				C1F691D91AD9E5F1007FF919 /* GCDAsyncSocket.m */,
 			);
 			path = CocoaAsyncSocket;
 			sourceTree = "<group>";
@@ -1211,7 +1212,6 @@
 				C1F6907E1AD9E5C4007FF919 /* YDBCKAttachRequest.m in Sources */,
 				C1F690A41AD9E5C4007FF919 /* YapDatabaseSearchResultsViewTransaction.m in Sources */,
 				C1F70E2E1ADE17EA00CD9959 /* NSString+randomString.m in Sources */,
-				C1F6925F1AD9E5F1007FF919 /* GCDAsyncSocket.m in Sources */,
 				C1F690A01AD9E5C4007FF919 /* YapDatabaseSearchQueue.m in Sources */,
 				C1F690AB1AD9E5C4007FF919 /* YapDatabaseViewPage.mm in Sources */,
 				C1AC896F1AF09517008392D5 /* SignUpRoute.m in Sources */,
@@ -1290,6 +1290,7 @@
 				C1F690821AD9E5C4007FF919 /* YDBCKRecordTableInfo.m in Sources */,
 				C1F70E2A1ADE0BC700CD9959 /* XOCUser.m in Sources */,
 				C1F690A91AD9E5C4007FF919 /* YapDatabaseSecondaryIndexSetup.m in Sources */,
+				C1AC89A21AF34D4D008392D5 /* GCDAsyncSocket.m in Sources */,
 				C1F690921AD9E5C4007FF919 /* YapDatabaseFullTextSearchHandler.m in Sources */,
 				C1F6908F1AD9E5C4007FF919 /* YapDatabaseFilteredViewTypes.m in Sources */,
 				C1F690C61AD9E5C4007FF919 /* YapSet.m in Sources */,
