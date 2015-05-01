@@ -8,6 +8,6 @@
 
 #import "AdvancedRoute.h"
 
-@interface LoginRoute : AdvancedRoute
+@interface SigninRoute : AdvancedRoute
 
 @end

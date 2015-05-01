@@ -61,11 +61,6 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 #define WS_OP_PING                 9
 #define WS_OP_PONG                 10
 
-static inline BOOL WS_OP_IS_FINAL_FRAGMENT(UInt8 frame)
-{
-	return (frame & 0x80) ? YES : NO;
-}
-
 static inline BOOL WS_PAYLOAD_IS_MASKED(UInt8 frame)
 {
 	return (frame & 0x80) ? YES : NO;
@@ -191,7 +186,7 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 	
 	if ((self = [super init]))
 	{
-		if (HTTP_LOG_VERBOSE)
+		if (HTTP_LOG_LEVEL_VERBOSE)
 		{
 			NSData *requestHeaders = [aRequest messageData];
 			
@@ -434,7 +429,7 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 	NSData *responseHeaders = [wsResponse messageData];
 	
 	
-	if (HTTP_LOG_VERBOSE)
+	if (HTTP_LOG_LEVEL_VERBOSE)
 	{
 		NSString *temp = [[NSString alloc] initWithData:responseHeaders encoding:NSUTF8StringEncoding];
 		HTTPLogVerbose(@"%@[%p] Response Headers:\n%@", THIS_FILE, self, temp);
@@ -516,7 +511,7 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 	
 	[asyncSocket writeData:responseBody withTimeout:TIMEOUT_NONE tag:TAG_HTTP_RESPONSE_BODY];
 	
-	if (HTTP_LOG_VERBOSE)
+	if (HTTP_LOG_LEVEL_VERBOSE)
 	{
 		NSString *s1 = [[NSString alloc] initWithData:d1 encoding:NSASCIIStringEncoding];
 		NSString *s2 = [[NSString alloc] initWithData:d2 encoding:NSASCIIStringEncoding];

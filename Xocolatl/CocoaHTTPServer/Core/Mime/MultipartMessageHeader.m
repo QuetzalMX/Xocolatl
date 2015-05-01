@@ -14,9 +14,9 @@
 #pragma mark log level
 
 #ifdef DEBUG
-static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
+static const NSInteger httpLogLevel = HTTP_LOG_LEVEL_WARN;
 #else
-static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
+static const NSInteger httpLogLevel = HTTP_LOG_LEVEL_WARN;
 #endif
 
 //-----------------------------------------------------------------
@@ -39,15 +39,15 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 	encoding = contentTransferEncoding_unknown;
 
 	char* bytes = (char*)data.bytes;
-	int length = data.length;
-	int offset = 0;
+	NSInteger length = data.length;
+	NSInteger offset = 0;
 
 	// split header into header fields, separated by \r\n
-	uint16_t fields_separator = 0x0A0D; // \r\n
+	NSUInteger fields_separator = 0x0A0D; // \r\n
 	while( offset < length - 2 ) {
 
 		// the !isspace condition is to support header unfolding
-		if( (*(uint16_t*) (bytes+offset)  == fields_separator) && ((offset == length - 2) || !(isspace(bytes[offset+2])) )) {
+		if( (*(NSUInteger*) (bytes+offset)  == fields_separator) && ((offset == length - 2) || !(isspace(bytes[offset+2])) )) {
 			NSData* fieldData = [NSData dataWithBytesNoCopy:bytes length:offset freeWhenDone:NO];
 			MultipartMessageHeaderField* field = [[MultipartMessageHeaderField alloc] initWithData: fieldData  contentEncoding:formEncoding];
 			if( field ) {

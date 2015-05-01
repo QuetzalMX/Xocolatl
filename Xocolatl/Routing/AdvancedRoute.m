@@ -36,16 +36,16 @@
                response:(RouteResponse *)response;
 {
     //Where are we routing this request?
-    if ([request.method isEqualToString:@"GET"] && self.methods[@"GET"]) {
+    if ([request.method isEqualToString:HTTPMethodGET] && self.methods[HTTPMethodGET]) {
         [self getRequest:request
                 response:response];
-    } else if ([request.method isEqualToString:@"POST"] && self.methods[@"POST"]) {
+    } else if ([request.method isEqualToString:HTTPMethodPOST] && self.methods[HTTPMethodPOST]) {
         [self postRequest:request
                  response:response];
-    } else if ([request.method isEqualToString:@"PUT"] && self.methods[@"PUT"]) {
+    } else if ([request.method isEqualToString:HTTPMethodPUT] && self.methods[HTTPMethodPUT]) {
         [self putRequest:request
                 response:response];
-    } else if ([request.method isEqualToString:@"DELETE"] && self.methods[@"DELETE"]) {
+    } else if ([request.method isEqualToString:HTTPMethodDELETE] && self.methods[HTTPMethodDELETE]) {
         [self deleteRequest:request
                    response:response];
     }

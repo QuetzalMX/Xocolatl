@@ -3,6 +3,13 @@
 #import "Route.h"
 #import "YapDatabase.h"
 
+#warning This should be in CocoaHTTPServer.
+NSString *const HTTPMethodGET = @"GET";
+NSString *const HTTPMethodPOST = @"POST";
+NSString *const HTTPMethodPUT = @"PUT";
+NSString *const HTTPMethodDELETE = @"DELETE";
+NSString *const HTTPMethodHEAD = @"HEAD";
+
 @implementation RoutingHTTPServer {
 	NSMutableDictionary *routes;
 	NSMutableDictionary *defaultHeaders;
@@ -109,8 +116,8 @@
         [self addRoute:route
              forMethod:method];
         
-        if ([method isEqualToString:@"GET"]) {
-            [self addRoute:route forMethod:@"HEAD"];
+        if ([method isEqualToString:HTTPMethodGET]) {
+            [self addRoute:route forMethod:HTTPMethodHEAD];
         }
     }];
 }

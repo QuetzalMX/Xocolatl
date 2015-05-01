@@ -239,20 +239,17 @@
 
 - (NSUInteger)saveThreshold
 {
-	if (dispatch_get_current_queue() == loggerQueue)
-	{
-		return saveThreshold;
-	}
-	else
-	{
-		__block NSUInteger result;
-		
-		dispatch_sync(loggerQueue, ^{
-			result = saveThreshold;
-		});
-		
-		return result;
-	}
+    if ([self isOnInternalLoggerQueue]) {
+        return saveThreshold;
+    } else {
+        __block NSUInteger result;
+        
+        dispatch_sync(loggerQueue, ^{
+            result = saveThreshold;
+        });
+        
+        return result;
+    }
 }
 
 - (void)setSaveThreshold:(NSUInteger)threshold
@@ -279,7 +276,7 @@
 		}
 	};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 		block();
 	else
 		dispatch_async(loggerQueue, block);
@@ -287,7 +284,7 @@
 
 - (NSTimeInterval)saveInterval
 {
-	if (dispatch_get_current_queue() == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 	{
 		return saveInterval;
 	}
@@ -362,7 +359,7 @@
 		}
 	};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 		block();
 	else
 		dispatch_async(loggerQueue, block);
@@ -370,7 +367,7 @@
 
 - (NSTimeInterval)maxAge
 {
-	if (dispatch_get_current_queue() == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 	{
 		return maxAge;
 	}
@@ -451,7 +448,7 @@
 		}
 	};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 		block();
 	else
 		dispatch_async(loggerQueue, block);
@@ -459,7 +456,7 @@
 
 - (NSTimeInterval)deleteInterval
 {
-	if (dispatch_get_current_queue() == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 	{
 		return deleteInterval;
 	}
@@ -533,7 +530,7 @@
 		}
 	};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 		block();
 	else
 		dispatch_async(loggerQueue, block);
@@ -541,7 +538,7 @@
 
 - (BOOL)deleteOnEverySave
 {
-	if (dispatch_get_current_queue() == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 	{
 		return deleteOnEverySave;
 	}
@@ -564,7 +561,7 @@
 		deleteOnEverySave = flag;
 	};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 		block();
 	else
 		dispatch_async(loggerQueue, block);
@@ -581,7 +578,7 @@
 		[self performSaveAndSuspendSaveTimer];
 	}};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 		block();
 	else
 		dispatch_async(loggerQueue, block);
@@ -594,7 +591,7 @@
 		[self performDelete];
 	}};
 	
-	if (dispatch_get_current_queue() == loggerQueue)
+	if ([self isOnInternalLoggerQueue])
 		block();
 	else
 		dispatch_async(loggerQueue, block);

@@ -12,13 +12,8 @@
 #import "XOCUser.h"
 #import "RoutingHTTPServer.h"
 #import "YapDatabase.h"
-#import "AuthRequestManager.h"
 #import "Route.h"
-#import "LoginRoute.h"
-
-//Example
-#import "CruyffUser.h"
-#import "HomeRoute.h"
+#import "SigninRoute.h"
 
 @interface AppDelegate ()
 
@@ -44,11 +39,8 @@
     }
     
     //Configure the routes.
-    LoginRoute *loginRoute = [[LoginRoute alloc] initInServer:self.server];
+    SigninRoute *loginRoute = [[SigninRoute alloc] initInServer:self.server];
     [self.server addRoute:loginRoute];
-    
-    HomeRoute *homeRoute = [[HomeRoute alloc] initInServer:self.server];
-    [self.server addRoute:homeRoute];
 }
 
 @end
