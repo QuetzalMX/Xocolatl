@@ -8,7 +8,6 @@
 
 #import "SigninRoute.h"
 
-#import "AuthRequestManager.h"
 #import "XOCUser+Auth.h"
 #import "YapDatabaseTransaction.h"
 
@@ -18,8 +17,8 @@ NSInteger const SecondsUntilAuthorizationExpires = 3600;
 
 - (NSDictionary *)methods;
 {
-    return @{@"GET": @"/",
-             @"POST": @"/api/login"};
+    return @{HTTPMethodGET: @"/",
+             HTTPMethodPOST: @"/api/login"};
 }
 
 - (void)getRequest:(RouteRequest *)request response:(RouteResponse *)response;

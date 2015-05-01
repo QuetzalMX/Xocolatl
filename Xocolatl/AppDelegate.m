@@ -12,7 +12,6 @@
 #import "XOCUser.h"
 #import "RoutingHTTPServer.h"
 #import "YapDatabase.h"
-#import "AuthRequestManager.h"
 #import "Route.h"
 #import "SigninRoute.h"
 

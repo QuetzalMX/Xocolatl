@@ -8,6 +8,11 @@
 
 typedef void (^RequestHandler)(RouteRequest *request, RouteResponse *response);
 
+extern NSString *const HTTPMethodGET;
+extern NSString *const HTTPMethodPOST;
+extern NSString *const HTTPMethodPUT;
+extern NSString *const HTTPMethodDELETE;
+
 @interface RoutingHTTPServer : HTTPServer
 
 @property (nonatomic, readonly) NSDictionary *defaultHeaders;

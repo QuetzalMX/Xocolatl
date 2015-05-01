@@ -70,6 +70,7 @@
             [super httpResponseForMethod:method
                                      URI:path
                       andCompletionBlock:^ (NSObject <HTTPResponse> *staticResponse) {
+#warning I need to check what this was for.
 //                          if (staticResponse && [staticResponse respondsToSelector:@selector(filePath)]) {
 //                              NSString *mimeType = [self.http mimeTypeForPath:[staticResponse performSelector:@selector(filePath)]];
 //                              if (mimeType) {
