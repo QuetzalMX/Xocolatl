@@ -32,9 +32,25 @@ NSString *const HTTPMethodHEAD = @"HEAD";
     [self setDocumentRoot:aDocumentRoot];
     
 #warning We need to decouple the database from the routing server.
-    NSString *databaseWithFileExtension = [NSString stringWithFormat:@"/database/%@.yap", databaseName];
-    NSString *databasePath = [aDocumentRoot stringByAppendingString:databaseWithFileExtension];
-    _database = [[YapDatabase alloc] initWithPath:databasePath];
+    //Let's see if we can create the database.
+    NSString *databaseFolderPath = [aDocumentRoot stringByAppendingString:@"/database/"];
+    BOOL isDirectory = YES;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:databaseFolderPath
+                                              isDirectory:&isDirectory]) {
+        //The database folder doesn't exist. Create it.
+        NSError *databaseFolderCreationError;
+        [[NSFileManager defaultManager] createDirectoryAtPath:databaseFolderPath
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:&databaseFolderCreationError];
+        if (databaseFolderCreationError) {
+            //The database folder couldn't be created. Something is wrong.
+            return nil;
+        }
+    }
+    
+    NSString *databaseWithFileExtension = [NSString stringWithFormat:@"%@%@.yap", databaseFolderPath, databaseName];
+    _database = [[YapDatabase alloc] initWithPath:databaseWithFileExtension];
     
     return self;
 }

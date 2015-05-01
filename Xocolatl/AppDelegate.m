@@ -4,22 +4,21 @@
 //
 //  Created by Fernando Olivares on 4/11/15.
 //  Copyright (c) 2015 Quetzal. All rights reserved.
-//
 
 #import "AppDelegate.h"
 
 //Core
-#import "XOCUser.h"
 #import "RoutingHTTPServer.h"
-#import "YapDatabase.h"
 #import "Route.h"
 #import "SigninRoute.h"
+#import "XOCUser.h"
+#import "YapDatabase.h"
 
 @interface AppDelegate ()
 
 @property (nonatomic, strong) RoutingHTTPServer *server;
-
 @property (weak) IBOutlet NSWindow *window;
+
 @end
 
 @implementation AppDelegate
@@ -28,8 +27,8 @@
     
     //Create the server.
     self.server = [[RoutingHTTPServer alloc] initAtPort:3000
-                                           documentRoot:[@"~/Sites/Cruyff" stringByExpandingTildeInPath]
-                                           databaseName:@"Cruyff"];
+                                           documentRoot:[@"~/Sites/SuperContabilidadMX" stringByExpandingTildeInPath]
+                                           databaseName:@"SuperContabilidadMX"];
     
     //Start the server.
     NSError *error;

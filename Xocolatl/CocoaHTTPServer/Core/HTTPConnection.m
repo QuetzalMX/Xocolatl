@@ -658,24 +658,20 @@ static NSMutableArray *recentNonces;
 		
 		NSArray *certificates = [self sslIdentityAndCertificates];
 		
-		if ([certificates count] > 0)
-		{
-			// All connections are assumed to be secure. Only secure connections are allowed on this server.
-			NSMutableDictionary *settings = [NSMutableDictionary dictionaryWithCapacity:3];
-			
-			// Configure this connection as the server
-			[settings setObject:[NSNumber numberWithBool:YES]
-						 forKey:(NSString *)kCFStreamSSLIsServer];
-			
-			[settings setObject:certificates
-						 forKey:(NSString *)kCFStreamSSLCertificates];
-			
-			// Configure this connection to use the highest possible SSL level
-			[settings setObject:(NSString *)kCFStreamSocketSecurityLevelNegotiatedSSL
-						 forKey:(NSString *)kCFStreamSSLLevel];
-			
-			[asyncSocket startTLS:settings];
-		}
+        if ([certificates count] > 0)
+        {
+            // All connections are assumed to be secure. Only secure connections are allowed on this server.
+            NSMutableDictionary *settings = [NSMutableDictionary dictionaryWithCapacity:3];
+            
+            // Configure this connection as the server
+            [settings setObject:[NSNumber numberWithBool:YES]
+                         forKey:(NSString *)kCFStreamSSLIsServer];
+            
+            [settings setObject:certificates
+                         forKey:(NSString *)kCFStreamSSLCertificates];
+            
+            [asyncSocket startTLS:settings];
+        }
 	}
 	
 	[self startReadingRequest];

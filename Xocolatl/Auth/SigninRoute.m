@@ -17,14 +17,7 @@ NSInteger const SecondsUntilAuthorizationExpires = 3600;
 
 - (NSDictionary *)methods;
 {
-    return @{HTTPMethodGET: @"/",
-             HTTPMethodPOST: @"/api/login"};
-}
-
-- (void)getRequest:(RouteRequest *)request response:(RouteResponse *)response;
-{
-    [response respondWithDynamicFile:[self.server.documentRoot stringByAppendingPathComponent:@"index.html"]
-            andReplacementDictionary:@{@"title": @"Cruyff Football"}];
+    return @{HTTPMethodPOST: @"/api/login"};
 }
 
 - (void)postRequest:(RouteRequest *)request response:(RouteResponse *)response;
@@ -72,6 +65,10 @@ NSInteger const SecondsUntilAuthorizationExpires = 3600;
                   inCollection:UsersCollection];
     }];
     
+    if (!registeredUser) {
+        return;
+    }
+    
     //Now that we have all the info, add our cookies and redirect the user back to home.
     [response setCookieNamed:@"timeOfDeath"
                    withValue:[NSString stringWithFormat:@"%.0f", timeOfDeath]
@@ -88,7 +85,8 @@ NSInteger const SecondsUntilAuthorizationExpires = 3600;
                     isSecure:YES
                     httpOnly:YES];
     
-    [response respondWithRedirect:@"/home"];
+    [response respondWithDictionary:registeredUser.jsonRepresentation
+                            andCode:200];
 }
 
 @end

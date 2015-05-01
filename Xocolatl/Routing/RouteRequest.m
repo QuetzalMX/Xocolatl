@@ -41,17 +41,23 @@
 
 - (NSDictionary *)parsedBody;
 {
-    NSString *unicodeBody = [[NSString alloc] initWithData:self.body
-                                                  encoding:NSUTF8StringEncoding];
+    NSError *unicodeBodyError;
+    NSMutableDictionary *unicodeBody = [NSJSONSerialization JSONObjectWithData:self.body
+                                                                       options:NSJSONReadingAllowFragments
+                                                                         error:&unicodeBodyError];
+    if (!unicodeBody || unicodeBodyError) {
+        NSString *unicodeBodyString = [[NSString alloc] initWithData:self.body
+                                                      encoding:NSUTF8StringEncoding];
+        
+        NSArray *variablePairs = [unicodeBodyString componentsSeparatedByString:@"&"];
+        unicodeBody = [NSMutableDictionary new];
+        [variablePairs enumerateObjectsUsingBlock:^(NSString *pair, NSUInteger idx, BOOL *stop) {
+            NSArray *pairArray = [pair componentsSeparatedByString:@"="];
+            unicodeBody[pairArray.firstObject] = pairArray.lastObject;
+        }];
+    }
     
-    NSArray *variablePairs = [unicodeBody componentsSeparatedByString:@"&"];
-    NSMutableDictionary *parsedBody = [NSMutableDictionary new];
-    [variablePairs enumerateObjectsUsingBlock:^(NSString *pair, NSUInteger idx, BOOL *stop) {
-        NSArray *pairArray = [pair componentsSeparatedByString:@"="];
-        parsedBody[pairArray.firstObject] = pairArray.lastObject;
-    }];
-    
-    return parsedBody;
+    return [unicodeBody copy];
 }
 
 - (NSString *)description {

@@ -23,7 +23,7 @@
 {
     NSString *path = [self.server.documentRoot stringByAppendingPathComponent:@"register.html"];
     [response respondWithDynamicFile:path
-            andReplacementDictionary:@{@"title": @"Cruyff Football"}];
+            andReplacementDictionary:@{@"title": @"SuperContabilidadMX"}];
 }
 
 - (void)postRequest:(RouteRequest *)request response:(RouteResponse *)response;
