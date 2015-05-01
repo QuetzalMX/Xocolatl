@@ -31,6 +31,7 @@ NSString *const HTTPMethodHEAD = @"HEAD";
     [self setPort:(UInt16)aPort];
     [self setDocumentRoot:aDocumentRoot];
     
+#warning We need to decouple the database from the routing server.
     NSString *databaseWithFileExtension = [NSString stringWithFormat:@"/database/%@.yap", databaseName];
     NSString *databasePath = [aDocumentRoot stringByAppendingString:databaseWithFileExtension];
     _database = [[YapDatabase alloc] initWithPath:databasePath];

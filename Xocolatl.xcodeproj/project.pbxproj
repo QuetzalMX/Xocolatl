@@ -103,8 +103,6 @@
 		C1F690DC1AD9E5E0007FF919 /* RouteResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F690D41AD9E5E0007FF919 /* RouteResponse.m */; };
 		C1F690DD1AD9E5E0007FF919 /* RoutingConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F690D61AD9E5E0007FF919 /* RoutingConnection.m */; };
 		C1F690DE1AD9E5E0007FF919 /* RoutingHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F690D81AD9E5E0007FF919 /* RoutingHTTPServer.m */; };
-		C1F691EC1AD9E5F1007FF919 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = C1F690E01AD9E5F0007FF919 /* .gitignore */; };
-		C1F691ED1AD9E5F1007FF919 /* .hgignore in Resources */ = {isa = PBXBuildFile; fileRef = C1F690E11AD9E5F0007FF919 /* .hgignore */; };
 		C1F691EE1AD9E5F1007FF919 /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F690E51AD9E5F0007FF919 /* DDData.m */; };
 		C1F691EF1AD9E5F1007FF919 /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F690E71AD9E5F0007FF919 /* DDNumber.m */; };
 		C1F691F01AD9E5F1007FF919 /* DDRange.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F690E91AD9E5F0007FF919 /* DDRange.m */; };
@@ -359,8 +357,6 @@
 		C1F690D61AD9E5E0007FF919 /* RoutingConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutingConnection.m; sourceTree = "<group>"; };
 		C1F690D71AD9E5E0007FF919 /* RoutingHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoutingHTTPServer.h; sourceTree = "<group>"; };
 		C1F690D81AD9E5E0007FF919 /* RoutingHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutingHTTPServer.m; sourceTree = "<group>"; };
-		C1F690E01AD9E5F0007FF919 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		C1F690E11AD9E5F0007FF919 /* .hgignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .hgignore; sourceTree = "<group>"; };
 		C1F690E41AD9E5F0007FF919 /* DDData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDData.h; sourceTree = "<group>"; };
 		C1F690E51AD9E5F0007FF919 /* DDData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDData.m; sourceTree = "<group>"; };
 		C1F690E61AD9E5F0007FF919 /* DDNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDNumber.h; sourceTree = "<group>"; };
@@ -905,8 +901,6 @@
 		C1F690DF1AD9E5F0007FF919 /* CocoaHTTPServer */ = {
 			isa = PBXGroup;
 			children = (
-				C1F690E01AD9E5F0007FF919 /* .gitignore */,
-				C1F690E11AD9E5F0007FF919 /* .hgignore */,
 				C1F690E21AD9E5F0007FF919 /* Core */,
 				C1F691081AD9E5F0007FF919 /* Extensions */,
 				C1F691121AD9E5F0007FF919 /* LICENSE.txt */,
@@ -1181,8 +1175,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1F691ED1AD9E5F1007FF919 /* .hgignore in Resources */,
-				C1F691EC1AD9E5F1007FF919 /* .gitignore in Resources */,
 				C1DD529D1AF0713900955035 /* certificate.p12 in Resources */,
 				C1F68E901AD9E587007FF919 /* Images.xcassets in Resources */,
 				C1F68E931AD9E587007FF919 /* MainMenu.xib in Resources */,
