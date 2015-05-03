@@ -147,36 +147,42 @@
 
 - (NSArray *)sslIdentityAndCertificates
 {
-    // Read .p12 file
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"certificate" ofType:@"p12"];
-    NSData *pkcs12data = [[NSData alloc] initWithContentsOfFile:path];
+    static NSArray *sslIdentityAndCertificates;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        // Read .p12 file
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"certificate" ofType:@"p12"];
+        NSData *pkcs12data = [[NSData alloc] initWithContentsOfFile:path];
+        
+        // Import .p12 data
+        CFArrayRef keyref = NULL;
+        OSStatus sanityCheck;
+        sanityCheck = SecPKCS12Import((__bridge CFDataRef)pkcs12data,
+                                      (__bridge CFDictionaryRef)@{(__bridge id)kSecImportExportPassphrase: @"pass"},
+                                      &keyref);
+        
+        if (sanityCheck != noErr) {
+            NSLog(@"Error while importing pkcs12 [%d]", (int)sanityCheck);
+        } else {
+            NSLog(@"Success opening p12 certificate.");
+        }
+        
+        // Identity
+        CFDictionaryRef identityDict = CFArrayGetValueAtIndex(keyref, 0);
+        SecIdentityRef identityRef = (SecIdentityRef)CFDictionaryGetValue(identityDict,
+                                                                          kSecImportItemIdentity);
+        
+        // Cert
+        SecCertificateRef cert = NULL;
+        OSStatus status = SecIdentityCopyCertificate(identityRef, &cert);
+        if (status)
+            NSLog(@"SecIdentityCopyCertificate failed.");
+        
+        // the certificates array, containing the identity then the root certificate
+        sslIdentityAndCertificates = @[(__bridge id)identityRef, (__bridge id)cert];
+    });
     
-    // Import .p12 data
-    CFArrayRef keyref = NULL;
-    OSStatus sanityCheck;
-    sanityCheck = SecPKCS12Import((__bridge CFDataRef)pkcs12data,
-                                  (__bridge CFDictionaryRef)@{(__bridge id)kSecImportExportPassphrase: @"pass"},
-                                  &keyref);
-    
-    if (sanityCheck != noErr) {
-        NSLog(@"Error while importing pkcs12 [%d]", (int)sanityCheck);
-    } else {
-        NSLog(@"Success opening p12 certificate.");
-    }
-    
-    // Identity
-    CFDictionaryRef identityDict = CFArrayGetValueAtIndex(keyref, 0);
-    SecIdentityRef identityRef = (SecIdentityRef)CFDictionaryGetValue(identityDict,
-                                                                      kSecImportItemIdentity);
-    
-    // Cert
-    SecCertificateRef cert = NULL;
-    OSStatus status = SecIdentityCopyCertificate(identityRef, &cert);
-    if (status)
-        NSLog(@"SecIdentityCopyCertificate failed.");
-    
-    // the certificates array, containing the identity then the root certificate
-    return @[(__bridge id)identityRef, (__bridge id)cert];
+    return sslIdentityAndCertificates;
 }
 
 @end
