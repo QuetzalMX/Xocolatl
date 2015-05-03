@@ -65,6 +65,8 @@
 
 	if (headers && !isError) {
 		[headers enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL *stop) {
+			[response setHeaderField:field value:value];
+		}];
 	}
 
 	// Set the connection header if not already specified
@@ -85,9 +87,13 @@
 	return [super preprocessErrorResponse:response];
 }
 
+- (BOOL)shouldDie;
+{
 	__block BOOL shouldDie = [super shouldDie];
 
 	// Allow custom headers to determine if the connection should be closed
+	if (!shouldDie && headers) {
+		[headers enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL *stop) {
 			if ([field caseInsensitiveCompare:@"connection"] == NSOrderedSame) {
 				if ([value caseInsensitiveCompare:@"close"] == NSOrderedSame) {
 					shouldDie = YES;
@@ -100,3 +106,37 @@
 	return shouldDie;
 }
 
+#pragma mark - HTTPResponse
+- (NSObject <HTTPResponse> *)httpResponseForMethod:(NSString *)method
+                                              URI:(NSString *)path;
+{
+    //We just received a connection.
+    NSURL *url = [request url];
+    NSString *query = nil;
+    NSDictionary *params = [NSDictionary dictionary];
+    headers = nil;
+    
+    if (url) {
+        path = [url path]; // Strip the query string from the path
+        query = [url query];
+        if (query) {
+            params = [self parseParams:query];
+        }
+    }
+    
+    RoutingResponse *response = [self.delegate connection:self
+                                  didFinishReadingRequest:request
+                                                 withPath:path
+                                                   method:method
+                                            andParameters:params];
+    if (!response) {
+        //We didn't know how to handle it. Perhaps HTTPConnection knows?
+        return [super httpResponseForMethod:method
+                                        URI:path];
+    }
+    
+    headers = response.httpHeaders;
+    return response;
+}
+
+@end
