@@ -893,7 +893,7 @@ static NSMutableArray *recentNonces;
 {
 	HTTPLogTrace();
 	
-	if (HTTP_LOG_VERBOSE)
+	if (HTTP_LOG_FLAG_VERBOSE)
 	{
 		NSData *tempData = [request messageData];
 		
@@ -990,9 +990,7 @@ static NSMutableArray *recentNonces;
 	
 	// Respond properly to HTTP 'GET' and 'HEAD' commands
 	httpResponse = [self httpResponseForMethod:method URI:uri];
-	
-	if (httpResponse == nil)
-	{
+	if (!httpResponse) {
 		[self handleResourceNotFound];
 		return;
 	}

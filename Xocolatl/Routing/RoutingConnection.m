@@ -1,33 +1,41 @@
 #import "RoutingConnection.h"
 #import "RoutingHTTPServer.h"
 #import "HTTPMessage.h"
-#import "HTTPResponseProxy.h"
+#import "RoutingResponse.h"
+
+//Authentication
+#import "GCDAsyncSocket.h"
+#import "HTTPMessage.h"
+#import "XOCUser+Auth.h"
 
 @interface RoutingConnection ()
 
-@property (nonatomic, weak) RoutingHTTPServer *http;
-@property (nonatomic, copy) NSDictionary *headers;
+@property (nonatomic, assign) RoutingHTTPServer *delegate;
 
 @end
 
-@implementation RoutingConnection
+@implementation RoutingConnection {
+	NSDictionary *headers;
+}
 
-- (instancetype)initWithAsyncSocket:(GCDAsyncSocket *)newSocket
-                      configuration:(HTTPConfig *)aConfig;
+- (id)initWithAsyncSocket:(GCDAsyncSocket *)newSocket
+            configuration:(HTTPConfig *)aConfig;
 {
 	if (self != [super initWithAsyncSocket:newSocket configuration:aConfig]) {
         return nil;
-	}
+    }
     
-    NSAssert([config.server isKindOfClass:[RoutingHTTPServer class]], @"A RoutingConnection is being used with a server that is not a RoutingHTTPServer");
-    _http = (RoutingHTTPServer *)config.server;
-    
+    NSAssert([config.server isKindOfClass:[RoutingHTTPServer class]],
+             @"A RoutingConnection is being used with a server that is not a RoutingHTTPServer");
+
+    _delegate = (RoutingHTTPServer *)config.server;
+	
 	return self;
 }
 
 - (BOOL)supportsMethod:(NSString *)method atPath:(NSString *)path {
 
-	if ([self.http supportsMethod:method])
+	if ([self.delegate supportsMethod:method])
 		return YES;
 
 	return [super supportsMethod:method atPath:path];
@@ -43,70 +51,21 @@
 }
 
 - (void)processBodyData:(NSData *)postDataChunk {
-	[request appendData:postDataChunk];
-}
-
-- (void)httpResponseForMethod:(NSString *)method
-                          URI:(NSString *)path
-           andCompletionBlock:(void (^)(NSObject <HTTPResponse> *))completionBlock;
-{
-    //We need to find a response for this method.
-    //Pass it to our router, who will find the route that's responsible.
-    [self.http routeMethod:method
-                  withPath:request.url.path
-                parameters:[self parseParams:request.url.query]
-                   request:request
-                connection:self
-        andCompletionBlock:^(NSObject<HTTPResponse> *response, NSDictionary *responseHeaders) {
-            //Someone did end up being responsible. We're done.
-            if (response) {
-                self.headers = responseHeaders;
-                completionBlock(response);
-                return;
-            }
-       
-            //No one was responsible for this route.
-            //Attempt to send a static file.
-            [super httpResponseForMethod:method
-                                     URI:path
-                      andCompletionBlock:^ (NSObject <HTTPResponse> *staticResponse) {
-#warning I need to check what this was for.
-//                          if (staticResponse && [staticResponse respondsToSelector:@selector(filePath)]) {
-//                              NSString *mimeType = [self.http mimeTypeForPath:[staticResponse performSelector:@selector(filePath)]];
-//                              if (mimeType) {
-//                                  self.headers = [NSDictionary dictionaryWithObject:mimeType forKey:@"Content-Type"];
-//                              }
-//                          }
-                     
-                          completionBlock(staticResponse);
-                      }];
-   }];
-	
-}
-
-- (void)responseHasAvailableData:(NSObject<HTTPResponse> *)sender;
-{
-    if ([sender respondsToSelector:@selector(response)]) {
-        HTTPResponseProxy *proxy = (HTTPResponseProxy *)httpResponse;
-        if (proxy.response == sender) {
-            [super responseHasAvailableData:httpResponse];
-        }
-    } else {
-        [super responseHasAvailableData:sender];
-    }
-}
-
-- (void)responseDidAbort:(NSObject<HTTPResponse> *)sender {
-	HTTPResponseProxy *proxy = (HTTPResponseProxy *)httpResponse;
-	if (proxy.response == sender) {
-		[super responseDidAbort:httpResponse];
+	BOOL result = [request appendData:postDataChunk];
+	if (!result) {
+		// TODO: Log
 	}
 }
 
-- (void)setHeadersForResponse:(HTTPMessage *)response isError:(BOOL)isError {
-	[self.http.defaultHeaders enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL *stop) {
-        [response setHeaderField:field value:value];
+- (void)setHeadersForResponse:(HTTPMessage *)response isError:(BOOL)isError;
+{
+	[self.delegate.defaultHeaders enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL *stop) {
+		[response setHeaderField:field value:value];
 	}];
+
+	if (headers && !isError) {
+		[headers enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL *stop) {
+	}
 
 	// Set the connection header if not already specified
 	NSString *connection = [response headerField:@"Connection"];
@@ -126,12 +85,9 @@
 	return [super preprocessErrorResponse:response];
 }
 
-- (BOOL)shouldDie {
 	__block BOOL shouldDie = [super shouldDie];
 
 	// Allow custom headers to determine if the connection should be closed
-	if (!shouldDie && self.headers) {
-		[self.headers enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL *stop) {
 			if ([field caseInsensitiveCompare:@"connection"] == NSOrderedSame) {
 				if ([value caseInsensitiveCompare:@"close"] == NSOrderedSame) {
 					shouldDie = YES;
@@ -144,4 +100,3 @@
 	return shouldDie;
 }
 
-@end

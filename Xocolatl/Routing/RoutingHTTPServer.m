@@ -1,290 +1,197 @@
 #import "RoutingHTTPServer.h"
 #import "RoutingConnection.h"
-#import "Route.h"
-#import "YapDatabase.h"
+#import "RoutingResponder.h"
+#import "RoutingResponse.h"
 
-#warning This should be in CocoaHTTPServer.
-NSString *const HTTPMethodGET = @"GET";
-NSString *const HTTPMethodPOST = @"POST";
-NSString *const HTTPMethodPUT = @"PUT";
-NSString *const HTTPMethodDELETE = @"DELETE";
-NSString *const HTTPMethodHEAD = @"HEAD";
-
-@implementation RoutingHTTPServer {
-	NSMutableDictionary *routes;
-	NSMutableDictionary *defaultHeaders;
-	NSMutableDictionary *mimeTypes;
-	dispatch_queue_t routeQueue;
+@interface RoutingHTTPServer () {
+    NSMutableDictionary *_mutableDefaultHeaders;
+    NSMutableDictionary *_mutableMIMETypes;
 }
 
-@synthesize defaultHeaders;
+@property (nonatomic, strong) NSMutableDictionary *responders;
 
-- (instancetype)initAtPort:(NSInteger)aPort
-                documentRoot:(NSString *)aDocumentRoot
-                databaseName:(NSString *)databaseName;
+@end
+
+@implementation RoutingHTTPServer
+
+- (instancetype)initAtPort:(NSInteger)aPort;
 {
-    if (self != [self init]) {
+	if (self != [super init]) {
         return nil;
     }
     
-    //It's necessary we use accessor methods.
+    //Pass the HTTPServer our connection class.
+    //This means that all incoming connections will be represented by objects of this class.
+    connectionClass = [RoutingConnection class];
+    
+    //It's necessary we use accessor methods because we don't want to modify our super class.
     [self setPort:(UInt16)aPort];
-    [self setDocumentRoot:aDocumentRoot];
     
-#warning We need to decouple the database from the routing server.
-    //Let's see if we can create the database.
-    NSString *databaseFolderPath = [aDocumentRoot stringByAppendingString:@"/database/"];
-    BOOL isDirectory = YES;
-    if (![[NSFileManager defaultManager] fileExistsAtPath:databaseFolderPath
-                                              isDirectory:&isDirectory]) {
-        //The database folder doesn't exist. Create it.
-        NSError *databaseFolderCreationError;
-        [[NSFileManager defaultManager] createDirectoryAtPath:databaseFolderPath
-                                  withIntermediateDirectories:YES
-                                                   attributes:nil
-                                                        error:&databaseFolderCreationError];
-        if (databaseFolderCreationError) {
-            //The database folder couldn't be created. Something is wrong.
-            return nil;
-        }
-    }
-    
-    NSString *databaseWithFileExtension = [NSString stringWithFormat:@"%@%@.yap", databaseFolderPath, databaseName];
-    _database = [[YapDatabase alloc] initWithPath:databaseWithFileExtension];
+    _responders = [[NSMutableDictionary alloc] init];
+    _mutableDefaultHeaders = [[NSMutableDictionary alloc] init];
+    _mimeTypes = @{ @"js": @"application/x-javascript",
+                    @"gif": @"image/gif",
+                    @"jpg": @"image/jpeg",
+                    @"jpeg": @"image/jpeg",
+                    @"png": @"image/png",
+                    @"svg": @"image/svg+xml",
+                    @"tif": @"image/tiff",
+                    @"tiff": @"image/tiff",
+                    @"ico": @"image/x-icon",
+                    @"bmp": @"image/x-ms-bmp",
+                    @"css": @"text/css",
+                    @"html": @"text/html",
+                    @"htm": @"text/html",
+                    @"txt": @"text/plain",
+                    @"xml": @"text/xml"};
     
     return self;
 }
 
-- (id)init {
-	if (self = [super init]) {
-		connectionClass = [RoutingConnection self];
-		routes = [[NSMutableDictionary alloc] init];
-		defaultHeaders = [[NSMutableDictionary alloc] init];
-		[self setupMIMETypes];
-	}
-	return self;
-}
-
-#if !OS_OBJECT_USE_OBJC_RETAIN_RELEASE
-- (void)dealloc {
-	if (routeQueue)
-		dispatch_release(routeQueue);
-}
-#endif
-
-- (void)setDefaultHeaders:(NSDictionary *)headers {
-	if (headers) {
-		defaultHeaders = [headers mutableCopy];
-	} else {
-		defaultHeaders = [[NSMutableDictionary alloc] init];
-	}
-}
-
-- (void)setDefaultHeader:(NSString *)field value:(NSString *)value {
-	[defaultHeaders setObject:value forKey:field];
-}
-
-- (dispatch_queue_t)routeQueue {
-	return routeQueue;
-}
-
-- (void)setRouteQueue:(dispatch_queue_t)queue {
-#if !OS_OBJECT_USE_OBJC_RETAIN_RELEASE
-	if (queue)
-		dispatch_retain(queue);
-
-	if (routeQueue)
-		dispatch_release(routeQueue);
-#endif
-
-	routeQueue = queue;
-}
-
-- (NSDictionary *)mimeTypes {
-	return mimeTypes;
-}
-
-- (void)setMIMETypes:(NSDictionary *)types {
-	NSMutableDictionary *newTypes;
-	if (types) {
-		newTypes = [types mutableCopy];
-	} else {
-		newTypes = [[NSMutableDictionary alloc] init];
-	}
-
-	mimeTypes = newTypes;
-}
-
-- (void)setMIMEType:(NSString *)theType forExtension:(NSString *)ext {
-	[mimeTypes setObject:theType forKey:ext];
-}
-
-- (NSString *)mimeTypeForPath:(NSString *)path {
-	NSString *ext = [[path pathExtension] lowercaseString];
-	if (!ext || [ext length] < 1)
-		return nil;
-
-	return [mimeTypes objectForKey:ext];
-}
-
-- (void)addRoute:(Route *)route;
+#pragma mark - Default Headers
+- (void)setDefaultHeaders:(NSDictionary *)defaultHeaders;
 {
-    [[route methods] enumerateKeysAndObjectsUsingBlock:^(NSString *method, NSString *key, BOOL *stop) {
-        [self addRoute:route
-             forMethod:method];
-        
-        if ([method isEqualToString:HTTPMethodGET]) {
-            [self addRoute:route forMethod:HTTPMethodHEAD];
+    _mutableDefaultHeaders = [defaultHeaders mutableCopy];
+}
+
+- (NSDictionary *)defaultHeaders;
+{
+    return [_mutableDefaultHeaders copy];
+}
+
+- (void)setDefaultHeader:(NSString *)field value:(NSString *)value;
+{
+    _mutableDefaultHeaders[field] = value;
+}
+
+#pragma mark - MIME Types
+- (void)setMIMETypes:(NSDictionary *)types;
+{
+    _mutableMIMETypes = [types mutableCopy];
+}
+
+- (NSDictionary *)mimeTypes;
+{
+	return [_mutableMIMETypes copy];
+}
+
+- (void)setMIMEType:(NSString *)theType forExtension:(NSString *)ext;
+{
+	_mutableMIMETypes[ext] = theType;
+}
+
+- (NSString *)mimeTypeForPath:(NSString *)path;
+{
+	return _mutableMIMETypes[path.pathExtension.lowercaseString];
+}
+
+#pragma mark - Routing
+- (void)addResponseHandler:(RoutingResponder *)responder;
+{
+    //A HEAD request is the same as a GET request, but it responds with headers only.
+    NSMutableDictionary *responderMethods = [responder.methods mutableCopy];
+    if (responder.methods[@"GET"]) {
+        responderMethods[@"HEAD"] = responder.methods[@"GET"];
+    }
+    
+    //A new handler can have multiple methods and paths.
+    //e.g. SignInResponseHandler can handle a GET for a sign in webpage and a POST to a different path for the sign in action.
+    //They cannot have repeated methods.
+    [responderMethods enumerateKeysAndObjectsUsingBlock:^(NSString *method, NSString *path, BOOL *stop) {
+        //Register this handler for the given method.
+        NSMutableArray *respondersForMethod = self.responders[method.uppercaseString];
+        if (!respondersForMethod) {
+            //This is our first responder for this method.
+            respondersForMethod = [NSMutableArray new];
+            self.responders[method.uppercaseString] = respondersForMethod;
         }
+        
+        [respondersForMethod addObject:responder];
     }];
 }
 
-- (void)addRoute:(Route *)route forMethod:(NSString *)method;
+- (BOOL)supportsMethod:(NSString *)method;
 {
-    method = [method uppercaseString];
-    NSMutableArray *methodRoutes = [routes objectForKey:method];
-    if (!methodRoutes) {
-        methodRoutes = [NSMutableArray array];
-        NSAssert(method != nil, @"All Routes should have at least one method implemented");
-        [routes setObject:methodRoutes forKey:method];
-    }
-    
-    [methodRoutes addObject:route];
+    return (self.responders[method.uppercaseString] != nil);
 }
 
-- (BOOL)supportsMethod:(NSString *)method {
-	return ([routes objectForKey:method] != nil);
-}
-
-- (void)handleRoute:(Route *)route
-        withRequest:(RouteRequest *)request
-           response:(RouteResponse *)response;
+#pragma mark RoutingConnectionDelegate
+- (RoutingResponse *)connection:(HTTPConnection *)connection
+        didFinishReadingRequest:(HTTPMessage *)request
+                       withPath:(NSString *)path
+                         method:(NSString *)method
+                  andParameters:(NSDictionary *)parameters;
 {
-	if (route.handler) {
-        route.handler(request, response);
-	} else {
-        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[route methodSignatureForSelector:route.selector]];
-        [inv setSelector:route.selector];
-        [inv setTarget:route.target];
-        
-        [inv setArgument:&(request) atIndex:2]; //arguments 0 and 1 are self and _cmd respectively, automatically set by NSInvocation
-        [inv setArgument:&(response) atIndex:3]; //arguments 0 and 1 are self and _cmd respectively, automatically set by NSInvocation
-        
-        [inv invoke];
-	}
-}
-
-- (void)routeMethod:(NSString *)method
-           withPath:(NSString *)path
-         parameters:(NSDictionary *)params
-            request:(HTTPMessage *)httpMessage
-         connection:(HTTPConnection *)connection
- andCompletionBlock:(ResponseHandler)completionBlock;
-{
-    //Do we have any registered routes?
-	NSMutableArray *methodRoutes = [routes objectForKey:method];
-    if (!methodRoutes) {
-        //Nope. So we can't respond to this request.
-        completionBlock(nil, nil);
-		return;
-    }
-
-    //We do have registered routes. Which one is responsible for this request?
-    Route *chosenRoute;
-    NSTextCheckingResult *resultForChosenRoute;
-	for (Route *route in methodRoutes) {
-        NSTextCheckingResult *result = [route isResponsibleForPath:path];
-		if (!result)
-			continue;
-        
-        resultForChosenRoute = result;
-        chosenRoute = route;
-	}
+    //RoutingConnection just finished reading all the necessary data from a request (this request has already been authorized).
+    //Now, RoutingConnection is requesting a response from us.
+    //What we need to do is find out what the path/method combination is and find a responseHandler that can process our request.
+    //Once we have it, we pass the response back to RoutingConnection so that it can answer the request.
+    //Categories seem like a good way of getting a response handler, but that might pose some problems with connections.
+    //Perhaps we have a set of connections in the routingServer?
     
-    //Did we find someone?
-    if (!chosenRoute) {
-        //We did not.
-        completionBlock(nil, nil);
-        return;
+    //Who needs to handle this response?
+    NSMutableArray *respondersForMethod = self.responders[method];
+    if (!respondersForMethod || respondersForMethod.count <= 0) {
+        //We don't know of anyone who can handle this response.
+        return nil;
     }
     
-    //We did find someone responsible.
-    //The first range is all of the text matched by the regex.
-    NSUInteger captureCount = [resultForChosenRoute numberOfRanges];
-    NSArray *routeKeys = chosenRoute.keys[method];
-    if (routeKeys) {
-        // Add the route's parameters to the parameter dictionary, accounting for
-        // the first range containing the matched text.
-        if (captureCount == routeKeys.count + 1) {
-            NSMutableDictionary *newParams = [params mutableCopy];
-            NSUInteger index = 1;
-            BOOL firstWildcard = YES;
-            for (NSString *key in routeKeys) {
-                NSString *capture = [path substringWithRange:[resultForChosenRoute rangeAtIndex:index]];
-                if ([key isEqualToString:@"wildcards"]) {
-                    NSMutableArray *wildcards = [newParams objectForKey:key];
-                    if (firstWildcard) {
-                        // Create a new array and replace any existing object with the same key
-                        wildcards = [NSMutableArray array];
-                        [newParams setObject:wildcards forKey:key];
-                        firstWildcard = NO;
+    __block RoutingResponder *responsibleResponder;
+    NSMutableDictionary *newParams = [parameters mutableCopy];
+    [respondersForMethod enumerateObjectsUsingBlock:^(RoutingResponder *responder, NSUInteger idx, BOOL *stop) {
+        //This responder recognizes the method. Does it recognize the path?
+        NSTextCheckingResult *result = [[responder regexForMethod:method] firstMatchInString:path
+                                                                                     options:0
+                                                                                       range:NSMakeRange(0, path.length)];
+        if (!result) {
+            //It does not. Try the next one.
+            return;
+        }
+        
+        // The first range is all of the text matched by the regex.
+        NSUInteger captureCount = [result numberOfRanges];
+        NSArray *responderKeys = [responder keysForMethod:method];
+        
+        if (responderKeys) {
+            // Add the route's parameters to the parameter dictionary, accounting for
+            // the first range containing the matched text.
+            if (captureCount == responderKeys.count + 1) {
+                __block NSUInteger index = 1;
+                __block BOOL firstWildcard = YES;
+                
+                [responderKeys enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
+                    NSString *capture = [path substringWithRange:[result rangeAtIndex:index]];
+                    if ([key isEqualToString:@"wildcards"]) {
+                        NSMutableArray *wildcards = [newParams objectForKey:key];
+                        if (firstWildcard) {
+                            // Create a new array and replace any existing object with the same key
+                            wildcards = [NSMutableArray array];
+                            [newParams setObject:wildcards forKey:key];
+                            firstWildcard = NO;
+                        }
+                        [wildcards addObject:capture];
+                    } else {
+                        [newParams setObject:capture forKey:key];
                     }
-                    [wildcards addObject:capture];
-                } else {
-                    [newParams setObject:capture forKey:key];
-                }
-                index++;
+                    index++;
+                }];
             }
-            params = newParams;
+        } else if (captureCount > 1) {
+            // For custom regular expressions place the anonymous captures in the captures parameter
+            NSMutableDictionary *newParams = [parameters mutableCopy];
+            NSMutableArray *captures = [NSMutableArray array];
+            for (NSUInteger i = 1; i < captureCount; i++) {
+                [captures addObject:[path substringWithRange:[result rangeAtIndex:i]]];
+            }
+            [newParams setObject:captures forKey:@"captures"];
         }
-    } else if (captureCount > 1) {
-        // For custom regular expressions place the anonymous captures in the captures parameter
-        NSMutableDictionary *newParams = [params mutableCopy];
-        NSMutableArray *captures = [NSMutableArray array];
-        for (NSUInteger i = 1; i < captureCount; i++) {
-            [captures addObject:[path substringWithRange:[resultForChosenRoute rangeAtIndex:i]]];
-        }
-        [newParams setObject:captures forKey:@"captures"];
-        params = newParams;
-    }
+        
+        responsibleResponder = responder;
+        *stop = YES;
+    }];
     
-    //Ask for a request and a response from them.
-    RouteRequest *request = [[RouteRequest alloc] initWithHTTPMessage:httpMessage parameters:params];
-    RouteResponse *response = [[RouteResponse alloc] initWithConnection:connection andResponseBlock:completionBlock];
-    if (!routeQueue) {
-        [self handleRoute:chosenRoute
-              withRequest:request
-                 response:response];
-    } else {
-        // Process the route on the specified queue
-        dispatch_sync(routeQueue, ^{
-            @autoreleasepool {
-                [self handleRoute:chosenRoute
-                      withRequest:request
-                         response:response];
-            }
-        });
-    }
-}
-
-- (void)setupMIMETypes {
-	mimeTypes = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-				 @"application/x-javascript",   @"js",
-				 @"image/gif",                  @"gif",
-				 @"image/jpeg",                 @"jpg",
-				 @"image/jpeg",                 @"jpeg",
-				 @"image/png",                  @"png",
-				 @"image/svg+xml",              @"svg",
-				 @"image/tiff",                 @"tif",
-				 @"image/tiff",                 @"tiff",
-				 @"image/x-icon",               @"ico",
-				 @"image/x-ms-bmp",             @"bmp",
-				 @"text/css",                   @"css",
-				 @"text/html",                  @"html",
-				 @"text/html",                  @"htm",
-				 @"text/plain",                 @"txt",
-				 @"text/xml",                   @"xml",
-				 nil];
+    return [responsibleResponder responseForRequest:request
+                                     withParameters:newParams];;
 }
 
 @end
