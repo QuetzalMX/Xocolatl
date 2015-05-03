@@ -15,8 +15,9 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 
 #define NULL_FD  -1
 
-
 @implementation HTTPFileResponse
+
+@synthesize done;
 
 - (id)initWithFilePath:(NSString *)fpath forConnection:(HTTPConnection *)parent
 {
@@ -99,23 +100,23 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 	return [self openFile];
 }
 
-- (UInt64)contentLength
+- (NSUInteger)contentLength
 {
 	HTTPLogTrace();
 	
 	return fileLength;
 }
 
-- (UInt64)offset
+- (NSUInteger)offset
 {
 	HTTPLogTrace();
 	
 	return fileOffset;
 }
 
-- (void)setOffset:(UInt64)offset
+- (void)setOffset:(NSUInteger)offset
 {
-	HTTPLogTrace2(@"%@[%p]: setOffset:%llu", THIS_FILE, self, offset);
+	HTTPLogTrace2(@"%@[%p]: setOffset:%lu", THIS_FILE, self, offset);
 	
 	if (![self openFileIfNeeded])
 	{

@@ -18,7 +18,6 @@
 
 - (NSRegularExpression *)regexForMethod:(NSString *)method;
 - (NSArray *)keysForMethod:(NSString *)method;
-- (BOOL)isPasswordProtected;
 
 //Routing
 - (RoutingResponse *)responseForRequest:(HTTPMessage *)message

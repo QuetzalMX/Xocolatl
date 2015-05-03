@@ -14,7 +14,6 @@
 //Routing
 - (void)addResponseHandler:(RoutingResponder *)responder;
 - (BOOL)supportsMethod:(NSString *)method;
-- (BOOL)isPasswordProtected:(NSString *)path;
 
 //Headers
 - (void)setDefaultHeader:(NSString *)field
