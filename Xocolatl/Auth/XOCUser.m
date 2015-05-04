@@ -35,6 +35,7 @@ NSString *const UsersCollection = @"Users";
 {
     //Create a new user.
     XOCUser *user = [[self alloc] init];
+    user.identifier = [NSString randomString];
     user.username = username;
     user.cookiePasswords = [NSMutableSet new];
     user.authorizations = [NSMutableDictionary new];

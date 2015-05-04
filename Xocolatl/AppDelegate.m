@@ -9,6 +9,9 @@
 
 //Core
 #import "RoutingHTTPServer.h"
+
+//Auth
+#import "SignUpResponder.h"
 #import "SignInResponder.h"
 #import "XOCUser.h"
 #import "YapDatabase.h"
@@ -70,6 +73,11 @@
                                                                andWriteConnection:self.writeConnection
                                                                          inServer:self.server];
     [self.server addResponseHandler:loginRoute];
+    
+    SignUpResponder *signUpRoute = [[SignUpResponder alloc] initWithReadConnection:self.readConnection
+                                                                andWriteConnection:self.writeConnection
+                                                                          inServer:self.server];
+    [self.server addResponseHandler:signUpRoute];
 }
 
 @end
