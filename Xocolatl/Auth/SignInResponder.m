@@ -79,12 +79,6 @@ NSInteger const SecondsUntilAuthorizationExpires = 3600;
     RoutingResponse *response = [RoutingResponse responseWithStatus:200
                                                             andBody:registeredUser.jsonRepresentation];
     
-    
-    [response setCookieNamed:@"timeOfDeath"
-                   withValue:[NSString stringWithFormat:@"%.0f", timeOfDeath]
-                    isSecure:YES
-                    httpOnly:YES];
-    
     [response setCookieNamed:@"username"
                    withValue:registeredUser.username
                     isSecure:YES

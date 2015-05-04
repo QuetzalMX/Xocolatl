@@ -16,17 +16,16 @@ extern NSString *const UsersCollection;
 @property (nonatomic, copy, readonly) NSString *username;
 
 //Self
-+ (instancetype)newUserWithUsername:(NSString *)username;
++ (instancetype)newUserWithUsername:(NSString *)username
+                        andPassword:(NSString *)password;
 - (NSDictionary *)jsonRepresentation;
 
 //Passwords
 + (BOOL)verifyPasswordHashForUser:(XOCUser *)user
                      withPassword:(NSString *)password;
-- (void)setHashedPassword:(NSString *)password;
 
 //Auth
 - (NSString *)newAuthHeaderWithTimeOfDeath:(NSTimeInterval)secondsUntilExpiration;
-- (BOOL)validateAuthHeader:(NSString *)clientProvidedAuth
-           withTimeOfDeath:(NSTimeInterval)timeOfDeath;
+- (BOOL)validateAuthHeader:(NSString *)clientProvidedAuth;
 
 @end

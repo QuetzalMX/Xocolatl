@@ -89,8 +89,7 @@
         user = [transaction objectForKey:username
                             inCollection:UsersCollection];
         
-        isValidAuth = [user validateAuthHeader:auth
-                               withTimeOfDeath:expiration.integerValue];
+        isValidAuth = [user validateAuthHeader:auth];
     }];
 
     //Save the user and affirm authorization.

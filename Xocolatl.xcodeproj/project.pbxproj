@@ -38,6 +38,11 @@
 		C1AC8A221AF4B131008392D5 /* HTTPMessage+Xocolatl.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC8A211AF4B131008392D5 /* HTTPMessage+Xocolatl.m */; };
 		C1AC8A291AF4B222008392D5 /* DatabaseResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC8A281AF4B222008392D5 /* DatabaseResponder.m */; };
 		C1AC8A301AF5AED3008392D5 /* RoutingResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC8A2F1AF5AED3008392D5 /* RoutingResponse.m */; };
+		C1C374971AF72A3500E9589B /* RNCryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C374901AF72A3500E9589B /* RNCryptor.m */; };
+		C1C374981AF72A3500E9589B /* RNCryptorEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C374921AF72A3500E9589B /* RNCryptorEngine.m */; };
+		C1C374991AF72A3500E9589B /* RNDecryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C374941AF72A3500E9589B /* RNDecryptor.m */; };
+		C1C3749A1AF72A3500E9589B /* RNEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C374961AF72A3500E9589B /* RNEncryptor.m */; };
+		C1C3749D1AF7322900E9589B /* NSData+RNSecureCompare.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C3749C1AF7322900E9589B /* NSData+RNSecureCompare.m */; };
 		C1DD52961AEF696600955035 /* SignInResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52951AEF696600955035 /* SignInResponder.m */; };
 		C1DD529D1AF0713900955035 /* certificate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = C1DD529C1AF0713900955035 /* certificate.p12 */; };
 		C1F68E8C1AD9E587007FF919 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F68E8B1AD9E587007FF919 /* AppDelegate.m */; };
@@ -202,6 +207,18 @@
 		C1AC8A281AF4B222008392D5 /* DatabaseResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseResponder.m; sourceTree = "<group>"; };
 		C1AC8A2E1AF5AED3008392D5 /* RoutingResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoutingResponse.h; sourceTree = "<group>"; };
 		C1AC8A2F1AF5AED3008392D5 /* RoutingResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutingResponse.m; sourceTree = "<group>"; };
+		C1C3748D1AF72A3500E9589B /* RNCryptor+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNCryptor+Private.h"; sourceTree = "<group>"; };
+		C1C3748E1AF72A3500E9589B /* RNCryptor-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNCryptor-Prefix.pch"; sourceTree = "<group>"; };
+		C1C3748F1AF72A3500E9589B /* RNCryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNCryptor.h; sourceTree = "<group>"; };
+		C1C374901AF72A3500E9589B /* RNCryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCryptor.m; sourceTree = "<group>"; };
+		C1C374911AF72A3500E9589B /* RNCryptorEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNCryptorEngine.h; sourceTree = "<group>"; };
+		C1C374921AF72A3500E9589B /* RNCryptorEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCryptorEngine.m; sourceTree = "<group>"; };
+		C1C374931AF72A3500E9589B /* RNDecryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNDecryptor.h; sourceTree = "<group>"; };
+		C1C374941AF72A3500E9589B /* RNDecryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNDecryptor.m; sourceTree = "<group>"; };
+		C1C374951AF72A3500E9589B /* RNEncryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNEncryptor.h; sourceTree = "<group>"; };
+		C1C374961AF72A3500E9589B /* RNEncryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNEncryptor.m; sourceTree = "<group>"; };
+		C1C3749B1AF7322900E9589B /* NSData+RNSecureCompare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+RNSecureCompare.h"; sourceTree = "<group>"; };
+		C1C3749C1AF7322900E9589B /* NSData+RNSecureCompare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+RNSecureCompare.m"; sourceTree = "<group>"; };
 		C1DD52941AEF696600955035 /* SignInResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignInResponder.h; path = Auth/SignInResponder.h; sourceTree = "<group>"; };
 		C1DD52951AEF696600955035 /* SignInResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignInResponder.m; path = Auth/SignInResponder.m; sourceTree = "<group>"; };
 		C1DD529C1AF0713900955035 /* certificate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = certificate.p12; sourceTree = "<group>"; };
@@ -547,6 +564,23 @@
 				C1AC8A281AF4B222008392D5 /* DatabaseResponder.m */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		C1C3748C1AF72A3500E9589B /* RNCryptor */ = {
+			isa = PBXGroup;
+			children = (
+				C1C3748D1AF72A3500E9589B /* RNCryptor+Private.h */,
+				C1C3748E1AF72A3500E9589B /* RNCryptor-Prefix.pch */,
+				C1C3748F1AF72A3500E9589B /* RNCryptor.h */,
+				C1C374901AF72A3500E9589B /* RNCryptor.m */,
+				C1C374911AF72A3500E9589B /* RNCryptorEngine.h */,
+				C1C374921AF72A3500E9589B /* RNCryptorEngine.m */,
+				C1C374931AF72A3500E9589B /* RNDecryptor.h */,
+				C1C374941AF72A3500E9589B /* RNDecryptor.m */,
+				C1C374951AF72A3500E9589B /* RNEncryptor.h */,
+				C1C374961AF72A3500E9589B /* RNEncryptor.m */,
+			);
+			path = RNCryptor;
 			sourceTree = "<group>";
 		};
 		C1F68E7C1AD9E587007FF919 = {
@@ -1003,6 +1037,7 @@
 		C1F70E241ADE0AE500CD9959 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				C1C3748C1AF72A3500E9589B /* RNCryptor */,
 				C1F70E2F1ADE17ED00CD9959 /* Categories */,
 				C1AC896D1AF09517008392D5 /* SignUpResponder.h */,
 				C1AC896E1AF09517008392D5 /* SignUpResponder.m */,
@@ -1017,6 +1052,8 @@
 		C1F70E2F1ADE17ED00CD9959 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				C1C3749B1AF7322900E9589B /* NSData+RNSecureCompare.h */,
+				C1C3749C1AF7322900E9589B /* NSData+RNSecureCompare.m */,
 				C1F70E2C1ADE17EA00CD9959 /* NSString+randomString.h */,
 				C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */,
 				C1FA43591AEC46BE006B3C07 /* NSData+hashedPassword.h */,
@@ -1163,10 +1200,12 @@
 				C1F6907F1AD9E5C4007FF919 /* YDBCKChangeQueue.m in Sources */,
 				C1F690B91AD9E5C4007FF919 /* YapDatabaseLogging.m in Sources */,
 				C1F690AE1AD9E5C4007FF919 /* YapDatabaseViewChange.m in Sources */,
+				C1C374981AF72A3500E9589B /* RNCryptorEngine.m in Sources */,
 				C1AC89D71AF4090F008392D5 /* HTTPConnection.m in Sources */,
 				C1AC89D31AF4090F008392D5 /* DDData.m in Sources */,
 				C1AC8A041AF4092A008392D5 /* DispatchQueueLogFormatter.m in Sources */,
 				C1F690A11AD9E5C4007FF919 /* YapDatabaseSearchResultsView.m in Sources */,
+				C1C3749D1AF7322900E9589B /* NSData+RNSecureCompare.m in Sources */,
 				C1AC89FE1AF4092A008392D5 /* DDAbstractDatabaseLogger.m in Sources */,
 				C1F690871AD9E5C4007FF919 /* YapDatabaseCloudKit.m in Sources */,
 				C1FA435B1AEC46BE006B3C07 /* NSData+hashedPassword.m in Sources */,
@@ -1191,6 +1230,7 @@
 				C1F690B71AD9E5C4007FF919 /* YapDatabaseConnectionDefaults.m in Sources */,
 				C1F690BD1AD9E5C4007FF919 /* YapMemoryTable.m in Sources */,
 				C1F690901AD9E5C4007FF919 /* YapDatabaseFullTextSearch.m in Sources */,
+				C1C3749A1AF72A3500E9589B /* RNEncryptor.m in Sources */,
 				C1F6909C1AD9E5C4007FF919 /* YapDatabaseRelationshipConnection.m in Sources */,
 				C1F6909A1AD9E5C4007FF919 /* YapDatabaseExtensionTransaction.m in Sources */,
 				C1F6909F1AD9E5C4007FF919 /* YapDatabaseRelationshipTransaction.m in Sources */,
@@ -1238,6 +1278,8 @@
 				C1F690B01AD9E5C4007FF919 /* YapDatabaseViewRangeOptions.m in Sources */,
 				C1F690C71AD9E5C4007FF919 /* YapWhitelistBlacklist.m in Sources */,
 				C1F690B41AD9E5C4007FF919 /* YapDatabaseViewTransaction.m in Sources */,
+				C1C374991AF72A3500E9589B /* RNDecryptor.m in Sources */,
+				C1C374971AF72A3500E9589B /* RNCryptor.m in Sources */,
 				C1F690C91AD9E5C4007FF919 /* YapDatabaseConnection.m in Sources */,
 				C1F6909E1AD9E5C4007FF919 /* YapDatabaseRelationshipOptions.m in Sources */,
 				C1AC89D81AF4090F008392D5 /* HTTPMessage.m in Sources */,

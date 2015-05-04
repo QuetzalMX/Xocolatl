@@ -41,8 +41,8 @@
         }
 
         //User doesn't exist. Create it.
-        newUser = [XOCUser newUserWithUsername:username];
-        [newUser setHashedPassword:password];
+        newUser = [XOCUser newUserWithUsername:username
+                                   andPassword:password];
         [newUser willRegisterUsingRequestBody:request.parsedBody];
         [transaction setObject:newUser
                         forKey:newUser.username
