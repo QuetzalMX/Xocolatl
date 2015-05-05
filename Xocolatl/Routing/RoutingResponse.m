@@ -27,27 +27,35 @@
 @synthesize httpHeaders = _httpHeaders;
 @synthesize isChunked = _isChunked;
 
++ (instancetype)responseWithStatus:(NSInteger)status
+                           andData:(NSData *)data;
+{
+    RoutingResponse *response = [[self alloc] init];
+    response.status = status;
+    response.data = data;
+    return response;
+}
+
 + (instancetype)responseWithError:(NSError *)error;
 {
     return [self responseWithStatus:error.code
                             andBody:error.userInfo];
 }
 
-+ (instancetype)responseWithStatus:(NSInteger)status andBody:(NSDictionary *)jsonBody;
++ (instancetype)responseWithStatus:(NSInteger)status
+                           andBody:(NSDictionary *)jsonBody;
 {
-    RoutingResponse *response = [[self alloc] init];
-    response.status = status;
-    
     NSError *parsingError;
-    response.data = [NSJSONSerialization dataWithJSONObject:jsonBody
-                                                    options:0
-                                                      error:&parsingError];
+    NSData *bodyData = [NSJSONSerialization dataWithJSONObject:jsonBody
+                                                       options:0
+                                                         error:&parsingError];
     
     if (parsingError) {
         return nil;
     }
     
-    return response;
+    return [self responseWithStatus:status
+                            andData:bodyData];
 }
 
 - (instancetype)init;

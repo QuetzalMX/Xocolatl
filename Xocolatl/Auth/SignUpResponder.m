@@ -12,7 +12,39 @@
 #import "YapDatabase.h"
 #import "RoutingResponse.h"
 
+#import <objc/runtime.h>
+
+@implementation RoutingResponse (SignUpResponder)
+
+- (void)setRegisteredUser:(XOCUser *)registeredUser;
+{
+    objc_setAssociatedObject(self, @selector(registeredUser), registeredUser, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (XOCUser *)registeredUser;
+{
+    return objc_getAssociatedObject(self, @selector(registeredUser));
+}
+
+@end
+
 @implementation SignUpResponder
+
+- (instancetype)initWithReadConnection:(YapDatabaseConnection *)readConnection
+                    andWriteConnection:(YapDatabaseConnection *)writeConnection
+                              inServer:(RoutingHTTPServer *)server
+                         withUserClass:(Class)userClass;
+{
+    if (self != [super initWithReadConnection:readConnection
+                           andWriteConnection:writeConnection
+                                     inServer:server]) {
+        return nil;
+    }
+    
+    self.userClass = userClass;
+    
+    return self;
+}
 
 - (NSDictionary *)methods;
 {
@@ -41,8 +73,8 @@
         }
 
         //User doesn't exist. Create it.
-        newUser = [XOCUser newUserWithUsername:username
-                                   andPassword:password];
+        newUser = [self.userClass newUserWithUsername:username
+                                          andPassword:password];
         [newUser willRegisterUsingRequestBody:request.parsedBody];
         [transaction setObject:newUser
                         forKey:newUser.username
@@ -53,8 +85,10 @@
         return [RoutingResponse responseWithError:error];
     }
     
-    return [RoutingResponse responseWithStatus:200
-                                       andBody:newUser.jsonRepresentation];
+    RoutingResponse *successResponse = [RoutingResponse responseWithStatus:200
+                                                                   andBody:newUser.jsonRepresentation];
+    successResponse.registeredUser = newUser;
+    return successResponse;
 }
 
 @end

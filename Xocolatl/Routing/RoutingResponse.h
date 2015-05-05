@@ -11,9 +11,11 @@
 
 @interface RoutingResponse : NSObject <HTTPResponse>
 
-+ (instancetype)responseWithStatus:(NSInteger)status andBody:(NSDictionary *)jsonBody;
++ (instancetype)responseWithStatus:(NSInteger)status
+                           andData:(NSData *)data;
 
 //Convenience.
++ (instancetype)responseWithStatus:(NSInteger)status andBody:(NSDictionary *)jsonBody;
 + (instancetype)responseWithError:(NSError *)error;
 
 - (void)setCookieNamed:(NSString *)name

@@ -11,5 +11,6 @@
 @interface HTTPMessage (Xocolatl)
 
 - (NSDictionary *)parsedBody;
+- (NSDictionary *)cookies;
 
 @end

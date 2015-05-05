@@ -8,6 +8,21 @@
 
 #import "DatabaseResponder.h"
 
+#import "RoutingResponse.h"
+
 @interface SignUpResponder : DatabaseResponder
+
+@property (nonatomic) Class userClass;
+
+- (instancetype)initWithReadConnection:(YapDatabaseConnection *)readConnection
+                    andWriteConnection:(YapDatabaseConnection *)writeConnection
+                              inServer:(RoutingHTTPServer *)server
+                         withUserClass:(Class)userClass;
+
+@end
+
+@interface RoutingResponse (SignUpResponder)
+
+@property (nonatomic, strong) XOCUser *registeredUser;
 
 @end

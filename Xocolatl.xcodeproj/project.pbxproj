@@ -326,6 +326,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		C1D77E8A1AF85705008E4D78 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		C13D40451ADCEED4004AF563 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		C1AC896D1AF09517008392D5 /* SignUpResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpResponder.h; path = Auth/SignUpResponder.h; sourceTree = "<group>"; };
@@ -407,6 +420,10 @@
 		C1D77D6F1AF84A35008E4D78 /* XocolatlFrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XocolatlFrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1D77D751AF84A35008E4D78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1D77D761AF84A35008E4D78 /* XocolatlFrameworkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XocolatlFrameworkTests.m; sourceTree = "<group>"; };
+		C1D77E6F1AF85705008E4D78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C1D77E701AF85705008E4D78 /* XocolatlClientFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XocolatlClientFramework.h; sourceTree = "<group>"; };
+		C1D77E7E1AF85705008E4D78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C1D77E7F1AF85705008E4D78 /* XocolatlClientFrameworkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XocolatlClientFrameworkTests.m; sourceTree = "<group>"; };
 		C1DD52941AEF696600955035 /* SignInResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignInResponder.h; path = Auth/SignInResponder.h; sourceTree = "<group>"; };
 		C1DD52951AEF696600955035 /* SignInResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignInResponder.m; path = Auth/SignInResponder.m; sourceTree = "<group>"; };
 		C1DD529C1AF0713900955035 /* certificate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = certificate.p12; sourceTree = "<group>"; };
@@ -820,6 +837,40 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		C1D77E6D1AF85705008E4D78 /* XocolatlClientFramework */ = {
+			isa = PBXGroup;
+			children = (
+				C1D77E701AF85705008E4D78 /* XocolatlClientFramework.h */,
+				C1D77E6E1AF85705008E4D78 /* Supporting Files */,
+			);
+			path = XocolatlClientFramework;
+			sourceTree = "<group>";
+		};
+		C1D77E6E1AF85705008E4D78 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C1D77E6F1AF85705008E4D78 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C1D77E7C1AF85705008E4D78 /* XocolatlClientFrameworkTests */ = {
+			isa = PBXGroup;
+			children = (
+				C1D77E7F1AF85705008E4D78 /* XocolatlClientFrameworkTests.m */,
+				C1D77E7D1AF85705008E4D78 /* Supporting Files */,
+			);
+			path = XocolatlClientFrameworkTests;
+			sourceTree = "<group>";
+		};
+		C1D77E7D1AF85705008E4D78 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C1D77E7E1AF85705008E4D78 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		C1F68E7C1AD9E587007FF919 = {
 			isa = PBXGroup;
 			children = (
@@ -830,6 +881,8 @@
 				C1F68E9B1AD9E587007FF919 /* XocolatlTests */,
 				C1D77D661AF84A35008E4D78 /* XocolatlFramework */,
 				C1D77D731AF84A35008E4D78 /* XocolatlFrameworkTests */,
+				C1D77E6D1AF85705008E4D78 /* XocolatlClientFramework */,
+				C1D77E7C1AF85705008E4D78 /* XocolatlClientFrameworkTests */,
 				C1F68E861AD9E587007FF919 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1388,6 +1441,7 @@
 				C1F68E811AD9E587007FF919 /* Sources */,
 				C1F68E821AD9E587007FF919 /* Frameworks */,
 				C1F68E831AD9E587007FF919 /* Resources */,
+				C1D77E8A1AF85705008E4D78 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1837,6 +1891,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 x86_64";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1859,6 +1914,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 x86_64";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -2053,6 +2109,7 @@
 				C1D77D791AF84A35008E4D78 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C1D77D7D1AF84A35008E4D78 /* Build configuration list for PBXNativeTarget "XocolatlFrameworkTests" */ = {
 			isa = XCConfigurationList;
@@ -2061,6 +2118,7 @@
 				C1D77D7B1AF84A35008E4D78 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C1F68E801AD9E587007FF919 /* Build configuration list for PBXProject "Xocolatl" */ = {
 			isa = XCConfigurationList;

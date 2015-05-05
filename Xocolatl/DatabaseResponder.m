@@ -56,28 +56,10 @@
 
 - (BOOL)isRequestAuthenticated:(HTTPMessage *)request;
 {
-    //Parse the cookies to see if we have an authorized user.
-    NSString *cookie = request.allHeaderFields[@"cookie"];
-    NSString *cookieWithoutSemiColons = [cookie stringByReplacingOccurrencesOfString:@";"
-                                                                          withString:@""];
-    NSArray *subCookies = [cookieWithoutSemiColons componentsSeparatedByString:@" "];
-    
-    NSMutableDictionary *parsedCookies = [NSMutableDictionary new];
-    for (NSString *subCookie in subCookies) {
-        NSArray *cookieFieldAndValue = [subCookie componentsSeparatedByString:@"="];
-        if (cookieFieldAndValue.count < 2) {
-            continue;
-        }
-        
-        parsedCookies[cookieFieldAndValue.firstObject] = cookieFieldAndValue.lastObject;
-    }
-    
-    NSString *username = parsedCookies[@"username"];
-    NSString *auth = parsedCookies[@"auth"];
-    NSString *expiration = parsedCookies[@"timeOfDeath"];
+    NSString *username = request.cookies[@"username"];
+    NSString *auth = request.cookies[@"auth"];
     if (!username || username.length <= 0 ||
-        !auth || auth.length <= 0 ||
-        !expiration || expiration.length <= 0) {
+        !auth || auth.length <= 0) {
         //No user or authorization.
         return NO;
     }

@@ -76,7 +76,8 @@
     
     SignUpResponder *signUpRoute = [[SignUpResponder alloc] initWithReadConnection:self.readConnection
                                                                 andWriteConnection:self.writeConnection
-                                                                          inServer:self.server];
+                                                                          inServer:self.server
+                                                                     withUserClass:[XOCUser class]];
     [self.server addResponseHandler:signUpRoute];
 }
 

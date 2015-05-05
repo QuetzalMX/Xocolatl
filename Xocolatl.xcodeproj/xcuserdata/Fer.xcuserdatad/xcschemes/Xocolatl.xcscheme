@@ -34,6 +34,20 @@
                ReferencedContainer = "container:Xocolatl.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C1D77E751AF85705008E4D78"
+               BuildableName = "XocolatlClientFrameworkTests.xctest"
+               BlueprintName = "XocolatlClientFrameworkTests"
+               ReferencedContainer = "container:Xocolatl.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -49,6 +63,16 @@
                BlueprintIdentifier = "C1F68E971AD9E587007FF919"
                BuildableName = "XocolatlTests.xctest"
                BlueprintName = "XocolatlTests"
+               ReferencedContainer = "container:Xocolatl.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C1D77E751AF85705008E4D78"
+               BuildableName = "XocolatlClientFrameworkTests.xctest"
+               BlueprintName = "XocolatlClientFrameworkTests"
                ReferencedContainer = "container:Xocolatl.xcodeproj">
             </BuildableReference>
          </TestableReference>
