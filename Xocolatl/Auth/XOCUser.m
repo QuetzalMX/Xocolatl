@@ -8,7 +8,6 @@
 
 #import "XOCUser.h"
 
-#import "NSData+hashedPassword.h"
 #import "NSString+randomString.h"
 
 //Thanks Rob Napier.
