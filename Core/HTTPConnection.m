@@ -620,10 +620,6 @@ static NSMutableArray *recentNonces;
 			[settings setObject:certificates
 						 forKey:(NSString *)kCFStreamSSLCertificates];
 			
-			// Configure this connection to use the highest possible SSL level
-			[settings setObject:(NSString *)kCFStreamSocketSecurityLevelNegotiatedSSL
-						 forKey:(NSString *)kCFStreamSSLLevel];
-			
 			[asyncSocket startTLS:settings];
 		}
 	}
@@ -893,7 +889,7 @@ static NSMutableArray *recentNonces;
 {
 	HTTPLogTrace();
 	
-	if (HTTP_LOG_VERBOSE)
+	if (HTTP_LOG_FLAG_VERBOSE)
 	{
 		NSData *tempData = [request messageData];
 		
@@ -990,9 +986,7 @@ static NSMutableArray *recentNonces;
 	
 	// Respond properly to HTTP 'GET' and 'HEAD' commands
 	httpResponse = [self httpResponseForMethod:method URI:uri];
-	
-	if (httpResponse == nil)
-	{
+	if (!httpResponse) {
 		[self handleResourceNotFound];
 		return;
 	}

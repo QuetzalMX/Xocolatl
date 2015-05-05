@@ -6,6 +6,9 @@
 @class WebSocket;
 @protocol HTTPResponse;
 
+#define TIMEOUT_WRITE_ERROR                  30
+
+#define HTTP_RESPONSE                      90
 
 #define HTTPConnectionDidDieNotification  @"HTTPConnectionDidDie"
 
@@ -109,6 +112,7 @@
 - (void)finishResponse;
 
 - (BOOL)shouldDie;
+- (BOOL)isAuthenticated;
 - (void)die;
 
 @end
