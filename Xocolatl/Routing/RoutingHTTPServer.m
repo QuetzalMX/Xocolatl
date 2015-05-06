@@ -98,6 +98,8 @@
     //e.g. SignInResponseHandler can handle a GET for a sign in webpage and a POST to a different path for the sign in action.
     //They cannot have repeated methods.
     [responderMethods enumerateKeysAndObjectsUsingBlock:^(NSString *method, NSString *path, BOOL *stop) {
+        
+        
         //Register this handler for the given method.
         NSMutableArray *respondersForMethod = self.responders[method.uppercaseString];
         if (!respondersForMethod) {
@@ -144,7 +146,21 @@
                                                                                      options:0
                                                                                        range:NSMakeRange(0, path.length)];
         if (!result) {
-            //It does not. Try the next one.
+            //Note: (FO) A regex will not return a result if there are no values in any captured group.
+            //This does not mean that the responder is not responsible, it only means that there were no arguments passed when they were probably expected.
+            //Perhaps it's the path without any matching capture groups?
+            //e.g. /api/teams/:id
+            //being called using
+            // /api/teams/
+            // I'm assuming we're not responsible of sanitizing inputs, so if the path is contained in the responder's path for this method, let it through.
+            NSString *responderPath = responder.methods[method];
+            if ([responderPath containsString:path]) {
+                //It is matching without any regex.
+                responsibleResponder = responder;
+                *stop = YES;
+            }
+            
+            //It didn't recognize the path or the regex. This isn't the responsible responder.
             return;
         }
         

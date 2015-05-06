@@ -13,6 +13,7 @@
 
 + (Class)modelClass;
 
-@property (nonatomic, strong) XocolatlModelObject *modelObject;
+@property (nonatomic, copy, readonly) NSArray *modelObjects;
+@property (nonatomic, strong, readonly) XocolatlModelObject *modelObject;
 
 @end

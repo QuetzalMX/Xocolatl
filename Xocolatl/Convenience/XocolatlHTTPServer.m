@@ -64,7 +64,7 @@
 {
     //Note: (FO) isSubclassOfClass checks whether the passed class is a subclas OR it's the same class.
     //So we're safe is someone passes SignUpResponder as the signUpRouteClass.
-    NSAssert([userClass isSubclassOfClass:[SignUpResponder class]],
+    NSAssert([signUpRouteClass isSubclassOfClass:[SignUpResponder class]],
              @"Using setSignUpRoute:withUserclass: requires the passed class to be a subclass of SignUpRoute.");
     SignUpResponder *route = [[signUpRouteClass alloc] initWithReadConnection:self.readConnection
                                                            andWriteConnection:self.writeConnection

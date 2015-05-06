@@ -15,11 +15,15 @@
 @property (nonatomic, strong, readonly) NSDate *createdAt;
 @property (nonatomic, strong, readonly) NSDate *modifiedAt;
 
-//Load/Save
+//Database
 + (NSString *)yapDatabaseCollectionIdentifier;
 
+//Load
++ (NSArray *)allObjectsUsingTransaction:(YapDatabaseReadTransaction *)transaction;
 + (instancetype)objectWithIdentifier:(NSString *)identifier
                     usingTransaction:(YapDatabaseReadTransaction *)transaction;
+
+//Save
 - (void)saveUsingTransaction:(YapDatabaseReadWriteTransaction *)transaction;
 
 //JSON.

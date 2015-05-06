@@ -70,6 +70,19 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
                         inCollection:[[self class] yapDatabaseCollectionIdentifier]];
 }
 
++ (NSArray *)allObjectsUsingTransaction:(YapDatabaseReadTransaction *)transaction;
+{
+    NSMutableArray *allObjects = [NSMutableArray new];
+    [transaction enumerateKeysAndObjectsInCollection:[[self class] yapDatabaseCollectionIdentifier]
+                                          usingBlock:^(NSString *key, id object, BOOL *stop) {
+                                              if (object) {
+                                                  [allObjects addObject:object];
+                                              }
+                                          }];
+    
+    return [allObjects copy];
+}
+
 - (void)saveUsingTransaction:(YapDatabaseReadWriteTransaction *)transaction;
 {
     [transaction setObject:self
