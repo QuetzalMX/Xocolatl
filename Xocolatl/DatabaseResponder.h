@@ -23,4 +23,9 @@
                     andWriteConnection:(YapDatabaseConnection *)writeConnection
                               inServer:(RoutingHTTPServer *)server;
 
+//Authentication
+- (BOOL)isProtected:(NSString *)method;
+- (BOOL)isRequestAuthenticated:(HTTPMessage *)request;
+- (RoutingResponse *)handleAuthenticationFailure;
+
 @end

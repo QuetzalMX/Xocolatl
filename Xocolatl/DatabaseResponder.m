@@ -46,7 +46,7 @@
 - (RoutingResponse *)responseForRequest:(HTTPMessage *)message
                          withParameters:(NSDictionary *)parameters;
 {
-    if (self.isProtected && ![self isRequestAuthenticated:message]) {
+    if ([self isProtected:message.method] && ![self isRequestAuthenticated:message]) {
         return [self handleAuthenticationFailure];
     }
     
@@ -80,7 +80,7 @@
     return isValidAuth;
 }
 
-- (BOOL)isProtected;
+- (BOOL)isProtected:(NSString *)method;
 {
     return NO;
 }

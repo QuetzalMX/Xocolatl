@@ -15,6 +15,9 @@ extern NSString *const UsersCollection;
 @property (nonatomic, copy, readonly) NSString *identifier;
 @property (nonatomic, copy, readonly) NSString *username;
 
+#warning Need to clean up these methods into another category (private)
+#warning This class should be a child of XocolatlModelObject
+
 //Self
 + (instancetype)newUserWithUsername:(NSString *)username
                         andPassword:(NSString *)password;
