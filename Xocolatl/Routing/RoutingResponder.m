@@ -90,7 +90,7 @@
                                      else {
                                          NSString *keyString = [parsedPath substringWithRange:[result rangeAtIndex:2]];
                                          [keysForMethod addObject:keyString];
-                                         replacementString = @"([/])?(.*)?";
+                                         replacementString = @"[/]?([^/]+)";
                                      }
                                      
                                      //Check whether we have to remove the slash.
@@ -106,14 +106,20 @@
                                          fixPathIfDirectory = [fixPathIfDirectory substringToIndex:fixPathIfDirectory.length - 1];
                                          fixPathIfDirectory = [fixPathIfDirectory stringByAppendingString:capturedString];
                                          replacementRange = [fixPathIfDirectory rangeOfString:capturedString];
+                                         //Since we removed one character, we add one to the length of the range.
+                                         replacementRange.length++;
                                      }
+                                     
+                                     NSLog(@"Replacing %@ in %@", replacementString, regexPath);
                                      
                                      [regexPath replaceCharactersInRange:replacementRange
                                                               withString:replacementString];
                                      diff += replacementString.length - result.range.length;
                                  }];
             
+            NSLog(@"Regex: %@", regexPath);
             parsedPath = [NSString stringWithFormat:@"^%@$", regexPath];
+            NSLog(@"Full regex: %@", parsedPath);
         }
 
         self.keys[method] = keysForMethod;

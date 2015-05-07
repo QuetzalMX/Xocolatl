@@ -32,19 +32,16 @@
     __block NSMutableArray *modelObjects = [NSMutableArray new];
     __block NSArray *modelObjectsJSON;
     NSString *objectId = parameters[@"id"];
+    NSLog(@"fetching %@ with id %@", [[self class] modelClass], objectId);
     [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-        NSLog(@"%@ %@", message.method, message.url);
-        
         //Are we fetching one record or all records?
         if (objectId && objectId.length > 0) {
             //Only one record.
-            NSLog(@"GET one record");
             modelObject = [[[self class] modelClass] objectWithIdentifier:parameters[@"id"]
                                                          usingTransaction:transaction];
             modelObjectJSON = [modelObject jsonRepresentationUsingTransaction:transaction];
         } else {
             //All records.
-            NSLog(@"GET multiple records");
             [modelObjects addObjectsFromArray:[[[self class] modelClass] allObjectsUsingTransaction:transaction]];
             
             NSMutableArray *fetchedObjectsJSON = [NSMutableArray new];
@@ -57,7 +54,7 @@
     }];
     
     //What did we fetch?
-    if (modelObject) {
+    if (objectId) {
         
         //Did we fetch something from the database?
         if (!modelObjectJSON) {
@@ -73,7 +70,6 @@
                                            andBody:modelObjectJSON];
     } else {
         //We fetched multiple entries. Can we transform their JSON in data?
-        NSLog(@"Found multiple entries");
         self.modelObjects = modelObjects;
         
         NSError *jsonError;
@@ -87,6 +83,7 @@
                                                                       userInfo:@{@"reason": @"Could not get JSON for this object"}]];
         }
         
+        NSLog(@"%@ is fetching %@", [self class], modelObjects);
         return [RoutingResponse responseWithStatus:200
                                            andData:modelObjectsJSONData];
     }

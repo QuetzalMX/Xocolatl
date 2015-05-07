@@ -95,7 +95,7 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
 #pragma mark - JSON
 - (NSDictionary *)jsonRepresentation;
 {
-    return @{@"ID": self.identifier,
+    return @{@"_id": self.identifier,
              @"createdAt": @([self.createdAt timeIntervalSince1970]),
              @"modifiedAt": @([self.modifiedAt timeIntervalSince1970])};
 }
