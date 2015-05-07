@@ -138,8 +138,6 @@
         return nil;
     }
     
-    NSLog(@"%@ %@", method, path);
-    
     __block RoutingResponder *responsibleResponder;
     NSMutableDictionary *newParams = [parameters mutableCopy];
     [respondersForMethod enumerateObjectsUsingBlock:^(RoutingResponder *responder, NSUInteger idx, BOOL *stop) {
@@ -147,9 +145,6 @@
         NSTextCheckingResult *result = [[responder regexForMethod:method] firstMatchInString:path
                                                                                      options:0
                                                                                        range:NSMakeRange(0, path.length)];
-        
-        NSLog(@"Using regex: %@", [responder regexForMethod:method]);
-        NSLog(@"Found result: %@ for path: %@", result, path);
         if (!result) {
             //Note: (FO) A regex will not return a result if there are no values in any captured group.
             //This does not mean that the responder is not responsible, it only means that there were no arguments passed when they were probably expected.

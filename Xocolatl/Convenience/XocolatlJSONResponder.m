@@ -32,7 +32,7 @@
     __block NSMutableArray *modelObjects = [NSMutableArray new];
     __block NSArray *modelObjectsJSON;
     NSString *objectId = parameters[@"id"];
-    NSLog(@"fetching %@ with id %@", [[self class] modelClass], objectId);
+
     [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
         //Are we fetching one record or all records?
         if (objectId && objectId.length > 0) {
@@ -83,7 +83,6 @@
                                                                       userInfo:@{@"reason": @"Could not get JSON for this object"}]];
         }
         
-        NSLog(@"%@ is fetching %@", [self class], modelObjects);
         return [RoutingResponse responseWithStatus:200
                                            andData:modelObjectsJSONData];
     }

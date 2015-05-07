@@ -110,16 +110,12 @@
                                          replacementRange.length++;
                                      }
                                      
-                                     NSLog(@"Replacing %@ in %@", replacementString, regexPath);
-                                     
                                      [regexPath replaceCharactersInRange:replacementRange
                                                               withString:replacementString];
                                      diff += replacementString.length - result.range.length;
                                  }];
             
-            NSLog(@"Regex: %@", regexPath);
             parsedPath = [NSString stringWithFormat:@"^%@$", regexPath];
-            NSLog(@"Full regex: %@", parsedPath);
         }
 
         self.keys[method] = keysForMethod;
