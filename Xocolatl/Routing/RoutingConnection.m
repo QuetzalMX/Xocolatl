@@ -63,22 +63,37 @@
 		[response setHeaderField:field value:value];
 	}];
 
-	if (headers && !isError) {
-		[headers enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL *stop) {
-			[response setHeaderField:field value:value];
-		}];
-	}
-
 	// Set the connection header if not already specified
 	NSString *connection = [response headerField:@"Connection"];
 	if (!connection) {
 		connection = [self shouldDie] ? @"close" : @"keep-alive";
 		[response setHeaderField:@"Connection" value:connection];
 	}
+    
+    //NOTE: (FO) As per RFC6265:  HTTP State Management Mechanism (http://tools.ietf.org/html/rfc6265#section-3), section 3. Overview, last paragraph:
+    // >  Origin servers SHOULD NOT fold multiple Set-Cookie header fields into a single header field.
+    // Currently, there is no way to comply with this standard using CFHTTPMessageSetHeaderFieldValue. Using it with the same headerField and multiple values will result in the last value being saved and all others discarded.
+    //So we append a number of spaces to Set-Cookie. Browsers will ignore this, so it isn't a big issue at all.
+    NSMutableString *setCookieField = [@"Set-Cookie" mutableCopy];
+    [headers enumerateKeysAndObjectsUsingBlock:^(NSString *headerName, id headerValue, BOOL *stop) {
+        if ([headerName isEqualToString:setCookieField]) {
+            [headerValue enumerateObjectsUsingBlock:^(NSString *aCookie, NSUInteger idx, BOOL *stop) {
+                [response setHeaderField:setCookieField
+                                   value:aCookie];
+                [setCookieField appendString:@" "];
+            }];
+            
+            return;
+        }
+        
+        [response setHeaderField:headerName
+                           value:headerValue];
+    }];
 }
 
 - (NSData *)preprocessResponse:(HTTPMessage *)response {
 	[self setHeadersForResponse:response isError:NO];
+    
 	return [super preprocessResponse:response];
 }
 

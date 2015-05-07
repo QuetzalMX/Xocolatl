@@ -15,11 +15,9 @@
 #import "RNDecryptor.h"
 #import "NSData+RNSecureCompare.h"
 
-NSString *const UsersCollection = @"Users";
+@interface XOCUser ()
 
-@interface XOCUser () <NSCoding>
-
-@property (nonatomic, copy, readwrite) NSString *identifier;
+@property (nonatomic, strong, readwrite) NSDate *modifiedAt;
 @property (nonatomic, copy, readwrite) NSString *username;
 @property (nonatomic, copy) NSData *password;
 @property (nonatomic, strong) NSMutableSet *cookiePasswords;
@@ -29,12 +27,18 @@ NSString *const UsersCollection = @"Users";
 
 @implementation XOCUser
 
+@synthesize modifiedAt;
+
++ (NSString *)yapDatabaseCollectionIdentifier;
+{
+    return @"XOCUserDatabaseCollectionIdentifier";
+}
+
 + (instancetype)newUserWithUsername:(NSString *)username
                         andPassword:(NSString *)password;
 {
     //Create a new user.
     XOCUser *user = [[self alloc] init];
-    user.identifier = [NSString randomString];
     user.username = username;
     user.cookiePasswords = [NSMutableSet new];
     user.authorizations = [NSMutableDictionary new];
@@ -51,14 +55,29 @@ NSString *const UsersCollection = @"Users";
     return user;
 }
 
++ (instancetype)objectWithIdentifier:(NSString *)identifier
+                    usingTransaction:(YapDatabaseReadTransaction *)transaction;
+{
+    return [transaction objectForKey:identifier
+                        inCollection:[XOCUser yapDatabaseCollectionIdentifier]];
+}
+
+- (void)saveUsingTransaction:(YapDatabaseReadWriteTransaction *)transaction;
+{
+    [transaction setObject:self
+                    forKey:self.username
+              inCollection:[XOCUser yapDatabaseCollectionIdentifier]];
+    
+    self.modifiedAt = [NSDate date];
+}
+
 #pragma mark - Serialization
 - (instancetype)initWithCoder:(NSCoder *)aDecoder;
 {
-    if (self != [super init]) {
+    if (self != [super initWithCoder:aDecoder]) {
         return nil;
     }
     
-    _identifier = [aDecoder decodeObjectForKey:@"identifier"];
     _username = [aDecoder decodeObjectForKey:@"username"];
     _password = [aDecoder decodeObjectForKey:@"password"];
     _cookiePasswords = [[aDecoder decodeObjectForKey:@"cookiePasswords"] mutableCopy];
@@ -69,6 +88,7 @@ NSString *const UsersCollection = @"Users";
 
 - (void)encodeWithCoder:(NSCoder *)aCoder;
 {
+    [super encodeWithCoder:aCoder];
     [aCoder encodeObject:self.identifier forKey:@"identifier"];
     [aCoder encodeObject:self.username forKey:@"username"];
     [aCoder encodeObject:self.password forKey:@"password"];
@@ -76,16 +96,17 @@ NSString *const UsersCollection = @"Users";
     [aCoder encodeObject:self.authorizations forKey:@"authorizations"];
 }
 
-- (NSDictionary *)jsonRepresentation;
+- (NSDictionary *)jsonRepresentationUsingTransaction:(YapDatabaseReadTransaction *)transaction;
 {
-    return @{@"id": self.identifier,
-             @"username": self.username};
+    NSMutableDictionary *json = [[super jsonRepresentationUsingTransaction:transaction] mutableCopy];
+    json[@"username"] = self.username;
+    return json;
 }
 
 #pragma mark - Authorization
 - (BOOL)isTimeOfDeathInTheFuture:(NSTimeInterval)timeOfDeath;
 {
-    return [[NSDate date] timeIntervalSince1970] >= timeOfDeath;
+    return [[NSDate date] timeIntervalSince1970] < timeOfDeath;
 }
 
 - (NSString *)clearAuthorizationWithTimeOfDeath:(NSTimeInterval)timeOfDeath;
@@ -98,32 +119,34 @@ NSString *const UsersCollection = @"Users";
 
 - (NSString *)newAuthHeaderWithTimeOfDeath:(NSTimeInterval)timeOfDeath;
 {
-    if ([self isTimeOfDeathInTheFuture:timeOfDeath]) {
+    if (![self isTimeOfDeathInTheFuture:timeOfDeath]) {
         return nil;
     }
     
     //Create a new cookie password and use it to encrypt the uesrname and timeOfDeath.
     NSString *passwordForAuthHeader = [NSString randomString];
     [self.cookiePasswords addObject:passwordForAuthHeader];
+
     NSString *clearText = [NSString stringWithFormat:@"%@:%.0f", self.username, timeOfDeath];
     NSError *error;
     NSData *cypherText = [RNEncryptor encryptData:[clearText dataUsingEncoding:NSUTF8StringEncoding]
                                      withSettings:kRNCryptorAES256Settings
                                          password:passwordForAuthHeader
                                             error:&error];
-    
+
     if (error) {
         //Something went terribly wrong.
         [self.cookiePasswords removeObject:passwordForAuthHeader];
         return nil;
     }
     
-    return [cypherText base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    return [[cypherText base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (BOOL)validateAuthHeader:(NSString *)clientProvidedAuth;
 {
-    NSData *clientProvidedAuthData = [[NSData alloc] initWithBase64EncodedString:clientProvidedAuth
+    NSString *urlDecodedClientProvidedAuth = [clientProvidedAuth stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSData *clientProvidedAuthData = [[NSData alloc] initWithBase64EncodedString:urlDecodedClientProvidedAuth
                                                                          options:NSDataBase64DecodingIgnoreUnknownCharacters];
     
     //Try decrypting the clientProvidedAuthData using our cookiePasswords.

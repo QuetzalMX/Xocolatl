@@ -66,8 +66,9 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
 + (instancetype)objectWithIdentifier:(NSString *)identifier
                     usingTransaction:(YapDatabaseReadTransaction *)transaction;
 {
+    NSString *yapCollectionIdentifier = [[self class] yapDatabaseCollectionIdentifier];
     return [transaction objectForKey:identifier
-                        inCollection:[[self class] yapDatabaseCollectionIdentifier]];
+                        inCollection:yapCollectionIdentifier];
 }
 
 + (NSArray *)allObjectsUsingTransaction:(YapDatabaseReadTransaction *)transaction;
@@ -93,16 +94,13 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
 }
 
 #pragma mark - JSON
-- (NSDictionary *)jsonRepresentation;
-{
-    return @{@"_id": self.identifier,
-             @"createdAt": @([self.createdAt timeIntervalSince1970]),
-             @"modifiedAt": @([self.modifiedAt timeIntervalSince1970])};
-}
-
 - (NSDictionary *)jsonRepresentationUsingTransaction:(YapDatabaseReadTransaction *)transaction;
 {
-    return [self jsonRepresentation];
+    NSString *createdAt = [NSString stringWithFormat:@"%.0f", [self.createdAt timeIntervalSince1970]];
+    NSString *modifiedAt = [NSString stringWithFormat:@"%.0f", [self.modifiedAt timeIntervalSince1970]];
+    return @{@"_id": self.identifier,
+             @"createdAt": createdAt,
+             @"modifiedAt": modifiedAt};
 }
 
 @end

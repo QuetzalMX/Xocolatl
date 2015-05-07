@@ -60,10 +60,11 @@
 
     __block XOCUser *newUser;
     __block NSError *error;
+    __block NSDictionary *newUserJSON;
     [self.writeConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         //First, check if the user exists.
-        XOCUser *registeredUser = [transaction objectForKey:username
-                                               inCollection:UsersCollection];
+        XOCUser *registeredUser = [XOCUser objectWithIdentifier:username
+                                               usingTransaction:transaction];
         if (registeredUser) {
             //User exists. Deny the registration.
             error = [NSError errorWithDomain:@"Account Creation"
@@ -75,10 +76,12 @@
         //User doesn't exist. Create it.
         newUser = [self.userClass newUserWithUsername:username
                                           andPassword:password];
+        
         [newUser willRegisterUsingRequestBody:request.parsedBody];
-        [transaction setObject:newUser
-                        forKey:newUser.username
-                  inCollection:UsersCollection];
+        
+        [newUser saveUsingTransaction:transaction];
+        
+        newUserJSON = [newUser jsonRepresentationUsingTransaction:transaction];
     }];
     
     if (error) {
@@ -86,7 +89,7 @@
     }
     
     RoutingResponse *successResponse = [RoutingResponse responseWithStatus:200
-                                                                   andBody:newUser.jsonRepresentation];
+                                                                   andBody:newUserJSON];
     successResponse.registeredUser = newUser;
     return successResponse;
 }

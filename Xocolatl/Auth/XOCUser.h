@@ -6,22 +6,15 @@
 //  Copyright (c) 2015 Quetzal. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "XocolatlModelObject.h"
 
-extern NSString *const UsersCollection;
+@interface XOCUser : XocolatlModelObject
 
-@interface XOCUser : NSObject <NSCoding>
-
-@property (nonatomic, copy, readonly) NSString *identifier;
 @property (nonatomic, copy, readonly) NSString *username;
-
-#warning Need to clean up these methods into another category (private)
-#warning This class should be a child of XocolatlModelObject
 
 //Self
 + (instancetype)newUserWithUsername:(NSString *)username
                         andPassword:(NSString *)password;
-- (NSDictionary *)jsonRepresentation;
 
 //Passwords
 + (BOOL)verifyPasswordHashForUser:(XOCUser *)user

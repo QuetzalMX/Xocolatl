@@ -15,6 +15,7 @@
 #import "SignInResponder.h"
 #import "XOCUser.h"
 #import "YapDatabase.h"
+#import "XOCUsersResponder.h"
 
 @interface AppDelegate ()
 
@@ -79,6 +80,11 @@
                                                                           inServer:self.server
                                                                      withUserClass:[XOCUser class]];
     [self.server addResponseHandler:signUpRoute];
+    
+    XOCUsersResponder *responder = [[XOCUsersResponder alloc] initWithReadConnection:self.readConnection
+                                                                  andWriteConnection:self.writeConnection
+                                                                            inServer:self.server];
+    [self.server addResponseHandler:responder];
 }
 
 @end

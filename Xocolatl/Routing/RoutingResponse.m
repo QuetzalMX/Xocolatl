@@ -120,7 +120,7 @@
     return [NSData dataWithBytesNoCopy:bytes length:length freeWhenDone:NO];
 }
 
-- (NSDictionary *)HTTPHeaders;
+- (NSDictionary *)httpHeaders;
 {
     return [self.mutableHeaders copy];
 }

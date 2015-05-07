@@ -30,19 +30,31 @@
         
         NSMutableDictionary *parsedCookies = [NSMutableDictionary new];
         for (NSString *subCookie in subCookies) {
-            NSArray *cookieFieldAndValue = [subCookie componentsSeparatedByString:@"="];
-            if (cookieFieldAndValue.count < 2) {
+            //Find the first = sign.
+            NSRange equalSignRange = [subCookie rangeOfString:@"="];
+            
+            if (equalSignRange.location == NSNotFound || equalSignRange.location + 1 >= subCookie.length) {
                 continue;
             }
             
-            parsedCookies[cookieFieldAndValue.firstObject] = cookieFieldAndValue.lastObject;
+            NSString *cookieName = [subCookie substringToIndex:equalSignRange.location];
+            NSString *cookieValue = [subCookie substringFromIndex:equalSignRange.location + 1];
+            if (!cookieName || !cookieValue) {
+                continue;
+            }
+            
+            parsedCookies[cookieName] = cookieValue;
         }
         
-        parsedCookies = [parsedCookies copy];
         [self setCookies:parsedCookies];
     }
     
-    return parsedCookies;
+    //NOTE: (FO) For a reason I don't understand, if we generate parsedCookies, we'll be able to see it as long as it's inside the if. Once we leave the if, its value is reset to nil. This is why we do a little bit of recursion here.
+    if (!parsedCookies) {
+        return self.cookies;
+    } else {
+        return parsedCookies;
+    }
 }
 
 - (void)setParsedBody:(NSDictionary *)cookies;

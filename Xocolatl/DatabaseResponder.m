@@ -68,8 +68,8 @@
     __block XOCUser *user;
     __block BOOL isValidAuth;
     [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-        user = [transaction objectForKey:username
-                            inCollection:UsersCollection];
+        user = [XOCUser objectWithIdentifier:username
+                            usingTransaction:transaction];
         
         isValidAuth = [user validateAuthHeader:auth];
     }];

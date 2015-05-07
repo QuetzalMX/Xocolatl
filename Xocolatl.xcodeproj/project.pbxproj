@@ -55,6 +55,10 @@
 		C1D1D6D31AF9ECE100F84252 /* XocolatlJSONResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C122AE011AF9E9D3002A7502 /* XocolatlJSONResponder.m */; };
 		C1D1D6D41AF9ECE800F84252 /* XocolatlJSONResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = C122AE001AF9E9D3002A7502 /* XocolatlJSONResponder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1D1D6D51AF9ECED00F84252 /* XocolatlJSONResponder.h in Resources */ = {isa = PBXBuildFile; fileRef = C122AE001AF9E9D3002A7502 /* XocolatlJSONResponder.h */; };
+		C1D1D6E21AFAF7F200F84252 /* XOCUsersResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1D1D6E11AFAF7F200F84252 /* XOCUsersResponder.m */; };
+		C1D1D6ED1AFB28F300F84252 /* XOCUsersResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1D1D6E11AFAF7F200F84252 /* XOCUsersResponder.m */; };
+		C1D1D6EE1AFB28F800F84252 /* XOCUsersResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = C1D1D6E01AFAF7F200F84252 /* XOCUsersResponder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C1D1D6EF1AFB28FC00F84252 /* XOCUsersResponder.h in Resources */ = {isa = PBXBuildFile; fileRef = C1D1D6E01AFAF7F200F84252 /* XOCUsersResponder.h */; };
 		C1D77D6A1AF84A35008E4D78 /* XocolatlFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = C1D77D691AF84A35008E4D78 /* XocolatlFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1D77D701AF84A35008E4D78 /* XocolatlFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D77D651AF84A35008E4D78 /* XocolatlFramework.framework */; };
 		C1D77D771AF84A35008E4D78 /* XocolatlFrameworkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C1D77D761AF84A35008E4D78 /* XocolatlFrameworkTests.m */; };
@@ -432,6 +436,8 @@
 		C1C374961AF72A3500E9589B /* RNEncryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNEncryptor.m; sourceTree = "<group>"; };
 		C1C3749B1AF7322900E9589B /* NSData+RNSecureCompare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+RNSecureCompare.h"; sourceTree = "<group>"; };
 		C1C3749C1AF7322900E9589B /* NSData+RNSecureCompare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+RNSecureCompare.m"; sourceTree = "<group>"; };
+		C1D1D6E01AFAF7F200F84252 /* XOCUsersResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XOCUsersResponder.h; path = Auth/XOCUsersResponder.h; sourceTree = "<group>"; };
+		C1D1D6E11AFAF7F200F84252 /* XOCUsersResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XOCUsersResponder.m; path = Auth/XOCUsersResponder.m; sourceTree = "<group>"; };
 		C1D77D651AF84A35008E4D78 /* XocolatlFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XocolatlFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1D77D681AF84A35008E4D78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1D77D691AF84A35008E4D78 /* XocolatlFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XocolatlFramework.h; sourceTree = "<group>"; };
@@ -676,6 +682,7 @@
 		C122ADF31AF9DF68002A7502 /* Convenience */ = {
 			isa = PBXGroup;
 			children = (
+				C1D1D6E31AFAFCE400F84252 /* Auth */,
 				C122ADF41AF9DF87002A7502 /* XocolatlHTTPServer.h */,
 				C122ADF51AF9DF87002A7502 /* XocolatlHTTPServer.m */,
 				C122ADFA1AF9E370002A7502 /* XocolatlModelObject.h */,
@@ -832,6 +839,21 @@
 				C1C374961AF72A3500E9589B /* RNEncryptor.m */,
 			);
 			path = RNCryptor;
+			sourceTree = "<group>";
+		};
+		C1D1D6E31AFAFCE400F84252 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				C1AC896D1AF09517008392D5 /* SignUpResponder.h */,
+				C1AC896E1AF09517008392D5 /* SignUpResponder.m */,
+				C1DD52941AEF696600955035 /* SignInResponder.h */,
+				C1DD52951AEF696600955035 /* SignInResponder.m */,
+				C1D1D6E01AFAF7F200F84252 /* XOCUsersResponder.h */,
+				C1D1D6E11AFAF7F200F84252 /* XOCUsersResponder.m */,
+				C1F70E281ADE0BC700CD9959 /* XOCUser.h */,
+				C1F70E291ADE0BC700CD9959 /* XOCUser.m */,
+			);
+			name = Auth;
 			sourceTree = "<group>";
 		};
 		C1D77D661AF84A35008E4D78 /* XocolatlFramework */ = {
@@ -1365,12 +1387,6 @@
 			children = (
 				C1C3748C1AF72A3500E9589B /* RNCryptor */,
 				C1F70E2F1ADE17ED00CD9959 /* Categories */,
-				C1AC896D1AF09517008392D5 /* SignUpResponder.h */,
-				C1AC896E1AF09517008392D5 /* SignUpResponder.m */,
-				C1DD52941AEF696600955035 /* SignInResponder.h */,
-				C1DD52951AEF696600955035 /* SignInResponder.m */,
-				C1F70E281ADE0BC700CD9959 /* XOCUser.h */,
-				C1F70E291ADE0BC700CD9959 /* XOCUser.m */,
 			);
 			name = Auth;
 			sourceTree = "<group>";
@@ -1425,6 +1441,7 @@
 				C1D77E5D1AF85132008E4D78 /* HTTPConnection.h in Headers */,
 				C122ADFE1AF9E545002A7502 /* XocolatlModelObject.h in Headers */,
 				C1D77E561AF84EED008E4D78 /* YapCollectionKey.h in Headers */,
+				C1D1D6EE1AFB28F800F84252 /* XOCUsersResponder.h in Headers */,
 				C1D1D6D41AF9ECE800F84252 /* XocolatlJSONResponder.h in Headers */,
 				C122ADF71AF9E08F002A7502 /* XocolatlHTTPServer.h in Headers */,
 			);
@@ -1556,6 +1573,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1D1D6EF1AFB28FC00F84252 /* XOCUsersResponder.h in Resources */,
 				C1D1D6D51AF9ECED00F84252 /* XocolatlJSONResponder.h in Resources */,
 				C122ADFF1AF9E54A002A7502 /* XocolatlModelObject.h in Resources */,
 				C122ADF81AF9E095002A7502 /* XocolatlHTTPServer.h in Resources */,
@@ -1624,6 +1642,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1D1D6ED1AFB28F300F84252 /* XOCUsersResponder.m in Sources */,
 				C1D1D6D31AF9ECE100F84252 /* XocolatlJSONResponder.m in Sources */,
 				C122ADFD1AF9E540002A7502 /* XocolatlModelObject.m in Sources */,
 				C122ADF91AF9E09C002A7502 /* XocolatlHTTPServer.m in Sources */,
@@ -1840,6 +1859,7 @@
 				C1F690A91AD9E5C4007FF919 /* YapDatabaseSecondaryIndexSetup.m in Sources */,
 				C1F690921AD9E5C4007FF919 /* YapDatabaseFullTextSearchHandler.m in Sources */,
 				C1F6908F1AD9E5C4007FF919 /* YapDatabaseFilteredViewTypes.m in Sources */,
+				C1D1D6E21AFAF7F200F84252 /* XOCUsersResponder.m in Sources */,
 				C1F690C61AD9E5C4007FF919 /* YapSet.m in Sources */,
 				C1F690B81AD9E5C4007FF919 /* YapDatabaseConnectionState.m in Sources */,
 				C1AC89FF1AF4092A008392D5 /* DDASLLogger.m in Sources */,

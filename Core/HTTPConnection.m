@@ -1924,20 +1924,20 @@ static NSMutableArray *recentNonces;
 	[response setHeaderField:@"Accept-Ranges" value:@"bytes"];
 	
 	// Add optional response headers
-	if ([httpResponse respondsToSelector:@selector(httpHeaders)])
-	{
-		NSDictionary *responseHeaders = [httpResponse httpHeaders];
-		
-		NSEnumerator *keyEnumerator = [responseHeaders keyEnumerator];
-		NSString *key;
-		
-		while ((key = [keyEnumerator nextObject]))
-		{
-			NSString *value = [responseHeaders objectForKey:key];
-			
-			[response setHeaderField:key value:value];
-		}
-	}
+//	if ([httpResponse respondsToSelector:@selector(httpHeaders)])
+//	{
+//		NSDictionary *responseHeaders = [httpResponse httpHeaders];
+//		
+//		NSEnumerator *keyEnumerator = [responseHeaders keyEnumerator];
+//		NSString *key;
+//		
+//		while ((key = [keyEnumerator nextObject]))
+//		{
+//			NSString *value = [responseHeaders objectForKey:key];
+//			
+//			[response setHeaderField:key value:value];
+//		}
+//	}
 	
 	return [response messageData];
 }

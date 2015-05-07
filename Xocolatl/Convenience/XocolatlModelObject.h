@@ -27,7 +27,6 @@
 - (void)saveUsingTransaction:(YapDatabaseReadWriteTransaction *)transaction;
 
 //JSON.
-- (NSDictionary *)jsonRepresentation;
 - (NSDictionary *)jsonRepresentationUsingTransaction:(YapDatabaseReadTransaction *)transaction;
 
 @end

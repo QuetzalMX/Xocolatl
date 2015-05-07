@@ -12,13 +12,13 @@
 #import "RoutingResponse.h"
 #import "YapDatabase.h"
 
-NSInteger const SecondsUntilAuthorizationExpires = 3600;
+NSInteger const SecondsUntilAuthorizationExpires = 86400;
 
 @implementation SignInResponder
 
 - (NSDictionary *)methods;
 {
-    return @{@"POST": @"/api/login"};
+    return @{@"POST": @"/api/signin"};
 }
 
 - (NSObject <HTTPResponse> *)responseForPOSTRequest:(HTTPMessage *)message
@@ -26,16 +26,17 @@ NSInteger const SecondsUntilAuthorizationExpires = 3600;
 {
     //Attempt to log in the user with the given credentials.
     NSTimeInterval timeOfDeath = [[NSDate date] timeIntervalSince1970] + SecondsUntilAuthorizationExpires;
-    NSString *user = message.parsedBody[@"username"];
+    NSString *username = message.parsedBody[@"username"];
     NSString *password = message.parsedBody[@"password"];
     
     __block XOCUser *registeredUser;
     __block NSString *authorization;
     __block NSError *error;
+    __block NSDictionary *registeredUserJSON;
     [self.writeConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         //Let's see if this user exists.
-        XOCUser *fetchedUser = [transaction objectForKey:user
-                                            inCollection:UsersCollection];
+        XOCUser *fetchedUser = [XOCUser objectWithIdentifier:username
+                                            usingTransaction:transaction];
         
         if (!fetchedUser) {
             //User is not registered.
@@ -58,11 +59,11 @@ NSInteger const SecondsUntilAuthorizationExpires = 3600;
         //The password is valid. Create an auth string and return the user.
         registeredUser = fetchedUser;
         authorization = [fetchedUser newAuthHeaderWithTimeOfDeath:timeOfDeath];
+        NSAssert(authorization, @"Auth should never be null");
         
         //Save the user.
-        [transaction setObject:fetchedUser
-                        forKey:user
-                  inCollection:UsersCollection];
+        [fetchedUser saveUsingTransaction:transaction];
+        registeredUserJSON = [registeredUser jsonRepresentationUsingTransaction:transaction];
     }];
     
     if (!registeredUser) {
@@ -77,7 +78,7 @@ NSInteger const SecondsUntilAuthorizationExpires = 3600;
     
     //Now that we have all the info, add our cookies and redirect the user back to home.
     RoutingResponse *response = [RoutingResponse responseWithStatus:200
-                                                            andBody:registeredUser.jsonRepresentation];
+                                                            andBody:registeredUserJSON];
     
     [response setCookieNamed:@"username"
                    withValue:registeredUser.username
