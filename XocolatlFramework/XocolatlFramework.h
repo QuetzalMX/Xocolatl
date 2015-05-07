@@ -20,6 +20,7 @@ FOUNDATION_EXPORT const unsigned char XocolatlFrameworkVersionString[];
 #import <XocolatlFramework/HTTPMessage+Xocolatl.h>
 #import <XocolatlFramework/HTTPMessage.h>
 #import <XocolatlFramework/HTTPResponse.h>
+#import <XocolatlFramework/NSArray+arrayFromNewObjects.h>
 #import <XocolatlFramework/NSData+RNSecureCompare.h>
 #import <XocolatlFramework/NSString+randomString.h>
 #import <XocolatlFramework/RNCryptor.h>
