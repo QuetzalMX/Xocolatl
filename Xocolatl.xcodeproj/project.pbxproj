@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		76EA2E6E1B03D2A100BB662C /* NSArray+arrayFromNewObjects.h in Headers */ = {isa = PBXBuildFile; fileRef = 76EA2E6C1B03D2A100BB662C /* NSArray+arrayFromNewObjects.h */; };
-		76EA2E6F1B03D2A100BB662C /* NSArray+arrayFromNewObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EA2E6D1B03D2A100BB662C /* NSArray+arrayFromNewObjects.m */; };
-		76EA2E701B03D2A100BB662C /* NSArray+arrayFromNewObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EA2E6D1B03D2A100BB662C /* NSArray+arrayFromNewObjects.m */; };
+		763610AA1B03D65E004384BC /* NSArray+arrayFromNewObjects.h in Headers */ = {isa = PBXBuildFile; fileRef = 763610A81B03D65E004384BC /* NSArray+arrayFromNewObjects.h */; };
+		763610AB1B03D65E004384BC /* NSArray+arrayFromNewObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 763610A91B03D65E004384BC /* NSArray+arrayFromNewObjects.m */; };
+		763610AC1B03D65E004384BC /* NSArray+arrayFromNewObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 763610A91B03D65E004384BC /* NSArray+arrayFromNewObjects.m */; };
 		C122ADF61AF9DF87002A7502 /* XocolatlHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C122ADF51AF9DF87002A7502 /* XocolatlHTTPServer.m */; };
 		C122ADF71AF9E08F002A7502 /* XocolatlHTTPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = C122ADF41AF9DF87002A7502 /* XocolatlHTTPServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C122ADF81AF9E095002A7502 /* XocolatlHTTPServer.h in Resources */ = {isa = PBXBuildFile; fileRef = C122ADF41AF9DF87002A7502 /* XocolatlHTTPServer.h */; };
@@ -359,8 +359,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		76EA2E6C1B03D2A100BB662C /* NSArray+arrayFromNewObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+arrayFromNewObjects.h"; path = "Core/Categories/NSArray+arrayFromNewObjects.h"; sourceTree = "<group>"; };
-		76EA2E6D1B03D2A100BB662C /* NSArray+arrayFromNewObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+arrayFromNewObjects.m"; path = "Core/Categories/NSArray+arrayFromNewObjects.m"; sourceTree = "<group>"; };
+		763610A81B03D65E004384BC /* NSArray+arrayFromNewObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+arrayFromNewObjects.h"; path = "Xocolatl/Convenience/NSArray+arrayFromNewObjects.h"; sourceTree = SOURCE_ROOT; };
+		763610A91B03D65E004384BC /* NSArray+arrayFromNewObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+arrayFromNewObjects.m"; path = "../../Xocolatl/Xocolatl/Convenience/NSArray+arrayFromNewObjects.m"; sourceTree = "<group>"; };
 		C122ADF41AF9DF87002A7502 /* XocolatlHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlHTTPServer.h; path = Convenience/XocolatlHTTPServer.h; sourceTree = "<group>"; };
 		C122ADF51AF9DF87002A7502 /* XocolatlHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XocolatlHTTPServer.m; path = Convenience/XocolatlHTTPServer.m; sourceTree = "<group>"; };
 		C122ADFA1AF9E370002A7502 /* XocolatlModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlModelObject.h; path = Convenience/XocolatlModelObject.h; sourceTree = "<group>"; };
@@ -865,8 +865,8 @@
 		C1D505931AFBF2B800796F8B /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				76EA2E6C1B03D2A100BB662C /* NSArray+arrayFromNewObjects.h */,
-				76EA2E6D1B03D2A100BB662C /* NSArray+arrayFromNewObjects.m */,
+				763610A81B03D65E004384BC /* NSArray+arrayFromNewObjects.h */,
+				763610A91B03D65E004384BC /* NSArray+arrayFromNewObjects.m */,
 			);
 			name = Categories;
 			path = ../../CruyffServer/CruyffServer;
@@ -1460,7 +1460,7 @@
 				C1D1D6EE1AFB28F800F84252 /* XOCUsersResponder.h in Headers */,
 				C1D1D6D41AF9ECE800F84252 /* XocolatlJSONResponder.h in Headers */,
 				C122ADF71AF9E08F002A7502 /* XocolatlHTTPServer.h in Headers */,
-				76EA2E6E1B03D2A100BB662C /* NSArray+arrayFromNewObjects.h in Headers */,
+				763610AA1B03D65E004384BC /* NSArray+arrayFromNewObjects.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1704,7 +1704,7 @@
 				C1D77DA51AF84B13008E4D78 /* YapDatabaseConnection.m in Sources */,
 				C1D77DA61AF84B13008E4D78 /* YapDatabaseOptions.m in Sources */,
 				C1D77DA71AF84B13008E4D78 /* YapDatabaseTransaction.m in Sources */,
-				76EA2E701B03D2A100BB662C /* NSArray+arrayFromNewObjects.m in Sources */,
+				763610AC1B03D65E004384BC /* NSArray+arrayFromNewObjects.m in Sources */,
 				C1D77DA81AF84B13008E4D78 /* YDBCKAttachRequest.m in Sources */,
 				C1D77DA91AF84B13008E4D78 /* YDBCKChangeQueue.m in Sources */,
 				C1D77DAA1AF84B13008E4D78 /* YDBCKChangeRecord.m in Sources */,
@@ -1801,7 +1801,7 @@
 				C1AC8A1E1AF48658008392D5 /* RoutingResponder.m in Sources */,
 				C1AC8A1B1AF40AC2008392D5 /* GCDAsyncSocket.m in Sources */,
 				C1F6907E1AD9E5C4007FF919 /* YDBCKAttachRequest.m in Sources */,
-				76EA2E6F1B03D2A100BB662C /* NSArray+arrayFromNewObjects.m in Sources */,
+				763610AB1B03D65E004384BC /* NSArray+arrayFromNewObjects.m in Sources */,
 				C1F690A41AD9E5C4007FF919 /* YapDatabaseSearchResultsViewTransaction.m in Sources */,
 				C1F70E2E1ADE17EA00CD9959 /* NSString+randomString.m in Sources */,
 				C1F690A01AD9E5C4007FF919 /* YapDatabaseSearchQueue.m in Sources */,
