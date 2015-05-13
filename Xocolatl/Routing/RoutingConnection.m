@@ -123,7 +123,7 @@
 
 #pragma mark - HTTPResponse
 - (NSObject <HTTPResponse> *)httpResponseForMethod:(NSString *)method
-                                              URI:(NSString *)path;
+                                               URI:(NSString *)path;
 {
     //We just received a connection.
     NSURL *url = [request url];
@@ -138,6 +138,8 @@
             params = [self parseParams:query];
         }
     }
+    
+    NSLog(@"Connection received: %@ %@", method, path);
     
     RoutingResponse *response = [self.delegate connection:self
                                   didFinishReadingRequest:request
@@ -166,20 +168,18 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         // Read .p12 file
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"certificate" ofType:@"p12"];
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"dev.quetzal.io" ofType:@"p12"];
         NSData *pkcs12data = [[NSData alloc] initWithContentsOfFile:path];
         
         // Import .p12 data
         CFArrayRef keyref = NULL;
         OSStatus sanityCheck;
         sanityCheck = SecPKCS12Import((__bridge CFDataRef)pkcs12data,
-                                      (__bridge CFDictionaryRef)@{(__bridge id)kSecImportExportPassphrase: @"pass"},
+                                      (__bridge CFDictionaryRef)@{(__bridge id)kSecImportExportPassphrase: @"alderaan19"},
                                       &keyref);
         
         if (sanityCheck != noErr) {
             NSLog(@"Error while importing pkcs12 [%d]", (int)sanityCheck);
-        } else {
-            NSLog(@"Success opening p12 certificate.");
         }
         
         // Identity

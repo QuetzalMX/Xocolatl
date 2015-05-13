@@ -65,6 +65,7 @@
     }
     
     _mutableHeaders = [NSMutableDictionary dictionary];
+    _mutableHeaders[@"Content-Type"] = @"application/json";
     
     return self;
 }

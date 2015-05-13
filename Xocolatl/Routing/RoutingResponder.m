@@ -151,25 +151,25 @@
 }
 
 - (RoutingResponse *)responseForGETRequest:(HTTPMessage *)message
-                                    withParameters:(NSDictionary *)parameters;
+                            withParameters:(NSDictionary *)parameters;
 {
     return nil;
 }
 
 - (RoutingResponse *)responseForPOSTRequest:(HTTPMessage *)message
-                                     withParameters:(NSDictionary *)parameters;
+                             withParameters:(NSDictionary *)parameters;
 {
     return nil;
 }
 
 - (RoutingResponse *)responseForPUTRequest:(HTTPMessage *)message
-                                    withParameters:(NSDictionary *)parameters;
+                            withParameters:(NSDictionary *)parameters;
 {
     return nil;
 }
 
 - (RoutingResponse *)responseForDELETERequest:(HTTPMessage *)message
-                                       withParameters:(NSDictionary *)parameters;
+                               withParameters:(NSDictionary *)parameters;
 {
     return nil;
 }
