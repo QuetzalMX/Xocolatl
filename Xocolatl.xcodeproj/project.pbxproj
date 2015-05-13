@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		76EA2E6E1B03D2A100BB662C /* NSArray+arrayFromNewObjects.h in Headers */ = {isa = PBXBuildFile; fileRef = 76EA2E6C1B03D2A100BB662C /* NSArray+arrayFromNewObjects.h */; };
+		76EA2E6F1B03D2A100BB662C /* NSArray+arrayFromNewObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EA2E6D1B03D2A100BB662C /* NSArray+arrayFromNewObjects.m */; };
+		76EA2E701B03D2A100BB662C /* NSArray+arrayFromNewObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 76EA2E6D1B03D2A100BB662C /* NSArray+arrayFromNewObjects.m */; };
 		C122ADF61AF9DF87002A7502 /* XocolatlHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C122ADF51AF9DF87002A7502 /* XocolatlHTTPServer.m */; };
 		C122ADF71AF9E08F002A7502 /* XocolatlHTTPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = C122ADF41AF9DF87002A7502 /* XocolatlHTTPServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C122ADF81AF9E095002A7502 /* XocolatlHTTPServer.h in Resources */ = {isa = PBXBuildFile; fileRef = C122ADF41AF9DF87002A7502 /* XocolatlHTTPServer.h */; };
@@ -59,10 +62,6 @@
 		C1D1D6ED1AFB28F300F84252 /* XOCUsersResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1D1D6E11AFAF7F200F84252 /* XOCUsersResponder.m */; };
 		C1D1D6EE1AFB28F800F84252 /* XOCUsersResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = C1D1D6E01AFAF7F200F84252 /* XOCUsersResponder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1D1D6EF1AFB28FC00F84252 /* XOCUsersResponder.h in Resources */ = {isa = PBXBuildFile; fileRef = C1D1D6E01AFAF7F200F84252 /* XOCUsersResponder.h */; };
-		C1D505941AFBF2B800796F8B /* NSArray+arrayFromNewObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = C1D505921AFBF2B800796F8B /* NSArray+arrayFromNewObjects.m */; };
-		C1D505951AFBF2C600796F8B /* NSArray+arrayFromNewObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = C1D505921AFBF2B800796F8B /* NSArray+arrayFromNewObjects.m */; };
-		C1D505961AFBF2CE00796F8B /* NSArray+arrayFromNewObjects.h in Headers */ = {isa = PBXBuildFile; fileRef = C1D505911AFBF2B800796F8B /* NSArray+arrayFromNewObjects.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C1D505971AFBF2D500796F8B /* NSArray+arrayFromNewObjects.h in Resources */ = {isa = PBXBuildFile; fileRef = C1D505911AFBF2B800796F8B /* NSArray+arrayFromNewObjects.h */; };
 		C1D77D6A1AF84A35008E4D78 /* XocolatlFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = C1D77D691AF84A35008E4D78 /* XocolatlFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1D77D701AF84A35008E4D78 /* XocolatlFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D77D651AF84A35008E4D78 /* XocolatlFramework.framework */; };
 		C1D77D771AF84A35008E4D78 /* XocolatlFrameworkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C1D77D761AF84A35008E4D78 /* XocolatlFrameworkTests.m */; };
@@ -360,6 +359,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		76EA2E6C1B03D2A100BB662C /* NSArray+arrayFromNewObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+arrayFromNewObjects.h"; path = "Core/Categories/NSArray+arrayFromNewObjects.h"; sourceTree = "<group>"; };
+		76EA2E6D1B03D2A100BB662C /* NSArray+arrayFromNewObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+arrayFromNewObjects.m"; path = "Core/Categories/NSArray+arrayFromNewObjects.m"; sourceTree = "<group>"; };
 		C122ADF41AF9DF87002A7502 /* XocolatlHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlHTTPServer.h; path = Convenience/XocolatlHTTPServer.h; sourceTree = "<group>"; };
 		C122ADF51AF9DF87002A7502 /* XocolatlHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XocolatlHTTPServer.m; path = Convenience/XocolatlHTTPServer.m; sourceTree = "<group>"; };
 		C122ADFA1AF9E370002A7502 /* XocolatlModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlModelObject.h; path = Convenience/XocolatlModelObject.h; sourceTree = "<group>"; };
@@ -442,8 +443,6 @@
 		C1C3749C1AF7322900E9589B /* NSData+RNSecureCompare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+RNSecureCompare.m"; sourceTree = "<group>"; };
 		C1D1D6E01AFAF7F200F84252 /* XOCUsersResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XOCUsersResponder.h; path = Auth/XOCUsersResponder.h; sourceTree = "<group>"; };
 		C1D1D6E11AFAF7F200F84252 /* XOCUsersResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XOCUsersResponder.m; path = Auth/XOCUsersResponder.m; sourceTree = "<group>"; };
-		C1D505911AFBF2B800796F8B /* NSArray+arrayFromNewObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+arrayFromNewObjects.h"; path = "Core/Categories/NSArray+arrayFromNewObjects.h"; sourceTree = "<group>"; };
-		C1D505921AFBF2B800796F8B /* NSArray+arrayFromNewObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+arrayFromNewObjects.m"; path = "Core/Categories/NSArray+arrayFromNewObjects.m"; sourceTree = "<group>"; };
 		C1D77D651AF84A35008E4D78 /* XocolatlFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XocolatlFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1D77D681AF84A35008E4D78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1D77D691AF84A35008E4D78 /* XocolatlFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XocolatlFramework.h; sourceTree = "<group>"; };
@@ -866,8 +865,8 @@
 		C1D505931AFBF2B800796F8B /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				C1D505911AFBF2B800796F8B /* NSArray+arrayFromNewObjects.h */,
-				C1D505921AFBF2B800796F8B /* NSArray+arrayFromNewObjects.m */,
+				76EA2E6C1B03D2A100BB662C /* NSArray+arrayFromNewObjects.h */,
+				76EA2E6D1B03D2A100BB662C /* NSArray+arrayFromNewObjects.m */,
 			);
 			name = Categories;
 			path = ../../CruyffServer/CruyffServer;
@@ -1456,12 +1455,12 @@
 				C1D77E571AF84EFE008E4D78 /* YapDatabaseExtension.h in Headers */,
 				C1D77E591AF84F21008E4D78 /* YapDatabaseExtensionConnection.h in Headers */,
 				C1D77E5D1AF85132008E4D78 /* HTTPConnection.h in Headers */,
-				C1D505961AFBF2CE00796F8B /* NSArray+arrayFromNewObjects.h in Headers */,
 				C122ADFE1AF9E545002A7502 /* XocolatlModelObject.h in Headers */,
 				C1D77E561AF84EED008E4D78 /* YapCollectionKey.h in Headers */,
 				C1D1D6EE1AFB28F800F84252 /* XOCUsersResponder.h in Headers */,
 				C1D1D6D41AF9ECE800F84252 /* XocolatlJSONResponder.h in Headers */,
 				C122ADF71AF9E08F002A7502 /* XocolatlHTTPServer.h in Headers */,
+				76EA2E6E1B03D2A100BB662C /* NSArray+arrayFromNewObjects.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1591,7 +1590,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1D505971AFBF2D500796F8B /* NSArray+arrayFromNewObjects.h in Resources */,
 				C1D1D6EF1AFB28FC00F84252 /* XOCUsersResponder.h in Resources */,
 				C1D1D6D51AF9ECED00F84252 /* XocolatlJSONResponder.h in Resources */,
 				C122ADFF1AF9E54A002A7502 /* XocolatlModelObject.h in Resources */,
@@ -1661,7 +1659,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1D505951AFBF2C600796F8B /* NSArray+arrayFromNewObjects.m in Sources */,
 				C1D1D6ED1AFB28F300F84252 /* XOCUsersResponder.m in Sources */,
 				C1D1D6D31AF9ECE100F84252 /* XocolatlJSONResponder.m in Sources */,
 				C122ADFD1AF9E540002A7502 /* XocolatlModelObject.m in Sources */,
@@ -1707,6 +1704,7 @@
 				C1D77DA51AF84B13008E4D78 /* YapDatabaseConnection.m in Sources */,
 				C1D77DA61AF84B13008E4D78 /* YapDatabaseOptions.m in Sources */,
 				C1D77DA71AF84B13008E4D78 /* YapDatabaseTransaction.m in Sources */,
+				76EA2E701B03D2A100BB662C /* NSArray+arrayFromNewObjects.m in Sources */,
 				C1D77DA81AF84B13008E4D78 /* YDBCKAttachRequest.m in Sources */,
 				C1D77DA91AF84B13008E4D78 /* YDBCKChangeQueue.m in Sources */,
 				C1D77DAA1AF84B13008E4D78 /* YDBCKChangeRecord.m in Sources */,
@@ -1803,7 +1801,7 @@
 				C1AC8A1E1AF48658008392D5 /* RoutingResponder.m in Sources */,
 				C1AC8A1B1AF40AC2008392D5 /* GCDAsyncSocket.m in Sources */,
 				C1F6907E1AD9E5C4007FF919 /* YDBCKAttachRequest.m in Sources */,
-				C1D505941AFBF2B800796F8B /* NSArray+arrayFromNewObjects.m in Sources */,
+				76EA2E6F1B03D2A100BB662C /* NSArray+arrayFromNewObjects.m in Sources */,
 				C1F690A41AD9E5C4007FF919 /* YapDatabaseSearchResultsViewTransaction.m in Sources */,
 				C1F70E2E1ADE17EA00CD9959 /* NSString+randomString.m in Sources */,
 				C1F690A01AD9E5C4007FF919 /* YapDatabaseSearchQueue.m in Sources */,
