@@ -11,6 +11,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Core/**/*.{h,m}'
+  s.library = 'sqlite3' , 'xml2'
 
   s.subspec 'Xocolatl' do |sss|
   sss.source_files = 'Xocolatl/**/*.{h,m}'
