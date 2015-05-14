@@ -10,7 +10,12 @@ Pod::Spec.new do |s|
   s.platform      = :osx, '10.10'
   s.requires_arc = true
 
-s.source_files = 'Core/**/*.{h,m}', 'Xocolatl/**/*.{h,m}', 'XocolatlFramework/**/*.{h,m}'
+  s.source_files = 'Core/**/*.{h,m}', 'Xocolatl/**/*.{h,m}'
+
+  s.subspec 'folder name' do |ss|
+  ss.source_files = 'XocolatlFramework/**/*.{h,m}'
+  end
+
   s.resource_bundles = {
     'Xocolatl' => ['Pod/Assets/*.png']
   }
