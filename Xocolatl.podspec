@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.author           = { "Fernando" => "fernando.olivares@me.com" }
   s.source           = { :git => "https://github.com/QuetzalMX/Xocolatl.git", :tag => s.version.to_s }
 
-  s.platform     = :osx
+  s.platform     = :osx, '6.0'
   s.requires_arc = true
 
 s.source_files = 'Core/**/*.{h,m}', 'Xocolatl/**/*.{h,m}', 'XocolatlFramework/**/*.{h,m}'
