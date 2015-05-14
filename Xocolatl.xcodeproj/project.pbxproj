@@ -361,6 +361,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		273D1D671B05177200ACFAB7 /* Xocolatl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Xocolatl.h; sourceTree = "<group>"; };
 		27B7AF8C1B042AD3009E5D13 /* NSArray+transformativeArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+transformativeArray.h"; path = "Xocolatl/Convenience/NSArray+transformativeArray.h"; sourceTree = SOURCE_ROOT; };
 		27B7AF8D1B042AD3009E5D13 /* NSArray+transformativeArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+transformativeArray.m"; path = "Xocolatl/Convenience/NSArray+transformativeArray.m"; sourceTree = SOURCE_ROOT; };
 		C122ADF41AF9DF87002A7502 /* XocolatlHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlHTTPServer.h; path = Convenience/XocolatlHTTPServer.h; sourceTree = "<group>"; };
@@ -697,6 +698,7 @@
 				C122ADFB1AF9E370002A7502 /* XocolatlModelObject.m */,
 				C122AE001AF9E9D3002A7502 /* XocolatlJSONResponder.h */,
 				C122AE011AF9E9D3002A7502 /* XocolatlJSONResponder.m */,
+				273D1D671B05177200ACFAB7 /* Xocolatl.h */,
 			);
 			name = Convenience;
 			sourceTree = "<group>";
