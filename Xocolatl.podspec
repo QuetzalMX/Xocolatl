@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '7.0'
   s.requires_arc = true
 
-  s.source_files = 'Core/HTTPAuthenticationRequest.{h,m}'
+  s.source_files = 'Core/**/*.{h,m}, Xocolatl/**/*.{h,m}'
   s.resource_bundles = {
     'Xocolatl' => ['Pod/Assets/*.png']
   }
