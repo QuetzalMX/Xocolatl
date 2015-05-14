@@ -15,6 +15,9 @@
 @interface XocolatlHTTPServer : RoutingHTTPServer
 
 + (instancetype)newServerNamed:(NSString *)name
+               listeningAtPort:(NSInteger)port;
+
++ (instancetype)newServerNamed:(NSString *)name
                listeningAtPort:(NSInteger)port
      usingSSLCertificateAtPath:(NSString *)p12CertificatePath
         andCertificatePassword:(NSString *)certificatePassword;

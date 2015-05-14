@@ -13,6 +13,15 @@
 @implementation XocolatlHTTPServer
 
 + (instancetype)newServerNamed:(NSString *)name
+               listeningAtPort:(NSInteger)port;
+{
+    return [self newServerNamed:name
+                listeningAtPort:port
+      usingSSLCertificateAtPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"certificate" ofType:@"p12"]
+         andCertificatePassword:@"pass"];
+}
+
++ (instancetype)newServerNamed:(NSString *)name
                listeningAtPort:(NSInteger)port
      usingSSLCertificateAtPath:(NSString *)p12CertificatePath
         andCertificatePassword:(NSString *)certificatePassword;

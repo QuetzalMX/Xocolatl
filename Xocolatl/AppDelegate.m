@@ -26,11 +26,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     
-    NSString *sslCertificatePath = [[NSBundle mainBundle] pathForResource:@"certificate" ofType:@"p12"];
     self.server = [XocolatlHTTPServer newServerNamed:@"Xocolatl"
-                                     listeningAtPort:3000
-                           usingSSLCertificateAtPath:sslCertificatePath
-                              andCertificatePassword:@"pass"];
+                                     listeningAtPort:3000];
     
     [self.server setSignUpRoute:[SignUpResponder class]
                   withUserClass:[XOCUser class]];

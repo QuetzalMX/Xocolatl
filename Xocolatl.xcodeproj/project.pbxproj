@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		27B7AF531B0428FC009E5D13 /* certificate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = C1DD529C1AF0713900955035 /* certificate.p12 */; };
-		763610AA1B03D65E004384BC /* NSArray+arrayFromNewObjects.h in Headers */ = {isa = PBXBuildFile; fileRef = 763610A81B03D65E004384BC /* NSArray+arrayFromNewObjects.h */; };
-		763610AB1B03D65E004384BC /* NSArray+arrayFromNewObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 763610A91B03D65E004384BC /* NSArray+arrayFromNewObjects.m */; };
-		763610AC1B03D65E004384BC /* NSArray+arrayFromNewObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 763610A91B03D65E004384BC /* NSArray+arrayFromNewObjects.m */; };
+		27B7AF8E1B042AD3009E5D13 /* NSArray+transformativeArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B7AF8D1B042AD3009E5D13 /* NSArray+transformativeArray.m */; };
+		27B7AF911B042B30009E5D13 /* NSArray+transformativeArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B7AF8D1B042AD3009E5D13 /* NSArray+transformativeArray.m */; };
+		27B7AF921B042B34009E5D13 /* NSArray+transformativeArray.h in Resources */ = {isa = PBXBuildFile; fileRef = 27B7AF8C1B042AD3009E5D13 /* NSArray+transformativeArray.h */; };
+		27B7AF931B042B3A009E5D13 /* NSArray+transformativeArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B7AF8C1B042AD3009E5D13 /* NSArray+transformativeArray.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C122ADF61AF9DF87002A7502 /* XocolatlHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C122ADF51AF9DF87002A7502 /* XocolatlHTTPServer.m */; };
 		C122ADF71AF9E08F002A7502 /* XocolatlHTTPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = C122ADF41AF9DF87002A7502 /* XocolatlHTTPServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C122ADF81AF9E095002A7502 /* XocolatlHTTPServer.h in Resources */ = {isa = PBXBuildFile; fileRef = C122ADF41AF9DF87002A7502 /* XocolatlHTTPServer.h */; };
@@ -360,8 +361,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		763610A81B03D65E004384BC /* NSArray+arrayFromNewObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+arrayFromNewObjects.h"; path = "Xocolatl/Convenience/NSArray+arrayFromNewObjects.h"; sourceTree = SOURCE_ROOT; };
-		763610A91B03D65E004384BC /* NSArray+arrayFromNewObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+arrayFromNewObjects.m"; path = "../../Xocolatl/Xocolatl/Convenience/NSArray+arrayFromNewObjects.m"; sourceTree = "<group>"; };
+		27B7AF8C1B042AD3009E5D13 /* NSArray+transformativeArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+transformativeArray.h"; path = "Xocolatl/Convenience/NSArray+transformativeArray.h"; sourceTree = SOURCE_ROOT; };
+		27B7AF8D1B042AD3009E5D13 /* NSArray+transformativeArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+transformativeArray.m"; path = "Xocolatl/Convenience/NSArray+transformativeArray.m"; sourceTree = SOURCE_ROOT; };
 		C122ADF41AF9DF87002A7502 /* XocolatlHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlHTTPServer.h; path = Convenience/XocolatlHTTPServer.h; sourceTree = "<group>"; };
 		C122ADF51AF9DF87002A7502 /* XocolatlHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XocolatlHTTPServer.m; path = Convenience/XocolatlHTTPServer.m; sourceTree = "<group>"; };
 		C122ADFA1AF9E370002A7502 /* XocolatlModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlModelObject.h; path = Convenience/XocolatlModelObject.h; sourceTree = "<group>"; };
@@ -866,8 +867,8 @@
 		C1D505931AFBF2B800796F8B /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				763610A81B03D65E004384BC /* NSArray+arrayFromNewObjects.h */,
-				763610A91B03D65E004384BC /* NSArray+arrayFromNewObjects.m */,
+				27B7AF8C1B042AD3009E5D13 /* NSArray+transformativeArray.h */,
+				27B7AF8D1B042AD3009E5D13 /* NSArray+transformativeArray.m */,
 			);
 			name = Categories;
 			path = ../../CruyffServer/CruyffServer;
@@ -1458,10 +1459,10 @@
 				C1D77E5D1AF85132008E4D78 /* HTTPConnection.h in Headers */,
 				C122ADFE1AF9E545002A7502 /* XocolatlModelObject.h in Headers */,
 				C1D77E561AF84EED008E4D78 /* YapCollectionKey.h in Headers */,
+				27B7AF931B042B3A009E5D13 /* NSArray+transformativeArray.h in Headers */,
 				C1D1D6EE1AFB28F800F84252 /* XOCUsersResponder.h in Headers */,
 				C1D1D6D41AF9ECE800F84252 /* XocolatlJSONResponder.h in Headers */,
 				C122ADF71AF9E08F002A7502 /* XocolatlHTTPServer.h in Headers */,
-				763610AA1B03D65E004384BC /* NSArray+arrayFromNewObjects.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1591,6 +1592,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27B7AF921B042B34009E5D13 /* NSArray+transformativeArray.h in Resources */,
 				27B7AF531B0428FC009E5D13 /* certificate.p12 in Resources */,
 				C1D1D6EF1AFB28FC00F84252 /* XOCUsersResponder.h in Resources */,
 				C1D1D6D51AF9ECED00F84252 /* XocolatlJSONResponder.h in Resources */,
@@ -1661,6 +1663,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27B7AF911B042B30009E5D13 /* NSArray+transformativeArray.m in Sources */,
 				C1D1D6ED1AFB28F300F84252 /* XOCUsersResponder.m in Sources */,
 				C1D1D6D31AF9ECE100F84252 /* XocolatlJSONResponder.m in Sources */,
 				C122ADFD1AF9E540002A7502 /* XocolatlModelObject.m in Sources */,
@@ -1706,7 +1709,6 @@
 				C1D77DA51AF84B13008E4D78 /* YapDatabaseConnection.m in Sources */,
 				C1D77DA61AF84B13008E4D78 /* YapDatabaseOptions.m in Sources */,
 				C1D77DA71AF84B13008E4D78 /* YapDatabaseTransaction.m in Sources */,
-				763610AC1B03D65E004384BC /* NSArray+arrayFromNewObjects.m in Sources */,
 				C1D77DA81AF84B13008E4D78 /* YDBCKAttachRequest.m in Sources */,
 				C1D77DA91AF84B13008E4D78 /* YDBCKChangeQueue.m in Sources */,
 				C1D77DAA1AF84B13008E4D78 /* YDBCKChangeRecord.m in Sources */,
@@ -1803,7 +1805,6 @@
 				C1AC8A1E1AF48658008392D5 /* RoutingResponder.m in Sources */,
 				C1AC8A1B1AF40AC2008392D5 /* GCDAsyncSocket.m in Sources */,
 				C1F6907E1AD9E5C4007FF919 /* YDBCKAttachRequest.m in Sources */,
-				763610AB1B03D65E004384BC /* NSArray+arrayFromNewObjects.m in Sources */,
 				C1F690A41AD9E5C4007FF919 /* YapDatabaseSearchResultsViewTransaction.m in Sources */,
 				C1F70E2E1ADE17EA00CD9959 /* NSString+randomString.m in Sources */,
 				C1F690A01AD9E5C4007FF919 /* YapDatabaseSearchQueue.m in Sources */,
@@ -1820,6 +1821,7 @@
 				C1F690C81AD9E5C4007FF919 /* YapDatabase.m in Sources */,
 				C1F690BF1AD9E5C4007FF919 /* YapRowidSet.mm in Sources */,
 				C1F690A81AD9E5C4007FF919 /* YapDatabaseSecondaryIndexOptions.m in Sources */,
+				27B7AF8E1B042AD3009E5D13 /* NSArray+transformativeArray.m in Sources */,
 				C1F690AA1AD9E5C4007FF919 /* YapDatabaseSecondaryIndexTransaction.m in Sources */,
 				C1AC8A291AF4B222008392D5 /* DatabaseResponder.m in Sources */,
 				C1AC8A301AF5AED3008392D5 /* RoutingResponse.m in Sources */,
