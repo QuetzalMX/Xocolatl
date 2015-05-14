@@ -12,10 +12,6 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Core/**/*.{h,m}'
 
-  s.subspec 'XocolatlFramework' do |ss|
-  ss.source_files = 'XocolatlFramework/**/*.{h,m}'
-  end
-
   s.subspec 'Xocolatl' do |sss|
   sss.source_files = 'Xocolatl/**/*.{h,m}'
   end
