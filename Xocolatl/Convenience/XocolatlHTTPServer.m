@@ -13,7 +13,9 @@
 @implementation XocolatlHTTPServer
 
 + (instancetype)newServerNamed:(NSString *)name
-               listeningAtPort:(NSInteger)port;
+               listeningAtPort:(NSInteger)port
+     usingSSLCertificateAtPath:(NSString *)p12CertificatePath
+        andCertificatePassword:(NSString *)certificatePassword;
 {
     //Create the server.
     NSString *documentRoot = [[NSString stringWithFormat:@"~/Sites/%@", name] stringByExpandingTildeInPath];
@@ -45,6 +47,9 @@
     
     server.writeConnection = [server.database newConnection];
     server.writeConnection.permittedTransactions = YDB_AnyReadWriteTransaction;
+    
+    server.sslCertificatePath = p12CertificatePath;
+    server.sslCertificatePassword = certificatePassword;
     
     return server;
 }

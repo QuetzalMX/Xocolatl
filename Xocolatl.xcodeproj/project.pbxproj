@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27B7AF531B0428FC009E5D13 /* certificate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = C1DD529C1AF0713900955035 /* certificate.p12 */; };
 		763610AA1B03D65E004384BC /* NSArray+arrayFromNewObjects.h in Headers */ = {isa = PBXBuildFile; fileRef = 763610A81B03D65E004384BC /* NSArray+arrayFromNewObjects.h */; };
 		763610AB1B03D65E004384BC /* NSArray+arrayFromNewObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 763610A91B03D65E004384BC /* NSArray+arrayFromNewObjects.m */; };
 		763610AC1B03D65E004384BC /* NSArray+arrayFromNewObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 763610A91B03D65E004384BC /* NSArray+arrayFromNewObjects.m */; };
@@ -1590,6 +1591,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27B7AF531B0428FC009E5D13 /* certificate.p12 in Resources */,
 				C1D1D6EF1AFB28FC00F84252 /* XOCUsersResponder.h in Resources */,
 				C1D1D6D51AF9ECED00F84252 /* XocolatlJSONResponder.h in Resources */,
 				C122ADFF1AF9E54A002A7502 /* XocolatlModelObject.h in Resources */,

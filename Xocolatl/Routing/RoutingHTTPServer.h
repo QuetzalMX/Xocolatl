@@ -8,6 +8,8 @@
 
 @property (nonatomic, copy) NSDictionary *defaultHeaders;
 @property (nonatomic, copy) NSDictionary *mimeTypes;
+@property (nonatomic, copy) NSString *sslCertificatePath;
+@property (nonatomic, copy) NSString *sslCertificatePassword;
 
 - (instancetype)initAtPort:(NSInteger)port;
 

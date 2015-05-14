@@ -15,7 +15,9 @@
 @interface XocolatlHTTPServer : RoutingHTTPServer
 
 + (instancetype)newServerNamed:(NSString *)name
-               listeningAtPort:(NSInteger)port;
+               listeningAtPort:(NSInteger)port
+     usingSSLCertificateAtPath:(NSString *)p12CertificatePath
+        andCertificatePassword:(NSString *)certificatePassword;
 
 @property (nonatomic, strong) YapDatabase *database;
 @property (nonatomic, strong) YapDatabaseConnection *readConnection;

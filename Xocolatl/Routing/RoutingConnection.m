@@ -168,14 +168,13 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         // Read .p12 file
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"dev.quetzal.io" ofType:@"p12"];
-        NSData *pkcs12data = [[NSData alloc] initWithContentsOfFile:path];
+        NSData *pkcs12data = [[NSData alloc] initWithContentsOfFile:self.delegate.sslCertificatePath];
         
         // Import .p12 data
         CFArrayRef keyref = NULL;
         OSStatus sanityCheck;
         sanityCheck = SecPKCS12Import((__bridge CFDataRef)pkcs12data,
-                                      (__bridge CFDictionaryRef)@{(__bridge id)kSecImportExportPassphrase: @"alderaan19"},
+                                      (__bridge CFDictionaryRef)@{(__bridge id)kSecImportExportPassphrase:self.delegate.sslCertificatePassword},
                                       &keyref);
         
         if (sanityCheck != noErr) {
@@ -195,6 +194,7 @@
         
         // the certificates array, containing the identity then the root certificate
         sslIdentityAndCertificates = @[(__bridge id)identityRef, (__bridge id)cert];
+        self.delegate.sslCertificatePassword = nil;
     });
     
     return sslIdentityAndCertificates;
