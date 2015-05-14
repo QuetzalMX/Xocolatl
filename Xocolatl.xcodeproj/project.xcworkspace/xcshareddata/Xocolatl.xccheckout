@@ -9,21 +9,9 @@
 	<key>IDESourceControlProjectName</key>
 	<string>Xocolatl</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
-	<dict>
-		<key>32EE89FED93F20BBFD8FCF88A26B40EAE714C56C</key>
-		<string>https://github.com/QuetzalMX/CruyffServer.git</string>
-		<key>890F151E8B880DE5ADC70BCB1D874A16ACD71F92</key>
-		<string>https://github.com/QuetzalMX/Xocolatl.git</string>
-	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Xocolatl.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
-	<dict>
-		<key>32EE89FED93F20BBFD8FCF88A26B40EAE714C56C</key>
-		<string>../../../CruyffServer</string>
-		<key>890F151E8B880DE5ADC70BCB1D874A16ACD71F92</key>
-		<string>../..</string>
-	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/QuetzalMX/Xocolatl.git</string>
 	<key>IDESourceControlProjectVersion</key>
@@ -32,14 +20,6 @@
 	<string>890F151E8B880DE5ADC70BCB1D874A16ACD71F92</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>32EE89FED93F20BBFD8FCF88A26B40EAE714C56C</string>
-			<key>IDESourceControlWCCName</key>
-			<string>CruyffServer</string>
-		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
