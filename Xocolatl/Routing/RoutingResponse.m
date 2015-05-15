@@ -45,13 +45,16 @@
 + (instancetype)responseWithStatus:(NSInteger)status
                            andBody:(NSDictionary *)jsonBody;
 {
-    NSError *parsingError;
-    NSData *bodyData = [NSJSONSerialization dataWithJSONObject:jsonBody
-                                                       options:0
-                                                         error:&parsingError];
-    
-    if (parsingError) {
-        return nil;
+    NSData *bodyData;
+    if (jsonBody) {
+        NSError *parsingError;
+        bodyData = [NSJSONSerialization dataWithJSONObject:jsonBody
+                                                   options:0
+                                                     error:&parsingError];
+        
+        if (parsingError) {
+            return nil;
+        }
     }
     
     return [self responseWithStatus:status

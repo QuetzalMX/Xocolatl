@@ -10,10 +10,12 @@
 
 #import "RoutingResponse.h"
 #import "XOCUser+Auth.h"
+#import "YapDatabase.h"
+#import "RoutingHTTPServer.h"
 
 @interface DatabaseResponder ()
 
-@property (nonatomic, strong, readwrite) XOCUser *user;
+@property (nonatomic, strong, readwrite) XocolatlUser *user;
 @property (nonatomic, strong, readwrite) RoutingHTTPServer *server;
 @property (nonatomic, strong, readwrite) YapDatabaseConnection *readConnection;
 @property (nonatomic, strong, readwrite) YapDatabaseConnection *writeConnection;
@@ -65,10 +67,10 @@
     }
     
     //There appears to be user, expiration and authorization. Is the auth valid?
-    __block XOCUser *user;
+    __block XocolatlUser *user;
     __block BOOL isValidAuth;
     [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-        user = [XOCUser objectWithIdentifier:username
+        user = [XocolatlUser objectWithIdentifier:username
                             usingTransaction:transaction];
         
         isValidAuth = [user validateAuthHeader:auth];

@@ -7,17 +7,19 @@
 //
 
 #import "RoutingResponder.h"
-#import "YapDatabase.h"
-#import "RoutingHTTPServer.h"
 
-@class XOCUser;
+#import "HTTPVerbs.h"
+
+@class YapDatabaseConnection;
+@class RoutingHTTPServer;
+@class XocolatlUser;
 
 @interface DatabaseResponder : RoutingResponder
 
 @property (nonatomic, strong, readonly) RoutingHTTPServer *server;
 @property (nonatomic, strong, readonly) YapDatabaseConnection *readConnection;
 @property (nonatomic, strong, readonly) YapDatabaseConnection *writeConnection;
-@property (nonatomic, strong, readonly) XOCUser *user;
+@property (nonatomic, strong, readonly) XocolatlUser *user;
 
 - (instancetype)initWithReadConnection:(YapDatabaseConnection *)readConnection
                     andWriteConnection:(YapDatabaseConnection *)writeConnection

@@ -10,18 +10,18 @@
 
 #import "XOCUser+Auth.h"
 #import "YapDatabase.h"
-#import "RoutingResponse.h"
+#import "XocolatlHTTPResponse.h"
 
 #import <objc/runtime.h>
 
 @implementation RoutingResponse (SignUpResponder)
 
-- (void)setRegisteredUser:(XOCUser *)registeredUser;
+- (void)setRegisteredUser:(XocolatlUser *)registeredUser;
 {
     objc_setAssociatedObject(self, @selector(registeredUser), registeredUser, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (XOCUser *)registeredUser;
+- (XocolatlUser *)registeredUser;
 {
     return objc_getAssociatedObject(self, @selector(registeredUser));
 }
@@ -48,7 +48,7 @@
 
 - (NSDictionary *)methods;
 {
-    return @{@"POST": @"/api/signup"};
+    return @{HTTPVerbPOST: @"/api/signup"};
 }
 
 - (RoutingResponse *)responseForPOSTRequest:(HTTPMessage *)request
@@ -57,19 +57,27 @@
     //Attempt to register a new user.
     NSString *username = request.parsedBody[@"username"];
     NSString *password = request.parsedBody[@"password"];
+    
+    if (![username isKindOfClass:[NSString class]]) {
+        return [XocolatlHTTPResponse responseWithErrorCode:XocolatlHTTPStatusCode400BadRequest
+                                                    reason:@"Username is invalid."];
+    }
+    
+    if (![password isKindOfClass:[NSString class]]) {
+        return [XocolatlHTTPResponse responseWithErrorCode:XocolatlHTTPStatusCode400BadRequest
+                                                    reason:@"Password is invalid"];
+    }
 
-    __block XOCUser *newUser;
-    __block NSError *error;
+    __block XocolatlUser *newUser;
+    __block BOOL alreadyRegistered;
     __block NSDictionary *newUserJSON;
     [self.writeConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         //First, check if the user exists.
-        XOCUser *registeredUser = [XOCUser objectWithIdentifier:username
+        XocolatlUser *registeredUser = [XocolatlUser objectWithIdentifier:username
                                                usingTransaction:transaction];
         if (registeredUser) {
             //User exists. Deny the registration.
-            error = [NSError errorWithDomain:@"Account Creation"
-                                        code:403
-                                    userInfo:@{NSLocalizedDescriptionKey: @"Username already exists."}];
+            alreadyRegistered = YES;
             return;
         }
 
@@ -84,11 +92,12 @@
         newUserJSON = [newUser jsonRepresentationUsingTransaction:transaction];
     }];
     
-    if (error) {
-        return [RoutingResponse responseWithError:error];
+    if (alreadyRegistered) {
+        return [XocolatlHTTPResponse responseWithErrorCode:XocolatlHTTPStatusCode403Forbidden
+                                                    reason:@"User is already registered."];
     }
     
-    RoutingResponse *successResponse = [RoutingResponse responseWithStatus:200
+    RoutingResponse *successResponse = [RoutingResponse responseWithStatus:XocolatlHTTPStatusCode201Created
                                                                    andBody:newUserJSON];
     successResponse.registeredUser = newUser;
     return successResponse;

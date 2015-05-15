@@ -6,16 +6,17 @@
 //  Copyright (c) 2015 Quetzal. All rights reserved.
 //
 
-#import "XOCUser.h"
+#import "XocolatlUser.h"
 
 #import "NSString+randomString.h"
+#import "YapDatabase.h"
 
 //Thanks Rob Napier.
 #import "RNEncryptor.h"
 #import "RNDecryptor.h"
 #import "NSData+RNSecureCompare.h"
 
-@interface XOCUser ()
+@interface XocolatlUser ()
 
 @property (nonatomic, strong, readwrite) NSDate *modifiedAt;
 @property (nonatomic, copy, readwrite) NSString *username;
@@ -25,7 +26,7 @@
 
 @end
 
-@implementation XOCUser
+@implementation XocolatlUser
 
 @synthesize modifiedAt;
 
@@ -38,7 +39,7 @@
                         andPassword:(NSString *)password;
 {
     //Create a new user.
-    XOCUser *user = [[self alloc] init];
+    XocolatlUser *user = [[self alloc] init];
     user.username = username;
     user.cookiePasswords = [NSMutableSet new];
     user.authorizations = [NSMutableDictionary new];
@@ -59,14 +60,14 @@
                     usingTransaction:(YapDatabaseReadTransaction *)transaction;
 {
     return [transaction objectForKey:identifier
-                        inCollection:[XOCUser yapDatabaseCollectionIdentifier]];
+                        inCollection:[XocolatlUser yapDatabaseCollectionIdentifier]];
 }
 
 - (void)saveUsingTransaction:(YapDatabaseReadWriteTransaction *)transaction;
 {
     [transaction setObject:self
                     forKey:self.username
-              inCollection:[XOCUser yapDatabaseCollectionIdentifier]];
+              inCollection:[XocolatlUser yapDatabaseCollectionIdentifier]];
     
     self.modifiedAt = [NSDate date];
 }
@@ -175,7 +176,7 @@
 }
 
 #pragma mark - Password
-+ (BOOL)verifyPasswordHashForUser:(XOCUser *)user
++ (BOOL)verifyPasswordHashForUser:(XocolatlUser *)user
                      withPassword:(NSString *)password;
 {
     //Check if the password can decrypt our hash.

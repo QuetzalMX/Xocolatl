@@ -11,6 +11,7 @@
 #import "HTTPAsyncFileResponse.h"
 #import "WebSocket.h"
 #import "HTTPLogging.h"
+#import "HTTPVerbs.h"
 
 #if ! __has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
@@ -258,10 +259,10 @@ static NSMutableArray *recentNonces;
 	// 
 	// See also: expectsRequestBodyFromMethod:atPath:
 	
-	if ([method isEqualToString:@"GET"])
+	if ([method isEqualToString:HTTPVerbGET])
 		return YES;
 	
-	if ([method isEqualToString:@"HEAD"])
+	if ([method isEqualToString:HTTPVerbHEAD])
 		return YES;
 		
 	return NO;
@@ -285,10 +286,10 @@ static NSMutableArray *recentNonces;
 	// 
 	// See also: supportsMethod:atPath:
 	
-	if ([method isEqualToString:@"POST"])
+	if ([method isEqualToString:HTTPVerbPOST])
 		return YES;
 	
-	if ([method isEqualToString:@"PUT"])
+	if ([method isEqualToString:HTTPVerbPUT])
 		return YES;
 	
 	return NO;

@@ -13,7 +13,7 @@
 //Auth
 #import "XocolatlHTTPServer.h"
 #import "SignUpResponder.h"
-#import "XOCUser.h"
+#import "XocolatlUser.h"
 
 @interface AppDelegate ()
 
@@ -30,7 +30,7 @@
                                      listeningAtPort:3000];
     
     [self.server setSignUpRoute:[SignUpResponder class]
-                  withUserClass:[XOCUser class]];
+                  withUserClass:[XocolatlUser class]];
     
     NSError *error;
     if (![self.server start:&error]) {

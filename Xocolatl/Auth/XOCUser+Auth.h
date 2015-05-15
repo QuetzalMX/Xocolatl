@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Quetzal. All rights reserved.
 //
 
-#import "XOCUser.h"
+#import "XocolatlUser.h"
 
-@interface XOCUser (Auth)
+@interface XocolatlUser (Auth)
 
 - (void)willRegisterUsingRequestBody:(NSDictionary *)requestBody;
 

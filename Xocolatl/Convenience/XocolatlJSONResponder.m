@@ -9,6 +9,7 @@
 #import "XocolatlJSONResponder.h"
 
 #import "RoutingResponse.h"
+#import "YapDatabase.h"
 
 @interface XocolatlJSONResponder ()
 

@@ -21,6 +21,10 @@
 		C122ADFE1AF9E545002A7502 /* XocolatlModelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = C122ADFA1AF9E370002A7502 /* XocolatlModelObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C122ADFF1AF9E54A002A7502 /* XocolatlModelObject.h in Resources */ = {isa = PBXBuildFile; fileRef = C122ADFA1AF9E370002A7502 /* XocolatlModelObject.h */; };
 		C122AE021AF9E9D3002A7502 /* XocolatlJSONResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C122AE011AF9E9D3002A7502 /* XocolatlJSONResponder.m */; };
+		C13227F91B0595C000B00AF8 /* XocolatlHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C13227F81B0595C000B00AF8 /* XocolatlHTTPResponse.m */; };
+		C13227FC1B059BD100B00AF8 /* XocolatlHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C13227F81B0595C000B00AF8 /* XocolatlHTTPResponse.m */; };
+		C13227FD1B059BE600B00AF8 /* XocolatlHTTPResponse.h in Resources */ = {isa = PBXBuildFile; fileRef = C13227F71B0595C000B00AF8 /* XocolatlHTTPResponse.h */; };
+		C13228001B059C9300B00AF8 /* HTTPVerbs.m in Sources */ = {isa = PBXBuildFile; fileRef = C13227FF1B059C9300B00AF8 /* HTTPVerbs.m */; };
 		C13D40461ADCEED4004AF563 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C13D40451ADCEED4004AF563 /* libsqlite3.dylib */; };
 		C1AC896F1AF09517008392D5 /* SignUpResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC896E1AF09517008392D5 /* SignUpResponder.m */; };
 		C1AC89D31AF4090F008392D5 /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC89AE1AF4090F008392D5 /* DDData.m */; };
@@ -81,7 +85,7 @@
 		C1D77D8A1AF84B13008E4D78 /* XOCUser+Auth.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E461ADF81E400CD9959 /* XOCUser+Auth.m */; };
 		C1D77D8B1AF84B13008E4D78 /* SignUpResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC896E1AF09517008392D5 /* SignUpResponder.m */; };
 		C1D77D8C1AF84B13008E4D78 /* SignInResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52951AEF696600955035 /* SignInResponder.m */; };
-		C1D77D8D1AF84B13008E4D78 /* XOCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E291ADE0BC700CD9959 /* XOCUser.m */; };
+		C1D77D8D1AF84B13008E4D78 /* XocolatlUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E291ADE0BC700CD9959 /* XocolatlUser.m */; };
 		C1D77D8E1AF84B13008E4D78 /* DatabaseResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC8A281AF4B222008392D5 /* DatabaseResponder.m */; };
 		C1D77D8F1AF84B13008E4D78 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC89EC1AF4092A008392D5 /* DDAbstractDatabaseLogger.m */; };
 		C1D77D901AF84B13008E4D78 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC89EE1AF4092A008392D5 /* DDASLLogger.m */; };
@@ -196,7 +200,7 @@
 		C1D77DFF1AF84BD1008E4D78 /* XOCUser+Auth.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F70E451ADF81E400CD9959 /* XOCUser+Auth.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1D77E001AF84BD1008E4D78 /* SignUpResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = C1AC896D1AF09517008392D5 /* SignUpResponder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1D77E011AF84BD1008E4D78 /* SignInResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = C1DD52941AEF696600955035 /* SignInResponder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C1D77E021AF84BD1008E4D78 /* XOCUser.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F70E281ADE0BC700CD9959 /* XOCUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C1D77E021AF84BD1008E4D78 /* XocolatlUser.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F70E281ADE0BC700CD9959 /* XocolatlUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1D77E031AF84BD1008E4D78 /* DatabaseResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = C1AC8A271AF4B222008392D5 /* DatabaseResponder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1D77E321AF84D59008E4D78 /* YapDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F690761AD9E5C4007FF919 /* YapDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1D77E331AF84D59008E4D78 /* YapDatabaseConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F690781AD9E5C4007FF919 /* YapDatabaseConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -218,7 +222,7 @@
 		C1D77E441AF84DDE008E4D78 /* XOCUser+Auth.h in Resources */ = {isa = PBXBuildFile; fileRef = C1F70E451ADF81E400CD9959 /* XOCUser+Auth.h */; };
 		C1D77E451AF84DDE008E4D78 /* SignUpResponder.h in Resources */ = {isa = PBXBuildFile; fileRef = C1AC896D1AF09517008392D5 /* SignUpResponder.h */; };
 		C1D77E461AF84DDE008E4D78 /* SignInResponder.h in Resources */ = {isa = PBXBuildFile; fileRef = C1DD52941AEF696600955035 /* SignInResponder.h */; };
-		C1D77E471AF84DDE008E4D78 /* XOCUser.h in Resources */ = {isa = PBXBuildFile; fileRef = C1F70E281ADE0BC700CD9959 /* XOCUser.h */; };
+		C1D77E471AF84DDE008E4D78 /* XocolatlUser.h in Resources */ = {isa = PBXBuildFile; fileRef = C1F70E281ADE0BC700CD9959 /* XocolatlUser.h */; };
 		C1D77E481AF84DDE008E4D78 /* DatabaseResponder.h in Resources */ = {isa = PBXBuildFile; fileRef = C1AC8A271AF4B222008392D5 /* DatabaseResponder.h */; };
 		C1D77E491AF84DDE008E4D78 /* YapDatabase.h in Resources */ = {isa = PBXBuildFile; fileRef = C1F690761AD9E5C4007FF919 /* YapDatabase.h */; };
 		C1D77E4A1AF84DDE008E4D78 /* YapDatabaseConnection.h in Resources */ = {isa = PBXBuildFile; fileRef = C1F690781AD9E5C4007FF919 /* YapDatabaseConnection.h */; };
@@ -324,7 +328,7 @@
 		C1F690C91AD9E5C4007FF919 /* YapDatabaseConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F690791AD9E5C4007FF919 /* YapDatabaseConnection.m */; };
 		C1F690CA1AD9E5C4007FF919 /* YapDatabaseOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F6907B1AD9E5C4007FF919 /* YapDatabaseOptions.m */; };
 		C1F690CB1AD9E5C4007FF919 /* YapDatabaseTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F6907D1AD9E5C4007FF919 /* YapDatabaseTransaction.m */; };
-		C1F70E2A1ADE0BC700CD9959 /* XOCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E291ADE0BC700CD9959 /* XOCUser.m */; };
+		C1F70E2A1ADE0BC700CD9959 /* XocolatlUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E291ADE0BC700CD9959 /* XocolatlUser.m */; };
 		C1F70E2E1ADE17EA00CD9959 /* NSString+randomString.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */; };
 		C1F70E471ADF81E400CD9959 /* XOCUser+Auth.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E461ADF81E400CD9959 /* XOCUser+Auth.m */; };
 		C1FE77C01ADCEE2800495528 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FE77BF1ADCEE2800495528 /* libxml2.dylib */; };
@@ -361,7 +365,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		273D1D671B05177200ACFAB7 /* Xocolatl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Xocolatl.h; sourceTree = "<group>"; };
+		273D1D671B05177200ACFAB7 /* Xocolatl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Xocolatl.h; path = Xocolatl/Xocolatl.h; sourceTree = "<group>"; };
 		27B7AF8C1B042AD3009E5D13 /* NSArray+transformativeArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+transformativeArray.h"; path = "Xocolatl/Convenience/NSArray+transformativeArray.h"; sourceTree = SOURCE_ROOT; };
 		27B7AF8D1B042AD3009E5D13 /* NSArray+transformativeArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+transformativeArray.m"; path = "Xocolatl/Convenience/NSArray+transformativeArray.m"; sourceTree = SOURCE_ROOT; };
 		C122ADF41AF9DF87002A7502 /* XocolatlHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlHTTPServer.h; path = Convenience/XocolatlHTTPServer.h; sourceTree = "<group>"; };
@@ -370,6 +374,10 @@
 		C122ADFB1AF9E370002A7502 /* XocolatlModelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XocolatlModelObject.m; path = Convenience/XocolatlModelObject.m; sourceTree = "<group>"; };
 		C122AE001AF9E9D3002A7502 /* XocolatlJSONResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlJSONResponder.h; path = Convenience/XocolatlJSONResponder.h; sourceTree = "<group>"; };
 		C122AE011AF9E9D3002A7502 /* XocolatlJSONResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XocolatlJSONResponder.m; path = Convenience/XocolatlJSONResponder.m; sourceTree = "<group>"; };
+		C13227F71B0595C000B00AF8 /* XocolatlHTTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XocolatlHTTPResponse.h; sourceTree = "<group>"; };
+		C13227F81B0595C000B00AF8 /* XocolatlHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XocolatlHTTPResponse.m; sourceTree = "<group>"; };
+		C13227FE1B059C9300B00AF8 /* HTTPVerbs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTTPVerbs.h; path = Convenience/HTTPVerbs.h; sourceTree = "<group>"; };
+		C13227FF1B059C9300B00AF8 /* HTTPVerbs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTTPVerbs.m; path = Convenience/HTTPVerbs.m; sourceTree = "<group>"; };
 		C13D40451ADCEED4004AF563 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		C1AC896D1AF09517008392D5 /* SignUpResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpResponder.h; path = Auth/SignUpResponder.h; sourceTree = "<group>"; };
 		C1AC896E1AF09517008392D5 /* SignUpResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpResponder.m; path = Auth/SignUpResponder.m; sourceTree = "<group>"; };
@@ -641,8 +649,8 @@
 		C1F6907B1AD9E5C4007FF919 /* YapDatabaseOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YapDatabaseOptions.m; sourceTree = "<group>"; };
 		C1F6907C1AD9E5C4007FF919 /* YapDatabaseTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YapDatabaseTransaction.h; sourceTree = "<group>"; };
 		C1F6907D1AD9E5C4007FF919 /* YapDatabaseTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YapDatabaseTransaction.m; sourceTree = "<group>"; };
-		C1F70E281ADE0BC700CD9959 /* XOCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XOCUser.h; path = Auth/XOCUser.h; sourceTree = "<group>"; };
-		C1F70E291ADE0BC700CD9959 /* XOCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XOCUser.m; path = Auth/XOCUser.m; sourceTree = "<group>"; };
+		C1F70E281ADE0BC700CD9959 /* XocolatlUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlUser.h; path = Auth/XocolatlUser.h; sourceTree = "<group>"; };
+		C1F70E291ADE0BC700CD9959 /* XocolatlUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XocolatlUser.m; path = Auth/XocolatlUser.m; sourceTree = "<group>"; };
 		C1F70E2C1ADE17EA00CD9959 /* NSString+randomString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+randomString.h"; path = "Auth/NSString+randomString.h"; sourceTree = "<group>"; };
 		C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+randomString.m"; path = "Auth/NSString+randomString.m"; sourceTree = "<group>"; };
 		C1F70E451ADF81E400CD9959 /* XOCUser+Auth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XOCUser+Auth.h"; path = "Auth/XOCUser+Auth.h"; sourceTree = "<group>"; };
@@ -698,7 +706,10 @@
 				C122ADFB1AF9E370002A7502 /* XocolatlModelObject.m */,
 				C122AE001AF9E9D3002A7502 /* XocolatlJSONResponder.h */,
 				C122AE011AF9E9D3002A7502 /* XocolatlJSONResponder.m */,
-				273D1D671B05177200ACFAB7 /* Xocolatl.h */,
+				C13227F71B0595C000B00AF8 /* XocolatlHTTPResponse.h */,
+				C13227F81B0595C000B00AF8 /* XocolatlHTTPResponse.m */,
+				C13227FE1B059C9300B00AF8 /* HTTPVerbs.h */,
+				C13227FF1B059C9300B00AF8 /* HTTPVerbs.m */,
 			);
 			name = Convenience;
 			sourceTree = "<group>";
@@ -860,8 +871,8 @@
 				C1DD52951AEF696600955035 /* SignInResponder.m */,
 				C1D1D6E01AFAF7F200F84252 /* XOCUsersResponder.h */,
 				C1D1D6E11AFAF7F200F84252 /* XOCUsersResponder.m */,
-				C1F70E281ADE0BC700CD9959 /* XOCUser.h */,
-				C1F70E291ADE0BC700CD9959 /* XOCUser.m */,
+				C1F70E281ADE0BC700CD9959 /* XocolatlUser.h */,
+				C1F70E291ADE0BC700CD9959 /* XocolatlUser.m */,
 			);
 			name = Auth;
 			sourceTree = "<group>";
@@ -947,6 +958,7 @@
 		C1F68E7C1AD9E587007FF919 = {
 			isa = PBXGroup;
 			children = (
+				273D1D671B05177200ACFAB7 /* Xocolatl.h */,
 				C1F68E871AD9E587007FF919 /* Xocolatl */,
 				C1AC89AB1AF4090F008392D5 /* CocoaHTTPServer */,
 				C1AC89E51AF4092A008392D5 /* CocoaAsyncSocket */,
@@ -1445,7 +1457,7 @@
 				C1D77DFF1AF84BD1008E4D78 /* XOCUser+Auth.h in Headers */,
 				C1D77E001AF84BD1008E4D78 /* SignUpResponder.h in Headers */,
 				C1D77E011AF84BD1008E4D78 /* SignInResponder.h in Headers */,
-				C1D77E021AF84BD1008E4D78 /* XOCUser.h in Headers */,
+				C1D77E021AF84BD1008E4D78 /* XocolatlUser.h in Headers */,
 				C1D77E361AF84D7D008E4D78 /* RoutingHTTPServer.h in Headers */,
 				C1D77E321AF84D59008E4D78 /* YapDatabase.h in Headers */,
 				C1D77E331AF84D59008E4D78 /* YapDatabaseConnection.h in Headers */,
@@ -1594,6 +1606,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C13227FD1B059BE600B00AF8 /* XocolatlHTTPResponse.h in Resources */,
 				27B7AF921B042B34009E5D13 /* NSArray+transformativeArray.h in Resources */,
 				27B7AF531B0428FC009E5D13 /* certificate.p12 in Resources */,
 				C1D1D6EF1AFB28FC00F84252 /* XOCUsersResponder.h in Resources */,
@@ -1623,7 +1636,7 @@
 				C1D77E441AF84DDE008E4D78 /* XOCUser+Auth.h in Resources */,
 				C1D77E451AF84DDE008E4D78 /* SignUpResponder.h in Resources */,
 				C1D77E461AF84DDE008E4D78 /* SignInResponder.h in Resources */,
-				C1D77E471AF84DDE008E4D78 /* XOCUser.h in Resources */,
+				C1D77E471AF84DDE008E4D78 /* XocolatlUser.h in Resources */,
 				C1D77E481AF84DDE008E4D78 /* DatabaseResponder.h in Resources */,
 				C1D77E491AF84DDE008E4D78 /* YapDatabase.h in Resources */,
 				C1D77E4A1AF84DDE008E4D78 /* YapDatabaseConnection.h in Resources */,
@@ -1665,6 +1678,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C13227FC1B059BD100B00AF8 /* XocolatlHTTPResponse.m in Sources */,
 				27B7AF911B042B30009E5D13 /* NSArray+transformativeArray.m in Sources */,
 				C1D1D6ED1AFB28F300F84252 /* XOCUsersResponder.m in Sources */,
 				C1D1D6D31AF9ECE100F84252 /* XocolatlJSONResponder.m in Sources */,
@@ -1684,7 +1698,7 @@
 				C1D77D8A1AF84B13008E4D78 /* XOCUser+Auth.m in Sources */,
 				C1D77D8B1AF84B13008E4D78 /* SignUpResponder.m in Sources */,
 				C1D77D8C1AF84B13008E4D78 /* SignInResponder.m in Sources */,
-				C1D77D8D1AF84B13008E4D78 /* XOCUser.m in Sources */,
+				C1D77D8D1AF84B13008E4D78 /* XocolatlUser.m in Sources */,
 				C1D77D8E1AF84B13008E4D78 /* DatabaseResponder.m in Sources */,
 				C1D77D8F1AF84B13008E4D78 /* DDAbstractDatabaseLogger.m in Sources */,
 				C1D77D901AF84B13008E4D78 /* DDASLLogger.m in Sources */,
@@ -1831,6 +1845,7 @@
 				C1F690841AD9E5C4007FF919 /* YDBCKMergeInfo.m in Sources */,
 				C1F690C01AD9E5C4007FF919 /* YapTouch.m in Sources */,
 				C122AE021AF9E9D3002A7502 /* XocolatlJSONResponder.m in Sources */,
+				C13227F91B0595C000B00AF8 /* XocolatlHTTPResponse.m in Sources */,
 				C1F6907F1AD9E5C4007FF919 /* YDBCKChangeQueue.m in Sources */,
 				C1F690B91AD9E5C4007FF919 /* YapDatabaseLogging.m in Sources */,
 				C1F690AE1AD9E5C4007FF919 /* YapDatabaseViewChange.m in Sources */,
@@ -1880,7 +1895,8 @@
 				C1F690931AD9E5C4007FF919 /* YapDatabaseFullTextSearchSnippetOptions.m in Sources */,
 				C1F690951AD9E5C4007FF919 /* YapDatabaseHooks.m in Sources */,
 				C1F690821AD9E5C4007FF919 /* YDBCKRecordTableInfo.m in Sources */,
-				C1F70E2A1ADE0BC700CD9959 /* XOCUser.m in Sources */,
+				C1F70E2A1ADE0BC700CD9959 /* XocolatlUser.m in Sources */,
+				C13228001B059C9300B00AF8 /* HTTPVerbs.m in Sources */,
 				C1F690A91AD9E5C4007FF919 /* YapDatabaseSecondaryIndexSetup.m in Sources */,
 				C1F690921AD9E5C4007FF919 /* YapDatabaseFullTextSearchHandler.m in Sources */,
 				C1F6908F1AD9E5C4007FF919 /* YapDatabaseFilteredViewTypes.m in Sources */,

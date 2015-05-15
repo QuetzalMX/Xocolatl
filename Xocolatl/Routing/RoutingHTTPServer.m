@@ -1,4 +1,6 @@
 #import "RoutingHTTPServer.h"
+
+#import "HTTPVerbs.h"
 #import "RoutingConnection.h"
 #import "RoutingResponder.h"
 #import "RoutingResponse.h"
@@ -90,15 +92,14 @@
 {
     //A HEAD request is the same as a GET request, but it responds with headers only.
     NSMutableDictionary *responderMethods = [responder.methods mutableCopy];
-    if (responder.methods[@"GET"]) {
-        responderMethods[@"HEAD"] = responder.methods[@"GET"];
+    if (responder.methods[HTTPVerbGET]) {
+        responderMethods[HTTPVerbHEAD] = responder.methods[HTTPVerbGET];
     }
     
     //A new handler can have multiple methods and paths.
     //e.g. SignInResponseHandler can handle a GET for a sign in webpage and a POST to a different path for the sign in action.
     //They cannot have repeated methods.
     [responderMethods enumerateKeysAndObjectsUsingBlock:^(NSString *method, NSString *path, BOOL *stop) {
-        
         
         //Register this handler for the given method.
         NSMutableArray *respondersForMethod = self.responders[method.uppercaseString];

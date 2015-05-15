@@ -9,6 +9,7 @@
 #import "XocolatlModelObject.h"
 
 #import "NSString+randomString.h"
+#import "YapDatabase.h"
 
 static NSString *const XocolatlModelObjectIdentifierKey = @"XocolatlModelObjectIdentifierKey";
 static NSString *const XocolatlModelObjectCreatedAtKey = @"XocolatlModelObjectCreatedAtKey";

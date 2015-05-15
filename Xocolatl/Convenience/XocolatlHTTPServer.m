@@ -9,12 +9,14 @@
 #import "XocolatlHTTPServer.h"
 
 #import "SignUpResponder.h"
+#import "YapDatabase.h"
 
 @implementation XocolatlHTTPServer
 
 + (instancetype)newServerNamed:(NSString *)name
                listeningAtPort:(NSInteger)port;
 {
+    //Find the default .p12 file and attempt to start the server with it.
     return [self newServerNamed:name
                 listeningAtPort:port
       usingSSLCertificateAtPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"certificate" ofType:@"p12"]
@@ -26,7 +28,12 @@
      usingSSLCertificateAtPath:(NSString *)p12CertificatePath
         andCertificatePassword:(NSString *)certificatePassword;
 {
-    //Create the server.
+    if (!name || name.length <= 0 ||
+        !p12CertificatePath || p12CertificatePath.length <= 0) {
+        return nil;
+    }
+    
+    //Create the server using the provided name.
     NSString *documentRoot = [[NSString stringWithFormat:@"~/Sites/%@", name] stringByExpandingTildeInPath];
     XocolatlHTTPServer *server = [[XocolatlHTTPServer alloc] initAtPort:port];
     [server setDocumentRoot:documentRoot];
@@ -64,7 +71,11 @@
 }
 
 - (void)addDatabaseRoute:(Class)routeClass;
-{   
+{
+    if (![routeClass isSubclassOfClass:[DatabaseResponder class]]) {
+        return;
+    }
+    
     DatabaseResponder *route = [[routeClass alloc] initWithReadConnection:self.readConnection
                                                        andWriteConnection:self.writeConnection
                                                                  inServer:self];

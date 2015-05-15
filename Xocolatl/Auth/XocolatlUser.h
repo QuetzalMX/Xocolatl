@@ -8,7 +8,7 @@
 
 #import "XocolatlModelObject.h"
 
-@interface XOCUser : XocolatlModelObject
+@interface XocolatlUser : XocolatlModelObject
 
 @property (nonatomic, copy, readonly) NSString *username;
 
@@ -17,7 +17,7 @@
                         andPassword:(NSString *)password;
 
 //Passwords
-+ (BOOL)verifyPasswordHashForUser:(XOCUser *)user
++ (BOOL)verifyPasswordHashForUser:(XocolatlUser *)user
                      withPassword:(NSString *)password;
 
 //Auth

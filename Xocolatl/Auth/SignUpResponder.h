@@ -23,6 +23,6 @@
 
 @interface RoutingResponse (SignUpResponder)
 
-@property (nonatomic, strong) XOCUser *registeredUser;
+@property (nonatomic, strong) XocolatlUser *registeredUser;
 
 @end

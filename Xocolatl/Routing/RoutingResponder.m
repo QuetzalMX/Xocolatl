@@ -10,6 +10,7 @@
 
 #import "HTTPMessage.h"
 #import "RoutingResponse.h"
+#import "HTTPVerbs.h"
 
 @interface RoutingResponder ()
 
@@ -55,6 +56,11 @@
     __block NSString *parsedPath;
     [self.methods enumerateKeysAndObjectsUsingBlock:^(NSString *method, NSString *path, BOOL *stop) {
         NSMutableArray *keysForMethod = [NSMutableArray array];
+        
+        //Make sure our path has a '/' as a first character.
+        if ([path rangeOfString:@"/"].location != 0) {
+            path = [@"/" stringByAppendingString:path];
+        }
         
         if ([path length] > 2 && [path characterAtIndex:0] == '{') {
             //This is a custom regular expression, just remove the {}.
@@ -133,16 +139,16 @@
         return nil;
     }
     
-    if ([message.method isEqualToString:@"GET"]) {
+    if ([message.method isEqualToString:HTTPVerbGET]) {
         return [self responseForGETRequest:message
                             withParameters:parameters];
-    } else if ([message.method isEqualToString:@"POST"]) {
+    } else if ([message.method isEqualToString:HTTPVerbPOST]) {
         return [self responseForPOSTRequest:message
                              withParameters:parameters];
-    } else if ([message.method isEqualToString:@"PUT"]) {
+    } else if ([message.method isEqualToString:HTTPVerbPUT]) {
         return [self responseForPUTRequest:message
                             withParameters:parameters];
-    } else if ([message.method isEqualToString:@"DELETE"]) {
+    } else if ([message.method isEqualToString:HTTPVerbDELETE]) {
         return [self responseForDELETERequest:message
                                withParameters:parameters];
     }

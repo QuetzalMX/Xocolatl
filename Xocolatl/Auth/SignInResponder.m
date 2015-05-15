@@ -18,7 +18,7 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
 
 - (NSDictionary *)methods;
 {
-    return @{@"POST": @"/api/signin"};
+    return @{HTTPVerbPOST: @"/api/signin"};
 }
 
 - (NSObject <HTTPResponse> *)responseForPOSTRequest:(HTTPMessage *)message
@@ -29,13 +29,13 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
     NSString *username = message.parsedBody[@"username"];
     NSString *password = message.parsedBody[@"password"];
     
-    __block XOCUser *registeredUser;
+    __block XocolatlUser *registeredUser;
     __block NSString *authorization;
     __block NSError *error;
     __block NSDictionary *registeredUserJSON;
     [self.writeConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         //Let's see if this user exists.
-        XOCUser *fetchedUser = [XOCUser objectWithIdentifier:username
+        XocolatlUser *fetchedUser = [XocolatlUser objectWithIdentifier:username
                                             usingTransaction:transaction];
         
         if (!fetchedUser) {
@@ -47,7 +47,7 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
         }
         
         //The user exists. Is the password valid?
-        if (![XOCUser verifyPasswordHashForUser:fetchedUser
+        if (![XocolatlUser verifyPasswordHashForUser:fetchedUser
                                    withPassword:password]) {
             //Nope. Invalid password.
             error = [NSError errorWithDomain:@"Invalid Credentials"

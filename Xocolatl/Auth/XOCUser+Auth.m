@@ -8,7 +8,7 @@
 
 #import "XOCUser+Auth.h"
 
-@implementation XOCUser (Auth)
+@implementation XocolatlUser (Auth)
 
 - (void)willRegisterUsingRequestBody:(NSDictionary *)requestBody;
 {
