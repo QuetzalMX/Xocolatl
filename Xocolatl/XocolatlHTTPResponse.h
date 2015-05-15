@@ -14,6 +14,7 @@ typedef NS_ENUM(NSUInteger, XocolatlHTTPStatusCode) {
     XocolatlHTTPStatusCode400BadRequest = 400,
     XocolatlHTTPStatusCode403Forbidden = 403,
     XocolatlHTTPStatusCode404NotFound = 404,
+    XocolatlHTTPStatusCode500ServerError = 500,
 };
 
 @interface XocolatlHTTPResponse : RoutingResponse

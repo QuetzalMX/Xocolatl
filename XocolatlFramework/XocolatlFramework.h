@@ -31,9 +31,11 @@ FOUNDATION_EXPORT const unsigned char XocolatlFrameworkVersionString[];
 #import <XocolatlFramework/RoutingResponse.h>
 #import <XocolatlFramework/SignInResponder.h>
 #import <XocolatlFramework/SignUpResponder.h>
+#import <XocolatlFramework/XocolatlAPNManager.h>
 #import <XocolatlFramework/XOCUser+Auth.h>
-#import <XocolatlFramework/XOCUser.h>
+#import <XocolatlFramework/XocolatlUser.h>
 #import <XocolatlFramework/XOCUsersResponder.h>
+#import <XocolatlFramework/XocolatlHTTPResponse.h>
 #import <XocolatlFramework/XocolatlModelObject.h>
 #import <XocolatlFramework/XocolatlJSONResponder.h>
 #import <XocolatlFramework/XocolatlHTTPServer.h>
