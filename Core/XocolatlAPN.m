@@ -36,24 +36,45 @@ NSString *const XocolatlAPNCustomPayloadKey = @"XocolatlAPNCustomPayloadKey";
     notification.title = title;
     notification.body = body;
     notification.badgeNumber = badgeNumber;
-    notification.sound = sound;
+    notification.sound = (sound != nil) ? sound : @"default";
     notification.recipientToken = recipientToken;
-    
+    return notification;
+}
+
++ (instancetype)newSilentNotificationForRecipient:(NSString *)recipientToken;
+{
+    XocolatlAPN *notification = [[XocolatlAPN alloc] init];
+    notification.sound = @"";
+    notification.recipientToken = recipientToken;
+    notification.silentNotification = YES;
+    notification.priority = XocolatlAPNPriorityConservePower;
     return notification;
 }
 
 - (NSDictionary *)rawPayload;
 {
     //First, the alert dictionary.
-    NSMutableDictionary *alertDictionary = [@{@"title": self.title,
-                                              @"body": self.body} mutableCopy];
+    NSMutableDictionary *alertDictionary = [NSMutableDictionary new];
+    
+    if (self.title) {
+        alertDictionary[@"title"] = self.title;
+    }
+    
+    if (self.body) {
+        alertDictionary[@"body"] = self.body;
+    }
 
     if (self.launchImage) {
         alertDictionary[@"launch-image"] = self.launchImage;
     }
     
     //Now, the APS dictionary.
-    NSMutableDictionary *apsDictionary = [@{@"alert": alertDictionary} mutableCopy];
+    NSMutableDictionary *apsDictionary = [NSMutableDictionary new];
+    
+    if (alertDictionary.count > 0)
+    {
+        apsDictionary[@"alert"] = alertDictionary;
+    }
     
     if (self.badgeNumber != XocolatlAPNBadgeNumberNoUpdate) {
         apsDictionary[@"badge"] = @(self.badgeNumber);

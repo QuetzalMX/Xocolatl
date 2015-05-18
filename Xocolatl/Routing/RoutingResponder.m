@@ -21,6 +21,11 @@
 
 @implementation RoutingResponder
 
+- (NSString *)description;
+{
+    return [self.methods description];
+}
+
 - (NSDictionary *)methods;
 {
     return nil;

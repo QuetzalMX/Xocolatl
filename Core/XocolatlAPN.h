@@ -40,6 +40,8 @@ typedef NS_ENUM(NSUInteger, XocolatlAPNPriority) {
                                 badgeNumber:(NSInteger)badgeNumber
                                       sound:(NSString *)sound;
 
++ (instancetype)newSilentNotificationForRecipient:(NSString *)recipientToken;
+
 @property (nonatomic, copy, readonly) NSString *title;
 @property (nonatomic, copy, readonly) NSString *body;
 @property (nonatomic, readonly) NSInteger badgeNumber;

@@ -13,6 +13,7 @@
 //Auth
 #import "XocolatlHTTPServer.h"
 #import "SignUpResponder.h"
+#import "SignInResponder.h"
 #import "XocolatlUser.h"
 
 @interface AppDelegate ()
@@ -31,6 +32,18 @@
     
     [self.server setSignUpRoute:[SignUpResponder class]
                   withUserClass:[XocolatlUser class]];
+    
+    [self.server addDatabaseRoute:[SignInResponder class]];
+    
+/*
+    //Import the certificate to push notifications
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"PushDevEnvironmentCertificate"
+                                                     ofType:@"p12"];
+    if (![[XocolatlAPNManager sharedManager] importP12Certificate:path
+                                                      andPassword:@"password"]) {
+        NSLog(@"Failed to initiate APN Manager");
+    }
+*/
     
     NSError *error;
     if (![self.server start:&error]) {

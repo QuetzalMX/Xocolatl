@@ -69,12 +69,12 @@
     }
 
     __block XocolatlUser *newUser;
-    __block BOOL alreadyRegistered;
+    __block BOOL alreadyRegistered = NO;
     __block NSDictionary *newUserJSON;
     [self.writeConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         //First, check if the user exists.
         XocolatlUser *registeredUser = [XocolatlUser objectWithIdentifier:username
-                                               usingTransaction:transaction];
+                                                         usingTransaction:transaction];
         if (registeredUser) {
             //User exists. Deny the registration.
             alreadyRegistered = YES;
