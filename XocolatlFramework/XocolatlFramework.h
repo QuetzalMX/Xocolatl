@@ -39,6 +39,7 @@ FOUNDATION_EXPORT const unsigned char XocolatlFrameworkVersionString[];
 #import <XocolatlFramework/XocolatlModelObject.h>
 #import <XocolatlFramework/XocolatlJSONResponder.h>
 #import <XocolatlFramework/XocolatlHTTPServer.h>
+#import <XocolatlFramework/XocolatlAPN.h>
 #import <XocolatlFramework/YapCollectionKey.h>
 #import <XocolatlFramework/YapDatabase.h>
 #import <XocolatlFramework/YapDatabaseConnection.h>
