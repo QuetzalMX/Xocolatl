@@ -83,6 +83,7 @@
     _password = [aDecoder decodeObjectForKey:@"password"];
     _cookiePasswords = [[aDecoder decodeObjectForKey:@"cookiePasswords"] mutableCopy];
     _authorizations = [[aDecoder decodeObjectForKey:@"authorizations"] mutableCopy];
+    _apnToken = [aDecoder decodeObjectForKey:@"apnToken"];
     
     return self;
 }
@@ -95,6 +96,7 @@
     [aCoder encodeObject:self.password forKey:@"password"];
     [aCoder encodeObject:self.cookiePasswords forKey:@"cookiePasswords"];
     [aCoder encodeObject:self.authorizations forKey:@"authorizations"];
+    [aCoder encodeObject:self.apnToken forKey:@"apnToken"];
 }
 
 - (NSDictionary *)jsonRepresentationUsingTransaction:(YapDatabaseReadTransaction *)transaction;

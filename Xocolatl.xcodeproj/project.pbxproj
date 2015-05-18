@@ -12,6 +12,7 @@
 		27B7AF911B042B30009E5D13 /* NSArray+transformativeArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B7AF8D1B042AD3009E5D13 /* NSArray+transformativeArray.m */; };
 		27B7AF921B042B34009E5D13 /* NSArray+transformativeArray.h in Resources */ = {isa = PBXBuildFile; fileRef = 27B7AF8C1B042AD3009E5D13 /* NSArray+transformativeArray.h */; };
 		27B7AF931B042B3A009E5D13 /* NSArray+transformativeArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B7AF8C1B042AD3009E5D13 /* NSArray+transformativeArray.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27F5BC591B0A41950001E728 /* XocolatlAPNManager.h in Resources */ = {isa = PBXBuildFile; fileRef = C13936BE1B0669E0008952B5 /* XocolatlAPNManager.h */; };
 		C122ADF61AF9DF87002A7502 /* XocolatlHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C122ADF51AF9DF87002A7502 /* XocolatlHTTPServer.m */; };
 		C122ADF71AF9E08F002A7502 /* XocolatlHTTPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = C122ADF41AF9DF87002A7502 /* XocolatlHTTPServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C122ADF81AF9E095002A7502 /* XocolatlHTTPServer.h in Resources */ = {isa = PBXBuildFile; fileRef = C122ADF41AF9DF87002A7502 /* XocolatlHTTPServer.h */; };
@@ -1692,6 +1693,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27F5BC591B0A41950001E728 /* XocolatlAPNManager.h in Resources */,
 				C13227FD1B059BE600B00AF8 /* XocolatlHTTPResponse.h in Resources */,
 				27B7AF921B042B34009E5D13 /* NSArray+transformativeArray.h in Resources */,
 				27B7AF531B0428FC009E5D13 /* certificate.p12 in Resources */,

@@ -101,7 +101,7 @@
 - (NSInteger)pushMessage:(NSString *)message
                  toToken:(NSString *)token;
 {
-    return [self pushWithPayload:@"{\"aps\":{\"alert\":\"Testing.. (0)\",\"badge\":1,\"sound\":\"default\"}}"
+    return [self pushWithPayload:[NSString stringWithFormat:@"{\"aps\":{\"alert\":\"%@\",\"badge\":1,\"sound\":\"default\"}}", message]
                          toToken:token
                       identifier:arc4random_uniform(100000)
                       expiration:nil
