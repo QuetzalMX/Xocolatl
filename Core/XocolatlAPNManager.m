@@ -98,29 +98,21 @@
 }
 
 #pragma mark - Push
-- (NSInteger)pushMessage:(NSString *)message
-                 toToken:(NSString *)token;
+- (void)pushAPN:(XocolatlAPN *)notification;
 {
-    return [self pushWithPayload:[NSString stringWithFormat:@"{\"aps\":{\"alert\":\"%@\",\"badge\":1,\"sound\":\"default\"}}", message]
-                         toToken:token
-                      identifier:arc4random_uniform(100000)
-                      expiration:nil
-                        priority:0];
-}
-
-- (NSInteger)pushWithPayload:(NSString *)payload
-                     toToken:(NSString *)token
-                   identifier:(NSInteger)identifier
-                   expiration:(NSDate *)expiry
-                     priority:(NSUInteger)priority;
-{
-    NWNotification *notification = [[NWNotification alloc] initWithPayload:payload
-                                                                     token:token
-                                                                identifier:identifier
-                                                                expiration:expiry
-                                                                  priority:priority];
+#warning This is inneficient, but we can fix it later, as well as catch the object.
+    NSData *payload = [NSJSONSerialization dataWithJSONObject:notification.rawPayload
+                                                      options:0
+                                                        error:nil];
+    
+    NWNotification *helperNotification = [[NWNotification alloc] initWithPayload:[[NSString alloc] initWithData:payload
+                                                                                                       encoding:NSUTF8StringEncoding]
+                                                                           token:notification.recipientToken
+                                                                      identifier:notification.identifier
+                                                                      expiration:[NSDate dateWithTimeIntervalSince1970:notification.expiration]
+                                                                        priority:notification.priority];
     NSError *error = nil;
-    BOOL pushed = [self.hub pushNotification:notification
+    BOOL pushed = [self.hub pushNotification:helperNotification
                                autoReconnect:YES
                                        error:&error];
     if (pushed) {
@@ -143,10 +135,8 @@
         });
     } else {
         NSLog(@"Unable to push: %@", error.localizedDescription);
-        return -1;
+        return;
     }
-    
-    return identifier;
 }
 
 #pragma mark - NWHubDelegate

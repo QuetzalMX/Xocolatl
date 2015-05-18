@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "XocolatlAPN.h"
+
 @interface XocolatlAPNManager : NSObject
 
 + (instancetype)sharedManager;
@@ -17,13 +19,6 @@
 - (BOOL)importP12Certificate:(NSString *)path
                  andPassword:(NSString *)password;
 
-- (NSInteger)pushMessage:(NSString *)message
-                 toToken:(NSString *)token;
-
-- (NSInteger)pushWithPayload:(NSString *)payload
-                     toToken:(NSString *)token
-                  identifier:(NSInteger)identifier
-                  expiration:(NSDate *)expiry
-                    priority:(NSUInteger)priority;
+- (void)pushAPN:(XocolatlAPN *)notification;
 
 @end
