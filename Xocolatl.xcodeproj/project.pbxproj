@@ -54,9 +54,10 @@
 		C13936E51B066D57008952B5 /* XocolatlAPNManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C13936BE1B0669E0008952B5 /* XocolatlAPNManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C13936E71B066D71008952B5 /* XocolatlAPNManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C13936BF1B0669E0008952B5 /* XocolatlAPNManager.m */; };
 		C13D40461ADCEED4004AF563 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C13D40451ADCEED4004AF563 /* libsqlite3.dylib */; };
-		C14E74521B0A544300ACC4A9 /* XocolatlAPN.h in Headers */ = {isa = PBXBuildFile; fileRef = C14E74501B0A544300ACC4A9 /* XocolatlAPN.h */; };
+		C14E74521B0A544300ACC4A9 /* XocolatlAPN.h in Headers */ = {isa = PBXBuildFile; fileRef = C14E74501B0A544300ACC4A9 /* XocolatlAPN.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C14E74531B0A544300ACC4A9 /* XocolatlAPN.m in Sources */ = {isa = PBXBuildFile; fileRef = C14E74511B0A544300ACC4A9 /* XocolatlAPN.m */; };
 		C14E74541B0A544300ACC4A9 /* XocolatlAPN.m in Sources */ = {isa = PBXBuildFile; fileRef = C14E74511B0A544300ACC4A9 /* XocolatlAPN.m */; };
+		C14E74551B0A654F00ACC4A9 /* XocolatlAPN.h in Resources */ = {isa = PBXBuildFile; fileRef = C14E74501B0A544300ACC4A9 /* XocolatlAPN.h */; };
 		C1AC896F1AF09517008392D5 /* SignUpResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC896E1AF09517008392D5 /* SignUpResponder.m */; };
 		C1AC89D31AF4090F008392D5 /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC89AE1AF4090F008392D5 /* DDData.m */; };
 		C1AC89D41AF4090F008392D5 /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC89B01AF4090F008392D5 /* DDNumber.m */; };
@@ -1564,13 +1565,13 @@
 				C1D77E5D1AF85132008E4D78 /* HTTPConnection.h in Headers */,
 				C122ADFE1AF9E545002A7502 /* XocolatlModelObject.h in Headers */,
 				C1D77E561AF84EED008E4D78 /* YapCollectionKey.h in Headers */,
+				C14E74521B0A544300ACC4A9 /* XocolatlAPN.h in Headers */,
 				27B7AF931B042B3A009E5D13 /* NSArray+transformativeArray.h in Headers */,
 				C13936D61B066B09008952B5 /* NWPusher.h in Headers */,
 				C13936B81B066799008952B5 /* XocolatlHTTPResponse.h in Headers */,
 				C1D1D6EE1AFB28F800F84252 /* XOCUsersResponder.h in Headers */,
 				C1D1D6D41AF9ECE800F84252 /* XocolatlJSONResponder.h in Headers */,
 				C13936DC1B066B09008952B5 /* NWSecTools.h in Headers */,
-				C14E74521B0A544300ACC4A9 /* XocolatlAPN.h in Headers */,
 				C122ADF71AF9E08F002A7502 /* XocolatlHTTPServer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1701,6 +1702,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C14E74551B0A654F00ACC4A9 /* XocolatlAPN.h in Resources */,
 				27F5BC591B0A41950001E728 /* XocolatlAPNManager.h in Resources */,
 				C13227FD1B059BE600B00AF8 /* XocolatlHTTPResponse.h in Resources */,
 				27B7AF921B042B34009E5D13 /* NSArray+transformativeArray.h in Resources */,
