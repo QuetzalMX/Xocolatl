@@ -43,7 +43,7 @@
 }
 
 + (instancetype)responseWithStatus:(NSInteger)status
-                           andBody:(NSDictionary *)jsonBody;
+                           andBody:(id)jsonBody;
 {
     NSData *bodyData;
     if (jsonBody) {

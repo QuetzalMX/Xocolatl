@@ -15,7 +15,8 @@
                            andData:(NSData *)data;
 
 //Convenience.
-+ (instancetype)responseWithStatus:(NSInteger)status andBody:(NSDictionary *)jsonBody;
++ (instancetype)responseWithStatus:(NSInteger)status
+                           andBody:(id)jsonBody;
 + (instancetype)responseWithError:(NSError *)error;
 
 - (void)setCookieNamed:(NSString *)name
