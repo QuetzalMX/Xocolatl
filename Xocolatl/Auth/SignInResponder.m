@@ -8,7 +8,7 @@
 
 #import "SignInResponder.h"
 
-#import "XOCUser+Auth.h"
+#import "XocolatlUser.h"
 #import "RoutingResponse.h"
 #import "YapDatabase.h"
 

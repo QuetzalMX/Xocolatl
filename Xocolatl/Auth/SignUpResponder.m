@@ -8,9 +8,9 @@
 
 #import "SignUpResponder.h"
 
-#import "XOCUser+Auth.h"
 #import "YapDatabase.h"
 #import "XocolatlHTTPResponse.h"
+#import "XocolatlUser.h"
 
 #import <objc/runtime.h>
 
@@ -85,7 +85,8 @@
         newUser = [self.userClass newUserWithUsername:username
                                           andPassword:password];
         
-        [newUser willRegisterUsingRequestBody:request.parsedBody];
+        [self willSaveUser:newUser
+          usingRequestBody:request.parsedBody];
         
         [newUser saveUsingTransaction:transaction];
         
@@ -101,6 +102,12 @@
                                                                    andBody:newUserJSON];
     successResponse.registeredUser = newUser;
     return successResponse;
+}
+
+- (void)willSaveUser:(XocolatlUser *)user
+    usingRequestBody:(id)body;
+{
+    //Used by subclasses.
 }
 
 @end

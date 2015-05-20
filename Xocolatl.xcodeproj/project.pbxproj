@@ -114,7 +114,6 @@
 		C1D77D861AF84B13008E4D78 /* RNEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C374961AF72A3500E9589B /* RNEncryptor.m */; };
 		C1D77D871AF84B13008E4D78 /* NSData+RNSecureCompare.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C3749C1AF7322900E9589B /* NSData+RNSecureCompare.m */; };
 		C1D77D881AF84B13008E4D78 /* NSString+randomString.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */; };
-		C1D77D8A1AF84B13008E4D78 /* XOCUser+Auth.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E461ADF81E400CD9959 /* XOCUser+Auth.m */; };
 		C1D77D8B1AF84B13008E4D78 /* SignUpResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC896E1AF09517008392D5 /* SignUpResponder.m */; };
 		C1D77D8C1AF84B13008E4D78 /* SignInResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52951AEF696600955035 /* SignInResponder.m */; };
 		C1D77D8D1AF84B13008E4D78 /* XocolatlUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E291ADE0BC700CD9959 /* XocolatlUser.m */; };
@@ -229,7 +228,6 @@
 		C1D77DFB1AF84BD1008E4D78 /* RNEncryptor.h in Headers */ = {isa = PBXBuildFile; fileRef = C1C374951AF72A3500E9589B /* RNEncryptor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1D77DFC1AF84BD1008E4D78 /* NSData+RNSecureCompare.h in Headers */ = {isa = PBXBuildFile; fileRef = C1C3749B1AF7322900E9589B /* NSData+RNSecureCompare.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1D77DFD1AF84BD1008E4D78 /* NSString+randomString.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F70E2C1ADE17EA00CD9959 /* NSString+randomString.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C1D77DFF1AF84BD1008E4D78 /* XOCUser+Auth.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F70E451ADF81E400CD9959 /* XOCUser+Auth.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1D77E001AF84BD1008E4D78 /* SignUpResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = C1AC896D1AF09517008392D5 /* SignUpResponder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1D77E011AF84BD1008E4D78 /* SignInResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = C1DD52941AEF696600955035 /* SignInResponder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1D77E021AF84BD1008E4D78 /* XocolatlUser.h in Headers */ = {isa = PBXBuildFile; fileRef = C1F70E281ADE0BC700CD9959 /* XocolatlUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -251,7 +249,6 @@
 		C1D77E401AF84DDE008E4D78 /* RNEncryptor.h in Resources */ = {isa = PBXBuildFile; fileRef = C1C374951AF72A3500E9589B /* RNEncryptor.h */; };
 		C1D77E411AF84DDE008E4D78 /* NSData+RNSecureCompare.h in Resources */ = {isa = PBXBuildFile; fileRef = C1C3749B1AF7322900E9589B /* NSData+RNSecureCompare.h */; };
 		C1D77E421AF84DDE008E4D78 /* NSString+randomString.h in Resources */ = {isa = PBXBuildFile; fileRef = C1F70E2C1ADE17EA00CD9959 /* NSString+randomString.h */; };
-		C1D77E441AF84DDE008E4D78 /* XOCUser+Auth.h in Resources */ = {isa = PBXBuildFile; fileRef = C1F70E451ADF81E400CD9959 /* XOCUser+Auth.h */; };
 		C1D77E451AF84DDE008E4D78 /* SignUpResponder.h in Resources */ = {isa = PBXBuildFile; fileRef = C1AC896D1AF09517008392D5 /* SignUpResponder.h */; };
 		C1D77E461AF84DDE008E4D78 /* SignInResponder.h in Resources */ = {isa = PBXBuildFile; fileRef = C1DD52941AEF696600955035 /* SignInResponder.h */; };
 		C1D77E471AF84DDE008E4D78 /* XocolatlUser.h in Resources */ = {isa = PBXBuildFile; fileRef = C1F70E281ADE0BC700CD9959 /* XocolatlUser.h */; };
@@ -362,7 +359,6 @@
 		C1F690CB1AD9E5C4007FF919 /* YapDatabaseTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F6907D1AD9E5C4007FF919 /* YapDatabaseTransaction.m */; };
 		C1F70E2A1ADE0BC700CD9959 /* XocolatlUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E291ADE0BC700CD9959 /* XocolatlUser.m */; };
 		C1F70E2E1ADE17EA00CD9959 /* NSString+randomString.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */; };
-		C1F70E471ADF81E400CD9959 /* XOCUser+Auth.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F70E461ADF81E400CD9959 /* XOCUser+Auth.m */; };
 		C1FE77C01ADCEE2800495528 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C1FE77BF1ADCEE2800495528 /* libxml2.dylib */; };
 /* End PBXBuildFile section */
 
@@ -703,8 +699,6 @@
 		C1F70E291ADE0BC700CD9959 /* XocolatlUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XocolatlUser.m; path = Auth/XocolatlUser.m; sourceTree = "<group>"; };
 		C1F70E2C1ADE17EA00CD9959 /* NSString+randomString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+randomString.h"; path = "Auth/NSString+randomString.h"; sourceTree = "<group>"; };
 		C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+randomString.m"; path = "Auth/NSString+randomString.m"; sourceTree = "<group>"; };
-		C1F70E451ADF81E400CD9959 /* XOCUser+Auth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XOCUser+Auth.h"; path = "Auth/XOCUser+Auth.h"; sourceTree = "<group>"; };
-		C1F70E461ADF81E400CD9959 /* XOCUser+Auth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XOCUser+Auth.m"; path = "Auth/XOCUser+Auth.m"; sourceTree = "<group>"; };
 		C1FE77BF1ADCEE2800495528 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -1515,8 +1509,6 @@
 				C1C3749C1AF7322900E9589B /* NSData+RNSecureCompare.m */,
 				C1F70E2C1ADE17EA00CD9959 /* NSString+randomString.h */,
 				C1F70E2D1ADE17EA00CD9959 /* NSString+randomString.m */,
-				C1F70E451ADF81E400CD9959 /* XOCUser+Auth.h */,
-				C1F70E461ADF81E400CD9959 /* XOCUser+Auth.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1540,7 +1532,6 @@
 				C1D77DFB1AF84BD1008E4D78 /* RNEncryptor.h in Headers */,
 				C1D77DFC1AF84BD1008E4D78 /* NSData+RNSecureCompare.h in Headers */,
 				C1D77DFD1AF84BD1008E4D78 /* NSString+randomString.h in Headers */,
-				C1D77DFF1AF84BD1008E4D78 /* XOCUser+Auth.h in Headers */,
 				C1D77E001AF84BD1008E4D78 /* SignUpResponder.h in Headers */,
 				C1D77E011AF84BD1008E4D78 /* SignInResponder.h in Headers */,
 				C13936D31B066B09008952B5 /* NWNotification.h in Headers */,
@@ -1731,7 +1722,6 @@
 				C1D77E401AF84DDE008E4D78 /* RNEncryptor.h in Resources */,
 				C1D77E411AF84DDE008E4D78 /* NSData+RNSecureCompare.h in Resources */,
 				C1D77E421AF84DDE008E4D78 /* NSString+randomString.h in Resources */,
-				C1D77E441AF84DDE008E4D78 /* XOCUser+Auth.h in Resources */,
 				C1D77E451AF84DDE008E4D78 /* SignUpResponder.h in Resources */,
 				C1D77E461AF84DDE008E4D78 /* SignInResponder.h in Resources */,
 				C1D77E471AF84DDE008E4D78 /* XocolatlUser.h in Resources */,
@@ -1795,7 +1785,6 @@
 				C1D77D861AF84B13008E4D78 /* RNEncryptor.m in Sources */,
 				C1D77D871AF84B13008E4D78 /* NSData+RNSecureCompare.m in Sources */,
 				C1D77D881AF84B13008E4D78 /* NSString+randomString.m in Sources */,
-				C1D77D8A1AF84B13008E4D78 /* XOCUser+Auth.m in Sources */,
 				C1D77D8B1AF84B13008E4D78 /* SignUpResponder.m in Sources */,
 				C1D77D8C1AF84B13008E4D78 /* SignInResponder.m in Sources */,
 				C1D77D8D1AF84B13008E4D78 /* XocolatlUser.m in Sources */,
@@ -1979,7 +1968,6 @@
 				C1DD52961AEF696600955035 /* SignInResponder.m in Sources */,
 				C1AC89E11AF4090F008392D5 /* HTTPFileResponse.m in Sources */,
 				C1F690AC1AD9E5C4007FF919 /* YapDatabaseViewPageMetadata.m in Sources */,
-				C1F70E471ADF81E400CD9959 /* XOCUser+Auth.m in Sources */,
 				C1F690BE1AD9E5C4007FF919 /* YapNull.m in Sources */,
 				C1F690811AD9E5C4007FF919 /* YDBCKMappingTableInfo.m in Sources */,
 				C1AC8A011AF4092A008392D5 /* DDLog.m in Sources */,

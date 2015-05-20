@@ -6,7 +6,6 @@
 //Authentication
 #import "GCDAsyncSocket.h"
 #import "HTTPMessage.h"
-#import "XOCUser+Auth.h"
 
 @interface RoutingConnection ()
 

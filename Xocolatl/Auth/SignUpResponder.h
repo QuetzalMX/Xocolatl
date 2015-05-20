@@ -19,6 +19,9 @@
                               inServer:(RoutingHTTPServer *)server
                          withUserClass:(Class)userClass;
 
+- (void)willSaveUser:(XocolatlUser *)user
+    usingRequestBody:(id)body;
+
 @end
 
 @interface RoutingResponse (SignUpResponder)

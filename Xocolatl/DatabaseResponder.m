@@ -9,9 +9,9 @@
 #import "DatabaseResponder.h"
 
 #import "RoutingResponse.h"
-#import "XOCUser+Auth.h"
 #import "YapDatabase.h"
 #import "RoutingHTTPServer.h"
+#import "XocolatlUser.h"
 
 @interface DatabaseResponder ()
 
