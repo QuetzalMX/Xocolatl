@@ -24,7 +24,7 @@
 @property (nonatomic, strong, readonly) NSDate *createdAt;
 
 /**
- *  modifiedAt must be manually changed. It has the same initial value as createdAt until it is manually modified.
+ *  modifiedAt will be changed whenever saveUsingTransaction: is called. It has the same initial value as createdAt until saveUsingTransaction: is called.
  */
 @property (nonatomic, strong, readonly) NSDate *modifiedAt;
 

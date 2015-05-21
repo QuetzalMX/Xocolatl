@@ -11,6 +11,7 @@
 typedef NS_ENUM(NSUInteger, XocolatlHTTPStatusCode) {
     XocolatlHTTPStatusCode200OK = 200,
     XocolatlHTTPStatusCode201Created = 201,
+    XocolatlHTTPStatusCode204NoContent = 204,
     XocolatlHTTPStatusCode400BadRequest = 400,
     XocolatlHTTPStatusCode403Forbidden = 403,
     XocolatlHTTPStatusCode404NotFound = 404,
