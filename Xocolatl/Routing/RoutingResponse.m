@@ -88,7 +88,7 @@
     }
     
     //Bake the cookie.
-    NSMutableString *formedCookie = [NSMutableString stringWithFormat:@"%@=%@; domain=localhost; path=/;", name, value];
+    NSMutableString *formedCookie = [NSMutableString stringWithFormat:@"%@=%@;", name, value];
     if (isSecure) {
         [formedCookie appendFormat:@" secure;"];
     }

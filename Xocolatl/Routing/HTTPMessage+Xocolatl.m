@@ -24,8 +24,10 @@
     if (!parsedCookies) {
         //Parse the cookies to see if we have an authorized user.
         NSString *cookie = self.allHeaderFields[@"cookie"];
-        NSString *cookieWithoutSemiColons = [cookie stringByReplacingOccurrencesOfString:@";"
-                                                                              withString:@""];
+        NSString *sanitizedCookie = [cookie stringByReplacingOccurrencesOfString:@"\""
+                                                                      withString:@""];
+        NSString *cookieWithoutSemiColons = [sanitizedCookie stringByReplacingOccurrencesOfString:@";"
+                                                                                       withString:@""];
         NSArray *subCookies = [cookieWithoutSemiColons componentsSeparatedByString:@" "];
         
         NSMutableDictionary *parsedCookies = [NSMutableDictionary new];

@@ -77,18 +77,21 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
     }
     
     //Now that we have all the info, add our cookies and redirect the user back to home.
+    NSMutableDictionary *dictionaryWithAuth = [registeredUserJSON mutableCopy];
+    dictionaryWithAuth[@"auth"] = authorization;
+    dictionaryWithAuth[@"username"] = registeredUser.username;
     RoutingResponse *response = [RoutingResponse responseWithStatus:200
-                                                            andBody:registeredUserJSON];
+                                                            andBody:dictionaryWithAuth];
     
     [response setCookieNamed:@"username"
                    withValue:registeredUser.username
                     isSecure:YES
-                    httpOnly:YES];
+                    httpOnly:NO];
     
     [response setCookieNamed:@"auth"
                    withValue:authorization
                     isSecure:YES
-                    httpOnly:YES];
+                    httpOnly:NO];
     
     return response;
 }
