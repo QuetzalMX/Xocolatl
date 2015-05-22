@@ -24,7 +24,7 @@
     
     //Pass the HTTPServer our connection class.
     //This means that all incoming connections will be represented by objects of this class.
-    connectionClass = [RoutingConnection class];
+    self.connectionClass = [RoutingConnection class];
     
     //It's necessary we use accessor methods because we don't want to modify our super class.
     [self setPort:(UInt16)aPort];

@@ -18,12 +18,6 @@
 	void *IsOnServerQueueKey;
 	void *IsOnConnectionQueueKey;
 	
-	// HTTP server configuration
-	NSString *documentRoot;
-	Class connectionClass;
-	NSString *interface;
-	UInt16 port;
-	
 	// NSNetService and related variables
 	NSNetService *netService;
 	NSString *domain;
@@ -73,8 +67,7 @@
  * You may also use the special strings "localhost" or "loopback" to specify that
  * the socket only accept connections from the local machine.
 **/
-- (NSString *)interface;
-- (void)setInterface:(NSString *)value;
+@property (nonatomic, copy) NSString *interface;
 
 /**
  * The port number to run the HTTP server on.
@@ -83,7 +76,7 @@
  * This is the recommended port value, as it avoids possible port conflicts with other applications.
  * Technologies such as Bonjour can be used to allow other applications to automatically discover the port number.
  * 
- * Note: As is common on most OS's, you need root privledges to bind to port numbers below 1024.
+ * Note: As is common on most OS's, you need root privleges to bind to port numbers below 1024.
  * 
  * You can change the port property while the server is running, but it won't affect the running server.
  * To actually change the port the server is listening for connections on you'll need to restart the server.
@@ -91,9 +84,8 @@
  * The listeningPort method will always return the port number the running server is listening for connections on.
  * If the server is not running this method returns 0.
 **/
-- (UInt16)port;
-- (UInt16)listeningPort;
-- (void)setPort:(UInt16)value;
+@property (nonatomic) NSUInteger port;
+@property (nonatomic, readonly) NSUInteger listeningPort;
 
 /**
  * Bonjour domain for publishing the service.

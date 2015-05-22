@@ -28,6 +28,12 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 
 @implementation HTTPServer
 
+//HTTP Server
+@synthesize documentRoot = _documentRoot;
+@synthesize connectionClass = _connectionClass;
+@synthesize interface = _interface;
+@synthesize port = _port;
+
 /**
  * Standard Constructor.
  * Instantiates an HTTP server, but does not start it.
@@ -54,14 +60,14 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 		asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:serverQueue];
 		
 		// Use default connection class of HTTPConnection
-		connectionClass = [HTTPConnection self];
+		_connectionClass = [HTTPConnection self];
 		
 		// By default bind on all available interfaces, en1, wifi etc
-		interface = nil;
+		_interface = nil;
 		
 		// Use a default port of 0
 		// This will allow the kernel to automatically pick an open port for us
-		port = 0;
+		_port = 0;
 		
 		// Configure default values for bonjour service
 		
@@ -105,20 +111,9 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 - (void)dealloc
 {
 	HTTPLogTrace();
-	
-	// Remove notification observer
+    
+    [self stop];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	// Stop the server if it's running
-	[self stop];
-	
-	// Release all instance variables
-	
-	#if !OS_OBJECT_USE_OBJC
-	dispatch_release(serverQueue);
-	dispatch_release(connectionQueue);
-	#endif
-	
 	[asyncSocket setDelegate:nil delegateQueue:NULL];
 }
 
@@ -136,7 +131,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	__block NSString *result;
 	
 	dispatch_sync(serverQueue, ^{
-		result = documentRoot;
+		result = _documentRoot;
 	});
 	
 	return result;
@@ -147,7 +142,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	HTTPLogTrace();
 	NSString *valueCopy = [value copy];
 	dispatch_async(serverQueue, ^{
-		documentRoot = valueCopy;
+		_documentRoot = valueCopy;
 	});
 }
 
@@ -161,7 +156,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
 	__block Class result;
 	dispatch_sync(serverQueue, ^{
-		result = connectionClass;
+		result = _connectionClass;
 	});
 	
 	return result;
@@ -171,32 +166,29 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
 	HTTPLogTrace();
 	dispatch_async(serverQueue, ^{
-		connectionClass = value;
+		_connectionClass = value;
 	});
 }
 
 /**
  * What interface to bind the listening socket to.
 **/
-- (NSString *)interface
+- (NSString *)interface;
 {
 	__block NSString *result;
-	
 	dispatch_sync(serverQueue, ^{
-		result = interface;
+		result = _interface;
 	});
 	
 	return result;
 }
 
-- (void)setInterface:(NSString *)value
+- (void)setInterface:(NSString *)value;
 {
 	NSString *valueCopy = [value copy];
-	
 	dispatch_async(serverQueue, ^{
-		interface = valueCopy;
+		_interface = valueCopy;
 	});
-	
 }
 
 /**
@@ -204,37 +196,32 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
  * By default this port is initially set to zero, which allows the kernel to pick an available port for us.
  * After the HTTP server has started, the port being used may be obtained by this method.
 **/
-- (UInt16)port
+- (NSUInteger)port;
 {
 	__block UInt16 result;
-	
 	dispatch_sync(serverQueue, ^{
-		result = port;
+		result = _port;
 	});
 	
     return result;
 }
 
-- (UInt16)listeningPort
+- (NSUInteger)listeningPort;
 {
 	__block UInt16 result;
-	
 	dispatch_sync(serverQueue, ^{
-		if (isRunning)
-			result = [asyncSocket localPort];
-		else
-			result = 0;
+        result = (isRunning) ? [asyncSocket localPort] : 0;
 	});
 	
 	return result;
 }
 
-- (void)setPort:(UInt16)value
+- (void)setPort:(NSUInteger)value;
 {
 	HTTPLogTrace();
 	
 	dispatch_async(serverQueue, ^{
-		port = value;
+		_port = value;
 	});
 }
 
