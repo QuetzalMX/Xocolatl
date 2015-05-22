@@ -42,10 +42,13 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 //-----------------------------------------------------------------
 
 
-@implementation MultipartFormDataParser 
-@synthesize delegate,formEncoding;
+@implementation MultipartFormDataParser
 
-- (id) initWithBoundary:(NSString*) boundary formEncoding:(NSStringEncoding) _formEncoding {
+@synthesize delegate;
+
+- (instancetype)initWithBoundary:(NSString*)boundary
+                    formEncoding:(NSStringEncoding)formEncoding;
+{
     if( nil == (self = [super init]) ){
         return self;
     }
@@ -53,13 +56,13 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 		HTTPLogWarn(@"MultipartFormDataParser: init with zero boundary");
 		return nil;
 	}
-    boundaryData = [[@"\r\n--" stringByAppendingString:boundary] dataUsingEncoding:NSASCIIStringEncoding];
+    boundaryData = [[@"\r\n" stringByAppendingString:boundary] dataUsingEncoding:NSASCIIStringEncoding];
 
     pendingData = [[NSMutableData alloc] init];
     currentEncoding = contentTransferEncoding_binary;
 	currentHeader = nil;
 
-	formEncoding = _formEncoding;
+	_formEncoding = formEncoding;
 	reachedEpilogue = NO;
 	processedPreamble = NO;
 
@@ -67,16 +70,19 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 }
 
 
-- (BOOL) appendData:(NSData *)data { 
+- (BOOL) appendData:(NSData *)data;
+{
     // Can't parse without boundary;
-    if( nil == boundaryData ) {
+    if(!boundaryData)
+    {
 		HTTPLogError(@"MultipartFormDataParser: Trying to parse multipart without specifying a valid boundary");
 		assert(false);
         return NO;
     }
-    NSData* workingData = data;
-
-    if( pendingData.length ) {
+    
+    NSData *workingData = data;
+    if(pendingData.length)
+    {
         [pendingData appendData:data];
         workingData = pendingData;
     }
@@ -91,7 +97,8 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 	// misfind the boundary, if it got split into different data chunks
 	NSUInteger sizeToLeavePending = boundaryData.length;
 
-	if( !reachedEpilogue && workingData.length <= sizeToLeavePending )  {
+	if( !reachedEpilogue && workingData.length <= sizeToLeavePending )
+    {
 		// not enough data even to start parsing.
 		// save to pending data.
 		if( !pendingData.length ) {
@@ -120,8 +127,12 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 			return YES;
 		}
 	}
-	while( true ) {
-		if( checkForContentEnd ) {
+    
+    //We have enough data to start parsing.
+	while (true)
+    {
+		if(checkForContentEnd)
+        {
 			// the flag will be raised to check if the last part was the last one.
 			if( offset < workingData.length -1 ) {
 				char* bytes = (char*) workingData.bytes;
@@ -153,8 +164,9 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 				return YES;
 			}
 		}
-		if( waitingForCRLF ) {
-
+        
+		if (waitingForCRLF)
+        {
 			// the flag will be raised in the code below, meaning, we've read the boundary, but
 			// didnt find the end of boundary line yet.
 
@@ -175,9 +187,12 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 			}
 			waitingForCRLF = NO;
 		}
-		if( !processedPreamble ) {
+        
+		if (!processedPreamble)
+        {
 			// got to find the first boundary before the actual content begins.
 			offset = [self processPreamble:workingData];
+            
 			// wait for more data for preamble
 			if( -1 == offset ) 
 				return YES;
@@ -219,7 +234,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 
 				// let the header parser do it's job from now on.
 				NSData * headerData = [NSData dataWithBytesNoCopy: (char*) workingData.bytes + offset length:headerEnd + 2 - offset freeWhenDone:NO];
-				currentHeader = [[MultipartMessageHeader alloc] initWithData:headerData formEncoding:formEncoding];
+				currentHeader = [[MultipartMessageHeader alloc] initWithData:headerData formEncoding:self.formEncoding];
 
 				if( nil == currentHeader ) {
 					// we've found the data is in wrong format.
@@ -328,28 +343,36 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 }
 
 
-- (int) processPreamble:(NSData*) data {
+- (int)processPreamble:(NSData *)data;
+{
 	int offset = 0;
 	
-	char* boundaryBytes = (char*) boundaryData.bytes + 2; // the first boundary won't have CRLF preceding.
-    char* dataBytes = (char*) data.bytes;
+	char *boundaryBytes = (char*) boundaryData.bytes + 2; // the first boundary won't have CRLF preceding.
+    char *dataBytes = (char*) data.bytes;
     NSUInteger boundaryLength = boundaryData.length - 2;
     NSUInteger dataLength = data.length;
     
 	// find the boundary without leading CRLF.
-    while( offset < dataLength - boundaryLength +1 ) {
+    while (offset < dataLength - boundaryLength + 1)
+    {
         int i;
-        for( i = 0;i < boundaryLength; i++ ) {
-            if( boundaryBytes[i] != dataBytes[offset + i] )
+        for (i = 0; i < boundaryLength; i++)
+        {
+            if(boundaryBytes[i] != dataBytes[offset + i])
+                
                 break;
         }
-        if( i == boundaryLength ) {
+        
+        if (i == boundaryLength)
+        {
             break;
         }
+        
 		offset++;
     }
  	
-	if( offset == dataLength ) {
+	if (offset == dataLength)
+    {
 		// the end of preamble wasn't found in this chunk
 		NSUInteger sizeToProcess = dataLength - boundaryLength;
 		if( sizeToProcess > 0) {

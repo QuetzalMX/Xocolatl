@@ -48,7 +48,6 @@ NSMutableData*						pendingData;
 	__unsafe_unretained id<MultipartFormDataParserDelegate>     delegate;
 #endif	
 	int									currentEncoding;
-	NSStringEncoding					formEncoding;
 }
 
 - (BOOL) appendData:(NSData*) data;

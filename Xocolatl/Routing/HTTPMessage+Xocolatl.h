@@ -7,10 +7,12 @@
 //
 
 #import "HTTPMessage.h"
+#import "MultipartFormDataParser.h"
 
-@interface HTTPMessage (Xocolatl)
+@interface HTTPMessage (Xocolatl) <MultipartFormDataParserDelegate>
 
 - (NSDictionary *)parsedBody;
 - (NSDictionary *)cookies;
+- (NSImage *)imageFromMultiPartForm;
 
 @end
