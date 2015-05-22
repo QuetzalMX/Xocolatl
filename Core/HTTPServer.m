@@ -145,7 +145,6 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 - (void)setDocumentRoot:(NSString *)value;
 {
 	HTTPLogTrace();
-	
 	NSString *valueCopy = [value copy];
 	dispatch_async(serverQueue, ^{
 		documentRoot = valueCopy;
@@ -158,10 +157,9 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
  * The default connection class is HTTPConnection.
  * If you use a different connection class, it is assumed that the class extends HTTPConnection
 **/
-- (Class)connectionClass
+- (Class)connectionClass;
 {
 	__block Class result;
-	
 	dispatch_sync(serverQueue, ^{
 		result = connectionClass;
 	});
@@ -169,10 +167,9 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	return result;
 }
 
-- (void)setConnectionClass:(Class)value
+- (void)setConnectionClass:(Class)value;
 {
 	HTTPLogTrace();
-	
 	dispatch_async(serverQueue, ^{
 		connectionClass = value;
 	});

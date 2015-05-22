@@ -63,8 +63,7 @@
  * If you change the connectionClass while the server is running,
  * the change will affect future incoming http connections.
 **/
-- (Class)connectionClass;
-- (void)setConnectionClass:(Class)value;
+@property (nonatomic) Class connectionClass;
 
 /**
  * Set what interface you'd like the server to listen on.
