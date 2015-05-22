@@ -131,7 +131,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
  * Thus requests for /index.html will be referencing the index.html file within the document root directory.
  * All file requests are relative to this document root.
 **/
-- (NSString *)documentRoot
+- (NSString *)documentRoot;
 {
 	__block NSString *result;
 	
@@ -142,26 +142,14 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	return result;
 }
 
-- (void)setDocumentRoot:(NSString *)value
+- (void)setDocumentRoot:(NSString *)value;
 {
 	HTTPLogTrace();
 	
-	// Document root used to be of type NSURL.
-	// Add type checking for early warning to developers upgrading from older versions.
-	
-	if (value && ![value isKindOfClass:[NSString class]])
-	{
-		HTTPLogWarn(@"%@: %@ - Expecting NSString parameter, received %@ parameter",
-					THIS_FILE, THIS_METHOD, NSStringFromClass([value class]));
-		return;
-	}
-	
 	NSString *valueCopy = [value copy];
-	
 	dispatch_async(serverQueue, ^{
 		documentRoot = valueCopy;
 	});
-	
 }
 
 /**
