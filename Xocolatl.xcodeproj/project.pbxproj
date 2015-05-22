@@ -58,6 +58,9 @@
 		C14E74531B0A544300ACC4A9 /* XocolatlAPN.m in Sources */ = {isa = PBXBuildFile; fileRef = C14E74511B0A544300ACC4A9 /* XocolatlAPN.m */; };
 		C14E74541B0A544300ACC4A9 /* XocolatlAPN.m in Sources */ = {isa = PBXBuildFile; fileRef = C14E74511B0A544300ACC4A9 /* XocolatlAPN.m */; };
 		C14E74551B0A654F00ACC4A9 /* XocolatlAPN.h in Resources */ = {isa = PBXBuildFile; fileRef = C14E74501B0A544300ACC4A9 /* XocolatlAPN.h */; };
+		C162D4AF1B0FEFA200141E49 /* BonjourHTTPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = C162D4AD1B0FEFA200141E49 /* BonjourHTTPServer.h */; };
+		C162D4B01B0FEFA200141E49 /* BonjourHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C162D4AE1B0FEFA200141E49 /* BonjourHTTPServer.m */; };
+		C162D4B11B0FEFA200141E49 /* BonjourHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C162D4AE1B0FEFA200141E49 /* BonjourHTTPServer.m */; };
 		C1AC896F1AF09517008392D5 /* SignUpResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC896E1AF09517008392D5 /* SignUpResponder.m */; };
 		C1AC89D31AF4090F008392D5 /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC89AE1AF4090F008392D5 /* DDData.m */; };
 		C1AC89D41AF4090F008392D5 /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC89B01AF4090F008392D5 /* DDNumber.m */; };
@@ -425,6 +428,8 @@
 		C13D40451ADCEED4004AF563 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		C14E74501B0A544300ACC4A9 /* XocolatlAPN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlAPN.h; path = Core/XocolatlAPN.h; sourceTree = SOURCE_ROOT; };
 		C14E74511B0A544300ACC4A9 /* XocolatlAPN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XocolatlAPN.m; path = Core/XocolatlAPN.m; sourceTree = SOURCE_ROOT; };
+		C162D4AD1B0FEFA200141E49 /* BonjourHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BonjourHTTPServer.h; sourceTree = "<group>"; };
+		C162D4AE1B0FEFA200141E49 /* BonjourHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BonjourHTTPServer.m; sourceTree = "<group>"; };
 		C1AC896D1AF09517008392D5 /* SignUpResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpResponder.h; path = Auth/SignUpResponder.h; sourceTree = "<group>"; };
 		C1AC896E1AF09517008392D5 /* SignUpResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpResponder.m; path = Auth/SignUpResponder.m; sourceTree = "<group>"; };
 		C1AC89AD1AF4090F008392D5 /* DDData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDData.h; sourceTree = "<group>"; };
@@ -810,6 +815,8 @@
 				C1AC89C41AF4090F008392D5 /* Responses */,
 				C1AC89D11AF4090F008392D5 /* WebSocket.h */,
 				C1AC89D21AF4090F008392D5 /* WebSocket.m */,
+				C162D4AD1B0FEFA200141E49 /* BonjourHTTPServer.h */,
+				C162D4AE1B0FEFA200141E49 /* BonjourHTTPServer.m */,
 			);
 			name = CocoaHTTPServer;
 			path = Core;
@@ -1540,6 +1547,7 @@
 				C13936D91B066B09008952B5 /* NWPushFeedback.h in Headers */,
 				C1D77E361AF84D7D008E4D78 /* RoutingHTTPServer.h in Headers */,
 				C1D77E321AF84D59008E4D78 /* YapDatabase.h in Headers */,
+				C162D4AF1B0FEFA200141E49 /* BonjourHTTPServer.h in Headers */,
 				C1D77E331AF84D59008E4D78 /* YapDatabaseConnection.h in Headers */,
 				C1D77E341AF84D59008E4D78 /* YapDatabaseOptions.h in Headers */,
 				C1D77E351AF84D59008E4D78 /* YapDatabaseTransaction.h in Headers */,
@@ -1846,6 +1854,7 @@
 				C1D77DC11AF84B13008E4D78 /* YapDatabaseHooksTransaction.m in Sources */,
 				C1D77DC21AF84B13008E4D78 /* YapDatabaseExtension.m in Sources */,
 				C1D77DC31AF84B13008E4D78 /* YapDatabaseExtensionConnection.m in Sources */,
+				C162D4B11B0FEFA200141E49 /* BonjourHTTPServer.m in Sources */,
 				C1D77DC41AF84B13008E4D78 /* YapDatabaseExtensionTransaction.m in Sources */,
 				C1D77DC51AF84B13008E4D78 /* YapDatabaseRelationship.m in Sources */,
 				C1D77DC61AF84B13008E4D78 /* YapDatabaseRelationshipConnection.m in Sources */,
@@ -1930,6 +1939,7 @@
 				C1F690851AD9E5C4007FF919 /* YDBCKRecord.m in Sources */,
 				C1F690831AD9E5C4007FF919 /* YDBCKChangeSet.m in Sources */,
 				C1F690BA1AD9E5C4007FF919 /* YapDatabaseManager.m in Sources */,
+				C162D4B01B0FEFA200141E49 /* BonjourHTTPServer.m in Sources */,
 				C1F690B61AD9E5C4007FF919 /* NSDictionary+YapDatabase.m in Sources */,
 				C1AC89D91AF4090F008392D5 /* HTTPServer.m in Sources */,
 				C1F690B11AD9E5C4007FF919 /* YapDatabaseView.m in Sources */,
