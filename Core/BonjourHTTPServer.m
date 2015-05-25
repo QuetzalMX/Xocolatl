@@ -52,7 +52,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
     __block NSString *result;
     
-    dispatch_sync(serverQueue, ^{
+    dispatch_sync(self.serverQueue, ^{
         result = _domain;
     });
     
@@ -65,7 +65,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
     
     NSString *valueCopy = [value copy];
     
-    dispatch_async(serverQueue, ^{
+    dispatch_async(self.serverQueue, ^{
         _domain = valueCopy;
     });
     
@@ -80,7 +80,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
     __block NSString *result;
     
-    dispatch_sync(serverQueue, ^{
+    dispatch_sync(self.serverQueue, ^{
         result = _name;
     });
     
@@ -91,7 +91,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
     __block NSString *result;
     
-    dispatch_sync(serverQueue, ^{
+    dispatch_sync(self.serverQueue, ^{
         
         if (self.netService == nil)
         {
@@ -115,7 +115,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
     NSString *valueCopy = [value copy];
     
-    dispatch_async(serverQueue, ^{
+    dispatch_async(self.serverQueue, ^{
         _name = valueCopy;
     });
     
@@ -129,7 +129,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
     __block NSString *result;
     
-    dispatch_sync(serverQueue, ^{
+    dispatch_sync(self.serverQueue, ^{
         result = _type;
     });
     
@@ -140,7 +140,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
     NSString *valueCopy = [value copy];
     
-    dispatch_async(serverQueue, ^{
+    dispatch_async(self.serverQueue, ^{
         _type = valueCopy;
     });
     
@@ -153,7 +153,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
     __block NSDictionary *result;
     
-    dispatch_sync(serverQueue, ^{
+    dispatch_sync(self.serverQueue, ^{
         result = _txtRecordDictionary;
     });
     
@@ -166,7 +166,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
     
     NSDictionary *valueCopy = [value copy];
     
-    dispatch_async(serverQueue, ^{
+    dispatch_async(self.serverQueue, ^{
         
         _txtRecordDictionary = valueCopy;
         
@@ -186,14 +186,29 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
     });
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Bonjour
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Server Control
+- (BOOL)start:(NSError *__autoreleasing *)errPtr;
+{
+    BOOL start = [super start:errPtr];
+    if (start)
+    {
+        [self publishBonjour];
+    }
+    
+    return start;
+}
 
+- (void)stop:(BOOL)keepExistingConnections;
+{
+    [self unpublishBonjour];
+    [super stop:keepExistingConnections];
+}
+
+#pragma mark Bonjour
 - (void)publishBonjour
 {
     HTTPLogTrace();
-    NSAssert(dispatch_get_specific(IsOnServerQueueKey) != NULL, @"Must be on serverQueue");
+    NSAssert(self.isOnServerQueue, @"Must be on serverQueue");
     if (!self.type)
     {
         return;
@@ -233,7 +248,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
     HTTPLogTrace();
     
-    NSAssert(dispatch_get_specific(IsOnServerQueueKey) != NULL, @"Must be on serverQueue");
+    NSAssert(self.isOnServerQueue, @"Must be on serverQueue");
     
     if (!self.netService)
     {
@@ -257,7 +272,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
     HTTPLogTrace();
     
-    dispatch_async(serverQueue, ^{
+    dispatch_async(self.serverQueue, ^{
         
         [self unpublishBonjour];
         [self publishBonjour];

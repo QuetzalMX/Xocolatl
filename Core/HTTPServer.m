@@ -1,51 +1,54 @@
+//
+//  HTTPServer.m
+//  CocoaHTTPServer
+//
+//  Created by Robbie Hanson
+
 #import "HTTPServer.h"
 #import "GCDAsyncSocket.h"
 #import "HTTPConnection.h"
 #import "WebSocket.h"
 #import "HTTPLogging.h"
+#import "HTTPConfig.h"
 
-#if ! __has_feature(objc_arc)
-#warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
-#endif
+static const int httpLogLevel = HTTP_LOG_LEVEL_INFO;
 
-// Log levels: off, error, warn, info, verbose
-// Other flags: trace
-static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
+@interface HTTPServer ()
+{
+    // Underlying asynchronous TCP/IP socket
+    GCDAsyncSocket *asyncSocket;
 
-@interface HTTPServer (PrivateAPI)
+    dispatch_queue_t connectionQueue;
+    void *IsOnServerQueueKey;
+    void *IsOnConnectionQueueKey;
+    
+    // Connection management
+    NSMutableArray *connections;
+    NSMutableArray *webSockets;
+    NSLock *connectionsLock;
+    NSLock *webSocketsLock;
+}
 
-- (void)unpublishBonjour;
-- (void)publishBonjour;
-
-+ (void)startBonjourThreadIfNeeded;
-+ (void)performBonjourBlock:(dispatch_block_t)block;
+@property (nonatomic, readwrite) BOOL isRunning;
+@property (nonatomic, weak) id <HTTPServerDelegate> delegate;
 
 @end
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark -
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation HTTPServer
 
 //HTTP Server
 @synthesize documentRoot = _documentRoot;
-@synthesize connectionClass = _connectionClass;
 @synthesize interface = _interface;
 @synthesize port = _port;
 
-/**
- * Standard Constructor.
- * Instantiates an HTTP server, but does not start it.
-**/
-- (instancetype)init;
+- (instancetype)initWithDelegate:(id<HTTPServerDelegate>)delegate;
 {
 	if ((self = [super init]))
 	{
 		HTTPLogTrace();
 		
 		// Setup underlying dispatch queues
-		serverQueue = dispatch_queue_create("HTTPServer", NULL);
+		_serverQueue = dispatch_queue_create("HTTPServer", NULL);
 		connectionQueue = dispatch_queue_create("HTTPConnection", NULL);
 		
 		IsOnServerQueueKey = &IsOnServerQueueKey;
@@ -53,14 +56,11 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 		
 		void *nonNullUnusedPointer = (__bridge void *)self; // Whatever, just not null
 		
-		dispatch_queue_set_specific(serverQueue, IsOnServerQueueKey, nonNullUnusedPointer, NULL);
+		dispatch_queue_set_specific(_serverQueue, IsOnServerQueueKey, nonNullUnusedPointer, NULL);
 		dispatch_queue_set_specific(connectionQueue, IsOnConnectionQueueKey, nonNullUnusedPointer, NULL);
 		
 		// Initialize underlying GCD based tcp socket
-		asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:serverQueue];
-		
-		// Use default connection class of HTTPConnection
-		_connectionClass = [HTTPConnection self];
+		asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:_serverQueue];
 		
 		// By default bind on all available interfaces, en1, wifi etc
 		_interface = nil;
@@ -68,6 +68,8 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 		// Use a default port of 0
 		// This will allow the kernel to automatically pick an open port for us
 		_port = 0;
+        
+        _delegate = delegate;
 		
 		// Configure default values for bonjour service
 		
@@ -90,38 +92,30 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 		                                             name:WebSocketDidDieNotification
 		                                           object:nil];
 		
-		isRunning = NO;
+		_isRunning = NO;
 	}
 	return self;
 }
 
-/**
- * Standard Deconstructor.
- * Stops the server, and clients, and releases any resources connected with this instance.
-**/
 - (void)dealloc
 {
 	HTTPLogTrace();
     
-    [self stop];
+    [self stop:NO];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[asyncSocket setDelegate:nil delegateQueue:NULL];
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Server Configuration
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (BOOL)isOnServerQueue;
+{
+    return (dispatch_get_specific(IsOnServerQueueKey) != NULL);
+}
 
-/**
- * The document root is filesystem root for the webserver.
- * Thus requests for /index.html will be referencing the index.html file within the document root directory.
- * All file requests are relative to this document root.
-**/
 - (NSString *)documentRoot;
 {
 	__block NSString *result;
-	
-	dispatch_sync(serverQueue, ^{
+	dispatch_sync(self.serverQueue, ^{
 		result = _documentRoot;
 	});
 	
@@ -132,42 +126,15 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 {
 	HTTPLogTrace();
 	NSString *valueCopy = [value copy];
-	dispatch_async(serverQueue, ^{
+	dispatch_async(self.serverQueue, ^{
 		_documentRoot = valueCopy;
 	});
 }
 
-/**
- * The connection class is the class that will be used to handle connections.
- * That is, when a new connection is created, an instance of this class will be intialized.
- * The default connection class is HTTPConnection.
- * If you use a different connection class, it is assumed that the class extends HTTPConnection
-**/
-- (Class)connectionClass;
-{
-	__block Class result;
-	dispatch_sync(serverQueue, ^{
-		result = _connectionClass;
-	});
-	
-	return result;
-}
-
-- (void)setConnectionClass:(Class)value;
-{
-	HTTPLogTrace();
-	dispatch_async(serverQueue, ^{
-		_connectionClass = value;
-	});
-}
-
-/**
- * What interface to bind the listening socket to.
-**/
 - (NSString *)interface;
 {
 	__block NSString *result;
-	dispatch_sync(serverQueue, ^{
+	dispatch_sync(self.serverQueue, ^{
 		result = _interface;
 	});
 	
@@ -177,20 +144,15 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 - (void)setInterface:(NSString *)value;
 {
 	NSString *valueCopy = [value copy];
-	dispatch_async(serverQueue, ^{
+	dispatch_async(self.serverQueue, ^{
 		_interface = valueCopy;
 	});
 }
 
-/**
- * The port to listen for connections on.
- * By default this port is initially set to zero, which allows the kernel to pick an available port for us.
- * After the HTTP server has started, the port being used may be obtained by this method.
-**/
 - (NSUInteger)port;
 {
 	__block UInt16 result;
-	dispatch_sync(serverQueue, ^{
+	dispatch_sync(self.serverQueue, ^{
 		result = _port;
 	});
 	
@@ -200,8 +162,8 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 - (NSUInteger)listeningPort;
 {
 	__block UInt16 result;
-	dispatch_sync(serverQueue, ^{
-        result = (isRunning) ? [asyncSocket localPort] : 0;
+	dispatch_sync(self.serverQueue, ^{
+        result = (self.isRunning) ? [asyncSocket localPort] : 0;
 	});
 	
 	return result;
@@ -210,65 +172,46 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 - (void)setPort:(NSUInteger)value;
 {
 	HTTPLogTrace();
-	
-	dispatch_async(serverQueue, ^{
+	dispatch_async(self.serverQueue, ^{
 		_port = value;
 	});
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Server Control
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 - (BOOL)start:(NSError **)errPtr
 {
 	HTTPLogTrace();
 	
 	__block BOOL success = YES;
-	__block NSError *err = nil;
-	
-	dispatch_sync(serverQueue, ^{ @autoreleasepool {
+	dispatch_sync(self.serverQueue, ^{ @autoreleasepool {
 		
-		success = [asyncSocket acceptOnInterface:self.interface
-                                            port:self.port
-                                           error:&err];
-		if (success)
+		self.isRunning = [asyncSocket acceptOnInterface:self.interface
+                                                   port:self.port
+                                                  error:errPtr];
+		if (self.isRunning)
 		{
 			HTTPLogInfo(@"%@: Started HTTP server on port %hu", THIS_FILE, [asyncSocket localPort]);
-			
-			isRunning = YES;
-			[self publishBonjour];
 		}
 		else
 		{
-			HTTPLogError(@"%@: Failed to start HTTP Server: %@", THIS_FILE, err);
+			HTTPLogError(@"%@: Failed to start HTTP Server: %@", THIS_FILE, *errPtr);
 		}
+        
+        success = self.isRunning;
 	}});
 	
-	if (errPtr)
-		*errPtr = err;
-	
 	return success;
-}
-
-- (void)stop
-{
-	[self stop:NO];
 }
 
 - (void)stop:(BOOL)keepExistingConnections
 {
 	HTTPLogTrace();
-	
-	dispatch_sync(serverQueue, ^{ @autoreleasepool {
-		
-		// First stop publishing the service via bonjour
-		[self unpublishBonjour];
+	dispatch_sync(self.serverQueue, ^{ @autoreleasepool {
 		
 		// Stop listening / accepting incoming connections
 		[asyncSocket disconnect];
-		isRunning = NO;
-		
+		self.isRunning = NO;
+        
 		if (!keepExistingConnections)
 		{
 			// Stop all HTTP connections the server owns
@@ -295,9 +238,8 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 - (BOOL)isRunning
 {
 	__block BOOL result;
-	
-	dispatch_sync(serverQueue, ^{
-		result = isRunning;
+	dispatch_sync(self.serverQueue, ^{
+		result = _isRunning;
 	});
 	
 	return result;
@@ -313,14 +255,8 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	[webSocketsLock unlock];
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Server Status
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- * Returns the number of http client connections that are currently connected to the server.
-**/
-- (NSUInteger)numberOfHTTPConnections
+- (NSUInteger)numberOfHTTPConnections;
 {
 	NSUInteger result = 0;
 	
@@ -331,13 +267,10 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	return result;
 }
 
-/**
- * Returns the number of websocket client connections that are currently connected to the server.
-**/
-- (NSUInteger)numberOfWebSocketConnections
+- (NSUInteger)numberOfWebSocketConnections;
 {
 	NSUInteger result = 0;
-	
+    
 	[webSocketsLock lock];
 	result = [webSockets count];
 	[webSocketsLock unlock];
@@ -345,11 +278,8 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Incoming Connections
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-- (HTTPConfig *)config
+- (HTTPConfig *)config;
 {
 	// Override me if you want to provide a custom config to the new connection.
 	// 
@@ -361,16 +291,15 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	// 
 	// Try the apache benchmark tool (already installed on your Mac):
 	// $  ab -n 1000 -c 1 http://localhost:<port>/some_path.html
-	
 	return [[HTTPConfig alloc] initWithServer:self
                                  documentRoot:self.documentRoot
                                         queue:connectionQueue];
 }
 
-- (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket
+- (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket;
 {
-	HTTPConnection *newConnection = (HTTPConnection *)[[self.connectionClass alloc] initWithAsyncSocket:newSocket
-                                                                                          configuration:[self config]];
+    HTTPConnection *newConnection = [self.delegate connectionForSocket:newSocket];
+
 	[connectionsLock lock];
 	[connections addObject:newConnection];
 	[connectionsLock unlock];
@@ -378,39 +307,20 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	[newConnection start];
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Notifications
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- * This method is automatically called when a notification of type HTTPConnectionDidDieNotification is posted.
- * It allows us to remove the connection from our array.
-**/
-- (void)connectionDidDie:(NSNotification *)notification
+- (void)connectionDidDie:(NSNotification *)notification;
 {
-	// Note: This method is called on the connection queue that posted the notification
-	
 	[connectionsLock lock];
-	
 	HTTPLogTrace();
 	[connections removeObject:[notification object]];
-	
 	[connectionsLock unlock];
 }
 
-/**
- * This method is automatically called when a notification of type WebSocketDidDieNotification is posted.
- * It allows us to remove the websocket from our array.
-**/
 - (void)webSocketDidDie:(NSNotification *)notification
 {
-	// Note: This method is called on the connection queue that posted the notification
-	
 	[webSocketsLock lock];
-	
 	HTTPLogTrace();
 	[webSockets removeObject:[notification object]];
-	
 	[webSocketsLock unlock];
 }
 

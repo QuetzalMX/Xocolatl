@@ -19,6 +19,11 @@
 	NSUInteger bufferSize;
 }
 
++ (NSString *)filePathForURI:(NSString *)path
+               usingBasePath:(NSString *)documentRoot
+          andValidIndexPages:(NSArray *)indexFileNames
+              allowDirectory:(BOOL)allowDirectory;
+
 - (id)initWithFilePath:(NSString *)filePath forConnection:(HTTPConnection *)connection;
 - (NSString *)filePath;
 

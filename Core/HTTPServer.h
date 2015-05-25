@@ -1,31 +1,26 @@
 //
-//  HTTPServer
+//  HTTPServer.h
 //  CocoaHTTPServer
 //
+//  Created by Robbie Hanson
+
 #import <Foundation/Foundation.h>
 
 @class GCDAsyncSocket;
 @class WebSocket;
 
+@class HTTPConnection;
+@protocol HTTPServerDelegate
+
+- (HTTPConnection *)connectionForSocket:(GCDAsyncSocket *)socket;
+
+@end
+
 @interface HTTPServer : NSObject <NSNetServiceDelegate>
-{
-	// Underlying asynchronous TCP/IP socket
-	GCDAsyncSocket *asyncSocket;
-	
-	// Dispatch queues
-	dispatch_queue_t serverQueue;
-	dispatch_queue_t connectionQueue;
-	void *IsOnServerQueueKey;
-	void *IsOnConnectionQueueKey;
-	
-	// Connection management
-	NSMutableArray *connections;
-	NSMutableArray *webSockets;
-	NSLock *connectionsLock;
-	NSLock *webSocketsLock;
-	
-	BOOL isRunning;
-}
+
+@property (nonatomic, readonly) BOOL isRunning;
+@property (nonatomic, strong, readonly) dispatch_queue_t serverQueue;
+@property (nonatomic, readonly) BOOL isOnServerQueue;
 
 /**
  * Specifies the document root to serve files from.
@@ -39,17 +34,6 @@
  * the change will affect future incoming http connections.
 **/
 @property (nonatomic, copy) NSString *documentRoot;
-
-/**
- * The connection class is the class used to handle incoming HTTP connections.
- * 
- * The default value is [HTTPConnection class].
- * You can override HTTPConnection, and then set this to [MyHTTPConnection class].
- * 
- * If you change the connectionClass while the server is running,
- * the change will affect future incoming http connections.
-**/
-@property (nonatomic) Class connectionClass;
 
 /**
  * Set what interface you'd like the server to listen on.
@@ -79,6 +63,8 @@
 @property (nonatomic) NSUInteger port;
 @property (nonatomic, readonly) NSUInteger listeningPort;
 
+- (instancetype)initWithDelegate:(id <HTTPServerDelegate>)delegate;
+
 /**
  * Attempts to starts the server on the configured port, interface, etc.
  * 
@@ -99,16 +85,7 @@
 **/
 - (BOOL)start:(NSError **)errPtr;
 
-/**
- * Stops the server, preventing it from accepting any new connections.
- * You may specify whether or not you want to close the existing client connections.
- * 
- * The default stop method (with no arguments) will close any existing connections. (It invokes [self stop:NO])
-**/
-- (void)stop;
 - (void)stop:(BOOL)keepExistingConnections;
-
-- (BOOL)isRunning;
 
 - (void)addWebSocket:(WebSocket *)ws;
 
