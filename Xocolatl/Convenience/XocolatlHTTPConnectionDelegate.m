@@ -52,6 +52,16 @@
     return df;
 }
 
+- (void)connectionWillStart:(HTTPConnection *)connection;
+{
+    
+}
+
+- (void)connectionWillDie:(HTTPConnection *)connection;
+{
+    
+}
+
 #pragma mark Data
 - (void)connection:(HTTPConnection *)connection willReadBodyOfSize:(NSUInteger)bodySize;
 {
@@ -143,6 +153,22 @@
     
     // Add server capability headers
     [response setHeaderField:@"Accept-Ranges" value:@"bytes"];
+    
+    // Add optional response headers
+    if ([connection.httpResponse respondsToSelector:@selector(httpHeaders)])
+    {
+        NSDictionary *responseHeaders = [connection.httpResponse httpHeaders];
+        
+        NSEnumerator *keyEnumerator = [responseHeaders keyEnumerator];
+        NSString *key;
+        
+        while((key = [keyEnumerator nextObject]))
+        {
+            NSString *value = [responseHeaders objectForKey:key];
+            
+            [response setHeaderField:key value:value];
+        }
+    }
 }
 
 - (void)connection:(HTTPConnection *)connection didSendResponse:(NSObject<HTTPResponse> *)response;
@@ -193,15 +219,25 @@
     [response setHeaderField:@"Accept-Ranges" value:@"bytes"];
 }
 
-- (BOOL)connection:(HTTPConnection *)connection acceptsMethod:(NSString *)method atPath:(NSString *)path;
+- (BOOL)connection:(HTTPConnection *)connection expectsRequestBodyFromMethod:(NSString *)method atPath:(NSString *)path;
+{
+    // Override me to add support for other methods that expect the client
+    // to send a body along with the request header.
+    if ([method isEqualToString:HTTPVerbPOST])
+        return YES;
+    
+    if ([method isEqualToString:HTTPVerbPUT])
+        return YES;
+    
+    return NO;
+}
+
+- (BOOL)connection:(HTTPConnection *)connection supportsMethod:(NSString *)method atPath:(NSString *)path;
 {
     // Things you may want to consider:
     // - Does the given path represent a resource that is designed to accept this method?
     // - If accepting an upload, is the size of the data being uploaded too big?
     //   To do this you can check the requestContentLength variable.
-    //
-    // See also: expectsRequestBodyFromMethod:atPath:
-    
     if ([method isEqualToString:HTTPVerbGET])
         return YES;
     
@@ -228,19 +264,10 @@
 /**
  * Returns whether or not the server is configured to be a secure server.
  * In other words, all connections to this server are immediately secured, thus only secure connections are allowed.
- * This is the equivalent of having an https server, where it is assumed that all connections must be secure.
  * If this is the case, then unsecure connections will not be allowed on this server, and a separate unsecure server
  * would need to be run on a separate port in order to support unsecure connections.
  *
- * Note: In order to support secure connections, the sslIdentityAndCertificates method must be implemented.
- **/
-- (BOOL)hasHTTPSEnabled;
-{
-    return YES;
-}
-
-/**
- * This method is expected to returns an array appropriate for use in kCFStreamSSLCertificates SSL Settings.
+ * This method is expected to return an array appropriate for use in kCFStreamSSLCertificates SSL Settings.
  * It should be an array of SecCertificateRefs except for the first element in the array, which is a SecIdentityRef.
  **/
 - (NSArray *)sslIdentityAndCertificates;
@@ -263,6 +290,17 @@
     return HTTPConnectionSecurityAuthenticationTypeNone;
 }
 
+/**
+ *  Whenever a request needs to access a protected path (i.e. connection:authLevelForPath: returned something different than HTTPConnectionSecurityAuthenticationTypeNone) it will call this method.
+ 
+    If you wish to use it, you must implement connection:passwordForUser:
+ 
+ *  @param connection         the connection that requests access
+ *  @param path               the path that will be accessed if credentials are valid
+ *  @param authenticationType basic, digest or cookie-based
+ *
+ *  @return YES if the connection has permission to access the resource at path.
+ */
 - (BOOL)connection:(HTTPConnection *)connection validateCredentialsForAccessToPath:(NSString *)path
    withAccessLevel:(HTTPConnectionSecurityAuthenticationType)authenticationType;
 {
@@ -271,30 +309,16 @@
     
     if (authenticationType == HTTPConnectionSecurityAuthenticationTypeDigest)
     {
-        // Digest Access Authentication (RFC 2617)
-        if(!auth.isDigest)
-        {
-            // User didn't send proper digest access authentication credentials
-            return NO;
-        }
-        
-        if (!auth.username)
-        {
-            // The client didn't provide a username.
-            // Most likely they didn't provide any authentication at all.
-            return NO;
-        }
-        
-#warning Get the user's password from your database here.
-        NSString *password = @"password";
-        if (!password)
-        {
-            // No access allowed (username doesn't exist in system)
+        // Digest Access Authentication (RFC 2617) http://en.wikipedia.org/wiki/Digest_access_authentication
+        NSString *password = [self connection:connection
+                              passwordForUser:auth.username];
+        if(!auth.isDigest || !auth.username || !password) {
+            // User didn't send proper digest access authentication credentials.
             return NO;
         }
         
         NSString *url = [connection.request.url relativeString];
-        if (![url isEqualToString:[auth uri]])
+        if (![url isEqualToString:auth.uri])
         {
             // Requested URL and Authorization URI do not match
             // This could be a replay attack
@@ -327,8 +351,7 @@
             }
         }
         
-        long authNC = strtol([[auth nc] UTF8String], NULL, 16);
-        
+        NSInteger authNC = strtol([[auth nc] UTF8String], NULL, 16);
         if (authNC <= connection.lastNC)
         {
             // The nc value (nonce count) hasn't been incremented since the last request.
@@ -382,8 +405,8 @@
         
         NSString *credUsername = [credentials substringToIndex:colonRange.location];
         NSString *credPassword = [credentials substringFromIndex:(colonRange.location + colonRange.length)];
-#warning Get the user's password from your database here.
-        NSString *password = @"password";
+        NSString *password = [self connection:connection
+                              passwordForUser:auth.username];
         if (!credUsername || !password)
         {
             // No access allowed (username doesn't exist in system)
@@ -394,6 +417,16 @@
     }
     
     return YES;
+}
+
+- (NSString *)connection:(HTTPConnection *)connection passwordForUser:(NSString *)user;
+{
+    // You can configure a password for the entire server, or custom passwords for users and/or resources
+    
+    // Security Note:
+    // A nil password means no access at all. (Such as for user doesn't exist)
+    // An empty string password is allowed, and will be treated as any other password. (To support anonymous access)
+    return nil;
 }
 
 - (HTTPMessage *)connection:(HTTPConnection *)connection
@@ -414,14 +447,18 @@ failedToAuthenticateForPath:(NSString *)path
     //
     // For example:
     //
-    // if ([path isEqualToString:@"/myAwesomeWebSocketStream"])
+    // if ([connection.requestURI isEqualToString:@"/myAwesomeWebSocketStream"])
     // {
     //     return [[[MyWebSocket alloc] initWithRequest:request socket:asyncSocket] autorelease];
     // }
     //
     // return [super webSocketForURI:path];
-    
     return nil;
+}
+
+- (void)socketDidDisconnect;
+{
+    
 }
 
 @end

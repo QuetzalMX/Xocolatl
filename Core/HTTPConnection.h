@@ -3,7 +3,7 @@
 //  CocoaHTTPServer
 //
 //  Created by Robbie Hanson.
-//
+
 #import <Foundation/Foundation.h>
 #import "HTTPConnectionDelegate.h"
 
@@ -12,7 +12,6 @@
 @class HTTPServer;
 @class HTTPConfig;
 @class WebSocket;
-@class HTTPConnection;
 
 @protocol HTTPResponse;
 
@@ -25,13 +24,9 @@ extern NSString *const HTTPConnectionDidDieNotification;
 @property (nonatomic, weak) id <HTTPConnectionSecurityDelegate> securityDelegate;
 @property (nonatomic, weak) id <HTTPConnectionWebSocketDelegate> socketDelegate;
 
-@property (nonatomic) NSInteger lastNC;
-@property (nonatomic, strong) NSString *nonce;
 @property (nonatomic, strong, readonly) HTTPConfig *config;
 @property (nonatomic, strong, readonly) HTTPMessage *request;
 @property (nonatomic, strong) NSObject <HTTPResponse> *httpResponse;
-
-+ (BOOL)hasRecentNonce:(NSString *)recentNonce;
 
 - (id)initWithAsyncSocket:(GCDAsyncSocket *)newSocket configuration:(HTTPConfig *)aConfig;
 
@@ -39,11 +34,6 @@ extern NSString *const HTTPConnectionDidDieNotification;
 - (void)stop;
 
 - (NSString *)requestURI;
-
-- (void)finishResponse;
-
-- (BOOL)shouldDie;
-- (void)die;
 
 @end
 

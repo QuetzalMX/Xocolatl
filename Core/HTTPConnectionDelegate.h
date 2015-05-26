@@ -27,8 +27,9 @@
 - (NSDateFormatter *)connectionDateFormatter;
 
 //Lifecycle
+- (void)connectionWillStart:(HTTPConnection *)connection;
 - (void)connection:(HTTPConnection *)connection didSendResponse:(NSObject<HTTPResponse> *)response;
-- (HTTPMessage *)connectionWillDie:(HTTPConnection *)connection;
+- (void)connectionWillDie:(HTTPConnection *)connection;
 
 //Errors
 - (HTTPMessage *)connection:(HTTPConnection *)connection responseForMalformedRequest:(NSData *)data;
@@ -53,12 +54,11 @@ typedef NS_ENUM(NSUInteger, HTTPConnectionSecurityAuthenticationType) {
 @protocol HTTPConnectionSecurityDelegate
 
 @optional
-- (BOOL)hasHTTPSEnabled;
 - (NSArray *)sslIdentityAndCertificates;
 - (NSString *)authenticationRealmForConnection:(HTTPConnection *)connection;
 
 - (HTTPConnectionSecurityAuthenticationType)connection:(HTTPConnection *)connection authLevelForPath:(NSString *)path;
-
+- (NSString *)connection:(HTTPConnection *)connection passwordForUser:(NSString *)user;
 - (BOOL)connection:(HTTPConnection *)connection validateCredentialsForAccessToPath:(NSString *)path withAccessLevel:(HTTPConnectionSecurityAuthenticationType)authenticationType;
 
 - (HTTPMessage *)connection:(HTTPConnection *)connection
@@ -69,8 +69,9 @@ failedToAuthenticateForPath:(NSString *)path
 @protocol HTTPConnectionRoutingDelegate
 
 @optional
+- (BOOL)connection:(HTTPConnection *)connection expectsRequestBodyFromMethod:(NSString *)method atPath:(NSString *)path;
 - (BOOL)connection:(HTTPConnection *)connection
-     acceptsMethod:(NSString *)method
+     supportsMethod:(NSString *)method
             atPath:(NSString *)path;
 
 - (NSObject<HTTPResponse> *)responseForConnection:(HTTPConnection *)connection;
@@ -86,6 +87,7 @@ failedToAuthenticateForPath:(NSString *)path
 @protocol HTTPConnectionWebSocketDelegate <NSObject>
 
 - (WebSocket *)connectionWillTransitionToSocket:(HTTPConnection *)connection;
+- (void)socketDidDisconnect;
 
 @end
 

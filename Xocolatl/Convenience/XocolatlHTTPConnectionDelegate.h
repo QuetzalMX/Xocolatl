@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "HTTPConnection.h"
+#import "HTTPConnection+Digest.h"
 
 @interface XocolatlHTTPConnectionDelegate : NSObject <HTTPConnectionDelegate, HTTPConnectionRoutingDelegate, HTTPConnectionSecurityDelegate, HTTPConnectionWebSocketDelegate>
 

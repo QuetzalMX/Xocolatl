@@ -1,6 +1,7 @@
+
 #import "GCDAsyncSocket.h"
 #import "HTTPServer.h"
-#import "HTTPConnection.h"
+#import "HTTPConnection+Digest.h"
 #import "HTTPMessage.h"
 #import "HTTPResponse.h"
 #import "HTTPAuthenticationRequest.h"
@@ -43,7 +44,6 @@ static const NSInteger TIMEOUT_READ_BODY                    = -1;
 static const NSInteger TIMEOUT_WRITE_HEAD                   = 30;
 static const NSInteger TIMEOUT_WRITE_BODY                   = -1;
 static const NSInteger TIMEOUT_WRITE_ERROR                  = 30;
-static const NSInteger TIMEOUT_NONCE                        = 300;
 
 // Define the various limits
 // MAX_HEADER_LINE_LENGTH: Max length (in bytes) of any single line in a header (including \r\n)
@@ -106,202 +106,66 @@ typedef NS_ENUM(NSUInteger, HTTPConnectionTransferType) {
 
 @implementation HTTPConnection
 
-static dispatch_queue_t recentNonceQueue;
-static NSMutableArray *recentNonces;
-
-+ (void)initialize
-{
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-        recentNonceQueue = dispatch_queue_create("HTTPConnection-Nonce", NULL);
-		recentNonces = [[NSMutableArray alloc] initWithCapacity:5];
-	});
-}
-
-/**
- * Generates and returns an authentication nonce.
- * A nonce is a  server-specified string uniquely generated for each 401 response.
- * The default implementation uses a single nonce for each session.
-**/
-+ (NSString *)generateNonce
-{
-	// We use the Core Foundation UUID class to generate a nonce value for us
-	// UUIDs (Universally Unique Identifiers) are 128-bit values guaranteed to be unique.
-	CFUUIDRef theUUID = CFUUIDCreate(NULL);
-	NSString *newNonce = (__bridge_transfer NSString *)CFUUIDCreateString(NULL, theUUID);
-	CFRelease(theUUID);
-	
-	// We have to remember that the HTTP protocol is stateless.
-	// Even though with version 1.1 persistent connections are the norm, they are not guaranteed.
-	// Thus if we generate a nonce for this connection,
-	// it should be honored for other connections in the near future.
-	// 
-	// In fact, this is absolutely necessary in order to support QuickTime.
-	// When QuickTime makes it's initial connection, it will be unauthorized, and will receive a nonce.
-	// It then disconnects, and creates a new connection with the nonce, and proper authentication.
-	// If we don't honor the nonce for the second connection, QuickTime will repeat the process and never connect.
-	
-	dispatch_async(recentNonceQueue, ^
-    {
-        @autoreleasepool
-        {
-            [recentNonces addObject:newNonce];
-        }
-    });
-	
-	double delayInSeconds = TIMEOUT_NONCE;
-	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-	dispatch_after(popTime, recentNonceQueue, ^
-    {
-        @autoreleasepool
-        {
-            [recentNonces removeObject:newNonce];
-        }
-    });
-	
-	return newNonce;
-}
-
-/**
- * Returns whether or not the given nonce is in the list of recently generated nonces.
-**/
-+ (BOOL)hasRecentNonce:(NSString *)recentNonce
-{
-	__block BOOL result = NO;
-	
-	dispatch_sync(recentNonceQueue, ^
-    {
-        @autoreleasepool
-        {
-            result = [recentNonces containsObject:recentNonce];
-        }
-    });
-	
-	return result;
-}
-
 #pragma mark Init, Dealloc:
 /**
- * Sole Constructor.
  * Associates this new HTTP connection with the given AsyncSocket.
  * This HTTP connection object will become the socket's delegate and take over responsibility for the socket.
 **/
-- (id)initWithAsyncSocket:(GCDAsyncSocket *)newSocket configuration:(HTTPConfig *)aConfig
+- (id)initWithAsyncSocket:(GCDAsyncSocket *)newSocket
+            configuration:(HTTPConfig *)aConfig;
 {
 	if ((self = [super init]))
 	{
 		HTTPLogTrace();
 		
-		if (aConfig.queue)
-		{
-			connectionQueue = aConfig.queue;
-		}
-		else
-		{
-			connectionQueue = dispatch_queue_create("HTTPConnection", NULL);
-		}
+        connectionQueue = aConfig.queue ?: dispatch_queue_create("HTTPConnection", NULL);
 		
-		// Take over ownership of the socket
+		// Take over ownership of the socket.
 		_asyncSocket = newSocket;
-		[_asyncSocket setDelegate:self delegateQueue:connectionQueue];
+		[_asyncSocket setDelegate:self
+                    delegateQueue:connectionQueue];
 		
-		// Store configuration
+		// Store configuration.
 		_config = aConfig;
 		
-		// Initialize lastNC (last nonce count).
-		// Used with digest access authentication.
-		// These must increment for each request from the client.
-		_lastNC = 0;
-		
-		// Create a new HTTP message
+		// Create a new HTTP message.
 		_request = [[HTTPMessage alloc] initEmptyRequest];
 		
 		numHeaderLines = 0;
 		
 		responseDataSizes = [[NSMutableArray alloc] initWithCapacity:5];
 	}
+    
 	return self;
 }
 
-/**
- * Standard Deconstructor.
-**/
 - (void)dealloc
 {
 	HTTPLogTrace();
 	
-	#if !OS_OBJECT_USE_OBJC
-	dispatch_release(connectionQueue);
-	#endif
-	
 	[self.asyncSocket setDelegate:nil delegateQueue:NULL];
 	[self.asyncSocket disconnect];
 	
-	if ([self.httpResponse respondsToSelector:@selector(connectionDidClose)])
-	{
+	if ([self.httpResponse respondsToSelector:@selector(connectionDidClose)]) {
 		[self.httpResponse connectionDidClose];
 	}
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Method Support
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- * Returns whether or not the server expects a body from the given method.
- * 
- * In other words, should the server expect a content-length header and associated body from this method.
- * This would be true in the case of a POST, where the client is sending data,
- * or for something like PUT where the client is supposed to be uploading a file.
-**/
-- (BOOL)expectsRequestBodyFromMethod:(NSString *)method atPath:(NSString *)path
-{
-	HTTPLogTrace();
-	
-	// Override me to add support for other methods that expect the client
-	// to send a body along with the request header.
-	// 
-	// You should fall through with a call to [super expectsRequestBodyFromMethod:method atPath:path]
-	// 
-	// See also: supportsMethod:atPath:
-	
-	if ([method isEqualToString:HTTPVerbPOST])
-		return YES;
-	
-	if ([method isEqualToString:HTTPVerbPUT])
-		return YES;
-	
-	return NO;
-}
-
+#pragma mark - Lifecycle
 /**
  * Starting point for the HTTP connection after it has been fully initialized (including subclasses).
  * This method is called by the HTTP server.
 **/
-- (void)start
+- (void)start;
 {
-	dispatch_async(connectionQueue, ^{ @autoreleasepool {
-		
-		if (!started)
-		{
-			started = YES;
-			[self startConnection];
-		}
-	}});
-}
-
-/**
- * This method is called by the HTTPServer if it is asked to stop.
- * The server, in turn, invokes stop on each HTTPConnection instance.
-**/
-- (void)stop
-{
-	dispatch_async(connectionQueue, ^{ @autoreleasepool {
-		
-		// Disconnect the socket.
-		// The socketDidDisconnect delegate method will handle everything else.
-		[self.asyncSocket disconnect];
-	}});
+	dispatch_async(connectionQueue, ^ {
+        if (started) {
+            return;
+        }
+        
+        started = YES;
+        [self startConnection];
+    });
 }
 
 /**
@@ -309,43 +173,40 @@ static NSMutableArray *recentNonces;
 **/
 - (void)startConnection
 {
-	// Override me to do any custom work before the connection starts.
-	// 
-	// Be sure to invoke [super startConnection] when you're done.
-	
 	HTTPLogTrace();
-	
-	if ([self.securityDelegate hasHTTPSEnabled])
-	{
-		// We are configured to be an HTTPS server.
-		// That is, we secure via SSL/TLS the connection prior to any communication.
-		NSArray *certificates = [self.securityDelegate sslIdentityAndCertificates];
-		if ([certificates count] > 0)
-		{
-			// All connections are assumed to be secure. Only secure connections are allowed on this server.
-			NSMutableDictionary *settings = [NSMutableDictionary dictionaryWithCapacity:3];
-			
-			// Configure this connection as the server
-			[settings setObject:[NSNumber numberWithBool:YES]
-						 forKey:(NSString *)kCFStreamSSLIsServer];
-			
-			[settings setObject:certificates
-						 forKey:(NSString *)kCFStreamSSLCertificates];
-			
-			[self.asyncSocket startTLS:settings];
-		}
-	}
+    [self.delegate connectionWillStart:self];
+    
+    //If we get an SSL identity and accompanying trust certificates, we secure the connection.
+    //Otherwise, assume we're in good, old HTTP.
+    NSArray *certificates = [self.securityDelegate sslIdentityAndCertificates];
+    if ([certificates count] > 0)
+    {
+        // All connections are assumed to be secure.
+        // Pass the certificates so we cna begin TLS.
+        NSMutableDictionary *settings = [NSMutableDictionary new];
+        settings[(NSString *)kCFStreamSSLIsServer] = @YES;
+        settings[(NSString *)kCFStreamSSLCertificates] = certificates;
+        [self.asyncSocket startTLS:settings];
+    }
 	
 	[self startReadingRequest];
 }
 
 /**
- * Starts reading an HTTP request.
-**/
+ * This method is called by the HTTPServer if it is asked to stop.
+ * The server, in turn, invokes stop on each HTTPConnection instance.
+ **/
+- (void)stop;
+{
+    dispatch_async(connectionQueue, ^{
+        [self.asyncSocket disconnect];
+    });
+}
+
+#pragma mark - Reading
 - (void)startReadingRequest
 {
 	HTTPLogTrace();
-	
 	[self.asyncSocket readDataToData:[GCDAsyncSocket CRLFData]
                          withTimeout:TIMEOUT_READ_FIRST_HEADER_LINE
                            maxLength:MAX_HEADER_LINE_LENGTH
@@ -362,7 +223,7 @@ static NSMutableArray *recentNonces;
  *   num = "50" 
  * } 
 **/ 
-- (NSDictionary *)parseGetParams 
+- (NSDictionary *)parseGetParams;
 {
 	if(![self.request isHeaderComplete]) return nil;
 	
@@ -452,8 +313,6 @@ static NSMutableArray *recentNonces;
 	// - Several legal but not canonical specifications of the second 500 bytes (byte offsets 500-999, inclusive):
 	// bytes=500-600,601-999
 	// bytes=500-700,601-999
-	// 
-	
 	NSRange eqsignRange = [rangeHeader rangeOfString:@"="];
 	
 	if(eqsignRange.location == NSNotFound) return NO;
@@ -579,11 +438,9 @@ static NSMutableArray *recentNonces;
 	return YES;
 }
 
-- (NSString *)requestURI
+- (NSString *)requestURI;
 {
-	if(self.request == nil) return nil;
-	
-	return [[self.request url] relativeString];
+    return (self.request.url.relativeString) ?: nil;
 }
 
 /**
@@ -596,26 +453,24 @@ static NSMutableArray *recentNonces;
 	
 	if (HTTP_LOG_FLAG_VERBOSE)
 	{
-		NSData *tempData = [self.request messageData];
-		NSString *tempStr = [[NSString alloc] initWithData:tempData encoding:NSUTF8StringEncoding];
+		NSString *tempStr = [[NSString alloc] initWithData:self.request.messageData
+                                                  encoding:NSUTF8StringEncoding];
 		HTTPLogVerbose(@"%@[%p]: Received HTTP request:\n%@", THIS_FILE, self, tempStr);
 	}
 	
-	// Check the HTTP version
+	// Check the HTTP version.
 	// We only support version 1.0 and 1.1
-	NSString *version = [self.request version];
-	if (![version isEqualToString:HTTPVersion1_1] && ![version isEqualToString:HTTPVersion1_0])
+	if (![self.request.version isEqualToString:HTTPVersion1_1] &&
+        ![self.request.version isEqualToString:HTTPVersion1_0])
 	{
-        HTTPLogWarn(@"HTTP Server: Error 505 - Version Not Supported: %@ (%@)", version, [self requestURI]);
+        HTTPLogWarn(@"HTTP Server: Error 505 - Version Not Supported: %@ (%@)", self.request.version, [self requestURI]);
         HTTPMessage *response = [self.delegate connection:self
-                        responseForUnsupportedHTTPVersion:version];
+                        responseForUnsupportedHTTPVersion:self.request.version];
         [self writeErrorResponse:response andCloseConnection:NO];
-        
 		return;
 	}
 	
-	// Extract requested URI
-	NSString *uri = [self requestURI];
+	// Extract requested URI.
 	if ([WebSocket isWebSocketRequest:self.request])
 	{
 		HTTPLogVerbose(@"isWebSocket");
@@ -680,18 +535,19 @@ static NSMutableArray *recentNonces;
 	
 	// Check Authentication (if needed)
 	// If not properly authenticated for resource, issue Unauthorized response
-    HTTPConnectionSecurityAuthenticationType pathSecurity = [self.securityDelegate connection:self authLevelForPath:uri];
+    HTTPConnectionSecurityAuthenticationType pathSecurity = [self.securityDelegate connection:self
+                                                                             authLevelForPath:self.requestURI];
 	if (pathSecurity != HTTPConnectionSecurityAuthenticationTypeNone)
 	{
         //The resourse is protected. Can they access this resource?
         if (![self.securityDelegate connection:self
-            validateCredentialsForAccessToPath:uri
+            validateCredentialsForAccessToPath:self.requestURI
                                withAccessLevel:pathSecurity])
         {
             //They cannot.
             HTTPLogInfo(@"HTTP Server: Error 401 - Unauthorized (%@)", [self requestURI]);
             HTTPMessage *response = [self.securityDelegate connection:self
-                                          failedToAuthenticateForPath:uri
+                                          failedToAuthenticateForPath:self.requestURI
                                                       withAccessLevel:pathSecurity];
             
             if (pathSecurity == HTTPConnectionSecurityAuthenticationTypeBasic ||
@@ -722,7 +578,6 @@ static NSMutableArray *recentNonces;
 	//By now, the method is supported and, if auth is required, the user is already authenticated.
     //So now, all we have to do is respond.
 	self.httpResponse = [self.routingDelegate responseForConnection:self];
-    
 	if (!self.httpResponse)
     {
 		[self.delegate connection:self
@@ -855,47 +710,39 @@ static NSMutableArray *recentNonces;
 
 - (void)sendResponseHeadersAndBody
 {
-	if ([self.httpResponse respondsToSelector:@selector(delayResponseHeaders)])
-	{
-		if ([self.httpResponse delayResponseHeaders])
-		{
+	if ([self.httpResponse respondsToSelector:@selector(delayResponseHeaders)]) {
+		if ([self.httpResponse delayResponseHeaders]) {
 			return;
 		}
 	}
 	
 	BOOL isChunked = NO;
-	if ([self.httpResponse respondsToSelector:@selector(isChunked)])
-	{
+	if ([self.httpResponse respondsToSelector:@selector(isChunked)]) {
 		isChunked = [self.httpResponse isChunked];
 	}
 	
 	// If a response is "chunked", this simply means the HTTPResponse object
 	// doesn't know the content-length in advance.
 	UInt64 contentLength = 0;
-	if (!isChunked)
-	{
+	if (!isChunked) {
 		contentLength = [self.httpResponse contentLength];
 	}
 	
 	// Check for specific range request
 	NSString *rangeHeader = [self.request headerField:@"Range"];
 	
-	BOOL isRangeRequest = NO;
-	
 	// If the response is "chunked" then we don't know the exact content-length.
 	// This means we'll be unable to process any range requests.
 	// This is because range requests might include a range like "give me the last 100 bytes"
-	if (!isChunked && rangeHeader)
-	{
-		if ([self parseRangeRequest:rangeHeader withContentLength:contentLength])
-		{
+    BOOL isRangeRequest = NO;
+	if (!isChunked && rangeHeader) {
+		if ([self parseRangeRequest:rangeHeader withContentLength:contentLength]) {
 			isRangeRequest = YES;
 		}
 	}
 	
 	HTTPMessage *response;
-	if (!isRangeRequest)
-	{
+	if (!isRangeRequest) {
 		// Create response
 		// Default status code: 200 - OK
 		NSInteger status = 200;
@@ -1359,6 +1206,7 @@ static NSMutableArray *recentNonces;
 		if (![self.request appendData:data])
 		{
             //We couldn't append the data. Bail.
+            HTTPLogWarn(@"%@[%p]: Malformed request", THIS_FILE, self);
             [self handleInvalidRequest:data];
             return;
 		}
@@ -1390,7 +1238,9 @@ static NSMutableArray *recentNonces;
         NSString *contentLength = [self.request headerField:@"Content-Length"];
         
         // Content-Length MUST be present for upload methods (such as POST or PUT) and MUST NOT be present for other methods.
-        BOOL expectsUpload = [self expectsRequestBodyFromMethod:method atPath:uri];
+        BOOL expectsUpload = [self.routingDelegate connection:self
+                                 expectsRequestBodyFromMethod:method
+                                                       atPath:uri];
         if (expectsUpload)
         {
 #warning Double-check this if/else before merging.
@@ -1458,7 +1308,7 @@ static NSMutableArray *recentNonces;
         
         // Check to make sure the given method is supported.
         if (![self.routingDelegate connection:self
-                                acceptsMethod:method
+                               supportsMethod:method
                                        atPath:uri])
         {
             // The method is not supported.
@@ -1807,6 +1657,7 @@ static NSMutableArray *recentNonces;
 {
 	HTTPLogTrace();
 	
+    [self.socketDelegate socketDidDisconnect];
 	self.asyncSocket = nil;
 	
 	[self die];

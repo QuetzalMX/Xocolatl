@@ -13,9 +13,13 @@
 
 @property (nonatomic, readonly) dispatch_queue_t queue;
 @property (nonatomic, weak, readonly) HTTPServer *server;
-@property (nonatomic, strong, readonly) NSString *documentRoot;
+@property (nonatomic, copy, readonly) NSString *documentRoot;
 
-- (instancetype)initWithServer:(HTTPServer *)server documentRoot:(NSString *)documentRoot;
-- (instancetype)initWithServer:(HTTPServer *)server documentRoot:(NSString *)documentRoot queue:(dispatch_queue_t)q;
+- (instancetype)initWithServer:(HTTPServer *)server
+                  documentRoot:(NSString *)documentRoot;
+
+- (instancetype)initWithServer:(HTTPServer *)server
+                  documentRoot:(NSString *)documentRoot
+                         queue:(dispatch_queue_t)q;
 
 @end
