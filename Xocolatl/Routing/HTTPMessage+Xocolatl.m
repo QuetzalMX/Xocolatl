@@ -10,28 +10,29 @@
 
 #import <objc/runtime.h>
 #import <AppKit/AppKit.h>
+#import "MultipartFormDataParser.h"
 
 NSString *const XocolatlHTTPHeaderContentType = @"Content-Type";
 
 @implementation HTTPMessage (Xocolatl)
 
-- (void)setImageFromMultiPartForm:(NSImage *)image;
+- (void)setImageFromMultiPartForm:(NSData *)image;
 {
     objc_setAssociatedObject(self, @selector(imageFromMultiPartForm), image, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSImage *)imageFromMultiPartForm;
+- (NSData *)imageFromMultiPartForm;
 {
     if (!objc_getAssociatedObject(self, @selector(imageFromMultiPartForm)))
     {
         //Get the boundary from our header.
         NSString *boundary = self.allHeaderFields[XocolatlHTTPHeaderContentType];
-        boundary = [[boundary componentsSeparatedByString:@"="] lastObject];
+        boundary = [[[boundary componentsSeparatedByString:@"="] lastObject] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
         MultipartFormDataParser *dataParser = [[MultipartFormDataParser alloc] initWithBoundary:boundary
                                                                                    formEncoding:NSASCIIStringEncoding];
-        [dataParser appendData:self.body];
         dataParser.delegate = self;
+        [dataParser appendData:self.body];
         
         //NOTE: (FO) By now, we should already have the associated property set, so we're done.
     }
@@ -122,7 +123,10 @@ NSString *const XocolatlHTTPHeaderContentType = @"Content-Type";
 #pragma mark - MultipartFormDataparser
 - (void) processContent:(NSData*) data WithHeader:(MultipartMessageHeader*) header;
 {
-    self.imageFromMultiPartForm = [[NSImage alloc] initWithData:data];
+    if ([[NSImage alloc] initWithData:data])
+    {
+        self.imageFromMultiPartForm = data;
+    }
 }
 
 @end

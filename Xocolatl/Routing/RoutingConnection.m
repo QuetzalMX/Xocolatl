@@ -139,13 +139,17 @@
     }
     
     NSLog(@"Connection received: %@ %@", method, path);
-    
     RoutingResponse *response = [self.delegate connection:self
                                   didFinishReadingRequest:request
                                                  withPath:path
                                                    method:method
                                             andParameters:params];
-    if (!response) {
+    if (response) {
+        NSLog(@"%@ is responding", [response className]);
+    }
+    else
+    {
+        NSLog(@"HTTPConnection responding.");
         //We didn't know how to handle it. Perhaps HTTPConnection knows?
         return [super httpResponseForMethod:method
                                         URI:path];

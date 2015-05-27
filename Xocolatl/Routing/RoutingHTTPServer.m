@@ -125,6 +125,11 @@
                          method:(NSString *)method
                   andParameters:(NSDictionary *)parameters;
 {
+    if ([path isEqualToString:@"/"])
+    {
+        return nil;
+    }
+    
     //RoutingConnection just finished reading all the necessary data from a request (this request has already been authorized).
     //Now, RoutingConnection is requesting a response from us.
     //What we need to do is find out what the path/method combination is and find a responseHandler that can process our request.

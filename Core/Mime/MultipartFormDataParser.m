@@ -22,6 +22,11 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 // interface MultipartFormDataParser (private)
 //-----------------------------------------------------------------
 
+@interface MultipartFormDataParser ()
+
+@property (nonatomic, copy) NSString *boundaryString;
+
+@end
 
 @interface MultipartFormDataParser (private)
 + (NSData*) decodedDataFromData:(NSData*) data encoding:(int) encoding;
@@ -56,7 +61,8 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 		HTTPLogWarn(@"MultipartFormDataParser: init with zero boundary");
 		return nil;
 	}
-    boundaryData = [[@"\r\n" stringByAppendingString:boundary] dataUsingEncoding:NSASCIIStringEncoding];
+    self.boundaryString = [@"--" stringByAppendingString:boundary];
+    boundaryData = [[@"\r\n--" stringByAppendingString:boundary] dataUsingEncoding:NSASCIIStringEncoding];
 
     pendingData = [[NSMutableData alloc] init];
     currentEncoding = contentTransferEncoding_binary;
@@ -347,7 +353,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 {
 	int offset = 0;
 	
-	char *boundaryBytes = (char*) boundaryData.bytes + 2; // the first boundary won't have CRLF preceding.
+	char *boundaryBytes = (char*) [self.boundaryString dataUsingEncoding:NSASCIIStringEncoding].bytes; // the first boundary won't have CRLF preceding.
     char *dataBytes = (char*) data.bytes;
     NSUInteger boundaryLength = boundaryData.length - 2;
     NSUInteger dataLength = data.length;
@@ -359,8 +365,9 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
         for (i = 0; i < boundaryLength; i++)
         {
             if(boundaryBytes[i] != dataBytes[offset + i])
-                
+            {
                 break;
+            }
         }
         
         if (i == boundaryLength)
