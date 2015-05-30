@@ -11,19 +11,19 @@
 #import "HTTPVerbs.h"
 
 @class YapDatabaseConnection;
-@class RoutingHTTPServer;
+@class XocolatlHTTPServer;
 @class XocolatlUser;
 
 @interface DatabaseResponder : RoutingResponder
 
-@property (nonatomic, strong, readonly) RoutingHTTPServer *server;
+@property (nonatomic, strong, readonly) XocolatlHTTPServer *server;
 @property (nonatomic, strong, readonly) YapDatabaseConnection *readConnection;
 @property (nonatomic, strong, readonly) YapDatabaseConnection *writeConnection;
 @property (nonatomic, strong, readonly) XocolatlUser *user;
 
 - (instancetype)initWithReadConnection:(YapDatabaseConnection *)readConnection
                     andWriteConnection:(YapDatabaseConnection *)writeConnection
-                              inServer:(RoutingHTTPServer *)server;
+                              inServer:(XocolatlHTTPServer *)server;
 
 //Authentication
 - (BOOL)isProtected:(NSString *)method;

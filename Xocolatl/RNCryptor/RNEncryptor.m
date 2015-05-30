@@ -24,7 +24,6 @@
 //  DEALINGS IN THE SOFTWARE.
 //
 
-
 #import "RNCryptor+Private.h"
 #import "RNEncryptor.h"
 #import "RNCryptorEngine.h"
@@ -46,18 +45,12 @@
 @synthesize haveWrittenHeader = _haveWrittenHeader;
 
 
-+ (NSData *)encryptData:(NSData *)thePlaintext
-           withSettings:(RNCryptorSettings)theSettings
-               password:(NSString *)aPassword
-                  error:(NSError **)anError
++ (NSData *)encryptData:(NSData *)thePlaintext withSettings:(RNCryptorSettings)theSettings password:(NSString *)aPassword error:(NSError **)anError
 {
   RNEncryptor *cryptor = [[self alloc] initWithSettings:theSettings
                                                password:aPassword
                                                 handler:^(RNCryptor *c, NSData *d) {}];
-    
-  return [self synchronousResultForCryptor:cryptor
-                                      data:thePlaintext
-                                     error:anError];
+  return [self synchronousResultForCryptor:cryptor data:thePlaintext error:anError];
 }
 
 + (NSData *)encryptData:(NSData *)thePlaintext
@@ -118,6 +111,8 @@
                                IV:(NSData *)anIV
                           handler:(RNCryptorHandler)aHandler
 {
+  NSParameterAssert(anEncryptionKey.length == theSettings.keySettings.keySize);
+  NSParameterAssert(anHMACKey.length == theSettings.HMACKeySettings.keySize);
   self = [super initWithHandler:aHandler];
   if (self) {
     self.IV = anIV;

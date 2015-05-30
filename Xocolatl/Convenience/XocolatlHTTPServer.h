@@ -24,7 +24,10 @@
  *  @return a valid XocolatlHTTPServer. Nil if the database cannot be instantiated.
  */
 + (instancetype)newServerNamed:(NSString *)serverName
-               listeningAtPort:(NSInteger)port;
+               listeningAtPort:(NSInteger)port
+                   withSiteURL:(NSString *)siteURL;
+
+@property (nonatomic, copy, readonly) NSString *siteURL;
 
 /**
  *  XocolatlHTTPServer can only handle HTTPS connections. In order for the server to function correctly, you must provide a .p12 file (which contains your private key and its X.509 certificate. These types of files are password protected, so you must provide the password in order to extract the key and certificate.
@@ -39,7 +42,8 @@
 + (instancetype)newServerNamed:(NSString *)serverName
                listeningAtPort:(NSInteger)port
      usingSSLCertificateAtPath:(NSString *)p12CertificatePath
-        andCertificatePassword:(NSString *)certificatePassword;
+        andCertificatePassword:(NSString *)certificatePassword
+                   withSiteURL:(NSString *)siteURL;
 
 @property (nonatomic, strong) YapDatabase *database;
 @property (nonatomic, strong) YapDatabaseConnection *readConnection;

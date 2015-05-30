@@ -10,13 +10,13 @@
 
 #import "RoutingResponse.h"
 #import "YapDatabase.h"
-#import "RoutingHTTPServer.h"
+#import "XocolatlHTTPServer.h"
 #import "XocolatlUser.h"
 
 @interface DatabaseResponder ()
 
 @property (nonatomic, strong, readwrite) XocolatlUser *user;
-@property (nonatomic, strong, readwrite) RoutingHTTPServer *server;
+@property (nonatomic, strong, readwrite) XocolatlHTTPServer *server;
 @property (nonatomic, strong, readwrite) YapDatabaseConnection *readConnection;
 @property (nonatomic, strong, readwrite) YapDatabaseConnection *writeConnection;
 

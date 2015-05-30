@@ -32,7 +32,7 @@
 
 - (instancetype)initWithReadConnection:(YapDatabaseConnection *)readConnection
                     andWriteConnection:(YapDatabaseConnection *)writeConnection
-                              inServer:(RoutingHTTPServer *)server
+                              inServer:(XocolatlHTTPServer *)server
                          withUserClass:(Class)userClass;
 {
     if (self != [super initWithReadConnection:readConnection

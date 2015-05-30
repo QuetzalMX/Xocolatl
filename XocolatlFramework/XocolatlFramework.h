@@ -23,10 +23,6 @@ FOUNDATION_EXPORT const unsigned char XocolatlFrameworkVersionString[];
 #import <XocolatlFramework/NSArray+transformativeArray.h>
 #import <XocolatlFramework/NSData+RNSecureCompare.h>
 #import <XocolatlFramework/NSString+randomString.h>
-#import <XocolatlFramework/RNCryptor.h>
-#import <XocolatlFramework/RNCryptorEngine.h>
-#import <XocolatlFramework/RNDecryptor.h>
-#import <XocolatlFramework/RNEncryptor.h>
 #import <XocolatlFramework/RoutingResponder.h>
 #import <XocolatlFramework/RoutingResponse.h>
 #import <XocolatlFramework/SignInResponder.h>

@@ -11,33 +11,44 @@
 #import "SignUpResponder.h"
 #import "YapDatabase.h"
 
+@interface XocolatlHTTPServer ()
+
+@property (nonatomic, copy, readwrite) NSString *siteURL;
+
+@end
+
 @implementation XocolatlHTTPServer
 
 + (instancetype)newServerNamed:(NSString *)name
-               listeningAtPort:(NSInteger)port;
+               listeningAtPort:(NSInteger)port
+                   withSiteURL:(NSString *)siteURL;
 {
     //Find the default .p12 file and attempt to start the server with it.
     return [self newServerNamed:name
                 listeningAtPort:port
       usingSSLCertificateAtPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"certificate" ofType:@"p12"]
-         andCertificatePassword:@"pass"];
+         andCertificatePassword:@"pass"
+                    withSiteURL:siteURL];
 }
 
-+ (instancetype)newServerNamed:(NSString *)name
++ (instancetype)newServerNamed:(NSString *)serverName
                listeningAtPort:(NSInteger)port
      usingSSLCertificateAtPath:(NSString *)p12CertificatePath
-        andCertificatePassword:(NSString *)certificatePassword;
+        andCertificatePassword:(NSString *)certificatePassword
+                   withSiteURL:(NSString *)siteURL;
 {
-    if (!name || name.length <= 0 ||
+    if (!serverName || serverName.length <= 0 ||
         !p12CertificatePath || p12CertificatePath.length <= 0) {
         return nil;
     }
     
     //Create the server using the provided name.
-    NSString *documentRoot = [[NSString stringWithFormat:@"~/Sites/%@", name] stringByExpandingTildeInPath];
+    NSString *documentRoot = [[NSString stringWithFormat:@"~/Sites/%@", serverName] stringByExpandingTildeInPath];
     XocolatlHTTPServer *server = [[XocolatlHTTPServer alloc] initAtPort:port];
     [server setDocumentRoot:documentRoot];
-    server.name = name;
+    server.name = serverName;
+    
+    server.siteURL = siteURL;
     
     //Let's see if we can create the database.
     NSString *databaseFolderPath = [documentRoot stringByAppendingString:@"/database"];
@@ -57,7 +68,7 @@
     };
     
     //We're good to go. Create our databases.
-    NSString *databaseWithFileExtension = [NSString stringWithFormat:@"%@/%@.yap", databaseFolderPath, name];
+    NSString *databaseWithFileExtension = [NSString stringWithFormat:@"%@/%@.yap", databaseFolderPath, serverName];
     server.database = [[YapDatabase alloc] initWithPath:databaseWithFileExtension];
     server.readConnection = [server.database newConnection];
     server.readConnection.permittedTransactions = YDB_AnyReadTransaction;
