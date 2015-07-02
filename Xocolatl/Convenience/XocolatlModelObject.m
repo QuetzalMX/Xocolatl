@@ -67,7 +67,7 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
 + (instancetype)objectWithIdentifier:(NSString *)identifier
                     usingTransaction:(YapDatabaseReadTransaction *)transaction;
 {
-    NSString *yapCollectionIdentifier = [[self class] yapDatabaseCollectionIdentifier];
+    NSString *yapCollectionIdentifier = nil;
     return [transaction objectForKey:identifier
                         inCollection:yapCollectionIdentifier];
 }
