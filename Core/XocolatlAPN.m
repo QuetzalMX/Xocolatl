@@ -43,6 +43,7 @@ NSString *const XocolatlAPNCustomPayloadKey = @"XocolatlAPNCustomPayloadKey";
 
 + (instancetype)newSilentNotificationForRecipient:(NSString *)recipientToken;
 {
+    NSParameterAssert(recipientToken);
     XocolatlAPN *notification = [[XocolatlAPN alloc] init];
     notification.sound = @"";
     notification.recipientToken = recipientToken;
@@ -86,6 +87,7 @@ NSString *const XocolatlAPNCustomPayloadKey = @"XocolatlAPNCustomPayloadKey";
     
     if (self.isSilentNotification) {
         apsDictionary[@"content-available"] = @(1);
+        apsDictionary[@"priority"] = @5;
     }
     
     //Add any custom payload before the final sending.

@@ -116,8 +116,7 @@
                                autoReconnect:YES
                                        error:&error];
     if (pushed) {
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_current_queue(), ^(void){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             NSError *error = nil;
             NWNotification *failed = nil;
             BOOL read = [self.hub readFailed:&failed
