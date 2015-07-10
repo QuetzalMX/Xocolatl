@@ -26,6 +26,7 @@
                      withPassword:(NSString *)password;
 
 //Auth
+- (NSString *)newAuthHeaderWithDefaultExpiration;
 - (NSString *)newAuthHeaderWithTimeOfDeath:(NSTimeInterval)secondsUntilExpiration;
 - (BOOL)validateAuthHeader:(NSString *)clientProvidedAuth;
 

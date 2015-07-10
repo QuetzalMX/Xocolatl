@@ -54,23 +54,25 @@
 - (RoutingResponse *)responseForPOSTRequest:(HTTPMessage *)request
                              withParameters:(NSDictionary *)parameters;
 {
-    //Attempt to register a new user.
+    // Validate your inputs.
     NSString *username = request.parsedBody[@"username"];
     NSString *password = request.parsedBody[@"password"];
     
     if (![username isKindOfClass:[NSString class]]) {
         return [XocolatlHTTPResponse responseWithErrorCode:XocolatlHTTPStatusCode400BadRequest
-                                                    reason:@"Username is invalid."];
+                                                    reason:@"Username should be a string."];
     }
     
     if (![password isKindOfClass:[NSString class]]) {
         return [XocolatlHTTPResponse responseWithErrorCode:XocolatlHTTPStatusCode400BadRequest
-                                                    reason:@"Password is invalid"];
+                                                    reason:@"Password should be a string"];
     }
 
+    //Attempt to register a new user.
     __block XocolatlUser *newUser;
     __block BOOL alreadyRegistered = NO;
     __block NSDictionary *newUserJSON;
+    __block NSString *auth;
     [self.writeConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         //First, check if the user exists.
         XocolatlUser *registeredUser = [XocolatlUser objectWithIdentifier:username
@@ -88,6 +90,9 @@
         [self willSaveUser:newUser
           usingRequestBody:request.parsedBody];
         
+        // Authorize it immediately.
+        auth = [newUser newAuthHeaderWithDefaultExpiration];
+        
         [newUser saveUsingTransaction:transaction];
         
         newUserJSON = [newUser jsonRepresentationUsingTransaction:transaction];
@@ -98,8 +103,10 @@
                                                     reason:@"User is already registered."];
     }
     
+    NSMutableDictionary *responseWithAuth = [newUserJSON mutableCopy];
+    responseWithAuth[@"auth"] = auth;
     RoutingResponse *successResponse = [RoutingResponse responseWithStatus:XocolatlHTTPStatusCode201Created
-                                                                   andBody:newUserJSON];
+                                                                   andBody:responseWithAuth];
     successResponse.registeredUser = newUser;
     return successResponse;
 }

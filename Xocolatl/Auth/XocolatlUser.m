@@ -16,6 +16,8 @@
 #import "RNDecryptor.h"
 #import "NSData+RNSecureCompare.h"
 
+NSInteger const SecondsUntilAuthorizationExpires = 86400;
+
 @interface XocolatlUser ()
 
 @property (nonatomic, strong, readwrite) NSDate *modifiedAt;
@@ -120,23 +122,29 @@
     return [NSString stringWithFormat:@"%@%@", expiration, username];
 }
 
-- (NSString *)newAuthHeaderWithTimeOfDeath:(NSTimeInterval)timeOfDeath;
+- (NSString *)newAuthHeaderWithDefaultExpiration;
 {
-    if (![self isTimeOfDeathInTheFuture:timeOfDeath]) {
-        return nil;
-    }
+    NSTimeInterval timeOfDeath = [[NSDate date] timeIntervalSince1970] + SecondsUntilAuthorizationExpires;
+    return [self newAuthHeaderWithTimeOfDeath:timeOfDeath];
+}
+
+- (NSString *)newAuthHeaderWithTimeOfDeath:(NSTimeInterval)secondsUntilExpiration;
+{
+    NSAssert(secondsUntilExpiration > 0,
+             @"An auth header requires an expiration date in the future.");
+    NSTimeInterval timeOfDeath = [[NSDate date] timeIntervalSince1970] + secondsUntilExpiration;
     
     //Create a new cookie password and use it to encrypt the uesrname and timeOfDeath.
     NSString *passwordForAuthHeader = [NSString randomString];
     [self.cookiePasswords addObject:passwordForAuthHeader];
-
+    
     NSString *clearText = [NSString stringWithFormat:@"%@:%.0f", self.username, timeOfDeath];
     NSError *error;
     NSData *cypherText = [RNEncryptor encryptData:[clearText dataUsingEncoding:NSUTF8StringEncoding]
                                      withSettings:kRNCryptorAES256Settings
                                          password:passwordForAuthHeader
                                             error:&error];
-
+    
     if (error) {
         //Something went terribly wrong.
         [self.cookiePasswords removeObject:passwordForAuthHeader];

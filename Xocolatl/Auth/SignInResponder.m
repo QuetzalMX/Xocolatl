@@ -12,8 +12,6 @@
 #import "RoutingResponse.h"
 #import "YapDatabase.h"
 
-NSInteger const SecondsUntilAuthorizationExpires = 86400;
-
 @implementation SignInResponder
 
 - (NSDictionary *)methods;
@@ -25,7 +23,6 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
                                      withParameters:(NSDictionary *)parameters;
 {
     //Attempt to log in the user with the given credentials.
-    NSTimeInterval timeOfDeath = [[NSDate date] timeIntervalSince1970] + SecondsUntilAuthorizationExpires;
     NSString *username = message.parsedBody[@"username"];
     NSString *password = message.parsedBody[@"password"];
     
@@ -58,7 +55,7 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
         
         //The password is valid. Create an auth string and return the user.
         registeredUser = fetchedUser;
-        authorization = [fetchedUser newAuthHeaderWithTimeOfDeath:timeOfDeath];
+        authorization = [fetchedUser newAuthHeaderWithDefaultExpiration];
         NSAssert(authorization, @"Auth should never be null");
         
         //Save the user.
