@@ -67,6 +67,7 @@
         return nil;
     }
     
+    _offset = 0;
     _mutableHeaders = [NSMutableDictionary dictionary];
     _mutableHeaders[@"Content-Type"] = @"application/json";
     
@@ -112,15 +113,28 @@
     return (self.offset == self.data.length);
 }
 
+/**
+ *  Our delegate is sending data and it's requesting a chunk for it to write.
+ *  We must provide that chunk from our data.
+ *
+ *  Our offset will tell us where to start reading. 
+ *  IMPORTANT: Make sure we DO NOT go over our data length, or we'll start to run into memory errors.
+ *
+ *  @param requestedLength the chunk's length
+ *
+ *  @return the chunk to be written.
+ */
 - (NSData *)readDataOfLength:(NSUInteger)requestedLength;
 {
-    NSUInteger remaining = self.data.length - self.offset;
+    // Get the remaining data.
+    // The remaining data is basically a range:
+    // NSMakeRange(offset, length - offset)
+    NSUInteger remaining = self.contentLength - self.offset;
     NSUInteger length = requestedLength < remaining ? requestedLength : remaining;
+    self.offset += length;
     
+    // Change that data to NSData.
     void *bytes = (void *)(self.data.bytes + self.offset);
-    
-    self.offset += requestedLength;
-    
     return [NSData dataWithBytesNoCopy:bytes length:length freeWhenDone:NO];
 }
 

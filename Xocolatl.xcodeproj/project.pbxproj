@@ -71,6 +71,9 @@
 		C14E74531B0A544300ACC4A9 /* XocolatlAPN.m in Sources */ = {isa = PBXBuildFile; fileRef = C14E74511B0A544300ACC4A9 /* XocolatlAPN.m */; };
 		C14E74541B0A544300ACC4A9 /* XocolatlAPN.m in Sources */ = {isa = PBXBuildFile; fileRef = C14E74511B0A544300ACC4A9 /* XocolatlAPN.m */; };
 		C14E74551B0A654F00ACC4A9 /* XocolatlAPN.h in Resources */ = {isa = PBXBuildFile; fileRef = C14E74501B0A544300ACC4A9 /* XocolatlAPN.h */; };
+		C14F781D1B531CCA00C5A442 /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = C14F781B1B531CCA00C5A442 /* GCDAsyncSocket.h */; };
+		C14F781E1B531CCA00C5A442 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C14F781C1B531CCA00C5A442 /* GCDAsyncSocket.m */; };
+		C14F781F1B531CCA00C5A442 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C14F781C1B531CCA00C5A442 /* GCDAsyncSocket.m */; };
 		C1AC896F1AF09517008392D5 /* SignUpResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC896E1AF09517008392D5 /* SignUpResponder.m */; };
 		C1AC89D31AF4090F008392D5 /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC89AE1AF4090F008392D5 /* DDData.m */; };
 		C1AC89D41AF4090F008392D5 /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC89B01AF4090F008392D5 /* DDNumber.m */; };
@@ -96,7 +99,6 @@
 		C1AC8A051AF4092A008392D5 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = C1AC89FA1AF4092A008392D5 /* README.txt */; };
 		C1AC8A171AF4098B008392D5 /* RoutingConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC8A101AF4098B008392D5 /* RoutingConnection.m */; };
 		C1AC8A181AF4098B008392D5 /* RoutingHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC8A121AF4098B008392D5 /* RoutingHTTPServer.m */; };
-		C1AC8A1B1AF40AC2008392D5 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC8A1A1AF40AC2008392D5 /* GCDAsyncSocket.m */; };
 		C1AC8A1E1AF48658008392D5 /* RoutingResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC8A1D1AF48658008392D5 /* RoutingResponder.m */; };
 		C1AC8A221AF4B131008392D5 /* HTTPMessage+Xocolatl.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC8A211AF4B131008392D5 /* HTTPMessage+Xocolatl.m */; };
 		C1AC8A291AF4B222008392D5 /* DatabaseResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC8A281AF4B222008392D5 /* DatabaseResponder.m */; };
@@ -143,7 +145,6 @@
 		C1D77DA01AF84B13008E4D78 /* HTTPAsyncFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC89C61AF4090F008392D5 /* HTTPAsyncFileResponse.m */; };
 		C1D77DA11AF84B13008E4D78 /* HTTPFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC89CE1AF4090F008392D5 /* HTTPFileResponse.m */; };
 		C1D77DA21AF84B13008E4D78 /* WebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC89D21AF4090F008392D5 /* WebSocket.m */; };
-		C1D77DA31AF84B13008E4D78 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC8A1A1AF40AC2008392D5 /* GCDAsyncSocket.m */; };
 		C1D77DA41AF84B13008E4D78 /* YapDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F690771AD9E5C4007FF919 /* YapDatabase.m */; };
 		C1D77DA51AF84B13008E4D78 /* YapDatabaseConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F690791AD9E5C4007FF919 /* YapDatabaseConnection.m */; };
 		C1D77DA61AF84B13008E4D78 /* YapDatabaseOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F6907B1AD9E5C4007FF919 /* YapDatabaseOptions.m */; };
@@ -431,6 +432,8 @@
 		C13D40451ADCEED4004AF563 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		C14E74501B0A544300ACC4A9 /* XocolatlAPN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlAPN.h; path = Core/XocolatlAPN.h; sourceTree = SOURCE_ROOT; };
 		C14E74511B0A544300ACC4A9 /* XocolatlAPN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XocolatlAPN.m; path = Core/XocolatlAPN.m; sourceTree = SOURCE_ROOT; };
+		C14F781B1B531CCA00C5A442 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		C14F781C1B531CCA00C5A442 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		C1AC896D1AF09517008392D5 /* SignUpResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpResponder.h; path = Auth/SignUpResponder.h; sourceTree = "<group>"; };
 		C1AC896E1AF09517008392D5 /* SignUpResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpResponder.m; path = Auth/SignUpResponder.m; sourceTree = "<group>"; };
 		C1AC89AD1AF4090F008392D5 /* DDData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDData.h; sourceTree = "<group>"; };
@@ -482,8 +485,6 @@
 		C1AC8A101AF4098B008392D5 /* RoutingConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutingConnection.m; sourceTree = "<group>"; };
 		C1AC8A111AF4098B008392D5 /* RoutingHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoutingHTTPServer.h; sourceTree = "<group>"; };
 		C1AC8A121AF4098B008392D5 /* RoutingHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutingHTTPServer.m; sourceTree = "<group>"; };
-		C1AC8A191AF40AC2008392D5 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
-		C1AC8A1A1AF40AC2008392D5 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		C1AC8A1C1AF48658008392D5 /* RoutingResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoutingResponder.h; sourceTree = "<group>"; };
 		C1AC8A1D1AF48658008392D5 /* RoutingResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutingResponder.m; sourceTree = "<group>"; };
 		C1AC8A201AF4B131008392D5 /* HTTPMessage+Xocolatl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HTTPMessage+Xocolatl.h"; sourceTree = "<group>"; };
@@ -876,8 +877,8 @@
 		C1AC89E51AF4092A008392D5 /* CocoaAsyncSocket */ = {
 			isa = PBXGroup;
 			children = (
-				C1AC8A191AF40AC2008392D5 /* GCDAsyncSocket.h */,
-				C1AC8A1A1AF40AC2008392D5 /* GCDAsyncSocket.m */,
+				C14F781B1B531CCA00C5A442 /* GCDAsyncSocket.h */,
+				C14F781C1B531CCA00C5A442 /* GCDAsyncSocket.m */,
 				C1AC89E61AF4092A008392D5 /* About.txt */,
 			);
 			name = CocoaAsyncSocket;
@@ -1525,6 +1526,7 @@
 				C1369B081B1A646D004E29F5 /* RNEncryptor.h in Headers */,
 				C1D77DFC1AF84BD1008E4D78 /* NSData+RNSecureCompare.h in Headers */,
 				C1D77DFD1AF84BD1008E4D78 /* NSString+randomString.h in Headers */,
+				C14F781D1B531CCA00C5A442 /* GCDAsyncSocket.h in Headers */,
 				C1D77E001AF84BD1008E4D78 /* SignUpResponder.h in Headers */,
 				C1D77E011AF84BD1008E4D78 /* SignInResponder.h in Headers */,
 				C13936D31B066B09008952B5 /* NWNotification.h in Headers */,
@@ -1800,7 +1802,6 @@
 				C1D77DA01AF84B13008E4D78 /* HTTPAsyncFileResponse.m in Sources */,
 				C1D77DA11AF84B13008E4D78 /* HTTPFileResponse.m in Sources */,
 				C1D77DA21AF84B13008E4D78 /* WebSocket.m in Sources */,
-				C1D77DA31AF84B13008E4D78 /* GCDAsyncSocket.m in Sources */,
 				C1D77DA41AF84B13008E4D78 /* YapDatabase.m in Sources */,
 				C1D77DA51AF84B13008E4D78 /* YapDatabaseConnection.m in Sources */,
 				C1D77DA61AF84B13008E4D78 /* YapDatabaseOptions.m in Sources */,
@@ -1813,6 +1814,7 @@
 				C1D77DAC1AF84B13008E4D78 /* YDBCKRecordTableInfo.m in Sources */,
 				C1D77DAD1AF84B13008E4D78 /* YDBCKChangeSet.m in Sources */,
 				C1D77DAE1AF84B13008E4D78 /* YDBCKMergeInfo.m in Sources */,
+				C14F781F1B531CCA00C5A442 /* GCDAsyncSocket.m in Sources */,
 				C1D77DAF1AF84B13008E4D78 /* YDBCKRecord.m in Sources */,
 				C1D77DB01AF84B13008E4D78 /* YDBCKRecordInfo.m in Sources */,
 				C1D77DB11AF84B13008E4D78 /* YapDatabaseCloudKit.m in Sources */,
@@ -1909,7 +1911,6 @@
 				C1F690C41AD9E5C4007FF919 /* YapDatabaseQuery.m in Sources */,
 				C1F690801AD9E5C4007FF919 /* YDBCKChangeRecord.m in Sources */,
 				C1AC8A1E1AF48658008392D5 /* RoutingResponder.m in Sources */,
-				C1AC8A1B1AF40AC2008392D5 /* GCDAsyncSocket.m in Sources */,
 				C1F6907E1AD9E5C4007FF919 /* YDBCKAttachRequest.m in Sources */,
 				C1F690A41AD9E5C4007FF919 /* YapDatabaseSearchResultsViewTransaction.m in Sources */,
 				C1F70E2E1ADE17EA00CD9959 /* NSString+randomString.m in Sources */,
@@ -2023,6 +2024,7 @@
 				C1F690A31AD9E5C4007FF919 /* YapDatabaseSearchResultsViewOptions.m in Sources */,
 				C1F690BC1AD9E5C4007FF919 /* YapDebugDictionary.m in Sources */,
 				C122ADF61AF9DF87002A7502 /* XocolatlHTTPServer.m in Sources */,
+				C14F781E1B531CCA00C5A442 /* GCDAsyncSocket.m in Sources */,
 				C1AC89D41AF4090F008392D5 /* DDNumber.m in Sources */,
 				C13936DA1B066B09008952B5 /* NWPushFeedback.m in Sources */,
 				C1AC89DC1AF4090F008392D5 /* MultipartMessageHeaderField.m in Sources */,
