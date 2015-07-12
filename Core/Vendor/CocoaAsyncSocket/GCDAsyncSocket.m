@@ -5481,41 +5481,42 @@ enum GCDAsyncSocketConfig
 				BOOL keepLooping = YES;
 				while (keepLooping)
 				{
-					const size_t sslMaxBytesToWrite = 32768;
+					const size_t sslMaxBytesToWrite = 32767;
 					size_t sslBytesToWrite = MIN(bytesRemaining, sslMaxBytesToWrite);
 					size_t sslBytesWritten = 0;
 					
+                    result = SSLWrite(sslContext, buffer, sslBytesToWrite, &sslBytesWritten);
+                    
                     // During testing we found a race condition where the buffer would be overwritten in memory.
                     // We tried setting the currentWrite as a strong property but that did not work.
                     // The only solution we found was to retain the buffer in some way. This is the least obtrusive way we found.
-                    // If you want to try it out just comment the following two calls involving buffer.
+                    // If you want to try it out just comment the block and try to log in.
 #warning Try to debug racing condition in the future.
-                    if (buffer) {
-                        result = SSLWrite(sslContext, buffer, sslBytesToWrite, &sslBytesWritten);
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                        NSString *bufferString;
+                        bufferString = [NSString stringWithFormat:@"%s", buffer];
+                    });
+                    
+                    if (result == noErr)
+                    {
+                        buffer += sslBytesWritten;
+                        bytesWritten += sslBytesWritten;
+                        bytesRemaining -= sslBytesWritten;
                         
-                        if (result == noErr)
+                        keepLooping = (bytesRemaining > 0);
+                    }
+                    else
+                    {
+                        if (result == errSSLWouldBlock)
                         {
-                            buffer += sslBytesWritten;
-                            bytesWritten += sslBytesWritten;
-                            bytesRemaining -= sslBytesWritten;
-                            
-                            keepLooping = (bytesRemaining > 0);
+                            waiting = YES;
+                            sslWriteCachedLength = sslBytesToWrite;
                         }
                         else
                         {
-                            if (result == errSSLWouldBlock)
-                            {
-                                waiting = YES;
-                                sslWriteCachedLength = sslBytesToWrite;
-                            }
-                            else
-                            {
-                                error = [self sslError:result];
-                            }
-                            
-                            keepLooping = NO;
+                            error = [self sslError:result];
                         }
-                    } else {
+                        
                         keepLooping = NO;
                     }
 					

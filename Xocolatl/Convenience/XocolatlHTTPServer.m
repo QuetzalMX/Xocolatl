@@ -45,9 +45,8 @@
     //Create the server using the provided name.
     NSString *documentRoot = [[NSString stringWithFormat:@"~/Sites/%@", serverName] stringByExpandingTildeInPath];
     XocolatlHTTPServer *server = [[XocolatlHTTPServer alloc] initAtPort:port];
-    [server setDocumentRoot:documentRoot];
+    server.documentRoot = documentRoot;
     server.name = serverName;
-    
     server.siteURL = siteURL;
     
     //Let's see if we can create the database.
