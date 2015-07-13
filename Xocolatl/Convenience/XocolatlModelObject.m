@@ -61,15 +61,14 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
 #pragma mark - Loading and Saving
 + (NSString *)yapDatabaseCollectionIdentifier;
 {
-    return @"XocolatlModelObjectCollection";
+    return nil;
 }
 
 + (instancetype)objectWithIdentifier:(NSString *)identifier
                     usingTransaction:(YapDatabaseReadTransaction *)transaction;
 {
-    NSString *yapCollectionIdentifier = nil;
     return [transaction objectForKey:identifier
-                        inCollection:yapCollectionIdentifier];
+                        inCollection:nil];
 }
 
 + (NSArray *)allObjectsUsingTransaction:(YapDatabaseReadTransaction *)transaction;
@@ -89,7 +88,7 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
 {
     [transaction setObject:self
                     forKey:self.identifier
-              inCollection:[[self class] yapDatabaseCollectionIdentifier]];
+              inCollection:nil];
     
     self.modifiedAt = [NSDate date];
 }
