@@ -9,7 +9,7 @@
 #import "SignInResponder.h"
 
 #import "XocolatlUser.h"
-#import "RoutingResponse.h"
+#import "XocolatlHTTPResponse.h"
 #import "YapDatabase.h"
 
 @implementation SignInResponder
@@ -64,21 +64,20 @@
     }];
     
     if (!registeredUser) {
-        return [RoutingResponse responseWithError:[NSError errorWithDomain:@"User Does Not Exist"
-                                                                      code:404
-                                                                  userInfo:@{@"reason": @"The requested user is not registered."}]];
+        return [XocolatlHTTPResponse responseWithErrorCode:XocolatlHTTPStatusCode404NotFound
+                                                    reason:@"The requested user is not registered."];
     }
     
     if (error) {
-        return [RoutingResponse responseWithError:error];
+        return [XocolatlHTTPResponse responseWithError:error];
     }
     
     //Now that we have all the info, add our cookies and redirect the user back to home.
     NSMutableDictionary *dictionaryWithAuth = [registeredUserJSON mutableCopy];
     dictionaryWithAuth[@"auth"] = authorization;
     dictionaryWithAuth[@"username"] = registeredUser.username;
-    RoutingResponse *response = [RoutingResponse responseWithStatus:200
-                                                            andBody:dictionaryWithAuth];
+    XocolatlHTTPResponse *response = [XocolatlHTTPResponse responseWithStatus:XocolatlHTTPStatusCode200OK
+                                                                      andBody:dictionaryWithAuth];
     
     [response setCookieNamed:@"username"
                    withValue:registeredUser.username

@@ -126,16 +126,14 @@
  */
 - (NSData *)readDataOfLength:(NSUInteger)requestedLength;
 {
-    // Get the remaining data.
-    // The remaining data is basically a range:
-    // NSMakeRange(offset, length - offset)
+    // Get the next chunk, just make sure that we do not overflow.
     NSUInteger remaining = self.contentLength - self.offset;
-    NSUInteger length = requestedLength < remaining ? requestedLength : remaining;
-    self.offset += length;
+    NSUInteger length = requestedLength <= remaining ? requestedLength : remaining;
     
     // Change that data to NSData.
-    void *bytes = (void *)(self.data.bytes + self.offset);
-    return [NSData dataWithBytesNoCopy:bytes length:length freeWhenDone:NO];
+    NSData *nextChunk = [self.data subdataWithRange:NSMakeRange(self.offset, length)];
+    self.offset += length;
+    return nextChunk;
 }
 
 - (NSDictionary *)httpHeaders;
