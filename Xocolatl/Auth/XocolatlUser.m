@@ -65,13 +65,15 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
                         inCollection:[XocolatlUser yapDatabaseCollectionIdentifier]];
 }
 
-- (void)saveUsingTransaction:(YapDatabaseReadWriteTransaction *)transaction;
+- (BOOL)saveUsingTransaction:(YapDatabaseReadWriteTransaction *)transaction;
 {
+    self.modifiedAt = [NSDate date];
+    
     [transaction setObject:self
                     forKey:self.username
               inCollection:[XocolatlUser yapDatabaseCollectionIdentifier]];
     
-    self.modifiedAt = [NSDate date];
+    return YES;
 }
 
 #pragma mark - Serialization

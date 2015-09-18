@@ -74,7 +74,7 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
 + (NSArray *)allObjectsUsingTransaction:(YapDatabaseReadTransaction *)transaction;
 {
     NSMutableArray *allObjects = [NSMutableArray new];
-    [transaction enumerateKeysAndObjectsInCollection:[[self class] yapDatabaseCollectionIdentifier]
+    [transaction enumerateKeysAndObjectsInCollection:nil
                                           usingBlock:^(NSString *key, id object, BOOL *stop) {
                                               if (object) {
                                                   [allObjects addObject:object];
@@ -84,13 +84,15 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
     return [allObjects copy];
 }
 
-- (void)saveUsingTransaction:(YapDatabaseReadWriteTransaction *)transaction;
+- (BOOL)saveUsingTransaction:(YapDatabaseReadWriteTransaction *)transaction;
 {
+    self.modifiedAt = [NSDate date];
+    
     [transaction setObject:self
                     forKey:self.identifier
               inCollection:nil];
     
-    self.modifiedAt = [NSDate date];
+    return YES;
 }
 
 #pragma mark - JSON

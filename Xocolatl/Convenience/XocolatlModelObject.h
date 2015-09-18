@@ -68,7 +68,7 @@
  *
  *  @param transaction a valid readWrite transaction from a server connection.
  */
-- (void)saveUsingTransaction:(YapDatabaseReadWriteTransaction *)transaction;
+- (BOOL)saveUsingTransaction:(YapDatabaseReadWriteTransaction *)transaction;
 
 
 /**
