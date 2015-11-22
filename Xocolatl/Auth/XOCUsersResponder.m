@@ -8,10 +8,10 @@
 
 #import "XOCUsersResponder.h"
 
-#import "HTTPVerbs.h"
 #import "XocolatlUser.h"
 #import "XocolatlHTTPResponse.h"
 #import "YapDatabase.h"
+#import "HTTPVerbs.h"
 
 @interface XOCUsersResponder ()
 

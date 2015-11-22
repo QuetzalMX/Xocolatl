@@ -10,6 +10,19 @@
 
 @implementation XocolatlHTTPResponse
 
++ (instancetype)responseWithStatus:(XocolatlHTTPStatusCode)status
+                           andBody:(id)jsonBody;
+{
+    return [super responseWithStatus:status
+                             andBody:jsonBody];
+}
+
++ (instancetype)responseWithStatus:(XocolatlHTTPStatusCode)status andData:(NSData *)data;
+{
+    return [super responseWithStatus:status
+                             andData:data];
+}
+
 + (instancetype)responseWithErrorCode:(XocolatlHTTPStatusCode)errorCode
                                reason:(NSString *)reason;
 {

@@ -11,6 +11,7 @@
 #import "YapDatabase.h"
 #import "XocolatlHTTPResponse.h"
 #import "XocolatlUser.h"
+#import "HTTPVerbs.h"
 
 #import <objc/runtime.h>
 

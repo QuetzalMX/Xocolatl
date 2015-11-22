@@ -4,13 +4,10 @@
 //
 //  Created by Fernando Olivares on 5/14/15.
 //  Copyright (c) 2015 Quetzal. All rights reserved.
-//
 
-#import <Foundation/Foundation.h>
-
-extern NSString *const HTTPVerbHEAD;
-extern NSString *const HTTPVerbGET;
-extern NSString *const HTTPVerbPOST;
-extern NSString *const HTTPVerbPUT;
-extern NSString *const HTTPVerbDELETE;
-extern NSString *const HTTPVerbPATCH;
+static NSString * const HTTPVerbHEAD    = @"HEAD";
+static NSString * const HTTPVerbGET     = @"GET";
+static NSString * const HTTPVerbPOST    = @"POST";
+static NSString * const HTTPVerbPUT     = @"PUT";
+static NSString * const HTTPVerbDELETE  = @"DELETE";
+static NSString * const HTTPVerbPATCH   = @"PATCH";

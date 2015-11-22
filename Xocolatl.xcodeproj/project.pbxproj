@@ -25,7 +25,6 @@
 		C13227F91B0595C000B00AF8 /* XocolatlHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C13227F81B0595C000B00AF8 /* XocolatlHTTPResponse.m */; };
 		C13227FC1B059BD100B00AF8 /* XocolatlHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C13227F81B0595C000B00AF8 /* XocolatlHTTPResponse.m */; };
 		C13227FD1B059BE600B00AF8 /* XocolatlHTTPResponse.h in Resources */ = {isa = PBXBuildFile; fileRef = C13227F71B0595C000B00AF8 /* XocolatlHTTPResponse.h */; };
-		C13228001B059C9300B00AF8 /* HTTPVerbs.m in Sources */ = {isa = PBXBuildFile; fileRef = C13227FF1B059C9300B00AF8 /* HTTPVerbs.m */; };
 		C1369AFC1B1A646D004E29F5 /* RNCryptor+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = C1369AF11B1A646D004E29F5 /* RNCryptor+Private.h */; };
 		C1369AFD1B1A646D004E29F5 /* RNCryptor+Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = C1369AF21B1A646D004E29F5 /* RNCryptor+Swift.h */; };
 		C1369B001B1A646D004E29F5 /* RNCryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = C1369AF51B1A646D004E29F5 /* RNCryptor.m */; };
@@ -40,7 +39,6 @@
 		C1369B091B1A646D004E29F5 /* RNEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = C1369AFB1B1A646D004E29F5 /* RNEncryptor.m */; };
 		C1369B0A1B1A646D004E29F5 /* RNEncryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = C1369AFB1B1A646D004E29F5 /* RNEncryptor.m */; };
 		C13936B11B06645A008952B5 /* HTTPVerbs.h in Headers */ = {isa = PBXBuildFile; fileRef = C13227FE1B059C9300B00AF8 /* HTTPVerbs.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C13936B21B066466008952B5 /* HTTPVerbs.m in Sources */ = {isa = PBXBuildFile; fileRef = C13227FF1B059C9300B00AF8 /* HTTPVerbs.m */; };
 		C13936B81B066799008952B5 /* XocolatlHTTPResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = C13227F71B0595C000B00AF8 /* XocolatlHTTPResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C13936C01B0669E0008952B5 /* XocolatlAPNManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C13936BF1B0669E0008952B5 /* XocolatlAPNManager.m */; };
 		C13936D01B066B09008952B5 /* NWHub.h in Headers */ = {isa = PBXBuildFile; fileRef = C13936C21B066B09008952B5 /* NWHub.h */; };
@@ -67,6 +65,9 @@
 		C13936E51B066D57008952B5 /* XocolatlAPNManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C13936BE1B0669E0008952B5 /* XocolatlAPNManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C13936E71B066D71008952B5 /* XocolatlAPNManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C13936BF1B0669E0008952B5 /* XocolatlAPNManager.m */; };
 		C13D40461ADCEED4004AF563 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C13D40451ADCEED4004AF563 /* libsqlite3.dylib */; };
+		C13F09811BAC6FEB00ACF318 /* XocolatlHTTPAsynchronousResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C13F09801BAC6FEB00ACF318 /* XocolatlHTTPAsynchronousResponse.m */; };
+		C13F09821BAC790100ACF318 /* XocolatlHTTPAsynchronousResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C13F09801BAC6FEB00ACF318 /* XocolatlHTTPAsynchronousResponse.m */; };
+		C13F09831BAC790900ACF318 /* XocolatlHTTPAsynchronousResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = C13F097F1BAC6FEB00ACF318 /* XocolatlHTTPAsynchronousResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C14E74521B0A544300ACC4A9 /* XocolatlAPN.h in Headers */ = {isa = PBXBuildFile; fileRef = C14E74501B0A544300ACC4A9 /* XocolatlAPN.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C14E74531B0A544300ACC4A9 /* XocolatlAPN.m in Sources */ = {isa = PBXBuildFile; fileRef = C14E74511B0A544300ACC4A9 /* XocolatlAPN.m */; };
 		C14E74541B0A544300ACC4A9 /* XocolatlAPN.m in Sources */ = {isa = PBXBuildFile; fileRef = C14E74511B0A544300ACC4A9 /* XocolatlAPN.m */; };
@@ -74,6 +75,7 @@
 		C14F781D1B531CCA00C5A442 /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = C14F781B1B531CCA00C5A442 /* GCDAsyncSocket.h */; };
 		C14F781E1B531CCA00C5A442 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C14F781C1B531CCA00C5A442 /* GCDAsyncSocket.m */; };
 		C14F781F1B531CCA00C5A442 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C14F781C1B531CCA00C5A442 /* GCDAsyncSocket.m */; };
+		C160D5D01C014DFA00A8CA90 /* NSError+XocolatlHTTPError.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E314CF1BFD0B1500D65F85 /* NSError+XocolatlHTTPError.m */; };
 		C1AC896F1AF09517008392D5 /* SignUpResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC896E1AF09517008392D5 /* SignUpResponder.m */; };
 		C1AC89D31AF4090F008392D5 /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC89AE1AF4090F008392D5 /* DDData.m */; };
 		C1AC89D41AF4090F008392D5 /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC89B01AF4090F008392D5 /* DDNumber.m */; };
@@ -272,6 +274,7 @@
 		C1D77E5E1AF8513C008E4D78 /* HTTPConnection.h in Resources */ = {isa = PBXBuildFile; fileRef = C1AC89B51AF4090F008392D5 /* HTTPConnection.h */; };
 		C1DD52961AEF696600955035 /* SignInResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DD52951AEF696600955035 /* SignInResponder.m */; };
 		C1DD529D1AF0713900955035 /* certificate.p12 in Resources */ = {isa = PBXBuildFile; fileRef = C1DD529C1AF0713900955035 /* certificate.p12 */; };
+		C1E314D01BFD0B1500D65F85 /* NSError+XocolatlHTTPError.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E314CF1BFD0B1500D65F85 /* NSError+XocolatlHTTPError.m */; };
 		C1F68E8C1AD9E587007FF919 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F68E8B1AD9E587007FF919 /* AppDelegate.m */; };
 		C1F68E8E1AD9E587007FF919 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F68E8D1AD9E587007FF919 /* main.m */; };
 		C1F68E901AD9E587007FF919 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1F68E8F1AD9E587007FF919 /* Images.xcassets */; };
@@ -402,7 +405,6 @@
 		C13227F71B0595C000B00AF8 /* XocolatlHTTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XocolatlHTTPResponse.h; sourceTree = "<group>"; };
 		C13227F81B0595C000B00AF8 /* XocolatlHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XocolatlHTTPResponse.m; sourceTree = "<group>"; };
 		C13227FE1B059C9300B00AF8 /* HTTPVerbs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTTPVerbs.h; path = Convenience/HTTPVerbs.h; sourceTree = "<group>"; };
-		C13227FF1B059C9300B00AF8 /* HTTPVerbs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTTPVerbs.m; path = Convenience/HTTPVerbs.m; sourceTree = "<group>"; };
 		C1369AF11B1A646D004E29F5 /* RNCryptor+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNCryptor+Private.h"; sourceTree = "<group>"; };
 		C1369AF21B1A646D004E29F5 /* RNCryptor+Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNCryptor+Swift.h"; sourceTree = "<group>"; };
 		C1369AF41B1A646D004E29F5 /* RNCryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNCryptor.h; sourceTree = "<group>"; };
@@ -430,6 +432,8 @@
 		C13936CE1B066B09008952B5 /* NWType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NWType.h; sourceTree = "<group>"; };
 		C13936CF1B066B09008952B5 /* NWType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NWType.m; sourceTree = "<group>"; };
 		C13D40451ADCEED4004AF563 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		C13F097F1BAC6FEB00ACF318 /* XocolatlHTTPAsynchronousResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlHTTPAsynchronousResponse.h; path = Convenience/XocolatlHTTPAsynchronousResponse.h; sourceTree = "<group>"; };
+		C13F09801BAC6FEB00ACF318 /* XocolatlHTTPAsynchronousResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XocolatlHTTPAsynchronousResponse.m; path = Convenience/XocolatlHTTPAsynchronousResponse.m; sourceTree = "<group>"; };
 		C14E74501B0A544300ACC4A9 /* XocolatlAPN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlAPN.h; path = Core/XocolatlAPN.h; sourceTree = SOURCE_ROOT; };
 		C14E74511B0A544300ACC4A9 /* XocolatlAPN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XocolatlAPN.m; path = Core/XocolatlAPN.m; sourceTree = SOURCE_ROOT; };
 		C14F781B1B531CCA00C5A442 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
@@ -510,6 +514,8 @@
 		C1DD52941AEF696600955035 /* SignInResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignInResponder.h; path = Auth/SignInResponder.h; sourceTree = "<group>"; };
 		C1DD52951AEF696600955035 /* SignInResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignInResponder.m; path = Auth/SignInResponder.m; sourceTree = "<group>"; };
 		C1DD529C1AF0713900955035 /* certificate.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = certificate.p12; sourceTree = "<group>"; };
+		C1E314CE1BFD0B1500D65F85 /* NSError+XocolatlHTTPError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+XocolatlHTTPError.h"; path = "Xocolatl/Convenience/NSError+XocolatlHTTPError.h"; sourceTree = SOURCE_ROOT; };
+		C1E314CF1BFD0B1500D65F85 /* NSError+XocolatlHTTPError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSError+XocolatlHTTPError.m"; path = "Xocolatl/Convenience/NSError+XocolatlHTTPError.m"; sourceTree = SOURCE_ROOT; };
 		C1F68E851AD9E587007FF919 /* Xocolatl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xocolatl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1F68E891AD9E587007FF919 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1F68E8A1AD9E587007FF919 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -750,7 +756,8 @@
 				C13227F71B0595C000B00AF8 /* XocolatlHTTPResponse.h */,
 				C13227F81B0595C000B00AF8 /* XocolatlHTTPResponse.m */,
 				C13227FE1B059C9300B00AF8 /* HTTPVerbs.h */,
-				C13227FF1B059C9300B00AF8 /* HTTPVerbs.m */,
+				C13F097F1BAC6FEB00ACF318 /* XocolatlHTTPAsynchronousResponse.h */,
+				C13F09801BAC6FEB00ACF318 /* XocolatlHTTPAsynchronousResponse.m */,
 			);
 			name = Convenience;
 			sourceTree = "<group>";
@@ -957,6 +964,8 @@
 			children = (
 				27B7AF8C1B042AD3009E5D13 /* NSArray+transformativeArray.h */,
 				27B7AF8D1B042AD3009E5D13 /* NSArray+transformativeArray.m */,
+				C1E314CE1BFD0B1500D65F85 /* NSError+XocolatlHTTPError.h */,
+				C1E314CF1BFD0B1500D65F85 /* NSError+XocolatlHTTPError.m */,
 			);
 			name = Categories;
 			path = ../../CruyffServer/CruyffServer;
@@ -1550,6 +1559,7 @@
 				C1D77E571AF84EFE008E4D78 /* YapDatabaseExtension.h in Headers */,
 				C1D77E591AF84F21008E4D78 /* YapDatabaseExtensionConnection.h in Headers */,
 				C13936B11B06645A008952B5 /* HTTPVerbs.h in Headers */,
+				C13F09831BAC790900ACF318 /* XocolatlHTTPAsynchronousResponse.h in Headers */,
 				C13936E51B066D57008952B5 /* XocolatlAPNManager.h in Headers */,
 				C1369AFC1B1A646D004E29F5 /* RNCryptor+Private.h in Headers */,
 				C1D77E5D1AF85132008E4D78 /* HTTPConnection.h in Headers */,
@@ -1647,7 +1657,7 @@
 		C1F68E7D1AD9E587007FF919 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = Quetzal;
 				TargetAttributes = {
 					C1D77D641AF84A35008E4D78 = {
@@ -1760,8 +1770,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C160D5D01C014DFA00A8CA90 /* NSError+XocolatlHTTPError.m in Sources */,
+				C13F09821BAC790100ACF318 /* XocolatlHTTPAsynchronousResponse.m in Sources */,
 				C13936E71B066D71008952B5 /* XocolatlAPNManager.m in Sources */,
-				C13936B21B066466008952B5 /* HTTPVerbs.m in Sources */,
 				C13227FC1B059BD100B00AF8 /* XocolatlHTTPResponse.m in Sources */,
 				27B7AF911B042B30009E5D13 /* NSArray+transformativeArray.m in Sources */,
 				C1369B071B1A646D004E29F5 /* RNDecryptor.m in Sources */,
@@ -1931,9 +1942,11 @@
 				C14E74531B0A544300ACC4A9 /* XocolatlAPN.m in Sources */,
 				C1F690BF1AD9E5C4007FF919 /* YapRowidSet.mm in Sources */,
 				C1F690A81AD9E5C4007FF919 /* YapDatabaseSecondaryIndexOptions.m in Sources */,
+				C1E314D01BFD0B1500D65F85 /* NSError+XocolatlHTTPError.m in Sources */,
 				27B7AF8E1B042AD3009E5D13 /* NSArray+transformativeArray.m in Sources */,
 				C1F690AA1AD9E5C4007FF919 /* YapDatabaseSecondaryIndexTransaction.m in Sources */,
 				C1AC8A291AF4B222008392D5 /* DatabaseResponder.m in Sources */,
+				C13F09811BAC6FEB00ACF318 /* XocolatlHTTPAsynchronousResponse.m in Sources */,
 				C1AC8A301AF5AED3008392D5 /* RoutingResponse.m in Sources */,
 				C1F6909B1AD9E5C4007FF919 /* YapDatabaseRelationship.m in Sources */,
 				C1F690841AD9E5C4007FF919 /* YDBCKMergeInfo.m in Sources */,
@@ -1994,7 +2007,6 @@
 				C1F690951AD9E5C4007FF919 /* YapDatabaseHooks.m in Sources */,
 				C1F690821AD9E5C4007FF919 /* YDBCKRecordTableInfo.m in Sources */,
 				C1F70E2A1ADE0BC700CD9959 /* XocolatlUser.m in Sources */,
-				C13228001B059C9300B00AF8 /* HTTPVerbs.m in Sources */,
 				C1F690A91AD9E5C4007FF919 /* YapDatabaseSecondaryIndexSetup.m in Sources */,
 				C1F690921AD9E5C4007FF919 /* YapDatabaseFullTextSearchHandler.m in Sources */,
 				C1F6908F1AD9E5C4007FF919 /* YapDatabaseFilteredViewTypes.m in Sources */,
@@ -2093,6 +2105,7 @@
 				INFOPLIST_FILE = XocolatlFramework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.quetzal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64";
@@ -2116,6 +2129,7 @@
 				INFOPLIST_FILE = XocolatlFramework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.quetzal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64";
@@ -2140,6 +2154,7 @@
 				);
 				INFOPLIST_FILE = XocolatlFrameworkTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.quetzal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -2155,6 +2170,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = XocolatlFrameworkTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.quetzal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -2179,6 +2195,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2247,6 +2264,7 @@
 				);
 				INFOPLIST_FILE = Xocolatl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.quetzal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -2263,6 +2281,7 @@
 				);
 				INFOPLIST_FILE = Xocolatl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.quetzal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -2282,6 +2301,7 @@
 				);
 				INFOPLIST_FILE = XocolatlTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.quetzal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Xocolatl.app/Contents/MacOS/Xocolatl";
 			};
@@ -2298,6 +2318,7 @@
 				);
 				INFOPLIST_FILE = XocolatlTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.quetzal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Xocolatl.app/Contents/MacOS/Xocolatl";
 			};

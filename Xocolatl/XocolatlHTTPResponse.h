@@ -20,6 +20,12 @@ typedef NS_ENUM(NSUInteger, XocolatlHTTPStatusCode) {
 
 @interface XocolatlHTTPResponse : RoutingResponse
 
++ (instancetype)responseWithStatus:(XocolatlHTTPStatusCode)status
+                           andBody:(id)jsonBody;
+
++ (instancetype)responseWithStatus:(XocolatlHTTPStatusCode)status
+                           andData:(NSData *)data;
+
 + (instancetype)responseWithErrorCode:(XocolatlHTTPStatusCode)errorCode
                                reason:(NSString *)reason;
 

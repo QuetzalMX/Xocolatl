@@ -23,7 +23,7 @@
                listeningAtPort:(NSInteger)port
                    withSiteURL:(NSString *)siteURL;
 {
-    //Find the default .p12 file and attempt to start the server with it.
+    // Find the default .p12 file and attempt to start the server with it.
     return [self newServerNamed:name
                 listeningAtPort:port
       usingSSLCertificateAtPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"certificate" ofType:@"p12"]
@@ -42,26 +42,26 @@
         return nil;
     }
     
-    //Create the server using the provided name.
+    // Create the server using the provided name.
     NSString *documentRoot = [[NSString stringWithFormat:@"~/Sites/%@", serverName] stringByExpandingTildeInPath];
     XocolatlHTTPServer *server = [[XocolatlHTTPServer alloc] initAtPort:port];
     server.documentRoot = documentRoot;
     server.name = serverName;
     server.siteURL = siteURL;
     
-    //Let's see if we can create the database.
+    // Let's see if we can create the database.
     NSString *databaseFolderPath = [documentRoot stringByAppendingString:@"/database"];
     BOOL isDirectory = YES;
     if (![[NSFileManager defaultManager] fileExistsAtPath:databaseFolderPath
                                               isDirectory:&isDirectory]) {
-        //The database folder doesn't exist. Create it.
+        // The database folder doesn't exist. Create it.
         NSError *databaseFolderCreationError;
         [[NSFileManager defaultManager] createDirectoryAtPath:databaseFolderPath
                                   withIntermediateDirectories:YES
                                                    attributes:nil
                                                         error:&databaseFolderCreationError];
         if (databaseFolderCreationError) {
-            //The database folder couldn't be created. Something is wrong.
+            // The database folder couldn't be created. Something is wrong.
             return nil;
         }
     };

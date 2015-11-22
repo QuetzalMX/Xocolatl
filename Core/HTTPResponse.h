@@ -35,6 +35,27 @@
 @optional
 
 /**
+ * Status code for response.
+ * Allows for responses such as redirect (301), etc.
+ **/
+@property (nonatomic) NSInteger status;
+
+/**
+ * If you want to add any extra HTTP headers to the response,
+ * simply return them in a dictionary in this method.
+ **/
+@property (nonatomic, copy, readonly) NSDictionary *httpHeaders;
+
+/**
+ * This method is called from the HTTPConnection class when the connection is closed,
+ * or when the connection is finished with the response.
+ * If your response is asynchronous, you should implement this method so you know not to
+ * invoke any methods on the HTTPConnection after this method is called (as the connection may be deallocated).
+ **/
+- (void)connectionDidClose;
+
+#pragma mark - Asynchronous
+/**
  * If you need time to calculate any part of the HTTP response headers (status code or header fields),
  * this method allows you to delay sending the headers so that you may asynchronously execute the calculations.
  * Simply implement this method and return YES until you have everything you need concerning the headers.
@@ -55,18 +76,6 @@
 @property (nonatomic) BOOL delayResponseHeaders;
 
 /**
- * Status code for response.
- * Allows for responses such as redirect (301), etc.
-**/
-@property (nonatomic) NSInteger status;
-
-/**
- * If you want to add any extra HTTP headers to the response,
- * simply return them in a dictionary in this method.
-**/
-@property (nonatomic, copy, readonly) NSDictionary *httpHeaders;
-
-/**
  * If you don't know the content-length in advance,
  * implement this method in your custom response class and return YES.
  * 
@@ -75,12 +84,14 @@
 @property (nonatomic, readonly) BOOL isChunked;
 
 /**
- * This method is called from the HTTPConnection class when the connection is closed,
- * or when the connection is finished with the response.
- * If your response is asynchronous, you should implement this method so you know not to
- * invoke any methods on the HTTPConnection after this method is called (as the connection may be deallocated).
-**/
-- (void)connectionDidClose;
+ *  Read more about asynchronous responses in the note at the bottom.
+ */
+@property (nonatomic, readonly) BOOL isAsynchronous;
+
+/**
+ *  Once the asynchronous request has sent all of its information, it should set this flag to YES.
+ */
+@property (nonatomic, readonly) BOOL isDone;
 
 @end
 
