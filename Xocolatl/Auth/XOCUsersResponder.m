@@ -42,8 +42,8 @@
     
     [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
         //Only one record.
-        modelObject = [XocolatlUser objectWithIdentifier:objectId
-                                   usingTransaction:transaction];
+        modelObject = [XocolatlUser find:objectId
+                        usingTransaction:transaction];
         modelObjectJSON = [modelObject jsonRepresentationUsingTransaction:transaction];
     }];
     

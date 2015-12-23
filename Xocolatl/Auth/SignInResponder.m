@@ -41,8 +41,8 @@
     __block NSDictionary *registeredUserJSON;
     [self.writeConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         // Let's see if this user exists.
-        XocolatlUser *fetchedUser = [XocolatlUser objectWithIdentifier:username
-                                            usingTransaction:transaction];
+        XocolatlUser *fetchedUser = [XocolatlUser find:username
+                                      usingTransaction:transaction];
         
         if (!fetchedUser)
         {
@@ -86,12 +86,12 @@
     // Now that we have all the info, add our cookies and redirect the user back to home.
     NSMutableDictionary *dictionaryWithAuth = [registeredUserJSON mutableCopy];
     dictionaryWithAuth[@"auth"] = authorization;
-    dictionaryWithAuth[@"username"] = registeredUser.username;
+    dictionaryWithAuth[@"username"] = registeredUser.identifier;
     XocolatlHTTPResponse *response = [XocolatlHTTPResponse responseWithStatus:XocolatlHTTPStatusCode200OK
                                                                       andBody:dictionaryWithAuth];
     
     [response setCookieNamed:@"username"
-                   withValue:registeredUser.username
+                   withValue:registeredUser.identifier
                     isSecure:YES
                     httpOnly:NO];
     

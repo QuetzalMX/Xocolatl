@@ -20,8 +20,8 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
 
 @interface XocolatlUser ()
 
+@property (nonatomic, copy, readwrite) NSString *identifier;
 @property (nonatomic, strong, readwrite) NSDate *modifiedAt;
-@property (nonatomic, copy, readwrite) NSString *username;
 @property (nonatomic, copy) NSData *password;
 @property (nonatomic, strong) NSMutableSet *cookiePasswords;
 @property (nonatomic, strong) NSMutableDictionary *authorizations;
@@ -30,6 +30,7 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
 
 @implementation XocolatlUser
 
+@synthesize identifier;
 @synthesize modifiedAt;
 
 + (NSString *)yapDatabaseCollectionIdentifier;
@@ -42,7 +43,7 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
 {
     //Create a new user.
     XocolatlUser *user = [[self alloc] init];
-    user.username = username;
+    user.identifier = username;
     user.cookiePasswords = [NSMutableSet new];
     user.authorizations = [NSMutableDictionary new];
     
@@ -70,8 +71,8 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
     self.modifiedAt = [NSDate date];
     
     [transaction setObject:self
-                    forKey:self.username
-              inCollection:[XocolatlUser yapDatabaseCollectionIdentifier]];
+                    forKey:self.identifier
+              inCollection:nil];
     
     return YES;
 }
@@ -83,7 +84,6 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
         return nil;
     }
     
-    _username = [aDecoder decodeObjectForKey:@"username"];
     _password = [aDecoder decodeObjectForKey:@"password"];
     _cookiePasswords = [[aDecoder decodeObjectForKey:@"cookiePasswords"] mutableCopy];
     _authorizations = [[aDecoder decodeObjectForKey:@"authorizations"] mutableCopy];
@@ -96,7 +96,6 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
 {
     [super encodeWithCoder:aCoder];
     [aCoder encodeObject:self.identifier forKey:@"identifier"];
-    [aCoder encodeObject:self.username forKey:@"username"];
     [aCoder encodeObject:self.password forKey:@"password"];
     [aCoder encodeObject:self.cookiePasswords forKey:@"cookiePasswords"];
     [aCoder encodeObject:self.authorizations forKey:@"authorizations"];
@@ -106,7 +105,7 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
 - (NSDictionary *)jsonRepresentationUsingTransaction:(YapDatabaseReadTransaction *)transaction;
 {
     NSMutableDictionary *json = [[super jsonRepresentationUsingTransaction:transaction] mutableCopy];
-    json[@"username"] = self.username;
+    json[@"username"] = self.identifier;
     return json;
 }
 
@@ -120,7 +119,7 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
 {
     //In order to make our cookie secure, we add an authorization string that uses SHA256 to digest the expiration and username.
     NSString *expiration = [NSString stringWithFormat:@"%.0f", timeOfDeath];
-    NSString *username = [NSString stringWithFormat:@"%@", self.username];
+    NSString *username = [NSString stringWithFormat:@"%@", self.identifier];
     return [NSString stringWithFormat:@"%@%@", expiration, username];
 }
 
@@ -140,7 +139,7 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
     NSString *passwordForAuthHeader = [NSString randomString];
     [self.cookiePasswords addObject:passwordForAuthHeader];
     
-    NSString *clearText = [NSString stringWithFormat:@"%@:%.0f", self.username, timeOfDeath];
+    NSString *clearText = [NSString stringWithFormat:@"%@:%.0f", self.identifier, timeOfDeath];
     NSError *error;
     NSData *cypherText = [RNEncryptor encryptData:[clearText dataUsingEncoding:NSUTF8StringEncoding]
                                      withSettings:kRNCryptorAES256Settings
@@ -178,7 +177,7 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
         NSArray *clearTextComponents = [clearText componentsSeparatedByString:@":"];
         NSString *username = clearTextComponents.firstObject;
         NSString *timeToDeath = clearTextComponents.lastObject;
-        if ([username isEqualToString:self.username]) {
+        if ([username isEqualToString:self.identifier]) {
             //This authHeader seems to be valid. What about expiration?
             return [self isTimeOfDeathInTheFuture:timeToDeath.floatValue];
         }
@@ -203,7 +202,7 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
     }
     
     //It can. Check against the username.
-    return ([decryptedData rnsc_isEqualInConsistentTime:[user.username dataUsingEncoding:NSUTF8StringEncoding]]);
+    return ([decryptedData rnsc_isEqualInConsistentTime:[user.identifier dataUsingEncoding:NSUTF8StringEncoding]]);
 }
 
 @end

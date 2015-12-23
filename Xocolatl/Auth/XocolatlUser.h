@@ -10,8 +10,6 @@
 
 @interface XocolatlUser : XocolatlModelObject
 
-@property (nonatomic, copy, readonly) NSString *username;
-
 /**
  *  This token is optionally used to send push notifications.
  */

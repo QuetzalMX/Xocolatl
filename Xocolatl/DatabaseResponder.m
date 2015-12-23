@@ -70,8 +70,8 @@
     __block XocolatlUser *user;
     __block BOOL isValidAuth;
     [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-        user = [XocolatlUser objectWithIdentifier:username
-                            usingTransaction:transaction];
+        user = [XocolatlUser find:username
+                 usingTransaction:transaction];
         
         isValidAuth = [user validateAuthHeader:auth];
     }];

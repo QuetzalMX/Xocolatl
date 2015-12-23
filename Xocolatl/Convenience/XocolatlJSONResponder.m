@@ -38,8 +38,8 @@
         //Are we fetching one record or all records?
         if (objectId && objectId.length > 0) {
             //Only one record.
-            modelObject = [[[self class] modelClass] objectWithIdentifier:parameters[@"id"]
-                                                         usingTransaction:transaction];
+            modelObject = [[[self class] modelClass] find:parameters[@"id"]
+                                         usingTransaction:transaction];
             modelObjectJSON = [modelObject jsonRepresentationUsingTransaction:transaction];
         } else {
             //All records.

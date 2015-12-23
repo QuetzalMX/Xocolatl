@@ -16,17 +16,17 @@
 /**
  *  An identifier is a 36-character (32 without dashes) nonce that is created whenever the object is initialized.
  */
-@property (nonatomic, copy, readonly) NSString *identifier;
+@property (nonatomic, copy, readonly, nonnull) NSString *identifier;
 
 /**
  *  createdAt is the date this object was originally initialized. It is persistent between launches.
  */
-@property (nonatomic, strong, readonly) NSDate *createdAt;
+@property (nonatomic, strong, readonly, nonnull) NSDate *createdAt;
 
 /**
  *  modifiedAt will be changed whenever saveUsingTransaction: is called. It has the same initial value as createdAt until saveUsingTransaction: is called.
  */
-@property (nonatomic, strong, readonly) NSDate *modifiedAt;
+@property (nonatomic, strong, readonly, nonnull) NSDate *modifiedAt;
 
 /**
  *  All objects saved in the server's default database have a collection value. YapDatabase manages objects not only by its identifier, but optionally by its collection. This way you could, in theory, have two objects with the same identifier, and have no collision issues if they exist in different collections.
@@ -35,7 +35,7 @@
  *
  *  @return the collection in which this object is being saved.
  */
-+ (NSString *)yapDatabaseCollectionIdentifier;
++ (nullable NSString *)yapDatabaseCollectionIdentifier;
 
 /**
  *  This is a query method in order to get all objects of this class from the database. You must provide a transaction in order to fetch them. Internally, this method calls yapDatabaseCollectionIdentifier in order to fetch the objects from the database.
@@ -46,7 +46,7 @@
  *
  *  @return an array of objects that belong to this class.
  */
-+ (NSArray *)allObjectsUsingTransaction:(YapDatabaseReadTransaction *)transaction;
++ (nonnull NSArray <__kindof XocolatlModelObject *> *)allObjectsUsingTransaction:(nonnull YapDatabaseReadTransaction *)transaction;
 
 /**
  *  This is a query method in order to get one object of this class from the database. You must provide a transaction in order to fetch it. Internally, this method calls yapDatabaseCollectionIdentifier in order to fetch the objects from the database.
@@ -58,8 +58,8 @@
  *
  *  @return a single object of this class.
  */
-+ (instancetype)objectWithIdentifier:(NSString *)identifier
-                    usingTransaction:(YapDatabaseReadTransaction *)transaction;
++ (nullable instancetype)find:(nonnull NSString *)identifier
+             usingTransaction:(nonnull YapDatabaseReadTransaction *)transaction;
 
 /**
  *  This method serializes the object into the default server database. There is really no reason for you to subclass this method. If you want to do something before the object is serialized, you can do so in encodeWithCoder: in your own subclass.
@@ -68,7 +68,7 @@
  *
  *  @param transaction a valid readWrite transaction from a server connection.
  */
-- (BOOL)saveUsingTransaction:(YapDatabaseReadWriteTransaction *)transaction;
+- (BOOL)saveUsingTransaction:(nonnull YapDatabaseReadWriteTransaction *)transaction;
 
 
 /**
@@ -80,6 +80,6 @@
  *
  *  @return a dictionary representation of this object.
  */
-- (NSDictionary *)jsonRepresentationUsingTransaction:(YapDatabaseReadTransaction *)transaction;
+- (nonnull NSDictionary <NSString *, id> *)jsonRepresentationUsingTransaction:(nonnull YapDatabaseReadTransaction *)transaction;
 
 @end

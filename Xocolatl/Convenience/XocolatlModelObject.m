@@ -64,8 +64,8 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
     return nil;
 }
 
-+ (instancetype)objectWithIdentifier:(NSString *)identifier
-                    usingTransaction:(YapDatabaseReadTransaction *)transaction;
++ (instancetype)find:(NSString *)identifier
+    usingTransaction:(YapDatabaseReadTransaction *)transaction;
 {
     return [transaction objectForKey:identifier
                         inCollection:nil];
