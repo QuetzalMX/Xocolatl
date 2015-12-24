@@ -29,15 +29,6 @@
 @property (nonatomic, strong, readonly, nonnull) NSDate *modifiedAt;
 
 /**
- *  All objects saved in the server's default database have a collection value. YapDatabase manages objects not only by its identifier, but optionally by its collection. This way you could, in theory, have two objects with the same identifier, and have no collision issues if they exist in different collections.
- 
-    Subclassing this method is optional.
- *
- *  @return the collection in which this object is being saved.
- */
-+ (nullable NSString *)yapDatabaseCollectionIdentifier;
-
-/**
  *  This is a query method in order to get all objects of this class from the database. You must provide a transaction in order to fetch them. Internally, this method calls yapDatabaseCollectionIdentifier in order to fetch the objects from the database.
  
     Subclassing this method is optional.

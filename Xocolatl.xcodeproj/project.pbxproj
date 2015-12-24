@@ -105,6 +105,7 @@
 		C1AC8A221AF4B131008392D5 /* HTTPMessage+Xocolatl.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC8A211AF4B131008392D5 /* HTTPMessage+Xocolatl.m */; };
 		C1AC8A291AF4B222008392D5 /* DatabaseResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC8A281AF4B222008392D5 /* DatabaseResponder.m */; };
 		C1AC8A301AF5AED3008392D5 /* RoutingResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C1AC8A2F1AF5AED3008392D5 /* RoutingResponse.m */; };
+		C1AEA54C1C2BA82F0098FC85 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1AEA54B1C2BA82F0098FC85 /* Model.swift */; };
 		C1C3749D1AF7322900E9589B /* NSData+RNSecureCompare.m in Sources */ = {isa = PBXBuildFile; fileRef = C1C3749C1AF7322900E9589B /* NSData+RNSecureCompare.m */; };
 		C1D1D6D31AF9ECE100F84252 /* XocolatlJSONResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C122AE011AF9E9D3002A7502 /* XocolatlJSONResponder.m */; };
 		C1D1D6D41AF9ECE800F84252 /* XocolatlJSONResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = C122AE001AF9E9D3002A7502 /* XocolatlJSONResponder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -497,6 +498,8 @@
 		C1AC8A281AF4B222008392D5 /* DatabaseResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseResponder.m; sourceTree = "<group>"; };
 		C1AC8A2E1AF5AED3008392D5 /* RoutingResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoutingResponse.h; sourceTree = "<group>"; };
 		C1AC8A2F1AF5AED3008392D5 /* RoutingResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutingResponse.m; sourceTree = "<group>"; };
+		C1AEA54A1C2BA82F0098FC85 /* Xocolatl-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Xocolatl-Bridging-Header.h"; sourceTree = "<group>"; };
+		C1AEA54B1C2BA82F0098FC85 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		C1C3749B1AF7322900E9589B /* NSData+RNSecureCompare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+RNSecureCompare.h"; sourceTree = "<group>"; };
 		C1C3749C1AF7322900E9589B /* NSData+RNSecureCompare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+RNSecureCompare.m"; sourceTree = "<group>"; };
 		C1D1D6E01AFAF7F200F84252 /* XOCUsersResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XOCUsersResponder.h; path = Auth/XOCUsersResponder.h; sourceTree = "<group>"; };
@@ -1078,6 +1081,8 @@
 				C1F68E8F1AD9E587007FF919 /* Images.xcassets */,
 				C1F68E911AD9E587007FF919 /* MainMenu.xib */,
 				C1F68E881AD9E587007FF919 /* Supporting Files */,
+				C1AEA54B1C2BA82F0098FC85 /* Model.swift */,
+				C1AEA54A1C2BA82F0098FC85 /* Xocolatl-Bridging-Header.h */,
 			);
 			path = Xocolatl;
 			sourceTree = "<group>";
@@ -1657,6 +1662,7 @@
 		C1F68E7D1AD9E587007FF919 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = Quetzal;
 				TargetAttributes = {
@@ -1950,6 +1956,7 @@
 				C1AC8A301AF5AED3008392D5 /* RoutingResponse.m in Sources */,
 				C1F6909B1AD9E5C4007FF919 /* YapDatabaseRelationship.m in Sources */,
 				C1F690841AD9E5C4007FF919 /* YDBCKMergeInfo.m in Sources */,
+				C1AEA54C1C2BA82F0098FC85 /* Model.swift in Sources */,
 				C1F690C01AD9E5C4007FF919 /* YapTouch.m in Sources */,
 				C122AE021AF9E9D3002A7502 /* XocolatlJSONResponder.m in Sources */,
 				C1369B031B1A646D004E29F5 /* RNCryptorEngine.m in Sources */,
@@ -2256,6 +2263,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2266,6 +2274,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.quetzal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Xocolatl/Xocolatl-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -2273,6 +2283,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2283,6 +2294,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.quetzal.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Xocolatl/Xocolatl-Bridging-Header.h";
 			};
 			name = Release;
 		};

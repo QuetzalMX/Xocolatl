@@ -59,11 +59,6 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
 }
 
 #pragma mark - Loading and Saving
-+ (NSString *)yapDatabaseCollectionIdentifier;
-{
-    return nil;
-}
-
 + (instancetype)find:(NSString *)identifier
     usingTransaction:(YapDatabaseReadTransaction *)transaction;
 {
@@ -76,7 +71,7 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
     NSMutableArray *allObjects = [NSMutableArray new];
     [transaction enumerateKeysAndObjectsInCollection:nil
                                           usingBlock:^(NSString *key, id object, BOOL *stop) {
-                                              if (object) {
+                                              if (object && [object isMemberOfClass:[self class]]) {
                                                   [allObjects addObject:object];
                                               }
                                           }];
