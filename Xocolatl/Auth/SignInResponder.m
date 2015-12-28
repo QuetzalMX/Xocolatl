@@ -14,6 +14,7 @@
 #import "HTTPVerbs.h"
 
 #import "NSError+XocolatlHTTPError.h"
+#import "XocolatlModelObject+YapDatabase.h"
 
 @implementation SignInResponder
 

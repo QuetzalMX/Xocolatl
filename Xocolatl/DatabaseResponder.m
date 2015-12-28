@@ -12,6 +12,7 @@
 #import "YapDatabase.h"
 #import "XocolatlHTTPServer.h"
 #import "XocolatlUser.h"
+#import "XocolatlModelObject+YapDatabase.h"
 
 @interface DatabaseResponder ()
 

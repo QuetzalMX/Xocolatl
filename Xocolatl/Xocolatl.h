@@ -29,6 +29,7 @@
 #import "XOCUser.h"
 #import "XOCUsersResponder.h"
 #import "XocolatlModelObject.h"
+#import "XocolatlModelObject+YapDatabase.h"
 #import "XocolatlJSONResponder.h"
 #import "XocolatlHTTPServer.h"
 #import "YapCollectionKey.h"

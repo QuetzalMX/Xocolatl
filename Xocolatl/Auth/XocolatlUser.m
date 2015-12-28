@@ -33,11 +33,6 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
 @synthesize identifier;
 @synthesize modifiedAt;
 
-+ (NSString *)yapDatabaseCollectionIdentifier;
-{
-    return @"XOCUserDatabaseCollectionIdentifier";
-}
-
 + (instancetype)newUserWithUsername:(NSString *)username
                         andPassword:(NSString *)password;
 {
@@ -57,24 +52,6 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
     }
     
     return user;
-}
-
-+ (instancetype)objectWithIdentifier:(NSString *)identifier
-                    usingTransaction:(YapDatabaseReadTransaction *)transaction;
-{
-    return [transaction objectForKey:identifier
-                        inCollection:[XocolatlUser yapDatabaseCollectionIdentifier]];
-}
-
-- (BOOL)saveUsingTransaction:(YapDatabaseReadWriteTransaction *)transaction;
-{
-    self.modifiedAt = [NSDate date];
-    
-    [transaction setObject:self
-                    forKey:self.identifier
-              inCollection:nil];
-    
-    return YES;
 }
 
 #pragma mark - Serialization
@@ -100,13 +77,6 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
     [aCoder encodeObject:self.cookiePasswords forKey:@"cookiePasswords"];
     [aCoder encodeObject:self.authorizations forKey:@"authorizations"];
     [aCoder encodeObject:self.apnToken forKey:@"apnToken"];
-}
-
-- (NSDictionary *)jsonRepresentationUsingTransaction:(YapDatabaseReadTransaction *)transaction;
-{
-    NSMutableDictionary *json = [[super jsonRepresentationUsingTransaction:transaction] mutableCopy];
-    json[@"username"] = self.identifier;
-    return json;
 }
 
 #pragma mark - Authorization

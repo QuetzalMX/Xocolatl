@@ -9,7 +9,6 @@
 #import "XocolatlModelObject.h"
 
 #import "NSString+randomString.h"
-#import "YapDatabase.h"
 
 static NSString *const XocolatlModelObjectIdentifierKey = @"XocolatlModelObjectIdentifierKey";
 static NSString *const XocolatlModelObjectCreatedAtKey = @"XocolatlModelObjectCreatedAtKey";
@@ -19,7 +18,6 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
 
 @property (nonatomic, copy, readwrite) NSString *identifier;
 @property (nonatomic, strong, readwrite) NSDate *createdAt;
-@property (nonatomic, strong, readwrite) NSDate *modifiedAt;
 
 @end
 
@@ -56,48 +54,6 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
     [aCoder encodeObject:self.identifier forKey:XocolatlModelObjectIdentifierKey];
     [aCoder encodeObject:self.createdAt forKey:XocolatlModelObjectCreatedAtKey];
     [aCoder encodeObject:self.modifiedAt forKey:XocolatlModelObjectModifiedAtKey];
-}
-
-#pragma mark - Loading and Saving
-+ (instancetype)find:(NSString *)identifier
-    usingTransaction:(YapDatabaseReadTransaction *)transaction;
-{
-    return [transaction objectForKey:identifier
-                        inCollection:nil];
-}
-
-+ (NSArray *)allObjectsUsingTransaction:(YapDatabaseReadTransaction *)transaction;
-{
-    NSMutableArray *allObjects = [NSMutableArray new];
-    [transaction enumerateKeysAndObjectsInCollection:nil
-                                          usingBlock:^(NSString *key, id object, BOOL *stop) {
-                                              if (object && [object isMemberOfClass:[self class]]) {
-                                                  [allObjects addObject:object];
-                                              }
-                                          }];
-    
-    return [allObjects copy];
-}
-
-- (BOOL)saveUsingTransaction:(YapDatabaseReadWriteTransaction *)transaction;
-{
-    self.modifiedAt = [NSDate date];
-    
-    [transaction setObject:self
-                    forKey:self.identifier
-              inCollection:nil];
-    
-    return YES;
-}
-
-#pragma mark - JSON
-- (NSDictionary *)jsonRepresentationUsingTransaction:(YapDatabaseReadTransaction *)transaction;
-{
-    NSString *createdAt = [NSString stringWithFormat:@"%.0f", [self.createdAt timeIntervalSince1970]];
-    NSString *modifiedAt = [NSString stringWithFormat:@"%.0f", [self.modifiedAt timeIntervalSince1970]];
-    return @{@"_id": self.identifier,
-             @"createdAt": createdAt,
-             @"modifiedAt": modifiedAt};
 }
 
 @end

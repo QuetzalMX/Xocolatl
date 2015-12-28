@@ -13,6 +13,8 @@
 #import "YapDatabase.h"
 #import "HTTPVerbs.h"
 
+#import "XocolatlModelObject+YapDatabase.h"
+
 @interface XOCUsersResponder ()
 
 @property (nonatomic, strong, readwrite) XocolatlModelObject *modelObject;
