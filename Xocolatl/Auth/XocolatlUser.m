@@ -33,11 +33,11 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
 @synthesize identifier;
 @synthesize modifiedAt;
 
-+ (instancetype)newUserWithUsername:(NSString *)username
-                        andPassword:(NSString *)password;
+- (nullable instancetype)initWithUsername:(NSString *)username
+                              andPassword:(NSString *)password;
 {
     //Create a new user.
-    XocolatlUser *user = [[self alloc] init];
+    XocolatlUser *user = [[[self class] alloc] init];
     user.identifier = username;
     user.cookiePasswords = [NSMutableSet new];
     user.authorizations = [NSMutableDictionary new];

@@ -13,19 +13,19 @@
 /**
  *  This token is optionally used to send push notifications.
  */
-@property (nonatomic, copy) NSString *apnToken;
+@property (nullable, nonatomic, copy) NSString *apnToken;
 
 //Self
-+ (instancetype)newUserWithUsername:(NSString *)username
-                        andPassword:(NSString *)password;
+- (nullable instancetype)initWithUsername:(nonnull NSString *)username
+                              andPassword:(nonnull NSString *)password;
 
 //Passwords
-+ (BOOL)verifyPasswordHashForUser:(XocolatlUser *)user
-                     withPassword:(NSString *)password;
++ (BOOL)verifyPasswordHashForUser:(nonnull XocolatlUser *)user
+                     withPassword:(nonnull NSString *)password;
 
 //Auth
-- (NSString *)newAuthHeaderWithDefaultExpiration;
-- (NSString *)newAuthHeaderWithTimeOfDeath:(NSTimeInterval)secondsUntilExpiration;
-- (BOOL)validateAuthHeader:(NSString *)clientProvidedAuth;
+- (nullable NSString *)newAuthHeaderWithDefaultExpiration;
+- (nullable NSString *)newAuthHeaderWithTimeOfDeath:(NSTimeInterval)secondsUntilExpiration;
+- (BOOL)validateAuthHeader:(nonnull NSString *)clientProvidedAuth;
 
 @end

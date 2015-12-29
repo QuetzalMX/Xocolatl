@@ -86,8 +86,8 @@
         }
 
         //User doesn't exist. Create it.
-        newUser = [self.userClass newUserWithUsername:username
-                                          andPassword:password];
+        newUser = [[self.userClass alloc] initWithUsername:username
+                                               andPassword:password];
         
         [self willSaveUser:newUser
           usingRequestBody:request.parsedBody];

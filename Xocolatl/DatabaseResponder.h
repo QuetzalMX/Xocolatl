@@ -16,18 +16,18 @@
 
 @interface DatabaseResponder : RoutingResponder
 
-@property (nonatomic, strong, readonly) XocolatlHTTPServer *server;
-@property (nonatomic, strong, readonly) YapDatabaseConnection *readConnection;
-@property (nonatomic, strong, readonly) YapDatabaseConnection *writeConnection;
-@property (nonatomic, strong, readonly) XocolatlUser *user;
+@property (nonnull, nonatomic, strong, readonly) XocolatlHTTPServer *server;
+@property (nonnull, nonatomic, strong, readonly) YapDatabaseConnection *readConnection;
+@property (nonnull, nonatomic, strong, readonly) YapDatabaseConnection *writeConnection;
+@property (nullable, nonatomic, strong, readonly) XocolatlUser *user;
 
-- (instancetype)initWithReadConnection:(YapDatabaseConnection *)readConnection
-                    andWriteConnection:(YapDatabaseConnection *)writeConnection
-                              inServer:(XocolatlHTTPServer *)server;
+- (nonnull instancetype)initWithReadConnection:(nonnull YapDatabaseConnection *)readConnection
+                            andWriteConnection:(nonnull YapDatabaseConnection *)writeConnection
+                                      inServer:(nonnull XocolatlHTTPServer *)server;
 
 //Authentication
-- (BOOL)isProtected:(NSString *)method;
-- (BOOL)isRequestAuthenticated:(HTTPMessage *)request;
-- (RoutingResponse *)handleAuthenticationFailure;
+- (BOOL)isProtected:(nonnull NSString *)method;
+- (BOOL)isRequestAuthenticated:(nonnull HTTPMessage *)request;
+- (nonnull RoutingResponse *)handleAuthenticationFailure;
 
 @end
