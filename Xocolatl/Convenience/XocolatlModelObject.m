@@ -42,7 +42,8 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
         return nil;
     }
     
-    _identifier = [aDecoder decodeObjectForKey:XocolatlModelObjectIdentifierKey];
+#warning We're using a property here because XocolatlUser needs us to. This sucks.
+    self.identifier = [aDecoder decodeObjectForKey:XocolatlModelObjectIdentifierKey];
     _createdAt = [aDecoder decodeObjectForKey:XocolatlModelObjectCreatedAtKey];
     _modifiedAt = [aDecoder decodeObjectForKey:XocolatlModelObjectModifiedAtKey];
     

@@ -72,7 +72,6 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
 - (void)encodeWithCoder:(NSCoder *)aCoder;
 {
     [super encodeWithCoder:aCoder];
-    [aCoder encodeObject:self.identifier forKey:@"identifier"];
     [aCoder encodeObject:self.password forKey:@"password"];
     [aCoder encodeObject:self.cookiePasswords forKey:@"cookiePasswords"];
     [aCoder encodeObject:self.authorizations forKey:@"authorizations"];

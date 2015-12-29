@@ -16,6 +16,22 @@
 #import "NSError+XocolatlHTTPError.h"
 #import "XocolatlModelObject+YapDatabase.h"
 
+#import <objc/runtime.h>
+
+@implementation RoutingResponse (SignInResponder)
+
+- (void)setSignedInUser:(XocolatlUser *)registeredUser;
+{
+    objc_setAssociatedObject(self, @selector(signedInUser), registeredUser, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (XocolatlUser *)signedInUser;
+{
+    return objc_getAssociatedObject(self, @selector(signedInUser));
+}
+
+@end
+
 @implementation SignInResponder
 
 - (NSDictionary *)methods;
@@ -90,6 +106,8 @@
     dictionaryWithAuth[@"username"] = registeredUser.identifier;
     XocolatlHTTPResponse *response = [XocolatlHTTPResponse responseWithStatus:XocolatlHTTPStatusCode200OK
                                                                       andBody:dictionaryWithAuth];
+    
+    response.signedInUser = registeredUser;
     
     [response setCookieNamed:@"username"
                    withValue:registeredUser.identifier

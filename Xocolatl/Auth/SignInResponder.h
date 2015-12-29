@@ -8,6 +8,14 @@
 
 #import "DatabaseResponder.h"
 
+#import "RoutingResponse.h"
+
 @interface SignInResponder : DatabaseResponder
+
+@end
+
+@interface RoutingResponse (SignInResponder)
+
+@property (nonatomic, strong) XocolatlUser *signedInUser;
 
 @end
