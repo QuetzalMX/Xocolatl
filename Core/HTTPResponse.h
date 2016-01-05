@@ -44,7 +44,7 @@
  * If you want to add any extra HTTP headers to the response,
  * simply return them in a dictionary in this method.
  **/
-@property (nonatomic, copy, readonly) NSDictionary *httpHeaders;
+@property (nonatomic, copy) NSDictionary *httpHeaders;
 
 /**
  * This method is called from the HTTPConnection class when the connection is closed,

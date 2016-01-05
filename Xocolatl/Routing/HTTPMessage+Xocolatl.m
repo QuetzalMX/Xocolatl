@@ -109,7 +109,15 @@ NSString *const XocolatlHTTPHeaderContentType = @"Content-Type";
             unicodeBody = [NSMutableDictionary new];
             [variablePairs enumerateObjectsUsingBlock:^(NSString *pair, NSUInteger idx, BOOL *stop) {
                 NSArray *pairArray = [pair componentsSeparatedByString:@"="];
-                unicodeBody[pairArray.firstObject] = pairArray.lastObject;
+                
+                NSString *key = pairArray.firstObject;
+                key = [key stringByRemovingPercentEncoding];
+                key = [[key componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] componentsJoinedByString:@""];
+                
+                NSString *value = pairArray.lastObject;
+                value = [value stringByRemovingPercentEncoding];
+                
+                unicodeBody[key] = value;
             }];
         }
         

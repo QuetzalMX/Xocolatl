@@ -136,6 +136,11 @@
     return nextChunk;
 }
 
+- (void)setHttpHeaders:(NSDictionary *)httpHeaders;
+{
+    _mutableHeaders = [httpHeaders mutableCopy];
+}
+
 - (NSDictionary *)httpHeaders;
 {
     return [self.mutableHeaders copy];
