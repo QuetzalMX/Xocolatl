@@ -10,6 +10,7 @@
 
 #import "SignUpResponder.h"
 #import "YapDatabase.h"
+#import "XocolatlModelObject+YapDatabase.h"
 
 @interface XocolatlHTTPServer ()
 
@@ -68,7 +69,24 @@
     
     //We're good to go. Create our databases.
     NSString *databaseWithFileExtension = [NSString stringWithFormat:@"%@/%@.yap", databaseFolderPath, serverName];
-    server.database = [[YapDatabase alloc] initWithPath:databaseWithFileExtension];
+    server.database = [[YapDatabase alloc] initWithPath:databaseWithFileExtension
+                                             serializer:^NSData *(NSString *collection, NSString *key, XocolatlModelObject *object) {
+                                                 
+                                                 if ([object respondsToSelector:@selector(willSaveToDatabase)]) {
+                                                     [object willSaveToDatabase];
+                                                 }
+                                                 
+                                                 return [NSKeyedArchiver archivedDataWithRootObject:object];
+                                             }
+                                           deserializer:^id(NSString *collection, NSString *key, NSData *data) {
+                                               
+                                               XocolatlModelObject *object = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+                                               if ([object respondsToSelector:@selector(willLoadFromDatabase)]) {
+                                                   [object willLoadFromDatabase];
+                                               }
+                                               
+                                               return object;
+                                           }];
     server.readConnection = [server.database newConnection];
     server.readConnection.permittedTransactions = YDB_AnyReadTransaction;
     server.readConnection.metadataCacheEnabled = YES;

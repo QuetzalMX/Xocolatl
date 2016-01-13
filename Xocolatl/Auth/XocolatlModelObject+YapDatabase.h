@@ -58,4 +58,7 @@
  */
 - (nonnull NSDictionary <NSString *, id> *)jsonRepresentationUsingTransaction:(nonnull YapDatabaseReadTransaction *)transaction;
 
+- (void)willSaveToDatabase;
+- (void)willLoadFromDatabase;
+
 @end
