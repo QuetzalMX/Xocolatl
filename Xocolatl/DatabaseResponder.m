@@ -49,8 +49,12 @@
 - (RoutingResponse *)responseForRequest:(HTTPMessage *)message
                          withParameters:(NSDictionary *)parameters;
 {
-    if ([self isProtected:message.method] && ![self isRequestAuthenticated:message]) {
+    if ([self protectionLevelForMethod:message.method] == ResponderAccessLevelRequiresAuth && ![self isRequestAuthenticated:message]) {
         return [self handleAuthenticationFailure];
+    }
+    
+    if ([self protectionLevelForMethod:message.method] == ResponderAccessLevelOptionalAuth) {
+        [self isRequestAuthenticated:message];
     }
     
     return [super responseForRequest:message
@@ -83,9 +87,9 @@
     return isValidAuth;
 }
 
-- (BOOL)isProtected:(NSString *)method;
+- (ResponderAccessLevel)protectionLevelForMethod:(nonnull NSString *)method;
 {
-    return NO;
+    return ResponderAccessLevelPublic;
 }
 
 - (RoutingResponse *)handleAuthenticationFailure;

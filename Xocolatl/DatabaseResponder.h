@@ -14,6 +14,12 @@
 @class XocolatlHTTPServer;
 @class XocolatlUser;
 
+typedef NS_ENUM(NSUInteger, ResponderAccessLevel) {
+    ResponderAccessLevelPublic,
+    ResponderAccessLevelRequiresAuth,
+    ResponderAccessLevelOptionalAuth,
+};
+
 @interface DatabaseResponder : RoutingResponder
 
 @property (nonnull, nonatomic, strong, readonly) XocolatlHTTPServer *server;
@@ -26,7 +32,7 @@
                                       inServer:(nonnull XocolatlHTTPServer *)server;
 
 //Authentication
-- (BOOL)isProtected:(nonnull NSString *)method;
+- (ResponderAccessLevel)protectionLevelForMethod:(nonnull NSString *)method;
 - (BOOL)isRequestAuthenticated:(nonnull HTTPMessage *)request;
 - (nonnull RoutingResponse *)handleAuthenticationFailure;
 
