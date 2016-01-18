@@ -10,6 +10,6 @@
 
 @interface NSString (randomString)
 
-+ (instancetype)randomString;
++ (nonnull instancetype)randomString;
 
 @end
