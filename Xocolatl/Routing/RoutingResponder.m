@@ -164,25 +164,25 @@
 - (RoutingResponse *)responseForGETRequest:(HTTPMessage *)message
                             withParameters:(NSDictionary *)parameters;
 {
-    return nil;
+    return [RoutingResponse responseWithStatus:405 andBody:nil];
 }
 
 - (RoutingResponse *)responseForPOSTRequest:(HTTPMessage *)message
                              withParameters:(NSDictionary *)parameters;
 {
-    return nil;
+    return [RoutingResponse responseWithStatus:405 andBody:nil];
 }
 
 - (RoutingResponse *)responseForPUTRequest:(HTTPMessage *)message
                             withParameters:(NSDictionary *)parameters;
 {
-    return nil;
+    return [RoutingResponse responseWithStatus:405 andBody:nil];
 }
 
 - (RoutingResponse *)responseForDELETERequest:(HTTPMessage *)message
                                withParameters:(NSDictionary *)parameters;
 {
-    return nil;
+    return [RoutingResponse responseWithStatus:405 andBody:nil];
 }
 
 @end
