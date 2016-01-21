@@ -25,4 +25,7 @@
  */
 @property (nonatomic, strong, nonnull) NSDate *modifiedAt;
 
+
+@property (nonatomic, strong, nonnull, readonly) NSDictionary <NSString *, id> *jsonRepresentation;
+
 @end

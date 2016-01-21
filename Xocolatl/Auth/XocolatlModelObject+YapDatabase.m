@@ -46,11 +46,7 @@
 #pragma mark - JSON
 - (NSDictionary *)jsonRepresentationUsingTransaction:(YapDatabaseReadTransaction *)transaction;
 {
-    NSString *createdAt = [NSString stringWithFormat:@"%.0f", [self.createdAt timeIntervalSince1970]];
-    NSString *modifiedAt = [NSString stringWithFormat:@"%.0f", [self.modifiedAt timeIntervalSince1970]];
-    return @{@"_id": self.identifier,
-             @"createdAt": createdAt,
-             @"modifiedAt": modifiedAt};
+    return self.jsonRepresentation;
 }
 
 @end

@@ -57,4 +57,15 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
     [aCoder encodeObject:self.modifiedAt forKey:XocolatlModelObjectModifiedAtKey];
 }
 
+- (NSDictionary <NSString *, id> *)jsonRepresentation;
+{
+    NSString *createdAt = [NSString stringWithFormat:@"%.0f", [self.createdAt timeIntervalSince1970]];
+    NSString *modifiedAt = [NSString stringWithFormat:@"%.0f", [self.modifiedAt timeIntervalSince1970]];
+    return @{
+             @"_id": self.identifier,
+             @"createdAt": createdAt,
+             @"modifiedAt": modifiedAt
+             };
+}
+
 @end
