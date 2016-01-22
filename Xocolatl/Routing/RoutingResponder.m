@@ -156,6 +156,9 @@
     } else if ([message.method isEqualToString:HTTPVerbDELETE]) {
         return [self responseForDELETERequest:message
                                withParameters:parameters];
+    } else if ([message.method isEqualToString:HTTPVerbPATCH]) {
+        return [self responseForPATCHRequest:message
+                              withParameters:parameters];
     }
     
     return nil;
@@ -181,6 +184,12 @@
 
 - (RoutingResponse *)responseForDELETERequest:(HTTPMessage *)message
                                withParameters:(NSDictionary *)parameters;
+{
+    return [RoutingResponse responseWithStatus:405 andBody:nil];
+}
+
+- (RoutingResponse *)responseForPATCHRequest:(HTTPMessage *)message
+                              withParameters:(NSDictionary *)parameters;
 {
     return [RoutingResponse responseWithStatus:405 andBody:nil];
 }

@@ -31,5 +31,7 @@
                             withParameters:(NSDictionary *)parameters;
 - (RoutingResponse *)responseForDELETERequest:(HTTPMessage *)message
                                withParameters:(NSDictionary *)parameters;
+- (RoutingResponse *)responseForPATCHRequest:(HTTPMessage *)message
+                              withParameters:(NSDictionary *)parameters;
 
 @end
