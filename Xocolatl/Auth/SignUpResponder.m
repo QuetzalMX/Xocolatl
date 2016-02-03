@@ -110,6 +110,17 @@
     RoutingResponse *successResponse = [RoutingResponse responseWithStatus:XocolatlHTTPStatusCode201Created
                                                                    andBody:responseWithAuth];
     successResponse.registeredUser = newUser;
+    
+    [successResponse setCookieNamed:@"username"
+                          withValue:newUser.identifier
+                           isSecure:YES
+                           httpOnly:NO];
+    
+    [successResponse setCookieNamed:@"auth"
+                          withValue:auth
+                           isSecure:YES
+                           httpOnly:NO];
+    
     return successResponse;
 }
 
