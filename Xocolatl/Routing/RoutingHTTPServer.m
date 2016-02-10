@@ -182,6 +182,10 @@
                 __block BOOL firstWildcard = YES;
                 
                 [responderKeys enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
+                    if ([result rangeAtIndex:index].location == NSNotFound) {
+                        return;
+                    }
+                    
                     NSString *capture = [path substringWithRange:[result rangeAtIndex:index]];
                     if ([key isEqualToString:@"wildcards"]) {
                         NSMutableArray *wildcards = [newParams objectForKey:key];

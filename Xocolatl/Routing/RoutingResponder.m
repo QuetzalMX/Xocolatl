@@ -127,6 +127,13 @@
                                  }];
             
             parsedPath = [NSString stringWithFormat:@"^%@$", regexPath];
+            
+            // Make the last capture group optional.
+            NSRange lastCaptureGroup = [parsedPath rangeOfString:@"[/]?([^/]+)" options:NSBackwardsSearch];
+            if (lastCaptureGroup.location != NSNotFound) {
+                parsedPath = [parsedPath stringByReplacingCharactersInRange:lastCaptureGroup
+                                                                 withString:@"[/]?([^/]+)?"];
+            }
         }
 
         self.keys[method] = keysForMethod;
