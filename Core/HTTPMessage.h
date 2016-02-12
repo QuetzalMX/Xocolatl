@@ -30,7 +30,7 @@
 
 - (NSString *)version;
 
-- (NSString *)method;
+- (NSString * _Nullable)method;
 - (NSURL *)url;
 
 - (NSInteger)statusCode;

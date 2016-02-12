@@ -89,15 +89,15 @@
         registeredUserJSON = [registeredUser jsonRepresentationUsingTransaction:transaction];
     }];
     
+    if (error)
+    {
+        return [XocolatlHTTPResponse responseWithError:error];
+    }
+    
     if (!registeredUser)
     {
         return [XocolatlHTTPResponse responseWithErrorCode:XocolatlHTTPStatusCode404NotFound
                                                     reason:@"The requested user is not registered."];
-    }
-    
-    if (error)
-    {
-        return [XocolatlHTTPResponse responseWithError:error];
     }
     
     // Now that we have all the info, add our cookies and redirect the user back to home.
