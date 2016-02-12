@@ -138,14 +138,14 @@
         }
     }
     
-    NSLog(@"Connection received: %@ %@", method, path);
+    NSLog(@"%@ %@", method, path);
     RoutingResponse *response = [self.delegate connection:self
                                   didFinishReadingRequest:request
                                                  withPath:path
                                                    method:method
                                             andParameters:params];
     if (response) {
-        NSLog(@"%@ is responding", [response className]);
+        NSLog(@"%@: %ld", response.className, (long)response.status);
     }
     else
     {
