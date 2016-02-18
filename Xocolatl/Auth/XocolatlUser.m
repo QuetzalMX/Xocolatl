@@ -54,6 +54,14 @@ NSInteger const SecondsUntilAuthorizationExpires = 86400;
     return user;
 }
 
+- (void)setNewPassword:(NSString *)newPassword;
+{
+    self.password = [RNEncryptor encryptData:[self.identifier dataUsingEncoding:NSUTF8StringEncoding]
+                                withSettings:kRNCryptorAES256Settings
+                                    password:newPassword
+                                       error:nil];
+}
+
 #pragma mark - Serialization
 - (instancetype)initWithCoder:(NSCoder *)aDecoder;
 {

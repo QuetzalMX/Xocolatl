@@ -16,7 +16,6 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
 
 @interface XocolatlModelObject ()
 
-@property (nonatomic, copy, readwrite) NSString *identifier;
 @property (nonatomic, strong, readwrite) NSDate *createdAt;
 
 @end

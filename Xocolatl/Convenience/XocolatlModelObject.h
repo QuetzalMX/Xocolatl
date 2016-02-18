@@ -13,7 +13,7 @@
 /**
  *  An identifier is a 36-character (32 without dashes) nonce that is created whenever the object is initialized.
  */
-@property (nonatomic, copy, readonly, nonnull) NSString *identifier;
+@property (nonatomic, copy, nonnull) NSString *identifier;
 
 /**
  *  createdAt is the date this object was originally initialized. It is persistent between launches.

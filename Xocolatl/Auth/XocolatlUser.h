@@ -19,6 +19,8 @@
 - (nullable instancetype)initWithUsername:(nonnull NSString *)username
                               andPassword:(nonnull NSString *)password;
 
+- (void)setNewPassword:(NSString *)newPassword;
+
 //Passwords
 + (BOOL)verifyPasswordHashForUser:(nonnull XocolatlUser *)user
                      withPassword:(nonnull NSString *)password;
