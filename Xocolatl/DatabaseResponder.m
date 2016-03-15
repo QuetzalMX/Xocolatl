@@ -35,10 +35,10 @@
     
     //Make sure our connections are read and readwrite.
     _readConnection = readConnection;
-    _readConnection.permittedTransactions = YDB_AnyReadTransaction;
+//    _readConnection.permittedTransactions = YDB_AnyReadTransaction;
     
     _writeConnection = writeConnection;
-    _writeConnection.permittedTransactions = YDB_AnyReadWriteTransaction;
+//    _writeConnection.permittedTransactions = YDB_AnyReadWriteTransaction;
     
     _server = server;
     
@@ -64,11 +64,28 @@
 - (BOOL)isRequestAuthenticated:(HTTPMessage *)request;
 {
     NSString *username = request.cookies[@"username"];
+    if (!username || username.length <= 0) {
+        
+        // Is the username in the raw header?
+        username = request.allHeaderFields[@"username"];
+        
+        if (!username || username.length <= 0) {
+            // They're not.
+            return NO;
+        }
+    }
+    
     NSString *auth = request.cookies[@"auth"];
-    if (!username || username.length <= 0 ||
-        !auth || auth.length <= 0) {
-        //No user or authorization.
-        return NO;
+    if (!auth || auth.length <= 0) {
+        
+        // Is the auth in the raw header?
+        auth = request.allHeaderFields[@"auth"];
+        
+        if (!auth || auth.length <= 0) {
+            //No user or authorization.
+            return NO;
+        }
+        
     }
     
     //There appears to be user, expiration and authorization. Is the auth valid?

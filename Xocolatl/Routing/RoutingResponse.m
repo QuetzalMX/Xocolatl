@@ -57,8 +57,12 @@
         }
     }
     
-    return [self responseWithStatus:status
-                            andData:bodyData];
+    
+    
+    RoutingResponse *response = [self responseWithStatus:status
+                                                 andData:bodyData];
+    response->_jsonBody = jsonBody;
+    return response;
 }
 
 - (instancetype)init;

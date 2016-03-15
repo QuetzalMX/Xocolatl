@@ -49,6 +49,32 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
     return self;
 }
 
+- (instancetype)initWithJSON:(id)json;
+{
+    if (self != [super init]) {
+        return nil;
+    }
+    
+    if (json[@"_id"] == nil ||
+        json[@"createdAt"] == nil ||
+        json[@"modifiedAt"] == nil) {
+        return nil;
+    }
+    
+    self.identifier = json[XocolatlModelObjectIdentifierKey];
+    self.createdAt = json[XocolatlModelObjectCreatedAtKey];
+    self.modifiedAt = json[XocolatlModelObjectModifiedAtKey];
+    
+    return self;
+}
+
+- (void)updateWithJSON:(NSDictionary <NSString *, id> * _Nonnull)json;
+{
+    self.identifier = json[XocolatlModelObjectIdentifierKey] ?: self.identifier;
+    self.createdAt = json[XocolatlModelObjectCreatedAtKey] ?: self.createdAt;
+    self.modifiedAt = json[XocolatlModelObjectModifiedAtKey] ?: self.modifiedAt;
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder;
 {
     [aCoder encodeObject:self.identifier forKey:XocolatlModelObjectIdentifierKey];

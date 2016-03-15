@@ -11,6 +11,8 @@
 
 @interface RoutingResponse : NSObject <HTTPResponse>
 
+@property (nonatomic, strong, readonly, nullable) id jsonBody;
+
 + (instancetype)responseWithStatus:(NSInteger)status
                            andData:(NSData *)data;
 

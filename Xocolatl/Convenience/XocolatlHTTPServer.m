@@ -88,12 +88,12 @@
                                                return object;
                                            }];
     server.readConnection = [server.database newConnection];
-    server.readConnection.permittedTransactions = YDB_AnyReadTransaction;
+//    server.readConnection.permittedTransactions = YDB_AnyReadTransaction;
     server.readConnection.metadataCacheEnabled = YES;
     server.readConnection.metadataCacheLimit = 0;
     
     server.writeConnection = [server.database newConnection];
-    server.writeConnection.permittedTransactions = YDB_AnyReadWriteTransaction;
+//    server.writeConnection.permittedTransactions = YDB_AnyReadWriteTransaction;
     
     server.sslCertificatePath = p12CertificatePath;
     server.sslCertificatePassword = certificatePassword;
