@@ -61,9 +61,9 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
         return nil;
     }
     
-    self.identifier = json[XocolatlModelObjectIdentifierKey];
-    self.createdAt = json[XocolatlModelObjectCreatedAtKey];
-    self.modifiedAt = json[XocolatlModelObjectModifiedAtKey];
+    self.identifier = json[@"_id"];
+    self.createdAt = json[@"createdAt"];
+    self.modifiedAt = json[@"modifiedAt"];
     
     return self;
 }
