@@ -62,8 +62,16 @@ static NSString *const XocolatlModelObjectModifiedAtKey = @"XocolatlModelObjectM
     }
     
     self.identifier = json[@"_id"];
-    self.createdAt = json[@"createdAt"];
-    self.modifiedAt = json[@"modifiedAt"];
+    
+    NSString *createdUnixTimeStamp = json[@"createdAt"];
+    if (createdUnixTimeStamp) {
+        self.createdAt = [NSDate dateWithTimeIntervalSince1970:[createdUnixTimeStamp doubleValue]];
+    }
+    
+    NSString *modifiedUnixTimeStamp = json[@"modifiedAt"];
+    if (modifiedUnixTimeStamp) {
+        self.createdAt = [NSDate dateWithTimeIntervalSince1970:[modifiedUnixTimeStamp doubleValue]];
+    }
     
     return self;
 }
