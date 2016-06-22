@@ -68,6 +68,7 @@
 		C13F09811BAC6FEB00ACF318 /* XocolatlHTTPAsynchronousResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C13F09801BAC6FEB00ACF318 /* XocolatlHTTPAsynchronousResponse.m */; };
 		C13F09821BAC790100ACF318 /* XocolatlHTTPAsynchronousResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C13F09801BAC6FEB00ACF318 /* XocolatlHTTPAsynchronousResponse.m */; };
 		C13F09831BAC790900ACF318 /* XocolatlHTTPAsynchronousResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = C13F097F1BAC6FEB00ACF318 /* XocolatlHTTPAsynchronousResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C14469E61D1AEA2F0078D495 /* dev.quetzal.io.p12 in Resources */ = {isa = PBXBuildFile; fileRef = C14469E51D1AEA2F0078D495 /* dev.quetzal.io.p12 */; };
 		C14E74521B0A544300ACC4A9 /* XocolatlAPN.h in Headers */ = {isa = PBXBuildFile; fileRef = C14E74501B0A544300ACC4A9 /* XocolatlAPN.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C14E74531B0A544300ACC4A9 /* XocolatlAPN.m in Sources */ = {isa = PBXBuildFile; fileRef = C14E74511B0A544300ACC4A9 /* XocolatlAPN.m */; };
 		C14E74541B0A544300ACC4A9 /* XocolatlAPN.m in Sources */ = {isa = PBXBuildFile; fileRef = C14E74511B0A544300ACC4A9 /* XocolatlAPN.m */; };
@@ -426,6 +427,7 @@
 		C13D40451ADCEED4004AF563 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		C13F097F1BAC6FEB00ACF318 /* XocolatlHTTPAsynchronousResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlHTTPAsynchronousResponse.h; path = Convenience/XocolatlHTTPAsynchronousResponse.h; sourceTree = "<group>"; };
 		C13F09801BAC6FEB00ACF318 /* XocolatlHTTPAsynchronousResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XocolatlHTTPAsynchronousResponse.m; path = Convenience/XocolatlHTTPAsynchronousResponse.m; sourceTree = "<group>"; };
+		C14469E51D1AEA2F0078D495 /* dev.quetzal.io.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = dev.quetzal.io.p12; sourceTree = "<group>"; };
 		C14E74501B0A544300ACC4A9 /* XocolatlAPN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XocolatlAPN.h; path = Core/XocolatlAPN.h; sourceTree = SOURCE_ROOT; };
 		C14E74511B0A544300ACC4A9 /* XocolatlAPN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XocolatlAPN.m; path = Core/XocolatlAPN.m; sourceTree = SOURCE_ROOT; };
 		C14F781B1B531CCA00C5A442 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
@@ -985,6 +987,7 @@
 		C1D77D671AF84A35008E4D78 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C14469E51D1AEA2F0078D495 /* dev.quetzal.io.p12 */,
 				C1D77D681AF84A35008E4D78 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -1668,6 +1671,7 @@
 				C1F68E901AD9E587007FF919 /* Images.xcassets in Resources */,
 				C1AC89FB1AF4092A008392D5 /* About.txt in Resources */,
 				C1F68E931AD9E587007FF919 /* MainMenu.xib in Resources */,
+				C14469E61D1AEA2F0078D495 /* dev.quetzal.io.p12 in Resources */,
 				C1AC8A051AF4092A008392D5 /* README.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
