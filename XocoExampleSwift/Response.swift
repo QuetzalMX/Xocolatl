@@ -9,40 +9,22 @@ import Foundation
 
 public protocol Response {
 
+    /// The underlying HTTP message
     var data: ResponseData { get }
-    /**
-     * Returns the length of the data in bytes.
-     * If you don't know the length in advance, implement the isChunked method and have it return YES.
-     **/
+
+    /// If you don't know the length in advance, implement the isChunked method and have it return YES.
     var contentLength: UInt { get }
 
-    /**
-     * Returns the data for the response.
-     * You do not have to return data of the exact length that is given.
-     * You may optionally return data of a lesser length.
-     * However, you must never return data of a greater length than requested.
-     * Doing so could disrupt proper support for range requests.
-     *
-     * To support asynchronous responses, read the discussion at the bottom of this header.
-     **/
-    func read(bytes: UInt) -> Data
+    /// The returned data's length must always be less than or equal to the requested length.
+    func readBody(bytes: UInt) -> Data
 
-    /**
-     * Should only return YES after the HTTPConnection has read all available data.
-     * That is, all data for the response has been returned to the HTTPConnection via the readDataOfLength method.
-     **/
+    /// If invoking readBody(bytes:) returns empty data, this method should return true.
     var bodySent: Bool { get }
 
-    /**
-     * Status code for response.
-     * Allows for responses such as redirect (301), etc.
-     **/
-    var status: StatusCode { get }
+    /// The response's HTTP code.
+    var statusCode: StatusCode { get }
 
-    /**
-     * If you want to add any extra HTTP headers to the response,
-     * simply return them in a dictionary in this method.
-     **/
+    /// Response-specific headers.
     var additionalHeaders: [String: String] { get }
 }
 

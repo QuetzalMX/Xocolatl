@@ -14,7 +14,7 @@ protocol RequestCompletionDelegate {
 }
 
 /// Optionally accept the request's body and save it as necessary.
-protocol RequestBodyParsingDelegate {
+public protocol RequestBodyParsingDelegate {
     func shouldAcceptBody(request: Request, method: Method, path: String) -> Bool
     func willReceiveBody(request: Request, bodySize: Int)
     func didReceiveBodyChunk(request: Request, data: Data)

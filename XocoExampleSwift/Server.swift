@@ -26,6 +26,9 @@ public class Server {
     /// Handles incoming connections from clients.
     fileprivate let incomingConnectionsSocket: ServerSocket
 
+    /// Handles the parsing of any incoming request's body.
+    fileprivate var requestBodyParsingDelegate: RequestBodyParsingDelegate?
+
     init(certificatePath: String, certificatePassword: String) throws {
 
         // Parse the certificate.
@@ -59,8 +62,9 @@ public class Server {
     /// - parameter responseDelegate: provides a Response to requests we receive
     ///
     /// - throws: if the socket cannot begin listening for requests
-    public func start(responseDelegate: ServerDelegate) throws {
+    public func start(responseDelegate: ServerDelegate, requestBodyParsingDelegate: RequestBodyParsingDelegate? = nil) throws {
         self.responseDelegate = responseDelegate
+        self.requestBodyParsingDelegate = requestBodyParsingDelegate ?? self
         try incomingConnectionsSocket.start(atPort: 3000, delegate: self)
     }
 }
@@ -112,40 +116,59 @@ extension Server : RequestCompletionDelegate {
 }
 
 //MARK: - Parsing Request Body
+
+/// The server will forward all of these methods to the requestBodyParsingDelegate if it exists.
 extension Server : RequestBodyParsingDelegate {
 
-    func shouldAcceptBody(request: Request, method: Method, path: String) -> Bool {
-        switch method {
+    /// Once a request is received and the headers parsed, it requests instructions regarding parssing or ignoring the incoming body.
+    /// Default behavior is to accept body for POST and PUT requests.
+    ///
+    /// - parameter request: the request that would own the body
+    /// - parameter method:  the type of request
+    /// - parameter path:    the path of the request
+    ///
+    /// - returns: true if this request should parse the incoming body
+    public func shouldAcceptBody(request: Request, method: Method, path: String) -> Bool {
 
-        case .POST, .PUT:
-            return true
-        default:
-            return false
-
+        guard let bodyParsingDelegate = requestBodyParsingDelegate else {
+            return (.POST == method || .PUT == method)
         }
+
+        return bodyParsingDelegate.shouldAcceptBody(request: request, method: method, path: path)
     }
 
-    func willReceiveBody(request: Request, bodySize: Int) {
-        // This method is called after receiving all HTTP headers, but before reading any of the request body.
-        // Override me to allocate buffers, file handles, etc.
+    /// This method is called after receiving all HTTP headers, but before reading any of the request body.
+    /// You should allocate buffers, file handles, or whatever you need to process a body of this length.
+    /// Default behavior is empty.
+    ///
+    /// - parameter request:  the request about to receive a body
+    /// - parameter bodySize: the size of the body
+    public func willReceiveBody(request: Request, bodySize: Int) {
+        requestBodyParsingDelegate?.willReceiveBody(request: request, bodySize: bodySize)
     }
 
-    func didReceiveBodyChunk(request: Request, data: Data) {
-        // Override me to do something useful with a POST / PUT.
-        // If the post is small, such as a simple form, you may want to simply append the data to the request.
-        // If the post is big, such as a file upload, you may want to store the file to disk.
-        //
-        // Remember: In order to support LARGE POST uploads, the data is read in chunks.
-        // This prevents a 50 MB upload from being stored in RAM.
-        // The size of the chunks are limited by the POST_CHUNKSIZE definition.
-        // Therefore, this method may be called multiple times for the same POST request.
-        guard request.data.append(data) else { return }
+    /// Called whenever a piece of the body (which may be the entirety of the body) is received.
+    /// This method may be called multiple times for the same request if the body is more than one chunk of data.
+    /// Default behavior is to append the data to the request.
+    ///
+    /// - parameter request: the request that owns the receiving body
+    /// - parameter data:    a part or all of the body
+    public func didReceiveBodyChunk(request: Request, data: Data) {
+
+        guard let bodyParsingDelegate = requestBodyParsingDelegate else {
+            let _ = request.data.append(data)
+            return
+        }
+
+        bodyParsingDelegate.didReceiveBodyChunk(request: request, data: data)
     }
 
-    func didFinishReceivingBody(request: Request) {
-        // This method is called after the request body has been fully read but before the HTTP request is processed.
-        // Override me to perform any final operations on an upload.
-        // For example, if you were saving the upload to disk this would be
-        // the hook to flush any pending data to disk and maybe close the file.
+    /// Once the body has been parsed, clean up here if needed.
+    /// Default implementation is empty.
+    ///
+    /// - parameter request: the request that just parsed its body.
+    public func didFinishReceivingBody(request: Request) {
+        requestBodyParsingDelegate?.didFinishReceivingBody(request: request)
     }
+
 }

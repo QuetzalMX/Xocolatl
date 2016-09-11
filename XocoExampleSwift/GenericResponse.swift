@@ -32,7 +32,7 @@ class GenericResponse {
 
 extension GenericResponse : Response {
 
-    var status: StatusCode { return code }
+    var statusCode: StatusCode { return code }
 
     var bodySent: Bool {
         guard let givenBodyData = bodyData else { return true }
@@ -49,7 +49,7 @@ extension GenericResponse : Response {
     var additionalHeaders: [String: String] { return [:] }
 
     var data: ResponseData {
-        let responseData = ResponseData(code: code)
+        let responseData = ResponseData(statusCode: code, http: .v1_1)
 
         if let givenBodyData = bodyData {
             responseData.body = givenBodyData
@@ -61,7 +61,7 @@ extension GenericResponse : Response {
         return responseData
     }
 
-    func read(bytes: UInt) -> Data {
+    func readBody(bytes: UInt) -> Data {
 
         guard let givenBodyData = bodyData else { return Data() }
 

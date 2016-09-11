@@ -18,11 +18,10 @@
 		C1F67A291D83B8A5006EEAE1 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A211D83B8A5006EEAE1 /* Server.swift */; };
 		C1F67A2A1D83B8A5006EEAE1 /* ServerSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A221D83B8A5006EEAE1 /* ServerSocket.swift */; };
 		C1F67A2B1D83B8A5006EEAE1 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A231D83B8A5006EEAE1 /* Request.swift */; };
-		C1F67A2C1D83B8A5006EEAE1 /* RequestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A241D83B8A5006EEAE1 /* RequestData.swift */; };
+		C1F67A2C1D83B8A5006EEAE1 /* HTTPData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A241D83B8A5006EEAE1 /* HTTPData.swift */; };
 		C1F67A2D1D83B8A5006EEAE1 /* RequestSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A251D83B8A5006EEAE1 /* RequestSocket.swift */; };
 		C1F67A371D83D0DC006EEAE1 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A361D83D0DC006EEAE1 /* Response.swift */; };
 		C1F67A391D83D1F1006EEAE1 /* JSONResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A381D83D1F1006EEAE1 /* JSONResponse.swift */; };
-		C1F67A3B1D83D776006EEAE1 /* ResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A3A1D83D776006EEAE1 /* ResponseData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,12 +39,11 @@
 		C1F67A211D83B8A5006EEAE1 /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		C1F67A221D83B8A5006EEAE1 /* ServerSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerSocket.swift; sourceTree = "<group>"; };
 		C1F67A231D83B8A5006EEAE1 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		C1F67A241D83B8A5006EEAE1 /* RequestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestData.swift; sourceTree = "<group>"; };
+		C1F67A241D83B8A5006EEAE1 /* HTTPData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPData.swift; sourceTree = "<group>"; };
 		C1F67A251D83B8A5006EEAE1 /* RequestSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestSocket.swift; sourceTree = "<group>"; };
 		C1F67A2F1D83B8B5006EEAE1 /* XocoExampleSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XocoExampleSwift-Bridging-Header.h"; sourceTree = "<group>"; };
 		C1F67A361D83D0DC006EEAE1 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		C1F67A381D83D1F1006EEAE1 /* JSONResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONResponse.swift; sourceTree = "<group>"; };
-		C1F67A3A1D83D776006EEAE1 /* ResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,19 +86,11 @@
 		C13261491D83E6B4001A0D5D /* Request */ = {
 			isa = PBXGroup;
 			children = (
-				C1F67A241D83B8A5006EEAE1 /* RequestData.swift */,
 				C1F67A231D83B8A5006EEAE1 /* Request.swift */,
+				C1F67A361D83D0DC006EEAE1 /* Response.swift */,
+				C1F67A241D83B8A5006EEAE1 /* HTTPData.swift */,
 			);
 			name = Request;
-			sourceTree = "<group>";
-		};
-		C132614A1D83E6BF001A0D5D /* Response */ = {
-			isa = PBXGroup;
-			children = (
-				C1F67A3A1D83D776006EEAE1 /* ResponseData.swift */,
-				C1F67A361D83D0DC006EEAE1 /* Response.swift */,
-			);
-			name = Response;
 			sourceTree = "<group>";
 		};
 		C132614E1D84A5AC001A0D5D /* Xocolatl */ = {
@@ -156,7 +146,6 @@
 		C1F67A351D83D03A006EEAE1 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				C132614A1D83E6BF001A0D5D /* Response */,
 				C13261481D83E6AE001A0D5D /* Server */,
 				C13261491D83E6B4001A0D5D /* Request */,
 				C129F8CF1D84E0BE00A7ED60 /* Sockets */,
@@ -242,13 +231,12 @@
 				C1F67A281D83B8A5006EEAE1 /* XocolatlServerDelegate.swift in Sources */,
 				C1F67A2A1D83B8A5006EEAE1 /* ServerSocket.swift in Sources */,
 				C1F67A2B1D83B8A5006EEAE1 /* Request.swift in Sources */,
-				C1F67A2C1D83B8A5006EEAE1 /* RequestData.swift in Sources */,
+				C1F67A2C1D83B8A5006EEAE1 /* HTTPData.swift in Sources */,
 				C1F67A391D83D1F1006EEAE1 /* JSONResponse.swift in Sources */,
 				C1F67A291D83B8A5006EEAE1 /* Server.swift in Sources */,
 				C129F8C71D84A74300A7ED60 /* RequestTableViewController.swift in Sources */,
 				C1F67A371D83D0DC006EEAE1 /* Response.swift in Sources */,
 				C1F67A131D83B890006EEAE1 /* AppDelegate.swift in Sources */,
-				C1F67A3B1D83D776006EEAE1 /* ResponseData.swift in Sources */,
 				C1F67A2D1D83B8A5006EEAE1 /* RequestSocket.swift in Sources */,
 				C129F8CD1D84DF7700A7ED60 /* GCDAsyncSocket.m in Sources */,
 				C132614C1D84A2B8001A0D5D /* GenericResponse.swift in Sources */,
