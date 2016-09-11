@@ -30,7 +30,7 @@
     NSString *certificatePath = [[NSBundle mainBundle] pathForResource:@"dev.quetzal.io"
                                                                 ofType:@"p12"];
     self.server = [XocolatlHTTPServer newServerNamed:@"Xocolatl"
-                                     listeningAtPort:3000
+                                     listeningAtPort:8080
                            usingSSLCertificateAtPath:certificatePath
                               andCertificatePassword:@"alderaan19"
                                          withSiteURL:@"https://xocolatl.mx"];

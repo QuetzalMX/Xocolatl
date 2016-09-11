@@ -860,9 +860,14 @@ enum GCDAsyncSocketConfig
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@interface GCDAsyncSocket ()
+
+@property (nonatomic, assign) uint32_t flags;
+
+@end
+
 @implementation GCDAsyncSocket
 {
-	uint32_t flags;
 	uint16_t config;
 	
 	__weak id delegate;
@@ -907,6 +912,11 @@ enum GCDAsyncSocketConfig
 	void *IsOnSocketQueueOrTargetQueueKey;
 	
 	id userData;
+}
+
+- (void)setFlags:(uint32_t)flags;
+{
+    _flags = flags;
 }
 
 - (id)init
@@ -997,7 +1007,7 @@ enum GCDAsyncSocketConfig
 	
 	// Set dealloc flag.
 	// This is used by closeWithError to ensure we don't accidentally retain ourself.
-	flags |= kDealloc;
+	self.flags |= kDealloc;
 	
 	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 	{
@@ -1633,7 +1643,7 @@ enum GCDAsyncSocketConfig
 			dispatch_resume(accept6Source);
 		}
 		
-		flags |= kSocketStarted;
+		self.flags |= kSocketStarted;
 		
 		result = YES;
 	}};
@@ -1740,7 +1750,7 @@ enum GCDAsyncSocketConfig
 			else
 				acceptedSocket->socket6FD = childSocketFD;
 			
-			acceptedSocket->flags = (kSocketStarted | kConnected);
+			acceptedSocket.flags = (kSocketStarted | kConnected);
 			
 			// Setup read and write sources for accepted socket
 			
@@ -1923,7 +1933,7 @@ enum GCDAsyncSocketConfig
 		// We've made it past all the checks.
 		// It's time to start the connection process.
 		
-		flags |= kSocketStarted;
+		self.flags |= kSocketStarted;
 		
 		LogVerbose(@"Dispatching DNS lookup...");
 		
@@ -2088,7 +2098,7 @@ enum GCDAsyncSocketConfig
 			return_from_block;
 		}
 		
-		flags |= kSocketStarted;
+		self.flags |= kSocketStarted;
 		
 		[self startConnectTimeout:timeout];
 		
@@ -2321,7 +2331,7 @@ enum GCDAsyncSocketConfig
 		return;
 	}
 	
-	flags |= kConnected;
+	self.flags |= kConnected;
 	
 	[self endConnectTimeout];
 	
@@ -2662,12 +2672,12 @@ enum GCDAsyncSocketConfig
 	
 	// If the client has passed the connect/accept method, then the connection has at least begun.
 	// Notify delegate that it is now ending.
-	BOOL shouldCallDelegate = (flags & kSocketStarted) ? YES : NO;
-	BOOL isDeallocating = (flags & kDealloc) ? YES : NO;
+	BOOL shouldCallDelegate = (self.flags & kSocketStarted) ? YES : NO;
+	BOOL isDeallocating = (self.flags & kDealloc) ? YES : NO;
 	
 	// Clear stored socket info and all flags (config remains as is)
 	socketFDBytesAvailable = 0;
-	flags = 0;
+	self.flags = 0;
 	
 	if (shouldCallDelegate)
 	{
@@ -2688,7 +2698,7 @@ enum GCDAsyncSocketConfig
 {
 	dispatch_block_t block = ^{ @autoreleasepool {
 		
-		if (flags & kSocketStarted)
+		if (self.flags & kSocketStarted)
 		{
 			[self closeWithError:nil];
 		}
@@ -2706,9 +2716,9 @@ enum GCDAsyncSocketConfig
 {
 	dispatch_async(socketQueue, ^{ @autoreleasepool {
 		
-		if (flags & kSocketStarted)
+		if (self.flags & kSocketStarted)
 		{
-			flags |= (kForbidReadsWrites | kDisconnectAfterReads);
+			self.flags |= (kForbidReadsWrites | kDisconnectAfterReads);
 			[self maybeClose];
 		}
 	}});
@@ -2718,9 +2728,9 @@ enum GCDAsyncSocketConfig
 {
 	dispatch_async(socketQueue, ^{ @autoreleasepool {
 		
-		if (flags & kSocketStarted)
+		if (self.flags & kSocketStarted)
 		{
-			flags |= (kForbidReadsWrites | kDisconnectAfterWrites);
+			self.flags |= (kForbidReadsWrites | kDisconnectAfterWrites);
 			[self maybeClose];
 		}
 	}});
@@ -2730,9 +2740,9 @@ enum GCDAsyncSocketConfig
 {
 	dispatch_async(socketQueue, ^{ @autoreleasepool {
 		
-		if (flags & kSocketStarted)
+		if (self.flags & kSocketStarted)
 		{
-			flags |= (kForbidReadsWrites | kDisconnectAfterReads | kDisconnectAfterWrites);
+			self.flags |= (kForbidReadsWrites | kDisconnectAfterReads | kDisconnectAfterWrites);
 			[self maybeClose];
 		}
 	}});
@@ -2749,11 +2759,11 @@ enum GCDAsyncSocketConfig
 	
 	BOOL shouldClose = NO;
 	
-	if (flags & kDisconnectAfterReads)
+	if (self.flags & kDisconnectAfterReads)
 	{
 		if (([readQueue count] == 0) && (currentRead == nil))
 		{
-			if (flags & kDisconnectAfterWrites)
+			if (self.flags & kDisconnectAfterWrites)
 			{
 				if (([writeQueue count] == 0) && (currentWrite == nil))
 				{
@@ -2766,7 +2776,7 @@ enum GCDAsyncSocketConfig
 			}
 		}
 	}
-	else if (flags & kDisconnectAfterWrites)
+	else if (self.flags & kDisconnectAfterWrites)
 	{
 		if (([writeQueue count] == 0) && (currentWrite == nil))
 		{
@@ -2911,7 +2921,7 @@ enum GCDAsyncSocketConfig
 	__block BOOL result = NO;
 	
 	dispatch_block_t block = ^{
-		result = (flags & kSocketStarted) ? NO : YES;
+		result = (self.flags & kSocketStarted) ? NO : YES;
 	};
 	
 	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
@@ -2927,7 +2937,7 @@ enum GCDAsyncSocketConfig
 	__block BOOL result = NO;
 	
 	dispatch_block_t block = ^{
-		result = (flags & kConnected) ? YES : NO;
+		result = (self.flags & kConnected) ? YES : NO;
 	};
 	
 	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
@@ -3320,14 +3330,14 @@ enum GCDAsyncSocketConfig
 {
 	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 	{
-		return (flags & kSocketSecure) ? YES : NO;
+		return (self.flags & kSocketSecure) ? YES : NO;
 	}
 	else
 	{
 		__block BOOL result;
 		
 		dispatch_sync(socketQueue, ^{
-			result = (flags & kSocketSecure) ? YES : NO;
+			result = (self.flags & kSocketSecure) ? YES : NO;
 		});
 		
 		return result;
@@ -3546,7 +3556,7 @@ enum GCDAsyncSocketConfig
 		
 		LogVerbose(@"writeEventBlock");
 		
-		strongSelf->flags |= kSocketCanAcceptBytes;
+		strongSelf.flags |= kSocketCanAcceptBytes;
 		[strongSelf doWriteData];
 		
 	#pragma clang diagnostic pop
@@ -3605,13 +3615,13 @@ enum GCDAsyncSocketConfig
 	// But we should be able to write immediately.
 	
 	socketFDBytesAvailable = 0;
-	flags &= ~kReadSourceSuspended;
+	self.flags &= ~kReadSourceSuspended;
 	
 	LogVerbose(@"dispatch_resume(readSource)");
 	dispatch_resume(readSource);
 	
-	flags |= kSocketCanAcceptBytes;
-	flags |= kWriteSourceSuspended;
+	self.flags |= kSocketCanAcceptBytes;
+	self.flags |= kWriteSourceSuspended;
 }
 
 - (BOOL)usingCFStreamForTLS
@@ -3650,45 +3660,45 @@ enum GCDAsyncSocketConfig
 
 - (void)suspendReadSource
 {
-	if (!(flags & kReadSourceSuspended))
+	if (!(self.flags & kReadSourceSuspended))
 	{
 		LogVerbose(@"dispatch_suspend(readSource)");
 		
 		dispatch_suspend(readSource);
-		flags |= kReadSourceSuspended;
+		self.flags |= kReadSourceSuspended;
 	}
 }
 
 - (void)resumeReadSource
 {
-	if (flags & kReadSourceSuspended)
+	if (self.flags & kReadSourceSuspended)
 	{
 		LogVerbose(@"dispatch_resume(readSource)");
 		
 		dispatch_resume(readSource);
-		flags &= ~kReadSourceSuspended;
+		self.flags &= ~kReadSourceSuspended;
 	}
 }
 
 - (void)suspendWriteSource
 {
-	if (!(flags & kWriteSourceSuspended))
+	if (!(self.flags & kWriteSourceSuspended))
 	{
 		LogVerbose(@"dispatch_suspend(writeSource)");
 		
 		dispatch_suspend(writeSource);
-		flags |= kWriteSourceSuspended;
+		self.flags |= kWriteSourceSuspended;
 	}
 }
 
 - (void)resumeWriteSource
 {
-	if (flags & kWriteSourceSuspended)
+	if (self.flags & kWriteSourceSuspended)
 	{
 		LogVerbose(@"dispatch_resume(writeSource)");
 		
 		dispatch_resume(writeSource);
-		flags &= ~kWriteSourceSuspended;
+		self.flags &= ~kWriteSourceSuspended;
 	}
 }
 
@@ -3732,7 +3742,7 @@ enum GCDAsyncSocketConfig
 		
 		LogTrace();
 		
-		if ((flags & kSocketStarted) && !(flags & kForbidReadsWrites))
+		if ((self.flags & kSocketStarted) && !(self.flags & kForbidReadsWrites))
 		{
 			[readQueue addObject:packet];
 			[self maybeDequeueRead];
@@ -3775,7 +3785,7 @@ enum GCDAsyncSocketConfig
 		
 		LogTrace();
 		
-		if ((flags & kSocketStarted) && !(flags & kForbidReadsWrites))
+		if ((self.flags & kSocketStarted) && !(self.flags & kForbidReadsWrites))
 		{
 			[readQueue addObject:packet];
 			[self maybeDequeueRead];
@@ -3837,7 +3847,7 @@ enum GCDAsyncSocketConfig
 		
 		LogTrace();
 		
-		if ((flags & kSocketStarted) && !(flags & kForbidReadsWrites))
+		if ((self.flags & kSocketStarted) && !(self.flags & kForbidReadsWrites))
 		{
 			[readQueue addObject:packet];
 			[self maybeDequeueRead];
@@ -3908,7 +3918,7 @@ enum GCDAsyncSocketConfig
 	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	
 	// If we're not currently processing a read AND we have an available read stream
-	if ((currentRead == nil) && (flags & kConnected))
+	if ((currentRead == nil) && (self.flags & kConnected))
 	{
 		if ([readQueue count] > 0)
 		{
@@ -3922,7 +3932,7 @@ enum GCDAsyncSocketConfig
 				LogVerbose(@"Dequeued GCDAsyncSpecialPacket");
 				
 				// Attempt to start TLS
-				flags |= kStartingReadTLS;
+				self.flags |= kStartingReadTLS;
 				
 				// This method won't do anything unless both kStartingReadTLS and kStartingWriteTLS are set
 				[self maybeStartTLS];
@@ -3938,9 +3948,9 @@ enum GCDAsyncSocketConfig
 				[self doReadData];
 			}
 		}
-		else if (flags & kDisconnectAfterReads)
+		else if (self.flags & kDisconnectAfterReads)
 		{
-			if (flags & kDisconnectAfterWrites)
+			if (self.flags & kDisconnectAfterWrites)
 			{
 				if (([writeQueue count] == 0) && (currentWrite == nil))
 				{
@@ -3952,7 +3962,7 @@ enum GCDAsyncSocketConfig
 				[self closeWithError:nil];
 			}
 		}
-		else if (flags & kSocketSecure)
+		else if (self.flags & kSocketSecure)
 		{
 			[self flushSSLBuffers];
 			
@@ -3983,7 +3993,7 @@ enum GCDAsyncSocketConfig
 {
 	LogTrace();
 	
-	NSAssert((flags & kSocketSecure), @"Cannot flush ssl buffers on non-secure socket");
+	NSAssert((self.flags & kSocketSecure), @"Cannot flush ssl buffers on non-secure socket");
 	
 	if ([preBuffer availableBytes] > 0)
 	{
@@ -4095,13 +4105,13 @@ enum GCDAsyncSocketConfig
 	// This method is called on the socketQueue.
 	// It might be called directly, or via the readSource when data is available to be read.
 	
-	if ((currentRead == nil) || (flags & kReadsPaused))
+	if ((currentRead == nil) || (self.flags & kReadsPaused))
 	{
 		LogVerbose(@"No currentRead or kReadsPaused");
 		
 		// Unable to read at this time
 		
-		if (flags & kSocketSecure)
+		if (self.flags & kSocketSecure)
 		{
 			// Here's the situation:
 			// 
@@ -4162,7 +4172,7 @@ enum GCDAsyncSocketConfig
 	{
 		estimatedBytesAvailable = socketFDBytesAvailable;
 		
-		if (flags & kSocketSecure)
+		if (self.flags & kSocketSecure)
 		{
 			// There are 2 buffers to be aware of here.
 			// 
@@ -4217,13 +4227,13 @@ enum GCDAsyncSocketConfig
 		return;
 	}
 	
-	if (flags & kStartingReadTLS)
+	if (self.flags & kStartingReadTLS)
 	{
 		LogVerbose(@"Waiting for SSL/TLS handshake to complete");
 		
 		// The readQueue is waiting for SSL/TLS handshake to complete.
 		
-		if (flags & kStartingWriteTLS)
+		if (self.flags & kStartingWriteTLS)
 		{
 			if ([self usingSecureTransportForTLS])
 			{
@@ -4344,7 +4354,7 @@ enum GCDAsyncSocketConfig
 	// STEP 2 - READ FROM SOCKET
 	// 
 	
-	BOOL socketEOF = (flags & kSocketHasReadEOF) ? YES : NO;  // Nothing more to read via socket (end of file)
+	BOOL socketEOF = (self.flags & kSocketHasReadEOF) ? YES : NO;  // Nothing more to read via socket (end of file)
 	BOOL waiting   = !done && !error && !socketEOF && !hasBytesAvailable; // Ran out of data, waiting for more
 	
 	if (!done && !error && !socketEOF && hasBytesAvailable)
@@ -4355,7 +4365,7 @@ enum GCDAsyncSocketConfig
 		uint8_t *buffer = NULL;
 		size_t bytesRead = 0;
 		
-		if (flags & kSocketSecure)
+		if (self.flags & kSocketSecure)
 		{
 			if ([self usingCFStreamForTLS])
 			{
@@ -4844,9 +4854,9 @@ enum GCDAsyncSocketConfig
 	// If the EOF is read while there is still data in the preBuffer,
 	// then this method may be called continually after invocations of doReadData to see if it's time to disconnect.
 	
-	flags |= kSocketHasReadEOF;
+	self.flags |= kSocketHasReadEOF;
 	
-	if (flags & kSocketSecure)
+	if (self.flags & kSocketSecure)
 	{
 		// If the SSL layer has any buffered data, flush it into the preBuffer now.
 		
@@ -4856,7 +4866,7 @@ enum GCDAsyncSocketConfig
 	BOOL shouldDisconnect = NO;
 	NSError *error = nil;
 	
-	if ((flags & kStartingReadTLS) || (flags & kStartingWriteTLS))
+	if ((self.flags & kStartingReadTLS) || (self.flags & kStartingWriteTLS))
 	{
 		// We received an EOF during or prior to startTLS.
 		// The SSL/TLS handshake is now impossible, so this is an unrecoverable situation.
@@ -4868,7 +4878,7 @@ enum GCDAsyncSocketConfig
 			error = [self sslError:errSSLClosedAbort];
 		}
 	}
-	else if (flags & kReadStreamClosed)
+	else if (self.flags & kReadStreamClosed)
 	{
 		// The preBuffer has already been drained.
 		// The config allows half-duplex connections.
@@ -4911,7 +4921,7 @@ enum GCDAsyncSocketConfig
 			// Socket appears to still be writeable
 			
 			shouldDisconnect = NO;
-			flags |= kReadStreamClosed;
+			self.flags |= kReadStreamClosed;
 			
 			// Notify the delegate that we're going half-duplex
 			
@@ -5080,7 +5090,7 @@ enum GCDAsyncSocketConfig
 	// But if we do so synchronously we risk a possible deadlock.
 	// So instead we have to do so asynchronously, and callback to ourselves from within the delegate block.
 	
-	flags |= kReadsPaused;
+	self.flags |= kReadsPaused;
 	
 	__strong id theDelegate = delegate;
 
@@ -5121,7 +5131,7 @@ enum GCDAsyncSocketConfig
 			dispatch_source_set_timer(readTimer, tt, DISPATCH_TIME_FOREVER, 0);
 			
 			// Unpause reads, and continue
-			flags &= ~kReadsPaused;
+			self.flags &= ~kReadsPaused;
 			[self doReadData];
 		}
 		else
@@ -5147,7 +5157,7 @@ enum GCDAsyncSocketConfig
 		
 		LogTrace();
 		
-		if ((flags & kSocketStarted) && !(flags & kForbidReadsWrites))
+		if ((self.flags & kSocketStarted) && !(self.flags & kForbidReadsWrites))
 		{
 			[writeQueue addObject:packet];
 			[self maybeDequeueWrite];
@@ -5212,7 +5222,7 @@ enum GCDAsyncSocketConfig
 	
 	
 	// If we're not currently processing a write AND we have an available write stream
-	if ((currentWrite == nil) && (flags & kConnected))
+	if ((currentWrite == nil) && (self.flags & kConnected))
 	{
 		if ([writeQueue count] > 0)
 		{
@@ -5226,7 +5236,7 @@ enum GCDAsyncSocketConfig
 				LogVerbose(@"Dequeued GCDAsyncSpecialPacket");
 				
 				// Attempt to start TLS
-				flags |= kStartingWriteTLS;
+				self.flags |= kStartingWriteTLS;
 				
 				// This method won't do anything unless both kStartingReadTLS and kStartingWriteTLS are set
 				[self maybeStartTLS];
@@ -5242,9 +5252,9 @@ enum GCDAsyncSocketConfig
 				[self doWriteData];
 			}
 		}
-		else if (flags & kDisconnectAfterWrites)
+		else if (self.flags & kDisconnectAfterWrites)
 		{
-			if (flags & kDisconnectAfterReads)
+			if (self.flags & kDisconnectAfterReads)
 			{
 				if (([readQueue count] == 0) && (currentRead == nil))
 				{
@@ -5265,7 +5275,7 @@ enum GCDAsyncSocketConfig
 	
 	// This method is called by the writeSource via the socketQueue
 	
-	if ((currentWrite == nil) || (flags & kWritesPaused))
+	if ((currentWrite == nil) || (self.flags & kWritesPaused))
 	{
 		LogVerbose(@"No currentWrite or kWritesPaused");
 		
@@ -5281,7 +5291,7 @@ enum GCDAsyncSocketConfig
 			// If the writeSource is firing, we need to pause it
 			// or else it will continue to fire over and over again.
 			
-			if (flags & kSocketCanAcceptBytes)
+			if (self.flags & kSocketCanAcceptBytes)
 			{
 				[self suspendWriteSource];
 			}
@@ -5289,7 +5299,7 @@ enum GCDAsyncSocketConfig
 		return;
 	}
 	
-	if (!(flags & kSocketCanAcceptBytes))
+	if (!(self.flags & kSocketCanAcceptBytes))
 	{
 		LogVerbose(@"No space available to write...");
 		
@@ -5305,13 +5315,13 @@ enum GCDAsyncSocketConfig
 		return;
 	}
 	
-	if (flags & kStartingWriteTLS)
+	if (self.flags & kStartingWriteTLS)
 	{
 		LogVerbose(@"Waiting for SSL/TLS handshake to complete");
 		
 		// The writeQueue is waiting for SSL/TLS handshake to complete.
 		
-		if (flags & kStartingReadTLS)
+		if (self.flags & kStartingReadTLS)
 		{
 			if ([self usingSecureTransportForTLS])
 			{
@@ -5343,7 +5353,7 @@ enum GCDAsyncSocketConfig
 	NSError *error = nil;
 	size_t bytesWritten = 0;
 	
-	if (flags & kSocketSecure)
+	if (self.flags & kSocketSecure)
 	{
 		if ([self usingCFStreamForTLS])
 		{
@@ -5564,7 +5574,7 @@ enum GCDAsyncSocketConfig
 	
 	if (waiting)
 	{
-		flags &= ~kSocketCanAcceptBytes;
+		self.flags &= ~kSocketCanAcceptBytes;
 		
 		if (![self usingCFStreamForTLS])
 		{
@@ -5607,7 +5617,7 @@ enum GCDAsyncSocketConfig
 		{
 			// This would be the case if our write was able to accept some data, but not all of it.
 			
-			flags &= ~kSocketCanAcceptBytes;
+			self.flags &= ~kSocketCanAcceptBytes;
 			
 			if (![self usingCFStreamForTLS])
 			{
@@ -5723,7 +5733,7 @@ enum GCDAsyncSocketConfig
 	// But if we do so synchronously we risk a possible deadlock.
 	// So instead we have to do so asynchronously, and callback to ourselves from within the delegate block.
 	
-	flags |= kWritesPaused;
+	self.flags |= kWritesPaused;
 	
 	__strong id theDelegate = delegate;
 
@@ -5764,7 +5774,7 @@ enum GCDAsyncSocketConfig
 			dispatch_source_set_timer(writeTimer, tt, DISPATCH_TIME_FOREVER, 0);
 			
 			// Unpause writes, and continue
-			flags &= ~kWritesPaused;
+			self.flags &= ~kWritesPaused;
 			[self doWriteData];
 		}
 		else
@@ -5801,12 +5811,12 @@ enum GCDAsyncSocketConfig
 	
 	dispatch_async(socketQueue, ^{ @autoreleasepool {
 		
-		if ((flags & kSocketStarted) && !(flags & kQueuedTLS) && !(flags & kForbidReadsWrites))
+		if ((self.flags & kSocketStarted) && !(self.flags & kQueuedTLS) && !(self.flags & kForbidReadsWrites))
 		{
 			[readQueue addObject:packet];
 			[writeQueue addObject:packet];
 			
-			flags |= kQueuedTLS;
+			self.flags |= kQueuedTLS;
 			
 			[self maybeDequeueRead];
 			[self maybeDequeueWrite];
@@ -5823,7 +5833,7 @@ enum GCDAsyncSocketConfig
 	// 
 	// We'll know these conditions are met when both kStartingReadTLS and kStartingWriteTLS are set
 	
-	if ((flags & kStartingReadTLS) && (flags & kStartingWriteTLS))
+	if ((self.flags & kStartingReadTLS) && (self.flags & kStartingWriteTLS))
 	{
 		BOOL useSecureTransport = YES;
 		
@@ -6020,7 +6030,7 @@ enum GCDAsyncSocketConfig
 
 - (OSStatus)sslWriteWithBuffer:(const void *)buffer length:(size_t *)bufferLength
 {
-	if (!(flags & kSocketCanAcceptBytes))
+	if (!(self.flags & kSocketCanAcceptBytes))
 	{
 		// Unable to write.
 		// 
@@ -6050,11 +6060,11 @@ enum GCDAsyncSocketConfig
 			socketError = YES;
 		}
 		
-		flags &= ~kSocketCanAcceptBytes;
+		self.flags &= ~kSocketCanAcceptBytes;
 	}
 	else if (result == 0)
 	{
-		flags &= ~kSocketCanAcceptBytes;
+		self.flags &= ~kSocketCanAcceptBytes;
 	}
 	else
 	{
@@ -6545,10 +6555,10 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	{
 		LogVerbose(@"SSLHandshake complete");
 		
-		flags &= ~kStartingReadTLS;
-		flags &= ~kStartingWriteTLS;
+		self.flags &= ~kStartingReadTLS;
+		self.flags &= ~kStartingWriteTLS;
 		
-		flags |=  kSocketSecure;
+		self.flags |=  kSocketSecure;
 		
 		__strong id theDelegate = delegate;
 

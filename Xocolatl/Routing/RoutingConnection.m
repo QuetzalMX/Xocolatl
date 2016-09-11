@@ -151,8 +151,13 @@
     {
         NSLog(@"HTTPConnection responding.");
         //We didn't know how to handle it. Perhaps HTTPConnection knows?
-        return [super httpResponseForMethod:method
-                                        URI:path];
+//        return [super httpResponseForMethod:method
+//                                        URI:path];
+        NSData *data = [NSJSONSerialization dataWithJSONObject:@{@"Hello": @"World"}
+                                                       options:0
+                                                         error:nil];
+        return [RoutingResponse responseWithStatus:200
+                                           andData:data];
     }
     
     headers = response.httpHeaders;

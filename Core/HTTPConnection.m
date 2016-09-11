@@ -1659,7 +1659,7 @@ static NSMutableArray *recentNonces;
 - (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path
 {
 	HTTPLogTrace();
-	
+
 	// Override me to provide custom responses.
 	
 	NSString *filePath = [self filePathForURI:path allowDirectory:NO];
