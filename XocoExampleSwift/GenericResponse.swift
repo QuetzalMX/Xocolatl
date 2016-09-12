@@ -52,7 +52,7 @@ extension GenericResponse : Response {
         let responseData = ResponseData(statusCode: code, http: .v1_1)
 
         if let givenBodyData = bodyData {
-            responseData.body = givenBodyData
+            responseData.body = Body(content: givenBodyData)
         }
 
         responseData.setHeaderField(value: "\(contentLength)", forKey: "Content-Length")

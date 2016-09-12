@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: Protocols
 protocol ServerSocketDelegate {
-    func received(incomingRequest: Request)
+    func received(incomingRequest: RequestParser)
 }
 
 // MARK: Lifecycle
@@ -50,7 +50,7 @@ extension ServerSocket : GCDAsyncSocketDelegate {
                                       sslIdentity: sslIdentity,
                                       sslCertificate: sslCertificate)
 
-        let newRequest = Request(socket: newSocket)
+        let newRequest = RequestParser(socket: newSocket)
 
         delegate!.received(incomingRequest: newRequest)
     }

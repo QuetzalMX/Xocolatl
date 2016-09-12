@@ -10,20 +10,20 @@ import Foundation
 // MARK: Protocols
 /// Once a request is either completed or failed to be parsed, it is forwarded to our delegate.
 protocol RequestCompletionDelegate {
-    func reply(request: Request, inSocket: RequestSocket, status: Request.Status)
+    func reply(request: RequestParser, inSocket: RequestSocket, status: RequestParser.Status)
 }
 
 /// Optionally accept the request's body and save it as necessary.
 public protocol RequestBodyParsingDelegate {
-    func shouldAcceptBody(request: Request, method: Method, path: String) -> Bool
-    func willReceiveBody(request: Request, bodySize: Int)
-    func didReceiveBodyChunk(request: Request, data: Data)
-    func didFinishReceivingBody(request: Request)
+    func shouldAcceptBody(request: RequestParser, method: Method, path: String) -> Bool
+    func willReceiveBody(request: RequestParser, bodySize: Int)
+    func didReceiveBodyChunk(request: RequestParser, data: Data)
+    func didFinishReceivingBody(request: RequestParser)
 }
 
 // MARK: Lifecycle
-/// Parses HTTP requests and communicates the response.
-public class Request {
+/// Handles the parsing of information from an internal socket to an actual Request object.
+public class RequestParser {
 
     public fileprivate(set) var data = RequestData()
 
@@ -65,13 +65,13 @@ public class Request {
 }
 
 // MARK: - Read Delegation
-extension Request : RequestSocketReadDelegate {
+extension RequestParser : RequestSocketReadDelegate {
 
     func receivedHeader(data receivedData: Data) {
 
         // Is this a malformed request?
         guard data.append(receivedData) else {
-            requestDelegate!.reply(request: self, inSocket: socket, status: .invalidHeaderDataReceived(receivedData))
+            report(.invalidHeaderDataReceived(receivedData))
             return
         }
 
@@ -93,13 +93,13 @@ extension Request : RequestSocketReadDelegate {
         // Do we have a method?
         let method = data.method
         guard method != .Unknown else {
-            requestDelegate!.reply(request: self, inSocket: socket, status: .noHTTPMethod)
+            report(.noHTTPMethod)
             return
         }
 
         // Do we have a URI?
         guard let uriString = data.url?.relativeString else {
-            requestDelegate!.reply(request: self, inSocket: socket, status: .noURI)
+            report(.noURI)
             return
         }
 
@@ -115,13 +115,13 @@ extension Request : RequestSocketReadDelegate {
             } else {
                 // 2. Not Chunked body
                 guard possibleContentLength != nil else {
-                    requestDelegate!.reply(request: self, inSocket: socket, status: .missingContentLength)
+                    report(.missingContentLength)
                     return
                 }
 
                 guard let givenContentLengthString = possibleContentLength,
                     let givenContentLength = Int(givenContentLengthString) else {
-                        requestDelegate!.reply(request: self, inSocket: socket, status: .invalidContentLength)
+                        report(.invalidContentLength)
                         return
                 }
 
@@ -154,7 +154,7 @@ extension Request : RequestSocketReadDelegate {
                 guard let givenContentLengthString = possibleContentLength,
                     let givenContentLength = Int(givenContentLengthString),
                     givenContentLength == 0 else {
-                        requestDelegate!.reply(request: self, inSocket: socket, status: .unexpectedContentLength)
+                        report(.unexpectedContentLength)
                         return
                 }
             }
@@ -163,7 +163,7 @@ extension Request : RequestSocketReadDelegate {
             contentLengthReceived = 0
         }
 
-        requestDelegate!.reply(request: self, inSocket: socket, status: .success)
+        report(.success)
     }
 
     func receivedChunkSize(data: Data) {
@@ -207,7 +207,7 @@ extension Request : RequestSocketReadDelegate {
         // This should be the CRLF following the data.
         // Just ensure it's a CRLF.
         guard data == GCDAsyncSocket.crlfData() else {
-            requestDelegate!.reply(request: self, inSocket: socket, status: .missingChunkTrailer)
+            report(.missingChunkTrailer)
             return
         }
         
@@ -218,7 +218,7 @@ extension Request : RequestSocketReadDelegate {
 
         headerLines = headerLines + 1
         guard headerLines < 200 else {
-            requestDelegate!.reply(request: self, inSocket: socket, status: .headerLineCountOverflow)
+            overflowDetected()
             return
         }
 
@@ -230,7 +230,7 @@ extension Request : RequestSocketReadDelegate {
         }
 
         bodyParsingDelegate?.didFinishReceivingBody(request: self)
-        requestDelegate!.reply(request: self, inSocket: socket, status: .success)
+        report(.success)
     }
 
     func receivedBody(data: Data) {
@@ -248,17 +248,21 @@ extension Request : RequestSocketReadDelegate {
         }
 
         bodyParsingDelegate?.didFinishReceivingBody(request: self)
-        requestDelegate!.reply(request: self, inSocket: socket, status: .success)
+        report(.success)
     }
 
     private func overflowDetected() {
         socket.stop()
-        requestDelegate!.reply(request: self, inSocket: socket, status: .headerLineCountOverflow)
+        report(.headerLineCountOverflow)
+    }
+
+    private func report(_ status: RequestParser.Status) {
+        requestDelegate!.reply(request: self, inSocket: socket, status: status)
     }
 }
 
 // MARK: - Write Delegation
-extension Request : RequestSocketWriteDelegate {
+extension RequestParser : RequestSocketWriteDelegate {
 
     func didSendResponse() {
         data = RequestData()

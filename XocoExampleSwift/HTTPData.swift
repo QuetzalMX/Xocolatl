@@ -6,6 +6,8 @@
 //  Copyright © 2016 Quetzal. All rights reserved.
 
 import Foundation
+import AppKit
+import Quartz
 
 /// Convenience class for naming purposes.
 public class RequestData : HTTPData {
@@ -25,15 +27,34 @@ public class ResponseData : HTTPData {
         super.init()
         receivedData = CFHTTPMessageCreateResponse(nil, statusCode.value, nil, http.value as CFString).takeRetainedValue()
     }
+
+    override var body: Body {
+        // This is wrong
+        get {
+            let wrongValue = ""
+            guard let data = CFHTTPMessageCopyBody(receivedData)?.takeRetainedValue() as? Data else { return Body(content: Data()) }
+            return Body(content: data)
+        }
+
+        set {
+            CFHTTPMessageSetBody(receivedData, newValue.content as CFData)
+        }
+    }
 }
 
 /// Thin wrapper around Apple's CFHTTPMessage.
 public class HTTPData {
     fileprivate var receivedData: CFHTTPMessage!
+
+    /// This needs to be temporarily here because we cannot override properties from extensions.
+    var body : Body {
+        return Body(content: Data())
+    }
 }
 
 extension HTTPData {
 
+    @discardableResult
     func append(_ data: Data) -> Bool {
         return data.withUnsafeBytes { CFHTTPMessageAppendBytes(receivedData, $0, data.count) }
     }
@@ -43,25 +64,13 @@ extension HTTPData {
     }
 
     func headerField(_ key: String) -> String? {
-        return CFHTTPMessageCopyHeaderFieldValue(receivedData, key as CFString)?.takeRetainedValue() as? String
+        return CFHTTPMessageCopyHeaderFieldValue(receivedData, key.lowercased() as CFString)?.takeRetainedValue() as? String
     }
 
     var rawData : Data {
         guard let unmanagedData = CFHTTPMessageCopySerializedMessage(receivedData) else { return Data() }
 
         return unmanagedData.takeRetainedValue() as Data
-    }
-
-    var body : Data {
-
-        get {
-            guard let data = CFHTTPMessageCopyBody(receivedData)?.takeRetainedValue() as? Data else { return Data() }
-            return data
-        }
-
-        set {
-            CFHTTPMessageSetBody(receivedData, newValue as CFData)
-        }
     }
 
     var headerComplete : Bool {
@@ -89,6 +98,13 @@ extension HTTPData {
     var headerFields : [String: String] {
         guard let headerFields = CFHTTPMessageCopyAllHeaderFields(receivedData)?.takeRetainedValue() as? [String: String] else { return [:] }
         return headerFields
+    }
+}
+
+extension HTTPData {
+
+    var contentType: Body.ContentType {
+        return Body.ContentType(value: headerField("Content-Type"))
     }
 }
 

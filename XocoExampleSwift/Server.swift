@@ -7,17 +7,13 @@
 
 import Foundation
 
-/// The server has two responsibilities:
-/// 1. Listen for incoming requests.
-/// 2. Answer incoming requests.
-///
-/// Once a request is ready to be answered, our delegate will give us a valid response.
 public protocol ServerDelegate {
-    func respond(_ request: Request) -> Response?
+    func respond(_ request: RequestParser) -> Response?
 }
 
 public let ReceivedRequest = Notification.Name("ReceivedRequest")
 
+/// The server handles the lifecycle of Requests.
 public class Server {
 
     /// Handles what happens whenever a Request finishes (success or failure)
@@ -64,7 +60,7 @@ public class Server {
     /// - throws: if the socket cannot begin listening for requests
     public func start(responseDelegate: ServerDelegate, requestBodyParsingDelegate: RequestBodyParsingDelegate? = nil) throws {
         self.responseDelegate = responseDelegate
-        self.requestBodyParsingDelegate = requestBodyParsingDelegate ?? self
+        self.requestBodyParsingDelegate = requestBodyParsingDelegate
         try incomingConnectionsSocket.start(atPort: 3000, delegate: self)
     }
 }
@@ -76,7 +72,7 @@ extension Server : ServerSocketDelegate {
     /// This request has not begun accepting any data. It is our responsibility to start it when we see fit.
     ///
     /// - parameter request: the incoming request
-    internal func received(incomingRequest: Request) {
+    internal func received(incomingRequest: RequestParser) {
         incomingRequest.start(delegate: self, bodyParsingDelegate: self)
     }
 }
@@ -85,7 +81,7 @@ extension Server : ServerSocketDelegate {
 extension Server : RequestCompletionDelegate {
 
     // Result
-    func reply(request: Request, inSocket socket: RequestSocket, status: Request.Status) {
+    func reply(request: RequestParser, inSocket socket: RequestSocket, status: RequestParser.Status) {
 
         NotificationCenter.default.post(name: Notification.Name("ReceivedRequest"),
                                         object: request)
@@ -108,10 +104,10 @@ extension Server : RequestCompletionDelegate {
                        data: response.data.rawData)
 
         let responseBody = response.data.body
-        if !responseBody.isEmpty {
-            socket.respond(.WholeResponse,
-                           data: responseBody)
-        }
+//        if !responseBody.isEmpty {
+//            socket.respond(.WholeResponse,
+//                           data: responseBody)
+//        }
     }
 }
 
@@ -128,7 +124,7 @@ extension Server : RequestBodyParsingDelegate {
     /// - parameter path:    the path of the request
     ///
     /// - returns: true if this request should parse the incoming body
-    public func shouldAcceptBody(request: Request, method: Method, path: String) -> Bool {
+    public func shouldAcceptBody(request: RequestParser, method: Method, path: String) -> Bool {
 
         guard let bodyParsingDelegate = requestBodyParsingDelegate else {
             return (.POST == method || .PUT == method)
@@ -143,7 +139,7 @@ extension Server : RequestBodyParsingDelegate {
     ///
     /// - parameter request:  the request about to receive a body
     /// - parameter bodySize: the size of the body
-    public func willReceiveBody(request: Request, bodySize: Int) {
+    public func willReceiveBody(request: RequestParser, bodySize: Int) {
         requestBodyParsingDelegate?.willReceiveBody(request: request, bodySize: bodySize)
     }
 
@@ -153,10 +149,10 @@ extension Server : RequestBodyParsingDelegate {
     ///
     /// - parameter request: the request that owns the receiving body
     /// - parameter data:    a part or all of the body
-    public func didReceiveBodyChunk(request: Request, data: Data) {
+    public func didReceiveBodyChunk(request: RequestParser, data: Data) {
 
         guard let bodyParsingDelegate = requestBodyParsingDelegate else {
-            let _ = request.data.append(data)
+            request.data.append(data)
             return
         }
 
@@ -167,7 +163,7 @@ extension Server : RequestBodyParsingDelegate {
     /// Default implementation is empty.
     ///
     /// - parameter request: the request that just parsed its body.
-    public func didFinishReceivingBody(request: Request) {
+    public func didFinishReceivingBody(request: RequestParser) {
         requestBodyParsingDelegate?.didFinishReceivingBody(request: request)
     }
 

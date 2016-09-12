@@ -22,7 +22,7 @@ class XocolatlServerDelegate {
 
 extension XocolatlServerDelegate : ServerDelegate {
 
-    func respond(_ request: Request) -> Response? {
-        return GenericResponse(code: .OK, body: request.data.body)
+    func respond(_ request: RequestParser) -> Response? {
+        return GenericResponse(code: .OK, body: request.data.body.content)
     }
 }

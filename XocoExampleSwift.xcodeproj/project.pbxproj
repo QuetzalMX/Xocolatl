@@ -10,6 +10,7 @@
 		C129F8C71D84A74300A7ED60 /* RequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C129F8C61D84A74300A7ED60 /* RequestTableViewController.swift */; };
 		C129F8CD1D84DF7700A7ED60 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C129F8CC1D84DF7700A7ED60 /* GCDAsyncSocket.m */; };
 		C132614C1D84A2B8001A0D5D /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C132614B1D84A2B8001A0D5D /* GenericResponse.swift */; };
+		C198EFE21D8638D900880904 /* RequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = C198EFE11D8638D900880904 /* RequestBody.swift */; };
 		C1F67A131D83B890006EEAE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A121D83B890006EEAE1 /* AppDelegate.swift */; };
 		C1F67A151D83B890006EEAE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1F67A141D83B890006EEAE1 /* Assets.xcassets */; };
 		C1F67A181D83B890006EEAE1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F67A161D83B890006EEAE1 /* MainMenu.xib */; };
@@ -29,6 +30,7 @@
 		C129F8CB1D84DF7700A7ED60 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		C129F8CC1D84DF7700A7ED60 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		C132614B1D84A2B8001A0D5D /* GenericResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
+		C198EFE11D8638D900880904 /* RequestBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestBody.swift; sourceTree = "<group>"; };
 		C1F67A0F1D83B890006EEAE1 /* XocoExampleSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XocoExampleSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1F67A121D83B890006EEAE1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C1F67A141D83B890006EEAE1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				C1F67A231D83B8A5006EEAE1 /* Request.swift */,
 				C1F67A361D83D0DC006EEAE1 /* Response.swift */,
 				C1F67A241D83B8A5006EEAE1 /* HTTPData.swift */,
+				C198EFE11D8638D900880904 /* RequestBody.swift */,
 			);
 			name = Request;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				C129F8C71D84A74300A7ED60 /* RequestTableViewController.swift in Sources */,
 				C1F67A371D83D0DC006EEAE1 /* Response.swift in Sources */,
 				C1F67A131D83B890006EEAE1 /* AppDelegate.swift in Sources */,
+				C198EFE21D8638D900880904 /* RequestBody.swift in Sources */,
 				C1F67A2D1D83B8A5006EEAE1 /* RequestSocket.swift in Sources */,
 				C129F8CD1D84DF7700A7ED60 /* GCDAsyncSocket.m in Sources */,
 				C132614C1D84A2B8001A0D5D /* GenericResponse.swift in Sources */,

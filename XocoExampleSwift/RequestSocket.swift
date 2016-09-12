@@ -26,7 +26,7 @@ protocol RequestSocketWriteDelegate {
 /// Parses HTTP requests and responds to them. Uses a read-write, reusable internal socket.
 class RequestSocket {
 
-    /// All received/sent packets are processed for our delegates.
+    /// All received/sent packets are pre-processed for our delegates' convenience.
     fileprivate(set) var readDelegate: RequestSocketReadDelegate?
     fileprivate(set) var writeDelegate: RequestSocketWriteDelegate?
 
@@ -53,9 +53,8 @@ class RequestSocket {
         internalSocket.delegate = self
         internalSocket.delegateQueue = queue
 
-        // TLS.
         // Starting TLS is asynchronous to us, but the socket is smart enough to queue further reads until we have a TLS connection.
-        // So it's okay if we "begin reading" right away.
+        // So, it's okay if we "begin reading" right away.
         internalSocket.startTLS(settings)
 
         read(.Header)
