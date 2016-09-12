@@ -7,23 +7,17 @@
 
 import Foundation
 
-public protocol ServerDelegate {
-    func respond(_ request: ConnectionHandler) -> HTTPResponsive?
-}
-
-public let ReceivedRequest = Notification.Name("ReceivedRequest")
-
 /// The server handles the lifecycle of Requests.
 public class Server {
 
-    /// Handles what happens whenever a Request finishes (success or failure)
-    fileprivate var responseDelegate: ServerDelegate? = nil
+    /// Handles responses to incoming connections.
+    fileprivate var responseDelegate: ConnectionHandlerDelegate!
 
-    /// Handles incoming connections from clients.
-    fileprivate let incomingConnectionsSocket: ServerSocket
+    /// Optionally handles the body parsing of requests.
+    fileprivate var bodyParsingDelegate: RequestBodyParsingDelegate?
 
-    /// Handles the parsing of any incoming request's body.
-    fileprivate var requestBodyParsingDelegate: RequestBodyParsingDelegate?
+    /// Handles parsingg of incoming connections from clients.
+    private let incomingConnectionsSocket: ServerSocket
 
     init(certificatePath: String, certificatePassword: String) throws {
 
@@ -58,14 +52,15 @@ public class Server {
     /// - parameter responseDelegate: provides a Response to requests we receive
     ///
     /// - throws: if the socket cannot begin listening for requests
-    public func start(responseDelegate: ServerDelegate, requestBodyParsingDelegate: RequestBodyParsingDelegate? = nil) throws {
+    public func start(responseDelegate: ConnectionHandlerDelegate, requestBodyParsingDelegate: RequestBodyParsingDelegate? = nil) throws {
         self.responseDelegate = responseDelegate
-        self.requestBodyParsingDelegate = requestBodyParsingDelegate
+        self.bodyParsingDelegate = requestBodyParsingDelegate
+
         try incomingConnectionsSocket.start(atPort: 3000, delegate: self)
     }
 }
 
-//MARK: Incoming REquests
+//MARK: Incoming Requests
 extension Server : ServerSocketDelegate {
 
     /// Once the socket received a request, it'll put it in a package and deliver it to us.
@@ -73,98 +68,6 @@ extension Server : ServerSocketDelegate {
     ///
     /// - parameter request: the incoming request
     internal func received(incomingRequest: ConnectionHandler) {
-        incomingRequest.beginParsing(delegate: self, bodyParsingDelegate: self)
+        incomingRequest.beginParsing(delegate: responseDelegate, bodyParsingDelegate: bodyParsingDelegate)
     }
-}
-
-//MARK: - Responding to Requests
-extension Server : RequestCompletionDelegate {
-
-    // Result
-    func reply(request: ConnectionHandler, inSocket socket: RequestSocket, status: ConnectionHandler.Status) {
-
-        NotificationCenter.default.post(name: Notification.Name("ReceivedRequest"),
-                                        object: request)
-
-        // Could we parse the request?
-        guard case .success = status else {
-            return
-        }
-
-        // We could. Respond.
-        guard let response = responseDelegate?.respond(request.data) else {
-            // Our delegate won't respond. 500.
-            let invalidRequest = GenericResponse(code: .GenericServerError, body: nil)
-            socket.respond(.PartialHeaders, data: invalidRequest.data.rawData)
-            return
-        }
-
-        // Write the header response.
-        socket.respond(.PartialHeaders,
-                       data: response.receivedData.rawData)
-
-        let responseBody = response.receivedData.body
-//        if !responseBody.isEmpty {
-//            socket.respond(.WholeResponse,
-//                           data: responseBody)
-//        }
-    }
-}
-
-//MARK: - Parsing Request Body
-
-/// The server will forward all of these methods to the requestBodyParsingDelegate if it exists.
-extension Server : RequestBodyParsingDelegate {
-
-    /// Once a request is received and the headers parsed, it requests instructions regarding parssing or ignoring the incoming body.
-    /// Default behavior is to accept body for POST and PUT requests.
-    ///
-    /// - parameter request: the request that would own the body
-    /// - parameter method:  the type of request
-    /// - parameter path:    the path of the request
-    ///
-    /// - returns: true if this request should parse the incoming body
-    public func shouldAcceptBody(request: ConnectionHandler, method: Method, path: String) -> Bool {
-
-        guard let bodyParsingDelegate = requestBodyParsingDelegate else {
-            return (.POST == method || .PUT == method)
-        }
-
-        return bodyParsingDelegate.shouldAcceptBody(request: request, method: method, path: path)
-    }
-
-    /// This method is called after receiving all HTTP headers, but before reading any of the request body.
-    /// You should allocate buffers, file handles, or whatever you need to process a body of this length.
-    /// Default behavior is empty.
-    ///
-    /// - parameter request:  the request about to receive a body
-    /// - parameter bodySize: the size of the body
-    public func willReceiveBody(request: ConnectionHandler, bodySize: Int) {
-        requestBodyParsingDelegate?.willReceiveBody(request: request, bodySize: bodySize)
-    }
-
-    /// Called whenever a piece of the body (which may be the entirety of the body) is received.
-    /// This method may be called multiple times for the same request if the body is more than one chunk of data.
-    /// Default behavior is to append the data to the request.
-    ///
-    /// - parameter request: the request that owns the receiving body
-    /// - parameter data:    a part or all of the body
-    public func didReceiveBodyChunk(request: ConnectionHandler, data: Data) {
-
-        guard let bodyParsingDelegate = requestBodyParsingDelegate else {
-            request.data.append(data)
-            return
-        }
-
-        bodyParsingDelegate.didReceiveBodyChunk(request: request, data: data)
-    }
-
-    /// Once the body has been parsed, clean up here if needed.
-    /// Default implementation is empty.
-    ///
-    /// - parameter request: the request that just parsed its body.
-    public func didFinishReceivingBody(request: ConnectionHandler) {
-        requestBodyParsingDelegate?.didFinishReceivingBody(request: request)
-    }
-
 }

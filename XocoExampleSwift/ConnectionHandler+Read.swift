@@ -1,81 +1,19 @@
 //
-//  Request.swift
-//  Xocolatl
+//  ConnectionHandler+Read.swift
+//  XocoExampleSwift
 //
-//  Created by Fernando Olivares on 9/7/16.
+//  Created by Fernando Olivares on 9/11/16.
 //  Copyright © 2016 Quetzal. All rights reserved.
+//
 
 import Foundation
 
-// MARK: Protocols
-/// Once a request is either completed or failed to be parsed, it is forwarded to our delegate.
-protocol RequestCompletionDelegate {
-    func reply(request: Request, fromHandler handler: ConnectionHandler)
-}
-
-/// Optionally accept the request's body and save it as necessary.
-public protocol RequestBodyParsingDelegate {
-    func shouldAcceptBody(request: ConnectionHandler, method: Method, path: String) -> Bool
-    func willReceiveBody(request: ConnectionHandler, bodySize: Int)
-    func didReceiveBodyChunk(request: ConnectionHandler, data: Data)
-    func didFinishReceivingBody(request: ConnectionHandler)
-}
-
-// MARK: Lifecycle
-/// Handles the parsing of information from an internal socket to an actual Request object.
-public class ConnectionHandler {
-
-    public fileprivate(set) var data = Request()
-
-    var status: Status
-    internal enum Status {
-        case success
-        case waiting
-        case parsing
-        case headerLineCountOverflow
-        case invalidHeaderDataReceived(Data)
-        case noHTTPMethod
-        case noURI
-        case missingContentLength
-        case missingChunkTrailer
-        case unexpectedContentLength
-        case invalidContentLength
-        case invalidChunkSize
-        case unknown(method: Method, atUri: String)
-    }
-
-    internal var headerLines = 0
-    internal var contentLength = 0
-    internal var contentLengthReceived = 0
-    internal var chunkSize: UInt64 = 0
-    internal var chunkSizeReceived: UInt64 = 0
-
-    fileprivate var requestDelegate: RequestCompletionDelegate?
-    fileprivate var bodyParsingDelegate: RequestBodyParsingDelegate?
-    fileprivate let socket: RequestSocket
-
-    init(socket: RequestSocket) {
-        self.socket = socket
-        status = .waiting
-    }
-
-    func beginParsing(delegate: RequestCompletionDelegate, bodyParsingDelegate: RequestBodyParsingDelegate?) {
-        self.requestDelegate = delegate
-        self.bodyParsingDelegate = bodyParsingDelegate
-        socket.start(readDelegate: self, writeDelegate: self, queue: DispatchQueue(label: "RequestSocketQueue"))
-        status = .parsing
-    }
-
-    /// Missing a stop function here.
-}
-
-// MARK: - Read Delegation
 extension ConnectionHandler : RequestSocketReadDelegate {
 
     func receivedHeader(data receivedData: Data) {
 
         // Is this a malformed request?
-        guard data.append(receivedData) else {
+        guard data.appendHeaderData(receivedData) else {
             report(.invalidHeaderDataReceived(receivedData))
             return
         }
@@ -112,7 +50,12 @@ extension ConnectionHandler : RequestSocketReadDelegate {
         let possibleContentLength = data.headerField("Content-Length")
 
         // Are we expecting a body?
-        if let expectsBody = bodyParsingDelegate?.shouldAcceptBody(request: self, method: method, path: uriString), expectsBody {
+        var expectsBody = (.POST == method || .PUT == method)
+        if let delegateExpectsBody = bodyParsingDelegate?.shouldAcceptBody(request: self, method: method, path: uriString) {
+            expectsBody = delegateExpectsBody
+        }
+
+        if expectsBody {
 
             if let transferEncoding = possibleTransferEncoding, transferEncoding.caseInsensitiveCompare("Chunked") != .orderedSame {
                 // 1. Chunked body
@@ -134,6 +77,7 @@ extension ConnectionHandler : RequestSocketReadDelegate {
             }
 
             contentLengthReceived = 0;
+
             bodyParsingDelegate?.willReceiveBody(request: self, bodySize: contentLength)
 
             // Does the body have length?
@@ -194,7 +138,11 @@ extension ConnectionHandler : RequestSocketReadDelegate {
         contentLengthReceived = contentLengthReceived + data.count
         chunkSizeReceived = chunkSizeReceived + UInt64(data.count)
 
-        bodyParsingDelegate?.didReceiveBodyChunk(request: self, data: data)
+        if let assignedBodyParsingDelegate = bodyParsingDelegate {
+            assignedBodyParsingDelegate.didReceiveBodyChunk(request: self, data: data)
+        } else {
+            self.data.appendHeaderData(data)
+        }
 
         let bytesLeft = chunkSize - chunkSizeReceived
         if bytesLeft > 0 {
@@ -208,17 +156,17 @@ extension ConnectionHandler : RequestSocketReadDelegate {
     }
 
     func receivedChunkTrailer(data: Data) {
-        
+
         // This should be the CRLF following the data.
         // Just ensure it's a CRLF.
         guard data == GCDAsyncSocket.crlfData() else {
             report(.missingChunkTrailer)
             return
         }
-        
+
         socket.read(.ChunkSize)
     }
-    
+
     func receivedChunkFooter(data: Data) {
 
         headerLines = headerLines + 1
@@ -251,42 +199,18 @@ extension ConnectionHandler : RequestSocketReadDelegate {
             socket.read(.Body(bytesToRead: bytesToRead))
             return
         }
-
+        
         bodyParsingDelegate?.didFinishReceivingBody(request: self)
         report(.success)
     }
-
+    
     private func overflowDetected() {
         socket.stop()
         report(.headerLineCountOverflow)
     }
-
+    
     private func report(_ status: ConnectionHandler.Status) {
         self.status = status
-        requestDelegate!.reply(request: data, fromHandler: self)
+        delegate!.reply(request: data, fromHandler: self)
     }
-}
-
-// MARK: - Write Delegation
-extension ConnectionHandler : RequestSocketWriteDelegate {
-
-    func didSendResponse() {
-        data = Request()
-        headerLines = 0
-        contentLength = 0
-        contentLengthReceived = 0
-        chunkSize = 0
-        chunkSizeReceived = 0
-
-    }
-}
-
-// MARK: - Enums
-public enum Method : String {
-    case HEAD
-    case GET
-    case POST
-    case PUT
-    case DELETE
-    case Unknown
 }

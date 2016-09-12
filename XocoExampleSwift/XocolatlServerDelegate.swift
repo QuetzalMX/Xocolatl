@@ -20,9 +20,28 @@ class XocolatlServerDelegate {
     }
 }
 
-extension XocolatlServerDelegate : ServerDelegate {
+//MARK: - Responding to Requests
+extension XocolatlServerDelegate : ConnectionHandlerDelegate {
 
-    func respond(_ request: ConnectionHandler) -> HTTPResponsive? {
-        return GenericResponse(code: .OK, body: request.data.body.content)
+    // Result
+    public func reply(request: Request, fromHandler handler: ConnectionHandler) {
+
+        NotificationCenter.default.post(name: Notification.Name("ReceivedRequest"),
+                                        object: request)
+
+        // Could we parse the request?
+        guard case .success = handler.status else {
+            return
+        }
+
+        // We could. Respond.
+//        guard let response = responseDelegate?.respond(request) else {
+//            // Our delegate won't respond. 500.
+//            let invalidRequest = GenericResponse(code: .GenericServerError, body: nil)
+//            handler.respond(with: invalidRequest)
+//            return
+//        }
+
+//        handler.respond(with: response)
     }
 }

@@ -9,22 +9,30 @@ import Foundation
 import AppKit
 import Quartz
 
-/// Thin wrapper around Apple's CFHTTPMessage.
-public class HTTPData {
-    var rawData: CFHTTPMessage!
-
-    /// This needs to be temporarily here because we cannot override properties from extensions.
-    var body : Body {
-        return Body(content: Data())
-    }
-}
-
 /// Convenience class for naming purposes.
 public class Request : HTTPData {
 
     override init() {
         super.init()
-        rawData = CFHTTPMessageCreateEmpty(nil, true).takeRetainedValue()
+        headerData = CFHTTPMessageCreateEmpty(nil, true).takeRetainedValue()
+    }
+
+    var body : Body {
+        return Body(content: Data())
+    }
+
+    var method : Method {
+
+        guard
+            let methodString = CFHTTPMessageCopyRequestMethod(headerData)?.takeRetainedValue() as? String,
+            let method = Method(rawValue: methodString)
+            else { return .Unknown }
+
+        return method
+    }
+
+    var contentType: Body.ContentType {
+        return Body.ContentType(value: headerField("Content-Type"))
     }
 }
 
@@ -35,76 +43,49 @@ public class Response : HTTPData {
     init(statusCode: StatusCode, http: HTTPVersion) {
         self.statusCode = statusCode
         super.init()
-        rawData = CFHTTPMessageCreateResponse(nil, statusCode.value, nil, http.value as CFString).takeRetainedValue()
-    }
-
-    override var body: Body {
-        // This is wrong
-        get {
-            let wrongValue = ""
-            guard let data = CFHTTPMessageCopyBody(rawData)?.takeRetainedValue() as? Data else { return Body(content: Data()) }
-            return Body(content: data)
-        }
-
-        set {
-            CFHTTPMessageSetBody(rawData, newValue.content as CFData)
-        }
-    }
-}
-
-extension HTTPData {
-
-    @discardableResult
-    func append(_ data: Data) -> Bool {
-        return data.withUnsafeBytes { CFHTTPMessageAppendBytes(rawData, $0, data.count) }
+        headerData = CFHTTPMessageCreateResponse(nil, statusCode.value, nil, http.value as CFString).takeRetainedValue()
     }
 
     func setHeaderField(value: String, forKey key: String) {
-        CFHTTPMessageSetHeaderFieldValue(rawData, key as CFString, value as CFString)
-    }
-
-    func headerField(_ key: String) -> String? {
-        return CFHTTPMessageCopyHeaderFieldValue(rawData, key.lowercased() as CFString)?.takeRetainedValue() as? String
-    }
-
-    var rawData : Data {
-        guard let unmanagedData = CFHTTPMessageCopySerializedMessage(rawData) else { return Data() }
-
-        return unmanagedData.takeRetainedValue() as Data
-    }
-
-    var headerComplete : Bool {
-        return CFHTTPMessageIsHeaderComplete(rawData)
-    }
-
-    var version : String? {
-        return CFHTTPMessageCopyVersion(rawData).takeRetainedValue() as String
-    }
-
-    var method : Method {
-
-        guard
-            let methodString = CFHTTPMessageCopyRequestMethod(rawData)?.takeRetainedValue() as? String,
-            let method = Method(rawValue: methodString)
-            else { return .Unknown }
-
-        return method
-    }
-
-    var url : URL? {
-        return CFHTTPMessageCopyRequestURL(rawData)?.takeRetainedValue() as? URL
-    }
-
-    var headerFields : [String: String] {
-        guard let headerFields = CFHTTPMessageCopyAllHeaderFields(rawData)?.takeRetainedValue() as? [String: String] else { return [:] }
-        return headerFields
+        CFHTTPMessageSetHeaderFieldValue(headerData, key as CFString, value as CFString)
     }
 }
 
+/// Thin wrapper around Apple's CFHTTPMessage.
+public class HTTPData {
+    var headerData: CFHTTPMessage!
+}
+
+/// Headers
 extension HTTPData {
 
-    var contentType: Body.ContentType {
-        return Body.ContentType(value: headerField("Content-Type"))
+    @discardableResult
+    func appendHeaderData(_ data: Data) -> Bool {
+        return data.withUnsafeBytes { CFHTTPMessageAppendBytes(headerData, $0, data.count) }
+    }
+
+    func headerField(_ key: String) -> String? {
+        return CFHTTPMessageCopyHeaderFieldValue(headerData, key.lowercased() as CFString)?.takeRetainedValue() as? String
+    }
+
+    var headerComplete : Bool {
+        return CFHTTPMessageIsHeaderComplete(headerData)
+    }
+
+    var headerFields : [String: String] {
+        guard let headerFields = CFHTTPMessageCopyAllHeaderFields(headerData)?.takeRetainedValue() as? [String: String] else {
+            return [:]
+        }
+
+        return headerFields
+    }
+
+    var version : String? {
+        return CFHTTPMessageCopyVersion(headerData).takeRetainedValue() as String
+    }
+
+    var url : URL? {
+        return CFHTTPMessageCopyRequestURL(headerData)?.takeRetainedValue() as? URL
     }
 }
 
