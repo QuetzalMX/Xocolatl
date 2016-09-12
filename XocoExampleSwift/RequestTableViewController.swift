@@ -10,7 +10,7 @@ import Cocoa
 
 class RequestTableViewController: NSObject {
 
-    var requests = [RequestParser]()
+    var requests = [ConnectionHandler]()
     @IBOutlet weak var tableView: NSTableView!
 
     override init() {
@@ -23,7 +23,7 @@ class RequestTableViewController: NSObject {
     }
 
     func updateTableView(notification: Notification) {
-        guard let receivedRequest = notification.object as? RequestParser else { return }
+        guard let receivedRequest = notification.object as? ConnectionHandler else { return }
 
         DispatchQueue.main.async {
             self.requests.append(receivedRequest)

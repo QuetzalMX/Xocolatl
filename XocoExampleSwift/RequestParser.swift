@@ -10,25 +10,28 @@ import Foundation
 // MARK: Protocols
 /// Once a request is either completed or failed to be parsed, it is forwarded to our delegate.
 protocol RequestCompletionDelegate {
-    func reply(request: RequestParser, inSocket: RequestSocket, status: RequestParser.Status)
+    func reply(request: Request, fromHandler handler: ConnectionHandler)
 }
 
 /// Optionally accept the request's body and save it as necessary.
 public protocol RequestBodyParsingDelegate {
-    func shouldAcceptBody(request: RequestParser, method: Method, path: String) -> Bool
-    func willReceiveBody(request: RequestParser, bodySize: Int)
-    func didReceiveBodyChunk(request: RequestParser, data: Data)
-    func didFinishReceivingBody(request: RequestParser)
+    func shouldAcceptBody(request: ConnectionHandler, method: Method, path: String) -> Bool
+    func willReceiveBody(request: ConnectionHandler, bodySize: Int)
+    func didReceiveBodyChunk(request: ConnectionHandler, data: Data)
+    func didFinishReceivingBody(request: ConnectionHandler)
 }
 
 // MARK: Lifecycle
 /// Handles the parsing of information from an internal socket to an actual Request object.
-public class RequestParser {
+public class ConnectionHandler {
 
-    public fileprivate(set) var data = RequestData()
+    public fileprivate(set) var data = Request()
 
+    var status: Status
     internal enum Status {
         case success
+        case waiting
+        case parsing
         case headerLineCountOverflow
         case invalidHeaderDataReceived(Data)
         case noHTTPMethod
@@ -53,19 +56,21 @@ public class RequestParser {
 
     init(socket: RequestSocket) {
         self.socket = socket
+        status = .waiting
     }
 
-    func start(delegate: RequestCompletionDelegate, bodyParsingDelegate: RequestBodyParsingDelegate?) {
+    func beginParsing(delegate: RequestCompletionDelegate, bodyParsingDelegate: RequestBodyParsingDelegate?) {
         self.requestDelegate = delegate
         self.bodyParsingDelegate = bodyParsingDelegate
         socket.start(readDelegate: self, writeDelegate: self, queue: DispatchQueue(label: "RequestSocketQueue"))
+        status = .parsing
     }
 
     /// Missing a stop function here.
 }
 
 // MARK: - Read Delegation
-extension RequestParser : RequestSocketReadDelegate {
+extension ConnectionHandler : RequestSocketReadDelegate {
 
     func receivedHeader(data receivedData: Data) {
 
@@ -256,16 +261,17 @@ extension RequestParser : RequestSocketReadDelegate {
         report(.headerLineCountOverflow)
     }
 
-    private func report(_ status: RequestParser.Status) {
-        requestDelegate!.reply(request: self, inSocket: socket, status: status)
+    private func report(_ status: ConnectionHandler.Status) {
+        self.status = status
+        requestDelegate!.reply(request: data, fromHandler: self)
     }
 }
 
 // MARK: - Write Delegation
-extension RequestParser : RequestSocketWriteDelegate {
+extension ConnectionHandler : RequestSocketWriteDelegate {
 
     func didSendResponse() {
-        data = RequestData()
+        data = Request()
         headerLines = 0
         contentLength = 0
         contentLengthReceived = 0

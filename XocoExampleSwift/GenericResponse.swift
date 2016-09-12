@@ -30,7 +30,7 @@ class GenericResponse {
     }()
 }
 
-extension GenericResponse : Response {
+extension GenericResponse : HTTPResponsive {
 
     var statusCode: StatusCode { return code }
 
@@ -48,7 +48,7 @@ extension GenericResponse : Response {
 
     var additionalHeaders: [String: String] { return [:] }
 
-    var data: ResponseData {
+    var data: Response {
         let responseData = ResponseData(statusCode: code, http: .v1_1)
 
         if let givenBodyData = bodyData {

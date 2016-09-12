@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol ServerDelegate {
-    func respond(_ request: RequestParser) -> Response?
+    func respond(_ request: ConnectionHandler) -> HTTPResponsive?
 }
 
 public let ReceivedRequest = Notification.Name("ReceivedRequest")
@@ -72,8 +72,8 @@ extension Server : ServerSocketDelegate {
     /// This request has not begun accepting any data. It is our responsibility to start it when we see fit.
     ///
     /// - parameter request: the incoming request
-    internal func received(incomingRequest: RequestParser) {
-        incomingRequest.start(delegate: self, bodyParsingDelegate: self)
+    internal func received(incomingRequest: ConnectionHandler) {
+        incomingRequest.beginParsing(delegate: self, bodyParsingDelegate: self)
     }
 }
 
@@ -81,7 +81,7 @@ extension Server : ServerSocketDelegate {
 extension Server : RequestCompletionDelegate {
 
     // Result
-    func reply(request: RequestParser, inSocket socket: RequestSocket, status: RequestParser.Status) {
+    func reply(request: ConnectionHandler, inSocket socket: RequestSocket, status: ConnectionHandler.Status) {
 
         NotificationCenter.default.post(name: Notification.Name("ReceivedRequest"),
                                         object: request)
@@ -92,7 +92,7 @@ extension Server : RequestCompletionDelegate {
         }
 
         // We could. Respond.
-        guard let response = responseDelegate?.respond(request) else {
+        guard let response = responseDelegate?.respond(request.data) else {
             // Our delegate won't respond. 500.
             let invalidRequest = GenericResponse(code: .GenericServerError, body: nil)
             socket.respond(.PartialHeaders, data: invalidRequest.data.rawData)
@@ -101,9 +101,9 @@ extension Server : RequestCompletionDelegate {
 
         // Write the header response.
         socket.respond(.PartialHeaders,
-                       data: response.data.rawData)
+                       data: response.receivedData.rawData)
 
-        let responseBody = response.data.body
+        let responseBody = response.receivedData.body
 //        if !responseBody.isEmpty {
 //            socket.respond(.WholeResponse,
 //                           data: responseBody)
@@ -124,7 +124,7 @@ extension Server : RequestBodyParsingDelegate {
     /// - parameter path:    the path of the request
     ///
     /// - returns: true if this request should parse the incoming body
-    public func shouldAcceptBody(request: RequestParser, method: Method, path: String) -> Bool {
+    public func shouldAcceptBody(request: ConnectionHandler, method: Method, path: String) -> Bool {
 
         guard let bodyParsingDelegate = requestBodyParsingDelegate else {
             return (.POST == method || .PUT == method)
@@ -139,7 +139,7 @@ extension Server : RequestBodyParsingDelegate {
     ///
     /// - parameter request:  the request about to receive a body
     /// - parameter bodySize: the size of the body
-    public func willReceiveBody(request: RequestParser, bodySize: Int) {
+    public func willReceiveBody(request: ConnectionHandler, bodySize: Int) {
         requestBodyParsingDelegate?.willReceiveBody(request: request, bodySize: bodySize)
     }
 
@@ -149,7 +149,7 @@ extension Server : RequestBodyParsingDelegate {
     ///
     /// - parameter request: the request that owns the receiving body
     /// - parameter data:    a part or all of the body
-    public func didReceiveBodyChunk(request: RequestParser, data: Data) {
+    public func didReceiveBodyChunk(request: ConnectionHandler, data: Data) {
 
         guard let bodyParsingDelegate = requestBodyParsingDelegate else {
             request.data.append(data)
@@ -163,7 +163,7 @@ extension Server : RequestBodyParsingDelegate {
     /// Default implementation is empty.
     ///
     /// - parameter request: the request that just parsed its body.
-    public func didFinishReceivingBody(request: RequestParser) {
+    public func didFinishReceivingBody(request: ConnectionHandler) {
         requestBodyParsingDelegate?.didFinishReceivingBody(request: request)
     }
 

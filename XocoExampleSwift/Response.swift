@@ -7,10 +7,10 @@
 
 import Foundation
 
-public protocol Response {
+public protocol HTTPResponsive {
 
     /// The underlying HTTP message
-    var data: ResponseData { get }
+    var data: Response { get }
 
     /// If you don't know the length in advance, implement the isChunked method and have it return YES.
     var contentLength: UInt { get }
