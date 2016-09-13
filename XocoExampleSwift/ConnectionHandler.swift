@@ -16,64 +16,106 @@ public enum Method : String {
     case Unknown
 }
 
+enum ContentType {
+
+    case URLEncoded
+    case JSON
+    case PDF
+    case FormData
+    case Text
+    case Image
+    case Other(_: String)
+
+    init(value: String?) {
+
+        guard let caseInsensitiveValue = value?.lowercased() else {
+            self = .Other("")
+            return
+        }
+
+        if caseInsensitiveValue.contains("json") {
+            self = .JSON
+        } else if caseInsensitiveValue.contains("x-www-form-urlencoded") {
+            self = .URLEncoded
+        } else if caseInsensitiveValue.contains("pdf") {
+            self = .PDF
+        } else if caseInsensitiveValue.contains("multipart/form-data") {
+            self = .FormData
+        } else if caseInsensitiveValue.contains("text/") {
+            self = .Text
+        } else if caseInsensitiveValue.contains("image/png") {
+            self = .Image
+        } else {
+            self = .Other(caseInsensitiveValue)
+        }
+    }
+}
+
 /// Handles the parsing of information from an internal socket to an actual Request object.
 public class ConnectionHandler {
 
-    /// This is the actual HTTP request. The goal is to make this as complete as possible.
-    internal var data = Request()
+    /// This is a wrapper around the HTTP request. The goal is to make this as complete as possible.
+    internal var request = Request()
 
-    /// Did we manage to parse it?
+    /// Since this handler is reused, this status changes constantly.
     var status: Status
     internal enum Status {
-        case created
+        /// We're waiting for requests
+        case listening
+
+        /// Should be in this state when reading and until we either fail or report success.
         case parsing
 
-        /// Results
-        case success
-        case headerLineCountOverflow
-        case invalidHeaderDataReceived(Data)
-        case noHTTPMethod
-        case noURI
-        case missingContentLength
-        case missingChunkTrailer
-        case unexpectedContentLength
-        case invalidContentLength
-        case invalidChunkSize
-        case unknown(method: Method, atUri: String)
+        /// We're out of commission.
+        case stopped
     }
 
-    /// Used when parsing.
-    internal var headerLines = 0
-    internal var contentLength = 0
-    internal var contentLengthReceived = 0
-    internal var chunkSize: UInt64 = 0
-    internal var chunkSizeReceived: UInt64 = 0
+    /// Notified when `request` is ready to be responded to or if we failed to parse it.
+    internal var delegate: RequestDelegate?
 
-    /// Our delegates
-    internal var delegate: ConnectionHandlerDelegate?
+    /// Optionally notified whenever we need a different way to parse the request's body.
     internal var bodyParsingDelegate: RequestBodyParsingDelegate?
 
     /// Internal socket
-    internal let socket: RequestSocket
+    fileprivate let socket: RequestSocket
 
+    /// We do not create our own sockets, we only handle sockets that the Server has created for us.
+    ///
+    /// - parameter socket: a socket that the Server has created for us
+    ///
+    /// - returns: a ConnectionHandler ready to start parsing
     init(socket: RequestSocket) {
         self.socket = socket
-        status = .created
+        status = .stopped
     }
-    
-    func beginParsing(delegate: ConnectionHandlerDelegate, bodyParsingDelegate: RequestBodyParsingDelegate?) {
+}
+
+extension ConnectionHandler {
+
+    /// Start listening for requests (i.e. data) coming from the socket.
+    ///
+    /// - parameter delegate:            notified whenever we're done
+    /// - parameter bodyParsingDelegate: optionally notified regarding parsing the incoming requests' body
+    func beginParsing(delegate: RequestDelegate, bodyParsingDelegate: RequestBodyParsingDelegate?) {
+
+        guard Status.parsing != status else { return }
+        status = .parsing
+
         self.delegate = delegate
         self.bodyParsingDelegate = bodyParsingDelegate
+        socket.start(readDelegate: self,
+                     writeDelegate: self,
+                     queue: DispatchQueue(label: "RequestSocketQueue"))
+    }
 
-        socket.start(readDelegate: self, writeDelegate: self, queue: DispatchQueue(label: "RequestSocketQueue"))
-
-        status = .parsing
+    func read(_ part: HTTPPart.Request) {
+        socket.read(part)
     }
 
     func respond(with response: HTTPResponsive) {
         // Write the header response.
 //        socket.respond(.PartialHeaders,
-//                       data: response.receivedData.rawData)
+//                       data: response.data.rawData)
 //
 //        let responseBody = response.receivedData.body
 //        if !responseBody.isEmpty {
@@ -82,5 +124,8 @@ public class ConnectionHandler {
 //        }
     }
 
-    /// Missing a stop function here.
+    func closeConnection() {
+        socket.stop()
+        status = .stopped
+    }
 }

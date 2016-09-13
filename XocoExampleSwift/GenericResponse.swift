@@ -14,7 +14,7 @@ class GenericResponse {
 
     fileprivate var offset = 0
 
-    init(code: StatusCode, body: Data?) {
+    init(_ code: StatusCode, body: Data? = nil) {
         self.code = code
         bodyData = body
     }

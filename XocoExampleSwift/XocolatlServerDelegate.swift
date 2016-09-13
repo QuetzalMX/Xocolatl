@@ -12,36 +12,27 @@ class XocolatlServerDelegate {
 
     private lazy var server: Server = {
         let path = Bundle.main.path(forResource: "dev.quetzal.io", ofType: ".p12")!
-        return try! Server(certificatePath: path, certificatePassword: "alderaan19")
+        let serverConfig = ServerConfiguration(requestDelegate: self, certificatePath: path, certificatePassword: "alderaan19")
+        return try! Server(configuration: serverConfig)
     }()
 
     func startServer() {
-        try! server.start(responseDelegate: self)
+        try! server.start(listeningAtPort: 3000)
     }
 }
 
 //MARK: - Responding to Requests
-extension XocolatlServerDelegate : ConnectionHandlerDelegate {
+extension XocolatlServerDelegate : RequestDelegate {
 
-    // Result
-    public func reply(request: Request, fromHandler handler: ConnectionHandler) {
-
-        NotificationCenter.default.post(name: Notification.Name("ReceivedRequest"),
-                                        object: request)
+    func reply(toRequest request: Request) -> HTTPResponsive {
 
         // Could we parse the request?
-        guard case .success = handler.status else {
-            return
+        guard case .success = request.status else {
+            return GenericResponse(.GenericClientError)
         }
 
         // We could. Respond.
-//        guard let response = responseDelegate?.respond(request) else {
-//            // Our delegate won't respond. 500.
-//            let invalidRequest = GenericResponse(code: .GenericServerError, body: nil)
-//            handler.respond(with: invalidRequest)
-//            return
-//        }
-
-//        handler.respond(with: response)
+        // Ask our router for the response to this request.
+        return GenericResponse(.OK)
     }
 }

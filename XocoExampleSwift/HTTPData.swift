@@ -9,59 +9,25 @@ import Foundation
 import AppKit
 import Quartz
 
-/// Convenience class for naming purposes.
-public class Request : HTTPData {
-
-    override init() {
-        super.init()
-        headerData = CFHTTPMessageCreateEmpty(nil, true).takeRetainedValue()
-    }
-
-    var body : Body {
-        return Body(content: Data())
-    }
-
-    var method : Method {
-
-        guard
-            let methodString = CFHTTPMessageCopyRequestMethod(headerData)?.takeRetainedValue() as? String,
-            let method = Method(rawValue: methodString)
-            else { return .Unknown }
-
-        return method
-    }
-
-    var contentType: Body.ContentType {
-        return Body.ContentType(value: headerField("Content-Type"))
-    }
-}
-
-/// Convenience class that also handles status codes.
-public class Response : HTTPData {
-
-    let statusCode: StatusCode
-    init(statusCode: StatusCode, http: HTTPVersion) {
-        self.statusCode = statusCode
-        super.init()
-        headerData = CFHTTPMessageCreateResponse(nil, statusCode.value, nil, http.value as CFString).takeRetainedValue()
-    }
-
-    func setHeaderField(value: String, forKey key: String) {
-        CFHTTPMessageSetHeaderFieldValue(headerData, key as CFString, value as CFString)
-    }
-}
-
 /// Thin wrapper around Apple's CFHTTPMessage.
 public class HTTPData {
     var headerData: CFHTTPMessage!
+
+    fileprivate func appendHTTPData(_ data: Data) -> Bool {
+        return data.withUnsafeBytes { CFHTTPMessageAppendBytes(headerData, $0, data.count) }
+    }
 }
 
-/// Headers
 extension HTTPData {
 
     @discardableResult
     func appendHeaderData(_ data: Data) -> Bool {
-        return data.withUnsafeBytes { CFHTTPMessageAppendBytes(headerData, $0, data.count) }
+        return appendHTTPData(data)
+    }
+
+    @discardableResult
+    func appendBodyData(_ data: Data) -> Bool {
+        return appendHTTPData(data)
     }
 
     func headerField(_ key: String) -> String? {
@@ -101,5 +67,4 @@ enum HTTPVersion {
             case .v2_0: return kCFHTTPVersion2_0 as String
         }
     }
-
 }

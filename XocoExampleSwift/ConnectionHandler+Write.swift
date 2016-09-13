@@ -12,12 +12,7 @@ import Foundation
 extension ConnectionHandler : RequestSocketWriteDelegate {
 
     func didSendResponse() {
-        data = Request()
-        headerLines = 0
-        contentLength = 0
-        contentLengthReceived = 0
-        chunkSize = 0
-        chunkSizeReceived = 0
-
+        request = Request()
+        status = .listening
     }
 }

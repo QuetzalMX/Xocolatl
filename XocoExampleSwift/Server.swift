@@ -7,21 +7,45 @@
 
 import Foundation
 
+/// Passed whenever initializing a new server.
+class ServerConfiguration {
+
+    let requestDelegate: RequestDelegate
+    let requestBodyParsingDelegate: RequestBodyParsingDelegate?
+
+    let certificatePath: String
+    var certificatePassword: String
+
+    init(requestDelegate: RequestDelegate,
+         requestBodyParsingDelegate: RequestBodyParsingDelegate? = nil,
+         certificatePath: String,
+         certificatePassword: String) {
+
+        self.requestDelegate = requestDelegate
+        self.requestBodyParsingDelegate = requestBodyParsingDelegate
+        self.certificatePath = certificatePath
+        self.certificatePassword = certificatePassword
+    }
+}
+
 /// The server handles the lifecycle of Requests.
 public class Server {
 
     /// Handles responses to incoming connections.
-    fileprivate var responseDelegate: ConnectionHandlerDelegate!
+    fileprivate var requestDelegate: RequestDelegate
 
     /// Optionally handles the body parsing of requests.
-    fileprivate var bodyParsingDelegate: RequestBodyParsingDelegate?
+    fileprivate var requestBodyParsingDelegate: RequestBodyParsingDelegate?
 
     /// Handles parsingg of incoming connections from clients.
     private let incomingConnectionsSocket: ServerSocket
 
-    init(certificatePath: String, certificatePassword: String) throws {
+    init(configuration: ServerConfiguration) throws {
 
         // Parse the certificate.
+        let certificatePath = configuration.certificatePath
+        let certificatePassword = configuration.certificatePassword
+
         guard let p12Data = try? Data(contentsOf: URL(fileURLWithPath: certificatePath)) else { fatalError(".p12 data not found at path \(certificatePath)") }
 
         // Get the private key from the certificate using the password.
@@ -45,6 +69,8 @@ public class Server {
 
         // The socket will pass them to the incoming requests.
         incomingConnectionsSocket = ServerSocket(sslIdentity: identityRef, sslCertificate: certificate)
+        requestDelegate = configuration.requestDelegate
+        requestBodyParsingDelegate = configuration.requestBodyParsingDelegate
     }
 
     /// Starts listening for incoming requests.
@@ -52,11 +78,13 @@ public class Server {
     /// - parameter responseDelegate: provides a Response to requests we receive
     ///
     /// - throws: if the socket cannot begin listening for requests
-    public func start(responseDelegate: ConnectionHandlerDelegate, requestBodyParsingDelegate: RequestBodyParsingDelegate? = nil) throws {
-        self.responseDelegate = responseDelegate
-        self.bodyParsingDelegate = requestBodyParsingDelegate
+    func start(listeningAtPort port: UInt16) throws {
+        try incomingConnectionsSocket.start(atPort: port, delegate: self)
+    }
 
-        try incomingConnectionsSocket.start(atPort: 3000, delegate: self)
+    /// Stop receiving requests.
+    func stop() {
+        incomingConnectionsSocket.stop()
     }
 }
 
@@ -68,6 +96,6 @@ extension Server : ServerSocketDelegate {
     ///
     /// - parameter request: the incoming request
     internal func received(incomingRequest: ConnectionHandler) {
-        incomingRequest.beginParsing(delegate: responseDelegate, bodyParsingDelegate: bodyParsingDelegate)
+        incomingRequest.beginParsing(delegate: requestDelegate, bodyParsingDelegate: requestBodyParsingDelegate)
     }
 }

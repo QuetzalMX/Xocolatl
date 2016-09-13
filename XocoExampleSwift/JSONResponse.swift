@@ -13,6 +13,6 @@ class JSONResponse : GenericResponse {
 
     init(json: Any, code: StatusCode) throws {
         jsonData = try JSONSerialization.data(withJSONObject: json)
-        super.init(code: code, body: jsonData)
+        super.init(code, body: jsonData)
     }
 }

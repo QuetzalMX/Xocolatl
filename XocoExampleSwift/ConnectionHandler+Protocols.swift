@@ -9,8 +9,8 @@
 import Foundation
 
 /// Once a request is either completed or failed to be parsed, it is forwarded to our delegate.
-public protocol ConnectionHandlerDelegate {
-    func reply(request: Request, fromHandler handler: ConnectionHandler)
+public protocol RequestDelegate {
+    func reply(toRequest request: Request) -> HTTPResponsive
 }
 
 /// Optionally accept the request's body and save it as necessary.

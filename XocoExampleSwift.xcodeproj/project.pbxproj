@@ -13,7 +13,8 @@
 		C1386BE41D86573A00B32728 /* ConnectionHandler+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BE31D86573A00B32728 /* ConnectionHandler+Protocols.swift */; };
 		C1386BE61D86590B00B32728 /* ConnectionHandler+Read.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BE51D86590B00B32728 /* ConnectionHandler+Read.swift */; };
 		C1386BE81D86592200B32728 /* ConnectionHandler+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BE71D86592200B32728 /* ConnectionHandler+Write.swift */; };
-		C198EFE21D8638D900880904 /* RequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = C198EFE11D8638D900880904 /* RequestBody.swift */; };
+		C1386BEE1D865EB500B32728 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BED1D865EB500B32728 /* Response.swift */; };
+		C1386BF01D87886C00B32728 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BEF1D87886C00B32728 /* Request.swift */; };
 		C1F67A131D83B890006EEAE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A121D83B890006EEAE1 /* AppDelegate.swift */; };
 		C1F67A151D83B890006EEAE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1F67A141D83B890006EEAE1 /* Assets.xcassets */; };
 		C1F67A181D83B890006EEAE1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F67A161D83B890006EEAE1 /* MainMenu.xib */; };
@@ -36,7 +37,8 @@
 		C1386BE31D86573A00B32728 /* ConnectionHandler+Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConnectionHandler+Protocols.swift"; sourceTree = "<group>"; };
 		C1386BE51D86590B00B32728 /* ConnectionHandler+Read.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConnectionHandler+Read.swift"; sourceTree = "<group>"; };
 		C1386BE71D86592200B32728 /* ConnectionHandler+Write.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConnectionHandler+Write.swift"; sourceTree = "<group>"; };
-		C198EFE11D8638D900880904 /* RequestBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestBody.swift; sourceTree = "<group>"; };
+		C1386BED1D865EB500B32728 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		C1386BEF1D87886C00B32728 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		C1F67A0F1D83B890006EEAE1 /* XocoExampleSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XocoExampleSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1F67A121D83B890006EEAE1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C1F67A141D83B890006EEAE1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -83,7 +85,7 @@
 			name = Sockets;
 			sourceTree = "<group>";
 		};
-		C13261481D83E6AE001A0D5D /* Process */ = {
+		C13261481D83E6AE001A0D5D /* Parsing */ = {
 			isa = PBXGroup;
 			children = (
 				C1F67A211D83B8A5006EEAE1 /* Server.swift */,
@@ -92,15 +94,16 @@
 				C1386BE51D86590B00B32728 /* ConnectionHandler+Read.swift */,
 				C1386BE71D86592200B32728 /* ConnectionHandler+Write.swift */,
 			);
-			name = Process;
+			name = Parsing;
 			sourceTree = "<group>";
 		};
 		C13261491D83E6B4001A0D5D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C1F67A241D83B8A5006EEAE1 /* HTTPData.swift */,
 				C1F67A361D83D0DC006EEAE1 /* HTTPResponsive.swift */,
-				C198EFE11D8638D900880904 /* RequestBody.swift */,
+				C1F67A241D83B8A5006EEAE1 /* HTTPData.swift */,
+				C1386BED1D865EB500B32728 /* Response.swift */,
+				C1386BEF1D87886C00B32728 /* Request.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -159,7 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				C13261491D83E6B4001A0D5D /* Model */,
-				C13261481D83E6AE001A0D5D /* Process */,
+				C13261481D83E6AE001A0D5D /* Parsing */,
 				C129F8CF1D84E0BE00A7ED60 /* Sockets */,
 				C129F8CE1D84E0A500A7ED60 /* GCDAsyncSocket */,
 			);
@@ -245,14 +248,15 @@
 				C1F67A2A1D83B8A5006EEAE1 /* ServerSocket.swift in Sources */,
 				C1F67A2B1D83B8A5006EEAE1 /* ConnectionHandler.swift in Sources */,
 				C1F67A2C1D83B8A5006EEAE1 /* HTTPData.swift in Sources */,
+				C1386BEE1D865EB500B32728 /* Response.swift in Sources */,
 				C1F67A391D83D1F1006EEAE1 /* JSONResponse.swift in Sources */,
 				C1F67A291D83B8A5006EEAE1 /* Server.swift in Sources */,
 				C129F8C71D84A74300A7ED60 /* RequestTableViewController.swift in Sources */,
 				C1F67A371D83D0DC006EEAE1 /* HTTPResponsive.swift in Sources */,
 				C1F67A131D83B890006EEAE1 /* AppDelegate.swift in Sources */,
-				C198EFE21D8638D900880904 /* RequestBody.swift in Sources */,
 				C1F67A2D1D83B8A5006EEAE1 /* RequestSocket.swift in Sources */,
 				C1386BE81D86592200B32728 /* ConnectionHandler+Write.swift in Sources */,
+				C1386BF01D87886C00B32728 /* Request.swift in Sources */,
 				C1386BE61D86590B00B32728 /* ConnectionHandler+Read.swift in Sources */,
 				C129F8CD1D84DF7700A7ED60 /* GCDAsyncSocket.m in Sources */,
 				C132614C1D84A2B8001A0D5D /* GenericResponse.swift in Sources */,

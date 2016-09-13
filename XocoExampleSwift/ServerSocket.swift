@@ -40,6 +40,10 @@ class ServerSocket {
 
         try internalSocket.accept(onInterface: "", port: port)
     }
+
+    func stop() {
+        internalSocket.disconnect()
+    }
 }
 
 // MARK: Read Delegation
