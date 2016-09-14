@@ -10,7 +10,7 @@ import Foundation
 /// Once a Request is ready to be processed (either parsed or failed parsing), it's passed to us for handling.
 class Router {
 
-    fileprivate var routes: [NSRegularExpression: (route: Routable, parameters: [String])] = [:]
+    fileprivate var routes: [NSRegularExpression: (route: Routable, groupNames: [String])] = [:]
 
     private lazy var server: Server = {
         let path = Bundle.main.path(forResource: "dev.quetzal.io", ofType: ".p12")!
@@ -25,7 +25,10 @@ class Router {
 
 extension Router {
 
-    func route(forRequest request: Request) -> Routable? {
+    private func route(forRequest request: Request, shouldParseParameters: Bool) -> (route: Routable?, parameters: [String: String]) {
+
+        var parsedParameters: [String: String] = [:]
+
         // Do we have a route that can handle it?
         let filteredRoutes = routes.filter { routeRegex, routeInfo -> Bool in
 
@@ -36,7 +39,7 @@ extension Router {
 
             // FIXME: Searching for the first match is unlikely to be enough, as it could be possible that two routes share the same first parameter?
             let requestPath: NSString = request.url!.relativePath as NSString
-            guard let _ = routeRegex.firstMatch(in: requestPath as String, range: NSRange(location: 0, length: requestPath.length)) else {
+            guard let result = routeRegex.firstMatch(in: requestPath as String, range: NSRange(location: 0, length: requestPath.length)) else {
                 //Note: (FO) A regex will not return a result if there are no values in any captured group.
                 //This does not mean that the responder is not responsible, it only means that there were no arguments passed when they were probably expected.
                 //Perhaps it's the path without any matching capture groups?
@@ -47,16 +50,58 @@ extension Router {
                 return requestPath.contains(routeInfo.route.path)
             }
 
+            guard shouldParseParameters else { return true }
+
+            let captureCount = result.numberOfRanges
+            let groupNames = routeInfo.groupNames
+            guard !groupNames.isEmpty else {
+                // FIXME: Custom regexes are not working.
+                // For custom regular expressions place the anonymous captures in the captures parameter
+//                var captures = [String]()
+//                for index in 1 ..< captureCount {
+//                    captures.append(requestPath.substring(with: result.rangeAt(index)))
+//                }
+//
+//                parsedParameters["captures"] = captures as AnyObject
+                return true
+            }
+
+            assert(captureCount == groupNames.count +  1, "There are more groups in the request's regex than captures")
+
+            // We have to use resultIndex, because using index would cause an error due to the result.rangeAt(0) being the full string.
+            var resultIndex = 1
+            for (_, groupName) in groupNames.enumerated() {
+                let capture = requestPath.substring(with: result.rangeAt(resultIndex))
+
+                if groupName == "wildcards" {
+
+                    // FIXME: Wildcards are not working.
+//                    if var existingWildcards = parsedParameters["wildcards"] as? [String] {
+//                        existingWildcards.append(capture)
+//                        parsedParameters["wildcards"] = existingWildcards as AnyObject
+//                    } else {
+//                        parsedParameters["wildcards"] = [capture] as AnyObject
+//                    }
+                } else {
+                    parsedParameters[groupName] = capture
+                }
+                resultIndex = resultIndex + 1
+            }
+
             return true
         }
 
         guard !filteredRoutes.isEmpty else {
-            return nil
+            return (route: nil, [:])
         }
 
         assert(filteredRoutes.count == 1, "There's two responsible routes for this request: \(request)")
+        
+        return (filteredRoutes.first!.value.route, parsedParameters)
+    }
 
-        return filteredRoutes.first!.value.route
+    func route(forRequest request: Request) -> Routable? {
+        return route(forRequest: request, shouldParseParameters: false).route
     }
 
     func addRoute(_ route: Routable) {
@@ -140,5 +185,9 @@ extension Router {
         }
         
         return (try! NSRegularExpression(pattern: "^\(finalRegexPath)$"), capturedGroupsNames)
+    }
+
+    func parseParameters(from request: Request) -> [String: String] {
+        return route(forRequest: request, shouldParseParameters: true).parameters
     }
 }

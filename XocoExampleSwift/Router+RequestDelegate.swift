@@ -23,6 +23,6 @@ extension Router : RequestDelegate {
             return GenericResponse(.GenericServerError)
         }
 
-        return responsibleRoute.handle(request)
+        return responsibleRoute.handle(request, parameters: parseParameters(from: request))
     }
 }

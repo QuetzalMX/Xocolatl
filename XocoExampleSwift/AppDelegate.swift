@@ -15,6 +15,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let serverDelegate = Router()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        //serverDelegate.addRoute(HomeRoute())
+        serverDelegate.addRoute(EchoeRoute())
         try! serverDelegate.startServer()
     }
 

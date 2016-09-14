@@ -14,6 +14,5 @@ protocol Routable {
     var path: String { get }
     var method: Method { get }
 
-    func handle(_ route: Request) -> HTTPResponsive
-    func validateInputs(_ route: Request) throws
+    func handle(_ route: Request, parameters: [String: String]) -> HTTPResponsive
 }
