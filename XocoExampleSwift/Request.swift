@@ -62,15 +62,6 @@ public class Request : HTTPData {
         headerData = CFHTTPMessageCreateEmpty(nil, true).takeRetainedValue()
     }
 
-    var body : Data {
-
-        guard let receivedBody = CFHTTPMessageCopyBody(headerData)?.takeRetainedValue() as? Data else {
-            return Data()
-        }
-
-        return receivedBody
-    }
-
     var method : Method {
 
         guard

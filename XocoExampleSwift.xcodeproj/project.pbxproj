@@ -15,11 +15,13 @@
 		C1386BE81D86592200B32728 /* ConnectionHandler+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BE71D86592200B32728 /* ConnectionHandler+Write.swift */; };
 		C1386BEE1D865EB500B32728 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BED1D865EB500B32728 /* Response.swift */; };
 		C1386BF01D87886C00B32728 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BEF1D87886C00B32728 /* Request.swift */; };
+		C1386BF91D88A03B00B32728 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BF81D88A03B00B32728 /* Route.swift */; };
+		C146DFDF1D8908B700817A99 /* Router+RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146DFDE1D8908B700817A99 /* Router+RequestDelegate.swift */; };
 		C1F67A131D83B890006EEAE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A121D83B890006EEAE1 /* AppDelegate.swift */; };
 		C1F67A151D83B890006EEAE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1F67A141D83B890006EEAE1 /* Assets.xcassets */; };
 		C1F67A181D83B890006EEAE1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F67A161D83B890006EEAE1 /* MainMenu.xib */; };
 		C1F67A271D83B8A5006EEAE1 /* dev.quetzal.io.p12 in Resources */ = {isa = PBXBuildFile; fileRef = C1F67A1F1D83B8A5006EEAE1 /* dev.quetzal.io.p12 */; };
-		C1F67A281D83B8A5006EEAE1 /* XocolatlServerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A201D83B8A5006EEAE1 /* XocolatlServerDelegate.swift */; };
+		C1F67A281D83B8A5006EEAE1 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A201D83B8A5006EEAE1 /* Router.swift */; };
 		C1F67A291D83B8A5006EEAE1 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A211D83B8A5006EEAE1 /* Server.swift */; };
 		C1F67A2A1D83B8A5006EEAE1 /* ServerSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A221D83B8A5006EEAE1 /* ServerSocket.swift */; };
 		C1F67A2B1D83B8A5006EEAE1 /* ConnectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A231D83B8A5006EEAE1 /* ConnectionHandler.swift */; };
@@ -39,13 +41,15 @@
 		C1386BE71D86592200B32728 /* ConnectionHandler+Write.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConnectionHandler+Write.swift"; sourceTree = "<group>"; };
 		C1386BED1D865EB500B32728 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		C1386BEF1D87886C00B32728 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		C1386BF81D88A03B00B32728 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		C146DFDE1D8908B700817A99 /* Router+RequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Router+RequestDelegate.swift"; sourceTree = "<group>"; };
 		C1F67A0F1D83B890006EEAE1 /* XocoExampleSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XocoExampleSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1F67A121D83B890006EEAE1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C1F67A141D83B890006EEAE1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C1F67A171D83B890006EEAE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		C1F67A191D83B890006EEAE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1F67A1F1D83B8A5006EEAE1 /* dev.quetzal.io.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = dev.quetzal.io.p12; sourceTree = "<group>"; };
-		C1F67A201D83B8A5006EEAE1 /* XocolatlServerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XocolatlServerDelegate.swift; sourceTree = "<group>"; };
+		C1F67A201D83B8A5006EEAE1 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		C1F67A211D83B8A5006EEAE1 /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		C1F67A221D83B8A5006EEAE1 /* ServerSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerSocket.swift; sourceTree = "<group>"; };
 		C1F67A231D83B8A5006EEAE1 /* ConnectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionHandler.swift; sourceTree = "<group>"; };
@@ -88,6 +92,7 @@
 		C13261481D83E6AE001A0D5D /* Parsing */ = {
 			isa = PBXGroup;
 			children = (
+				C1386BEF1D87886C00B32728 /* Request.swift */,
 				C1F67A211D83B8A5006EEAE1 /* Server.swift */,
 				C1F67A231D83B8A5006EEAE1 /* ConnectionHandler.swift */,
 				C1386BE31D86573A00B32728 /* ConnectionHandler+Protocols.swift */,
@@ -97,33 +102,26 @@
 			name = Parsing;
 			sourceTree = "<group>";
 		};
-		C13261491D83E6B4001A0D5D /* Model */ = {
+		C1386BF61D889C1000B32728 /* Routing */ = {
+			isa = PBXGroup;
+			children = (
+				C1386BF81D88A03B00B32728 /* Route.swift */,
+				C1F67A201D83B8A5006EEAE1 /* Router.swift */,
+				C146DFDE1D8908B700817A99 /* Router+RequestDelegate.swift */,
+			);
+			name = Routing;
+			sourceTree = "<group>";
+		};
+		C1386BF71D889CC900B32728 /* Responding */ = {
 			isa = PBXGroup;
 			children = (
 				C1F67A361D83D0DC006EEAE1 /* HTTPResponsive.swift */,
 				C1F67A241D83B8A5006EEAE1 /* HTTPData.swift */,
 				C1386BED1D865EB500B32728 /* Response.swift */,
-				C1386BEF1D87886C00B32728 /* Request.swift */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		C132614E1D84A5AC001A0D5D /* Xocolatl */ = {
-			isa = PBXGroup;
-			children = (
-				C1F67A201D83B8A5006EEAE1 /* XocolatlServerDelegate.swift */,
-				C132614F1D84A5BD001A0D5D /* Response */,
-			);
-			name = Xocolatl;
-			sourceTree = "<group>";
-		};
-		C132614F1D84A5BD001A0D5D /* Response */ = {
-			isa = PBXGroup;
-			children = (
 				C1F67A381D83D1F1006EEAE1 /* JSONResponse.swift */,
 				C132614B1D84A2B8001A0D5D /* GenericResponse.swift */,
 			);
-			name = Response;
+			name = Responding;
 			sourceTree = "<group>";
 		};
 		C1F67A061D83B890006EEAE1 = {
@@ -147,7 +145,6 @@
 			children = (
 				C1F67A121D83B890006EEAE1 /* AppDelegate.swift */,
 				C129F8C61D84A74300A7ED60 /* RequestTableViewController.swift */,
-				C132614E1D84A5AC001A0D5D /* Xocolatl */,
 				C1F67A351D83D03A006EEAE1 /* Core */,
 				C1F67A141D83B890006EEAE1 /* Assets.xcassets */,
 				C1F67A161D83B890006EEAE1 /* MainMenu.xib */,
@@ -161,7 +158,8 @@
 		C1F67A351D83D03A006EEAE1 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				C13261491D83E6B4001A0D5D /* Model */,
+				C1386BF71D889CC900B32728 /* Responding */,
+				C1386BF61D889C1000B32728 /* Routing */,
 				C13261481D83E6AE001A0D5D /* Parsing */,
 				C129F8CF1D84E0BE00A7ED60 /* Sockets */,
 				C129F8CE1D84E0A500A7ED60 /* GCDAsyncSocket */,
@@ -244,7 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1386BE41D86573A00B32728 /* ConnectionHandler+Protocols.swift in Sources */,
-				C1F67A281D83B8A5006EEAE1 /* XocolatlServerDelegate.swift in Sources */,
+				C1F67A281D83B8A5006EEAE1 /* Router.swift in Sources */,
 				C1F67A2A1D83B8A5006EEAE1 /* ServerSocket.swift in Sources */,
 				C1F67A2B1D83B8A5006EEAE1 /* ConnectionHandler.swift in Sources */,
 				C1F67A2C1D83B8A5006EEAE1 /* HTTPData.swift in Sources */,
@@ -252,6 +250,7 @@
 				C1F67A391D83D1F1006EEAE1 /* JSONResponse.swift in Sources */,
 				C1F67A291D83B8A5006EEAE1 /* Server.swift in Sources */,
 				C129F8C71D84A74300A7ED60 /* RequestTableViewController.swift in Sources */,
+				C1386BF91D88A03B00B32728 /* Route.swift in Sources */,
 				C1F67A371D83D0DC006EEAE1 /* HTTPResponsive.swift in Sources */,
 				C1F67A131D83B890006EEAE1 /* AppDelegate.swift in Sources */,
 				C1F67A2D1D83B8A5006EEAE1 /* RequestSocket.swift in Sources */,
@@ -259,6 +258,7 @@
 				C1386BF01D87886C00B32728 /* Request.swift in Sources */,
 				C1386BE61D86590B00B32728 /* ConnectionHandler+Read.swift in Sources */,
 				C129F8CD1D84DF7700A7ED60 /* GCDAsyncSocket.m in Sources */,
+				C146DFDF1D8908B700817A99 /* Router+RequestDelegate.swift in Sources */,
 				C132614C1D84A2B8001A0D5D /* GenericResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

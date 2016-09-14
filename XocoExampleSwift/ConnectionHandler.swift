@@ -114,14 +114,14 @@ extension ConnectionHandler {
 
     func respond(with response: HTTPResponsive) {
         // Write the header response.
-//        socket.respond(.PartialHeaders,
-//                       data: response.data.rawData)
-//
-//        let responseBody = response.receivedData.body
-//        if !responseBody.isEmpty {
-//            socket.respond(.WholeResponse,
-//                           data: responseBody)
-//        }
+        socket.respond(.PartialHeaders,
+                       data: response.data.rawHeaderData)
+
+        let responseBody = response.data.body
+        if !responseBody.isEmpty {
+            socket.respond(.WholeResponse,
+                           data: responseBody)
+        }
     }
 
     func closeConnection() {

@@ -49,17 +49,16 @@ extension GenericResponse : HTTPResponsive {
     var additionalHeaders: [String: String] { return [:] }
 
     var data: Response {
-        return Response(statusCode: .OK, http: .v1_0)
-//        let responseData = ResponseData(statusCode: code, http: .v1_1)
-//
-//        if let givenBodyData = bodyData {
-//            responseData.body = Body(content: givenBodyData)
-//        }
-//
-//        responseData.setHeaderField(value: "\(contentLength)", forKey: "Content-Length")
-//        responseData.setHeaderField(value: "bytes", forKey: "Accept-Ranges")
-//        responseData.setHeaderField(value: GenericResponse.httpDateFormatter.string(from: Date()), forKey: "Date")
-//        return responseData
+        let responseData = Response(statusCode: code, http: .v1_1)
+
+        if let givenBodyData = bodyData {
+            responseData.body = givenBodyData
+        }
+
+        responseData.setHeaderField(value: "\(contentLength)", forKey: "Content-Length")
+        responseData.setHeaderField(value: "bytes", forKey: "Accept-Ranges")
+        responseData.setHeaderField(value: GenericResponse.httpDateFormatter.string(from: Date()), forKey: "Date")
+        return responseData
     }
 
     func readBody(bytes: UInt) -> Data {

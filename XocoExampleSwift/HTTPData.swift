@@ -16,6 +16,13 @@ public class HTTPData {
     fileprivate func appendHTTPData(_ data: Data) -> Bool {
         return data.withUnsafeBytes { CFHTTPMessageAppendBytes(headerData, $0, data.count) }
     }
+
+    // Body has to be declared here because we cannot override properties declared in an extension.
+    var body : Data {
+        guard let content = CFHTTPMessageCopyBody(headerData)?.takeRetainedValue() else { return Data() }
+
+        return content as Data
+    }
 }
 
 extension HTTPData {
@@ -36,6 +43,11 @@ extension HTTPData {
 
     var headerComplete : Bool {
         return CFHTTPMessageIsHeaderComplete(headerData)
+    }
+
+    var rawHeaderData : Data {
+        guard let rawData = CFHTTPMessageCopySerializedMessage(headerData)?.takeRetainedValue() else { return Data() }
+        return rawData as Data
     }
 
     var headerFields : [String: String] {

@@ -12,10 +12,10 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
-    let serverDelegate = XocolatlServerDelegate()
+    let serverDelegate = Router()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        serverDelegate.startServer()
+        try! serverDelegate.startServer()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

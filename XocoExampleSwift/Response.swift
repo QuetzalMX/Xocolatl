@@ -21,4 +21,15 @@ public class Response : HTTPData {
     func setHeaderField(value: String, forKey key: String) {
         CFHTTPMessageSetHeaderFieldValue(headerData, key as CFString, value as CFString)
     }
+
+    override var body: Data {
+
+        get {
+            return super.body
+        }
+
+        set {
+            CFHTTPMessageSetBody(headerData, newValue as CFData)
+        }
+    }
 }

@@ -11,7 +11,7 @@ class JSONResponse : GenericResponse {
 
     fileprivate let jsonData: Data
 
-    init(json: Any, code: StatusCode) throws {
+    init(code: StatusCode, json: Any) throws {
         jsonData = try JSONSerialization.data(withJSONObject: json)
         super.init(code, body: jsonData)
     }
