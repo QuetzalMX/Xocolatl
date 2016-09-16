@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C129F8C71D84A74300A7ED60 /* RequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C129F8C61D84A74300A7ED60 /* RequestTableViewController.swift */; };
 		C129F8CD1D84DF7700A7ED60 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C129F8CC1D84DF7700A7ED60 /* GCDAsyncSocket.m */; };
 		C132614C1D84A2B8001A0D5D /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C132614B1D84A2B8001A0D5D /* GenericResponse.swift */; };
 		C1386BE41D86573A00B32728 /* ConnectionHandler+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BE31D86573A00B32728 /* ConnectionHandler+Protocols.swift */; };
@@ -17,8 +16,10 @@
 		C1386BF01D87886C00B32728 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BEF1D87886C00B32728 /* Request.swift */; };
 		C1386BF91D88A03B00B32728 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BF81D88A03B00B32728 /* Route.swift */; };
 		C146DFDF1D8908B700817A99 /* Router+RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146DFDE1D8908B700817A99 /* Router+RequestDelegate.swift */; };
-		C146DFE11D8913F800817A99 /* HomeRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146DFE01D8913F800817A99 /* HomeRoute.swift */; };
 		C146DFE31D89160800817A99 /* EchoRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146DFE21D89160800817A99 /* EchoRoute.swift */; };
+		C146DFE51D89CA7C00817A99 /* GenericRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146DFE41D89CA7C00817A99 /* GenericRoute.swift */; };
+		C146DFE71D89CB0900817A99 /* RouteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146DFE61D89CB0900817A99 /* RouteController.swift */; };
+		C14F46621D8B980F00005C8A /* JSONRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14F46611D8B980F00005C8A /* JSONRoute.swift */; };
 		C1F67A131D83B890006EEAE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A121D83B890006EEAE1 /* AppDelegate.swift */; };
 		C1F67A151D83B890006EEAE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1F67A141D83B890006EEAE1 /* Assets.xcassets */; };
 		C1F67A181D83B890006EEAE1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F67A161D83B890006EEAE1 /* MainMenu.xib */; };
@@ -34,7 +35,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C129F8C61D84A74300A7ED60 /* RequestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTableViewController.swift; sourceTree = "<group>"; };
 		C129F8CB1D84DF7700A7ED60 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		C129F8CC1D84DF7700A7ED60 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		C132614B1D84A2B8001A0D5D /* GenericResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
@@ -45,8 +45,10 @@
 		C1386BEF1D87886C00B32728 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		C1386BF81D88A03B00B32728 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		C146DFDE1D8908B700817A99 /* Router+RequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Router+RequestDelegate.swift"; sourceTree = "<group>"; };
-		C146DFE01D8913F800817A99 /* HomeRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRoute.swift; sourceTree = "<group>"; };
 		C146DFE21D89160800817A99 /* EchoRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EchoRoute.swift; sourceTree = "<group>"; };
+		C146DFE41D89CA7C00817A99 /* GenericRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericRoute.swift; sourceTree = "<group>"; };
+		C146DFE61D89CB0900817A99 /* RouteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteController.swift; sourceTree = "<group>"; };
+		C14F46611D8B980F00005C8A /* JSONRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONRoute.swift; sourceTree = "<group>"; };
 		C1F67A0F1D83B890006EEAE1 /* XocoExampleSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XocoExampleSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1F67A121D83B890006EEAE1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C1F67A141D83B890006EEAE1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -128,6 +130,28 @@
 			name = Responding;
 			sourceTree = "<group>";
 		};
+		C146DFE81D89CEB600817A99 /* Routes */ = {
+			isa = PBXGroup;
+			children = (
+				C146DFE41D89CA7C00817A99 /* GenericRoute.swift */,
+				C146DFE61D89CB0900817A99 /* RouteController.swift */,
+				C14F46611D8B980F00005C8A /* JSONRoute.swift */,
+			);
+			name = Routes;
+			sourceTree = "<group>";
+		};
+		C146DFE91D89CECC00817A99 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				C1F67A141D83B890006EEAE1 /* Assets.xcassets */,
+				C1F67A161D83B890006EEAE1 /* MainMenu.xib */,
+				C1F67A1F1D83B8A5006EEAE1 /* dev.quetzal.io.p12 */,
+				C1F67A191D83B890006EEAE1 /* Info.plist */,
+				C1F67A2F1D83B8B5006EEAE1 /* XocoExampleSwift-Bridging-Header.h */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
 		C1F67A061D83B890006EEAE1 = {
 			isa = PBXGroup;
 			children = (
@@ -148,20 +172,15 @@
 			isa = PBXGroup;
 			children = (
 				C1F67A121D83B890006EEAE1 /* AppDelegate.swift */,
-				C129F8C61D84A74300A7ED60 /* RequestTableViewController.swift */,
-				C146DFE01D8913F800817A99 /* HomeRoute.swift */,
 				C146DFE21D89160800817A99 /* EchoRoute.swift */,
-				C1F67A351D83D03A006EEAE1 /* Core */,
-				C1F67A141D83B890006EEAE1 /* Assets.xcassets */,
-				C1F67A161D83B890006EEAE1 /* MainMenu.xib */,
-				C1F67A1F1D83B8A5006EEAE1 /* dev.quetzal.io.p12 */,
-				C1F67A191D83B890006EEAE1 /* Info.plist */,
-				C1F67A2F1D83B8B5006EEAE1 /* XocoExampleSwift-Bridging-Header.h */,
+				C146DFE91D89CECC00817A99 /* Assets */,
+				C146DFE81D89CEB600817A99 /* Routes */,
+				C1F67A351D83D03A006EEAE1 /* Framework */,
 			);
 			path = XocoExampleSwift;
 			sourceTree = "<group>";
 		};
-		C1F67A351D83D03A006EEAE1 /* Core */ = {
+		C1F67A351D83D03A006EEAE1 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
 				C1386BF71D889CC900B32728 /* Responding */,
@@ -170,7 +189,7 @@
 				C129F8CF1D84E0BE00A7ED60 /* Sockets */,
 				C129F8CE1D84E0A500A7ED60 /* GCDAsyncSocket */,
 			);
-			name = Core;
+			name = Framework;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,13 +273,14 @@
 				C1F67A2C1D83B8A5006EEAE1 /* HTTPData.swift in Sources */,
 				C146DFE31D89160800817A99 /* EchoRoute.swift in Sources */,
 				C1386BEE1D865EB500B32728 /* Response.swift in Sources */,
+				C146DFE71D89CB0900817A99 /* RouteController.swift in Sources */,
 				C1F67A391D83D1F1006EEAE1 /* JSONResponse.swift in Sources */,
 				C1F67A291D83B8A5006EEAE1 /* Server.swift in Sources */,
-				C129F8C71D84A74300A7ED60 /* RequestTableViewController.swift in Sources */,
 				C1386BF91D88A03B00B32728 /* Route.swift in Sources */,
-				C146DFE11D8913F800817A99 /* HomeRoute.swift in Sources */,
 				C1F67A371D83D0DC006EEAE1 /* HTTPResponsive.swift in Sources */,
 				C1F67A131D83B890006EEAE1 /* AppDelegate.swift in Sources */,
+				C14F46621D8B980F00005C8A /* JSONRoute.swift in Sources */,
+				C146DFE51D89CA7C00817A99 /* GenericRoute.swift in Sources */,
 				C1F67A2D1D83B8A5006EEAE1 /* RequestSocket.swift in Sources */,
 				C1386BE81D86592200B32728 /* ConnectionHandler+Write.swift in Sources */,
 				C1386BF01D87886C00B32728 /* Request.swift in Sources */,

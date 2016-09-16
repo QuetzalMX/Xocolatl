@@ -16,7 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         //serverDelegate.addRoute(HomeRoute())
-        serverDelegate.addRoute(EchoeRoute())
+        //serverDelegate.addRoute(EchoeRoute())
         try! serverDelegate.startServer()
     }
 

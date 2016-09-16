@@ -14,6 +14,15 @@ public enum Method : String {
     case PUT
     case DELETE
     case Unknown
+
+    init(value: String) {
+        switch value {
+        case "GET":
+            self = .GET
+        default:
+            self = .Unknown
+        }
+    }
 }
 
 enum ContentType {

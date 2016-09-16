@@ -15,4 +15,9 @@ class JSONResponse : GenericResponse {
         jsonData = try JSONSerialization.data(withJSONObject: json)
         super.init(code, body: jsonData)
     }
+
+    init(code: StatusCode, jsonData: Data) {
+        self.jsonData = jsonData
+        super.init(code, body: self.jsonData)
+    }
 }
