@@ -16,7 +16,6 @@
 		C1386BF01D87886C00B32728 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BEF1D87886C00B32728 /* Request.swift */; };
 		C1386BF91D88A03B00B32728 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BF81D88A03B00B32728 /* Route.swift */; };
 		C146DFDF1D8908B700817A99 /* Router+RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146DFDE1D8908B700817A99 /* Router+RequestDelegate.swift */; };
-		C146DFE31D89160800817A99 /* EchoRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146DFE21D89160800817A99 /* EchoRoute.swift */; };
 		C146DFE51D89CA7C00817A99 /* GenericRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146DFE41D89CA7C00817A99 /* GenericRoute.swift */; };
 		C146DFE71D89CB0900817A99 /* RouteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146DFE61D89CB0900817A99 /* RouteController.swift */; };
 		C14F46621D8B980F00005C8A /* JSONRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14F46611D8B980F00005C8A /* JSONRoute.swift */; };
@@ -45,7 +44,6 @@
 		C1386BEF1D87886C00B32728 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		C1386BF81D88A03B00B32728 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		C146DFDE1D8908B700817A99 /* Router+RequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Router+RequestDelegate.swift"; sourceTree = "<group>"; };
-		C146DFE21D89160800817A99 /* EchoRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EchoRoute.swift; sourceTree = "<group>"; };
 		C146DFE41D89CA7C00817A99 /* GenericRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericRoute.swift; sourceTree = "<group>"; };
 		C146DFE61D89CB0900817A99 /* RouteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteController.swift; sourceTree = "<group>"; };
 		C14F46611D8B980F00005C8A /* JSONRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONRoute.swift; sourceTree = "<group>"; };
@@ -133,8 +131,8 @@
 		C146DFE81D89CEB600817A99 /* Routes */ = {
 			isa = PBXGroup;
 			children = (
-				C146DFE41D89CA7C00817A99 /* GenericRoute.swift */,
 				C146DFE61D89CB0900817A99 /* RouteController.swift */,
+				C146DFE41D89CA7C00817A99 /* GenericRoute.swift */,
 				C14F46611D8B980F00005C8A /* JSONRoute.swift */,
 			);
 			name = Routes;
@@ -172,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				C1F67A121D83B890006EEAE1 /* AppDelegate.swift */,
-				C146DFE21D89160800817A99 /* EchoRoute.swift */,
 				C146DFE91D89CECC00817A99 /* Assets */,
 				C146DFE81D89CEB600817A99 /* Routes */,
 				C1F67A351D83D03A006EEAE1 /* Framework */,
@@ -271,7 +268,6 @@
 				C1F67A2A1D83B8A5006EEAE1 /* ServerSocket.swift in Sources */,
 				C1F67A2B1D83B8A5006EEAE1 /* ConnectionHandler.swift in Sources */,
 				C1F67A2C1D83B8A5006EEAE1 /* HTTPData.swift in Sources */,
-				C146DFE31D89160800817A99 /* EchoRoute.swift in Sources */,
 				C1386BEE1D865EB500B32728 /* Response.swift in Sources */,
 				C146DFE71D89CB0900817A99 /* RouteController.swift in Sources */,
 				C1F67A391D83D1F1006EEAE1 /* JSONResponse.swift in Sources */,

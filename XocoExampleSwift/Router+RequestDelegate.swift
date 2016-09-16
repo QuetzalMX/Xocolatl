@@ -13,8 +13,6 @@ extension Router : RequestDelegate {
 
     func reply(toRequest request: Request) -> HTTPResponsive {
 
-        NotificationCenter.default.post(name: Notification.Name("RequestReceived"), object: request)
-
         // Could we parse the request?
         guard case .success = request.status else {
             return GenericResponse(.GenericClientError)

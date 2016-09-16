@@ -11,9 +11,11 @@ import AppKit
 
 class RouteController : NSViewController {
 
-    var routes = [Routable]()
+    var requests = [(request: Request, response: HTTPResponsive)]()
+    @IBOutlet var requestsTableView: NSTableView!
 
-    @IBOutlet var tableView: NSTableView!
+    var routes = [Routable]()
+    @IBOutlet var routeTableView: NSTableView!
     @IBOutlet var pathTextField: NSTextField!
     @IBOutlet var responseField: NSTextView!
     @IBOutlet var methodPopupButton: NSPopUpButton! {
@@ -23,6 +25,13 @@ class RouteController : NSViewController {
             methodPopupButton.addItems(withTitles: ["GET"])
             methodPopupButton.selectItem(at: 0)
         }
+    }
+
+    override func awakeFromNib() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateRequests),
+                                               name: Notification.Name("Responded"),
+                                               object: nil)
     }
 
     @IBAction func addRoute(sender: AnyObject) {
@@ -38,26 +47,68 @@ class RouteController : NSViewController {
         delegate.serverDelegate.addRoute(newRoute)
         routes.append(newRoute)
         pathTextField.stringValue = ""
-        tableView.reloadData()
+        responseField.string = ""
+        routeTableView.reloadData()
+    }
+
+    func updateRequests(notification: Notification) {
+        guard let notificationInfo = notification.object as? [Any],
+            let request = notificationInfo[0] as? Request,
+            let response = notificationInfo[1] as? HTTPResponsive else { return }
+
+        requests.append((request: request, response: response))
+
+        DispatchQueue.main.async {
+            self.requestsTableView.reloadData()
+        }
     }
 }
 
 extension RouteController : NSTableViewDataSource {
 
         func numberOfRows(in tableView: NSTableView) -> Int {
-            return routes.count
+
+            switch tableView {
+
+                case routeTableView: return routes.count
+                case requestsTableView: return requests.count
+                default: fatalError("Unregistered tableView")
+
+            }
         }
 
         func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-            let route = routes[row]
-    
-            let cellContentString: String
-            if tableColumn == tableView.tableColumns[0] {
-                cellContentString = route.method.rawValue
-            } else {
-                cellContentString = route.path
+
+            switch tableView {
+                case routeTableView:
+                    let route = routes[row]
+
+                    let cellContentString: String
+                    if tableColumn == tableView.tableColumns[0] {
+                        cellContentString = route.method.rawValue
+                    } else {
+                        cellContentString = route.path
+                    }
+                    
+                    return cellContentString
+
+                case requestsTableView:
+                    let request = requests[row].request
+                    let response = requests[row].response
+
+                    let cellContentString: String
+                    if tableColumn == tableView.tableColumns[0] {
+                        cellContentString = "\(response.statusCode.value)"
+                    } else if tableColumn == tableView.tableColumns[1] {
+                        cellContentString = request.method.rawValue
+                    } else {
+                        cellContentString = request.url!.path
+                    }
+
+                    return cellContentString
+
+                default: fatalError("Unregistered tableView")
             }
-    
-            return cellContentString
+
         }
 }

@@ -213,6 +213,7 @@ extension ConnectionHandler {
         request.status = status
         let delegateResponse = delegate!.reply(toRequest: request)
         respond(with: delegateResponse)
+        NotificationCenter.default.post(name: Notification.Name("Responded"), object: [request, delegateResponse])
     }
 
     fileprivate func appendBodyDataIfNecessary(_ data: Data) {
