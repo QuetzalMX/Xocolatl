@@ -1,0 +1,451 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C129F8CD1D84DF7700A7ED60 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C129F8CC1D84DF7700A7ED60 /* GCDAsyncSocket.m */; };
+		C132614C1D84A2B8001A0D5D /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C132614B1D84A2B8001A0D5D /* GenericResponse.swift */; };
+		C1386BE41D86573A00B32728 /* ConnectionHandler+Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BE31D86573A00B32728 /* ConnectionHandler+Protocols.swift */; };
+		C1386BE61D86590B00B32728 /* ConnectionHandler+Read.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BE51D86590B00B32728 /* ConnectionHandler+Read.swift */; };
+		C1386BE81D86592200B32728 /* ConnectionHandler+Write.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BE71D86592200B32728 /* ConnectionHandler+Write.swift */; };
+		C1386BEE1D865EB500B32728 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BED1D865EB500B32728 /* Response.swift */; };
+		C1386BF01D87886C00B32728 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BEF1D87886C00B32728 /* Request.swift */; };
+		C1386BF91D88A03B00B32728 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1386BF81D88A03B00B32728 /* Route.swift */; };
+		C146DFDF1D8908B700817A99 /* Router+RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146DFDE1D8908B700817A99 /* Router+RequestDelegate.swift */; };
+		C146DFE51D89CA7C00817A99 /* GenericRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146DFE41D89CA7C00817A99 /* GenericRoute.swift */; };
+		C146DFE71D89CB0900817A99 /* RouteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C146DFE61D89CB0900817A99 /* RouteController.swift */; };
+		C14F46621D8B980F00005C8A /* JSONRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14F46611D8B980F00005C8A /* JSONRoute.swift */; };
+		C1F67A131D83B890006EEAE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A121D83B890006EEAE1 /* AppDelegate.swift */; };
+		C1F67A151D83B890006EEAE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1F67A141D83B890006EEAE1 /* Assets.xcassets */; };
+		C1F67A181D83B890006EEAE1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C1F67A161D83B890006EEAE1 /* MainMenu.xib */; };
+		C1F67A271D83B8A5006EEAE1 /* dev.quetzal.io.p12 in Resources */ = {isa = PBXBuildFile; fileRef = C1F67A1F1D83B8A5006EEAE1 /* dev.quetzal.io.p12 */; };
+		C1F67A281D83B8A5006EEAE1 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A201D83B8A5006EEAE1 /* Router.swift */; };
+		C1F67A291D83B8A5006EEAE1 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A211D83B8A5006EEAE1 /* Server.swift */; };
+		C1F67A2A1D83B8A5006EEAE1 /* ServerSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A221D83B8A5006EEAE1 /* ServerSocket.swift */; };
+		C1F67A2B1D83B8A5006EEAE1 /* ConnectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A231D83B8A5006EEAE1 /* ConnectionHandler.swift */; };
+		C1F67A2C1D83B8A5006EEAE1 /* HTTPData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A241D83B8A5006EEAE1 /* HTTPData.swift */; };
+		C1F67A2D1D83B8A5006EEAE1 /* RequestSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A251D83B8A5006EEAE1 /* RequestSocket.swift */; };
+		C1F67A371D83D0DC006EEAE1 /* HTTPResponsive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A361D83D0DC006EEAE1 /* HTTPResponsive.swift */; };
+		C1F67A391D83D1F1006EEAE1 /* JSONResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F67A381D83D1F1006EEAE1 /* JSONResponse.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C129F8CB1D84DF7700A7ED60 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		C129F8CC1D84DF7700A7ED60 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		C132614B1D84A2B8001A0D5D /* GenericResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
+		C1386BE31D86573A00B32728 /* ConnectionHandler+Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConnectionHandler+Protocols.swift"; sourceTree = "<group>"; };
+		C1386BE51D86590B00B32728 /* ConnectionHandler+Read.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConnectionHandler+Read.swift"; sourceTree = "<group>"; };
+		C1386BE71D86592200B32728 /* ConnectionHandler+Write.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConnectionHandler+Write.swift"; sourceTree = "<group>"; };
+		C1386BED1D865EB500B32728 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		C1386BEF1D87886C00B32728 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		C1386BF81D88A03B00B32728 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		C146DFDE1D8908B700817A99 /* Router+RequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Router+RequestDelegate.swift"; sourceTree = "<group>"; };
+		C146DFE41D89CA7C00817A99 /* GenericRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericRoute.swift; sourceTree = "<group>"; };
+		C146DFE61D89CB0900817A99 /* RouteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteController.swift; sourceTree = "<group>"; };
+		C14F46611D8B980F00005C8A /* JSONRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONRoute.swift; sourceTree = "<group>"; };
+		C1F67A0F1D83B890006EEAE1 /* XocoExampleSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XocoExampleSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1F67A121D83B890006EEAE1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C1F67A141D83B890006EEAE1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C1F67A171D83B890006EEAE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		C1F67A191D83B890006EEAE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C1F67A1F1D83B8A5006EEAE1 /* dev.quetzal.io.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = dev.quetzal.io.p12; sourceTree = "<group>"; };
+		C1F67A201D83B8A5006EEAE1 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		C1F67A211D83B8A5006EEAE1 /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		C1F67A221D83B8A5006EEAE1 /* ServerSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerSocket.swift; sourceTree = "<group>"; };
+		C1F67A231D83B8A5006EEAE1 /* ConnectionHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionHandler.swift; sourceTree = "<group>"; };
+		C1F67A241D83B8A5006EEAE1 /* HTTPData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPData.swift; sourceTree = "<group>"; };
+		C1F67A251D83B8A5006EEAE1 /* RequestSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestSocket.swift; sourceTree = "<group>"; };
+		C1F67A2F1D83B8B5006EEAE1 /* XocoExampleSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XocoExampleSwift-Bridging-Header.h"; sourceTree = "<group>"; };
+		C1F67A361D83D0DC006EEAE1 /* HTTPResponsive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPResponsive.swift; sourceTree = "<group>"; };
+		C1F67A381D83D1F1006EEAE1 /* JSONResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONResponse.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C1F67A0C1D83B890006EEAE1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C129F8CE1D84E0A500A7ED60 /* GCDAsyncSocket */ = {
+			isa = PBXGroup;
+			children = (
+				C129F8CB1D84DF7700A7ED60 /* GCDAsyncSocket.h */,
+				C129F8CC1D84DF7700A7ED60 /* GCDAsyncSocket.m */,
+			);
+			name = GCDAsyncSocket;
+			sourceTree = "<group>";
+		};
+		C129F8CF1D84E0BE00A7ED60 /* Sockets */ = {
+			isa = PBXGroup;
+			children = (
+				C1F67A221D83B8A5006EEAE1 /* ServerSocket.swift */,
+				C1F67A251D83B8A5006EEAE1 /* RequestSocket.swift */,
+			);
+			name = Sockets;
+			sourceTree = "<group>";
+		};
+		C13261481D83E6AE001A0D5D /* Parsing */ = {
+			isa = PBXGroup;
+			children = (
+				C1386BEF1D87886C00B32728 /* Request.swift */,
+				C1F67A211D83B8A5006EEAE1 /* Server.swift */,
+				C1F67A231D83B8A5006EEAE1 /* ConnectionHandler.swift */,
+				C1386BE31D86573A00B32728 /* ConnectionHandler+Protocols.swift */,
+				C1386BE51D86590B00B32728 /* ConnectionHandler+Read.swift */,
+				C1386BE71D86592200B32728 /* ConnectionHandler+Write.swift */,
+			);
+			name = Parsing;
+			sourceTree = "<group>";
+		};
+		C1386BF61D889C1000B32728 /* Routing */ = {
+			isa = PBXGroup;
+			children = (
+				C1386BF81D88A03B00B32728 /* Route.swift */,
+				C1F67A201D83B8A5006EEAE1 /* Router.swift */,
+				C146DFDE1D8908B700817A99 /* Router+RequestDelegate.swift */,
+			);
+			name = Routing;
+			sourceTree = "<group>";
+		};
+		C1386BF71D889CC900B32728 /* Responding */ = {
+			isa = PBXGroup;
+			children = (
+				C1F67A361D83D0DC006EEAE1 /* HTTPResponsive.swift */,
+				C1F67A241D83B8A5006EEAE1 /* HTTPData.swift */,
+				C1386BED1D865EB500B32728 /* Response.swift */,
+				C1F67A381D83D1F1006EEAE1 /* JSONResponse.swift */,
+				C132614B1D84A2B8001A0D5D /* GenericResponse.swift */,
+			);
+			name = Responding;
+			sourceTree = "<group>";
+		};
+		C146DFE81D89CEB600817A99 /* Routes */ = {
+			isa = PBXGroup;
+			children = (
+				C146DFE61D89CB0900817A99 /* RouteController.swift */,
+				C146DFE41D89CA7C00817A99 /* GenericRoute.swift */,
+				C14F46611D8B980F00005C8A /* JSONRoute.swift */,
+			);
+			name = Routes;
+			sourceTree = "<group>";
+		};
+		C146DFE91D89CECC00817A99 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				C1F67A141D83B890006EEAE1 /* Assets.xcassets */,
+				C1F67A161D83B890006EEAE1 /* MainMenu.xib */,
+				C1F67A1F1D83B8A5006EEAE1 /* dev.quetzal.io.p12 */,
+				C1F67A191D83B890006EEAE1 /* Info.plist */,
+				C1F67A2F1D83B8B5006EEAE1 /* XocoExampleSwift-Bridging-Header.h */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		C1F67A061D83B890006EEAE1 = {
+			isa = PBXGroup;
+			children = (
+				C1F67A111D83B890006EEAE1 /* XocoExampleSwift */,
+				C1F67A101D83B890006EEAE1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C1F67A101D83B890006EEAE1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C1F67A0F1D83B890006EEAE1 /* XocoExampleSwift.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C1F67A111D83B890006EEAE1 /* XocoExampleSwift */ = {
+			isa = PBXGroup;
+			children = (
+				C1F67A121D83B890006EEAE1 /* AppDelegate.swift */,
+				C146DFE91D89CECC00817A99 /* Assets */,
+				C146DFE81D89CEB600817A99 /* Routes */,
+				C1F67A351D83D03A006EEAE1 /* Framework */,
+			);
+			path = XocoExampleSwift;
+			sourceTree = "<group>";
+		};
+		C1F67A351D83D03A006EEAE1 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				C1386BF71D889CC900B32728 /* Responding */,
+				C1386BF61D889C1000B32728 /* Routing */,
+				C13261481D83E6AE001A0D5D /* Parsing */,
+				C129F8CF1D84E0BE00A7ED60 /* Sockets */,
+				C129F8CE1D84E0A500A7ED60 /* GCDAsyncSocket */,
+			);
+			name = Framework;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C1F67A0E1D83B890006EEAE1 /* XocoExampleSwift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C1F67A1C1D83B890006EEAE1 /* Build configuration list for PBXNativeTarget "XocoExampleSwift" */;
+			buildPhases = (
+				C1F67A0B1D83B890006EEAE1 /* Sources */,
+				C1F67A0C1D83B890006EEAE1 /* Frameworks */,
+				C1F67A0D1D83B890006EEAE1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = XocoExampleSwift;
+			productName = XocoExampleSwift;
+			productReference = C1F67A0F1D83B890006EEAE1 /* XocoExampleSwift.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C1F67A071D83B890006EEAE1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = Quetzal;
+				TargetAttributes = {
+					C1F67A0E1D83B890006EEAE1 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 4G7P9DW4TY;
+						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = C1F67A0A1D83B890006EEAE1 /* Build configuration list for PBXProject "XocoExampleSwift" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C1F67A061D83B890006EEAE1;
+			productRefGroup = C1F67A101D83B890006EEAE1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C1F67A0E1D83B890006EEAE1 /* XocoExampleSwift */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C1F67A0D1D83B890006EEAE1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C1F67A151D83B890006EEAE1 /* Assets.xcassets in Resources */,
+				C1F67A271D83B8A5006EEAE1 /* dev.quetzal.io.p12 in Resources */,
+				C1F67A181D83B890006EEAE1 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C1F67A0B1D83B890006EEAE1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C1386BE41D86573A00B32728 /* ConnectionHandler+Protocols.swift in Sources */,
+				C1F67A281D83B8A5006EEAE1 /* Router.swift in Sources */,
+				C1F67A2A1D83B8A5006EEAE1 /* ServerSocket.swift in Sources */,
+				C1F67A2B1D83B8A5006EEAE1 /* ConnectionHandler.swift in Sources */,
+				C1F67A2C1D83B8A5006EEAE1 /* HTTPData.swift in Sources */,
+				C1386BEE1D865EB500B32728 /* Response.swift in Sources */,
+				C146DFE71D89CB0900817A99 /* RouteController.swift in Sources */,
+				C1F67A391D83D1F1006EEAE1 /* JSONResponse.swift in Sources */,
+				C1F67A291D83B8A5006EEAE1 /* Server.swift in Sources */,
+				C1386BF91D88A03B00B32728 /* Route.swift in Sources */,
+				C1F67A371D83D0DC006EEAE1 /* HTTPResponsive.swift in Sources */,
+				C1F67A131D83B890006EEAE1 /* AppDelegate.swift in Sources */,
+				C14F46621D8B980F00005C8A /* JSONRoute.swift in Sources */,
+				C146DFE51D89CA7C00817A99 /* GenericRoute.swift in Sources */,
+				C1F67A2D1D83B8A5006EEAE1 /* RequestSocket.swift in Sources */,
+				C1386BE81D86592200B32728 /* ConnectionHandler+Write.swift in Sources */,
+				C1386BF01D87886C00B32728 /* Request.swift in Sources */,
+				C1386BE61D86590B00B32728 /* ConnectionHandler+Read.swift in Sources */,
+				C129F8CD1D84DF7700A7ED60 /* GCDAsyncSocket.m in Sources */,
+				C146DFDF1D8908B700817A99 /* Router+RequestDelegate.swift in Sources */,
+				C132614C1D84A2B8001A0D5D /* GenericResponse.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C1F67A161D83B890006EEAE1 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C1F67A171D83B890006EEAE1 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C1F67A1A1D83B890006EEAE1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C1F67A1B1D83B890006EEAE1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		C1F67A1D1D83B890006EEAE1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 4G7P9DW4TY;
+				INFOPLIST_FILE = XocoExampleSwift/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.quetzal.XocoExampleSwift;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "XocoExampleSwift/XocoExampleSwift-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		C1F67A1E1D83B890006EEAE1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 4G7P9DW4TY;
+				INFOPLIST_FILE = XocoExampleSwift/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = io.quetzal.XocoExampleSwift;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "XocoExampleSwift/XocoExampleSwift-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C1F67A0A1D83B890006EEAE1 /* Build configuration list for PBXProject "XocoExampleSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C1F67A1A1D83B890006EEAE1 /* Debug */,
+				C1F67A1B1D83B890006EEAE1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C1F67A1C1D83B890006EEAE1 /* Build configuration list for PBXNativeTarget "XocoExampleSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C1F67A1D1D83B890006EEAE1 /* Debug */,
+				C1F67A1E1D83B890006EEAE1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C1F67A071D83B890006EEAE1 /* Project object */;
+}
