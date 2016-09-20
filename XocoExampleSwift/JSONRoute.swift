@@ -4,10 +4,10 @@
 //
 //  Created by Fernando Olivares on 9/15/16.
 //  Copyright © 2016 Quetzal. All rights reserved.
-//
 
 import Foundation
 
+/// This class is a work in progress. It's here while I test how to best build a UI for macOS.
 class JSONRoute {
 
     let givenPath: String

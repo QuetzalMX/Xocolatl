@@ -4,11 +4,11 @@
 //
 //  Created by Fernando Olivares on 9/14/16.
 //  Copyright © 2016 Quetzal. All rights reserved.
-//
 
 import Foundation
 import AppKit
 
+/// This class is a work in progress. It's here while I test how to best build a UI for macOS.
 class RouteController : NSViewController {
 
     var requests = [(request: Request, response: HTTPResponsive)]()

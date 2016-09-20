@@ -4,7 +4,6 @@
 //
 //  Created by Fernando Olivares on 9/9/16.
 //  Copyright © 2016 Quetzal. All rights reserved.
-//
 
 import Cocoa
 
@@ -15,8 +14,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let serverDelegate = Router()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        //serverDelegate.addRoute(HomeRoute())
-        //serverDelegate.addRoute(EchoeRoute())
         try! serverDelegate.startServer()
     }
 
