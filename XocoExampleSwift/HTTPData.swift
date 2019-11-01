@@ -14,7 +14,10 @@ public class HTTPData {
     var headerData: CFHTTPMessage!
 
     fileprivate func appendHTTPData(_ data: Data) -> Bool {
-        return data.withUnsafeBytes { CFHTTPMessageAppendBytes(headerData, $0, data.count) }
+		let dataMutablePointer = UnsafeMutablePointer<UInt8>.allocate(capacity: data.count)
+		data.copyBytes(to: dataMutablePointer, count: data.count)
+		
+		return CFHTTPMessageAppendBytes(headerData, UnsafePointer<UInt8>(dataMutablePointer), data.count)
     }
 
     // Body has to be declared here because we cannot override properties declared in an extension.
@@ -38,7 +41,7 @@ extension HTTPData {
     }
 
     func headerField(_ key: String) -> String? {
-        return CFHTTPMessageCopyHeaderFieldValue(headerData, key.lowercased() as CFString)?.takeRetainedValue() as? String
+		return CFHTTPMessageCopyHeaderFieldValue(headerData, key.lowercased() as CFString)?.takeRetainedValue() as String?
     }
 
     var headerComplete : Bool {
@@ -63,7 +66,7 @@ extension HTTPData {
     }
 
     var url : URL? {
-        return CFHTTPMessageCopyRequestURL(headerData)?.takeRetainedValue() as? URL
+		return CFHTTPMessageCopyRequestURL(headerData)?.takeRetainedValue() as URL?
     }
 }
 

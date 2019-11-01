@@ -65,7 +65,7 @@ public class Request : HTTPData {
     var method : Method {
 
         guard
-            let methodString = CFHTTPMessageCopyRequestMethod(headerData)?.takeRetainedValue() as? String,
+			let methodString = CFHTTPMessageCopyRequestMethod(headerData)?.takeRetainedValue() as String?,
             let method = Method(rawValue: methodString)
             else { return .Unknown }
 

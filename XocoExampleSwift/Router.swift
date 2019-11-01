@@ -71,7 +71,7 @@ extension Router {
             // We have to use resultIndex, because using index would cause an error due to the result.rangeAt(0) being the full string.
             var resultIndex = 1
             for (_, groupName) in groupNames.enumerated() {
-                let capture = requestPath.substring(with: result.rangeAt(resultIndex))
+				let capture = requestPath.substring(with: result.range(at: resultIndex))
 
                 if groupName == "wildcards" {
 
@@ -157,7 +157,7 @@ extension Router {
                 capturedGroupsNames.append("wildcards")
                 replacement = "(.*?)"
             } else {
-                let capturedGroupName = parsedPath.substring(with: existingResult.rangeAt(2))
+				let capturedGroupName = parsedPath.substring(with: existingResult.range(at: 2))
                 capturedGroupsNames.append(capturedGroupName)
                 replacement = "[/]?([^/]+)"
             }

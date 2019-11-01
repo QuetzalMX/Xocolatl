@@ -35,9 +35,8 @@ class RouteController : NSViewController {
     }
 
     @IBAction func addRoute(sender: AnyObject) {
-        guard let selectedMethodString = methodPopupButton.selectedItem?.title,
-            let response = responseField.string else { return }
-        addRoute(path: pathTextField.stringValue, method: Method(value: selectedMethodString), response: response)
+        guard let selectedMethodString = methodPopupButton.selectedItem?.title else { return }
+        addRoute(path: pathTextField.stringValue, method: Method(value: selectedMethodString), response: responseField.string)
     }
 
     func addRoute(path: String, method: Method, response: String) {
@@ -51,7 +50,7 @@ class RouteController : NSViewController {
         routeTableView.reloadData()
     }
 
-    func updateRequests(notification: Notification) {
+	@objc func updateRequests(notification: Notification) {
         guard let notificationInfo = notification.object as? [Any],
             let request = notificationInfo[0] as? Request,
             let response = notificationInfo[1] as? HTTPResponsive else { return }
